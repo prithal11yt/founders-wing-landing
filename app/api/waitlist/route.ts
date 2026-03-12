@@ -1,0 +1,77 @@
+import { createClient } from "@supabase/supabase-js"
+import { type NextRequest, NextResponse } from "next/server"
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+    console.log("[v0] Received form data:", body)
+
+    // Validate required environment variables
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+    if (!supabaseUrl || !supabaseKey) {
+      console.error("[v0] Missing Supabase environment variables")
+      return NextResponse.json(
+        { error: "Server configuration error" },
+        { status: 500 },
+      )
+    }
+
+    // Create Supabase client with service role key
+    const supabase = createClient(supabaseUrl, supabaseKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    })
+
+    // Insert form data into waitlist_applications table
+    const { data, error } = await supabase
+      .from("waitlist_applications")
+      .insert([
+        {
+          full_name: body.fullName,
+          email: body.email,
+          social_links: body.social,
+          what_building: body.building,
+          months_working: body.monthsWorking,
+          current_stage: body.currentStage,
+          working_full_time: body.workingFullTime,
+          join_reason: body.joinReason,
+          biggest_challenge: body.challenge,
+          can_contribute: body.contribute,
+          monthly_budget: body.monthlyBudget,
+          paid_community_willing: body.paidCommunity,
+          heard_from: body.heardFrom,
+          other_info: body.otherInfo,
+        },
+      ])
+      .select()
+
+    if (error) {
+      console.error("[v0] Supabase error:", error.message, error.details)
+      return NextResponse.json(
+        { error: `Failed to save application: ${error.message}` },
+        { status: 500 },
+      )
+    }
+
+    console.log("[v0] Application saved successfully:", data)
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Application submitted successfully",
+        data,
+      },
+      { status: 201 },
+    )
+  } catch (error) {
+    console.error("[v0] API error:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
+    return NextResponse.json(
+      { error: `Internal server error: ${errorMessage}` },
+      { status: 500 },
+    )
+  }
+}
