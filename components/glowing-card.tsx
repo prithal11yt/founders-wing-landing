@@ -32,7 +32,7 @@ export function GlowingCard({ children, className, ...props }: GlowingCardProps)
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "relative overflow-hidden rounded-3xl border border-white/10 bg-zinc-900/50 backdrop-blur-sm transition-colors duration-300",
+        "relative overflow-hidden rounded-3xl neu-flat transition-colors duration-300",
         className,
       )}
       {...props}

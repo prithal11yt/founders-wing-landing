@@ -1,136 +1,223 @@
 "use client"
 
-import { Globe, Users, ArrowRight } from "lucide-react"
-import { useState } from "react"
+import { Globe, Users, ArrowRight, MessageSquare, Video, BookOpen, Utensils, MapPin, Calendar } from "lucide-react"
+import { useEffect, useRef, useState, useCallback } from "react"
 import { cn } from "@/lib/utils"
+import Tilt from "react-parallax-tilt"
+
+function CursorGlow({ x, y, active, color = "rgba(2,132,199,0.15)" }: { x: number; y: number; active: boolean; color?: string }) {
+  return (
+    <div
+      className="absolute pointer-events-none z-0 transition-opacity duration-300"
+      style={{
+        left: x - 200,
+        top: y - 200,
+        width: 400,
+        height: 400,
+        background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
+        opacity: active ? 1 : 0,
+      }}
+    />
+  )
+}
 
 export function InteractiveBento() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const [isVisible, setIsVisible] = useState(false)
+  const card1Ref = useRef<HTMLDivElement>(null)
+  const card2Ref = useRef<HTMLDivElement>(null)
+  const [glow1, setGlow1] = useState({ x: 0, y: 0, active: false })
+  const [glow2, setGlow2] = useState({ x: 0, y: 0, active: false })
+
+  const handleCardMouseMove = useCallback((e: React.MouseEvent, cardRef: React.RefObject<HTMLDivElement | null>, setter: typeof setGlow1) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    setter({ x: e.clientX - rect.left, y: e.clientY - rect.top, active: true })
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true)
+      },
+      { threshold: 0.15 }
+    )
+    if (sectionRef.current) observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <div className="grid md:grid-cols-2 gap-8">
-      {/* Online Community */}
-      <div
-        className="group relative overflow-hidden rounded-3xl border border-white/10 bg-black h-[500px] transition-all duration-500 hover:border-white/20"
-        onMouseEnter={() => setHoveredIndex(0)}
-        onMouseLeave={() => setHoveredIndex(null)}
+    <div ref={sectionRef} className="grid md:grid-cols-2 gap-8">
+      {/* Online Community — Primary / Active Now */}
+      <Tilt
+        tiltMaxAngleX={6}
+        tiltMaxAngleY={6}
+        glareEnable={true}
+        glareMaxOpacity={0.08}
+        glareColor="#ffffff"
+        glarePosition="all"
+        glareBorderRadius="1.5rem"
+        scale={1.02}
+        transitionSpeed={1200}
+        className={cn(
+          "transition-all duration-700",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12",
+        )}
       >
-        <div className="absolute inset-0">
-          <img
-            src="/online-community-large.jpg"
-            alt="Online Community"
-            className={cn(
-              "h-full w-full object-cover object-center opacity-60 transition-transform duration-700",
-              hoveredIndex === 0 ? "scale-110" : "scale-105",
-            )}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-        </div>
+        <div
+          ref={card1Ref}
+          onMouseMove={(e) => handleCardMouseMove(e, card1Ref, setGlow1)}
+          onMouseLeave={() => setGlow1(prev => ({ ...prev, active: false }))}
+          className="group relative rounded-3xl neu-flat p-8 md:p-10 overflow-hidden h-full"
+        >
+          {/* Cursor glow */}
+          <CursorGlow x={glow1.x} y={glow1.y} active={glow1.active} color="rgba(2,132,199,0.12)" />
 
-        {/* Animated Overlay Content */}
-        <div className="relative h-full flex flex-col justify-end p-8 md:p-12">
-          <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white mb-6 border border-white/10 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
-            <Globe className="w-6 h-6" />
-          </div>
+          {/* Content */}
+          <div className="relative z-10">
+            {/* "Live" badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-medium text-cyan-700 mb-8">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-500 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500" />
+              </span>
+              Active Now
+            </div>
 
-          <h3 className="text-3xl font-bold mb-4 transform transition-transform duration-500 group-hover:translate-x-2">
-            The Online Hub
-          </h3>
+            <div className="w-14 h-14 rounded-2xl neu-convex flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+              <Globe className="w-7 h-7 text-accent-cyan" />
+            </div>
 
-          <p className="text-zinc-300 text-lg mb-6 transform transition-all duration-500 group-hover:-translate-y-2">
-            Your daily operating room. A private Slack space for fast feedback, thoughtful discussion, and real-time help from founders who are actively building.
-          </p>
+            <h3 className="text-3xl font-bold mb-3 text-foreground group-hover:translate-x-1 transition-transform duration-300">
+              The Online Hub
+            </h3>
+            <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+              Your AI command center. A private space for real-time AI strategy discussions, tool comparisons, and implementation help from founders actively deploying AI.
+            </p>
 
-          <ul className="space-y-3 text-zinc-400 transform transition-all duration-500 delay-100 group-hover:-translate-y-2">
-            <li className="flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-              Private Slack Channels
-            </li>
-            <li className="flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse delay-75" />
-              Weekly Virtual Deep Dives
-            </li>
-            <li className="flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse delay-150" />
-              Member Directory & Intros
-            </li>
-          </ul>
+            {/* Feature grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+              {[
+                { icon: MessageSquare, label: "AI Strategy Channels", desc: "Real-time discussions" },
+                { icon: Video, label: "Weekly AI Deep Dives", desc: "Live sessions" },
+                { icon: BookOpen, label: "Tool & Prompt Library", desc: "Curated resources" },
+              ].map((feature, i) => (
+                <div
+                  key={feature.label}
+                  className={cn(
+                    "rounded-2xl neu-pressed p-4 transition-all duration-500",
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
+                  )}
+                  style={{ transitionDelay: isVisible ? `${400 + i * 100}ms` : "0ms" }}
+                >
+                  <feature.icon className="w-5 h-5 text-accent-cyan mb-2" />
+                  <p className="text-sm font-medium text-foreground">{feature.label}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{feature.desc}</p>
+                </div>
+              ))}
+            </div>
 
-          <div
-            className={cn(
-              "absolute bottom-12 right-12 opacity-0 transform translate-x-4 transition-all duration-500",
-              hoveredIndex === 0 ? "opacity-100 translate-x-0" : "",
-            )}
-          >
-            <div className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center">
-              <ArrowRight className="w-5 h-5" />
+            {/* Mock chat UI */}
+            <div className="rounded-2xl neu-flat p-4 space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="w-7 h-7 rounded-full neu-convex flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="text-xs text-accent-cyan font-bold">R</span>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Rohan · 2min ago</p>
+                  <p className="text-sm text-foreground">Just deployed a multi-agent workflow that cut our support ticket resolution from 4hrs to 12min. Happy to share the architecture 🔥</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-7 h-7 rounded-full neu-convex flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="text-xs text-purple-400 font-bold">A</span>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Ananya · just now</p>
+                  <p className="text-sm text-foreground">Would love to see that! We&apos;re building something similar for our onboarding flow.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Tilt>
 
-      {/* Physical Meetups */}
-      <div
-        className="group relative overflow-hidden rounded-3xl border border-white/10 bg-black h-[500px] transition-all duration-500 hover:border-white/20"
-        onMouseEnter={() => setHoveredIndex(1)}
-        onMouseLeave={() => setHoveredIndex(null)}
+      {/* Physical Meetups — Coming Soon */}
+      <Tilt
+        tiltMaxAngleX={6}
+        tiltMaxAngleY={6}
+        glareEnable={true}
+        glareMaxOpacity={0.08}
+        glareColor="#ffffff"
+        glarePosition="all"
+        glareBorderRadius="1.5rem"
+        scale={1.02}
+        transitionSpeed={1200}
+        className={cn(
+          "transition-all duration-700 delay-150",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12",
+        )}
       >
-        <div className="absolute inset-0">
-          <img
-            src="/luxury-dinner-party-networking-event-dark-moody-at.jpg"
-            alt="Physical Meetups"
-            className={cn(
-              "h-full w-full object-cover object-center opacity-60 transition-transform duration-700",
-              hoveredIndex === 1 ? "scale-110" : "scale-105",
-            )}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-        </div>
+        <div
+          ref={card2Ref}
+          onMouseMove={(e) => handleCardMouseMove(e, card2Ref, setGlow2)}
+          onMouseLeave={() => setGlow2(prev => ({ ...prev, active: false }))}
+          className="group relative rounded-3xl neu-flat p-8 md:p-10 overflow-hidden h-full"
+        >
+          {/* Cursor glow */}
+          <CursorGlow x={glow2.x} y={glow2.y} active={glow2.active} color="rgba(147,51,234,0.10)" />
 
-        <div className="relative h-full flex flex-col justify-end p-8 md:p-12">
-          <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white mb-6 border border-white/10 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3">
-            <Users className="w-6 h-6" />
-          </div>
+          {/* Content */}
+          <div className="relative z-10">
+            {/* "Coming Soon" badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-xs font-medium text-purple-700 mb-8">
+              <Calendar className="w-3 h-3" />
+              Coming Soon
+            </div>
 
-          <h3 className="text-3xl font-bold mb-4 transform transition-transform duration-500 group-hover:translate-x-2">
-            Physical Meetups
-          </h3>
+            <div className="w-14 h-14 rounded-2xl neu-convex flex items-center justify-center mb-6 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
+              <Users className="w-7 h-7 text-purple-400" />
+            </div>
 
-          <p className="text-zinc-300 text-lg mb-6 transform transition-all duration-500 group-hover:-translate-y-2">
-            Designed for depth, not scale. Small, curated gatherings where conversations continue long after the event ends.
-          </p>
+            <h3 className="text-3xl font-bold mb-3 text-foreground group-hover:translate-x-1 transition-transform duration-300">
+              Physical Meetups
+            </h3>
+            <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+              Once the online community is thriving, we&apos;ll bring founders together IRL. Intimate, curated gatherings designed for depth — not keynotes.
+            </p>
 
-          <ul className="space-y-3 text-zinc-400 transform transition-all duration-500 delay-100 group-hover:-translate-y-2">
-            <li className="flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
-              Small Group Gatherings
-            </li>
-            <li className="flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse delay-75" />
-              Member-only Experiences
-            </li>
-            <li className="flex items-center gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse delay-150" />
-              Deep Connections
-            </li>
-          </ul>
-          
-          <p className="text-zinc-400 text-sm mt-6 transform transition-all duration-500 group-hover:-translate-y-2">
-            We design for relationships that last years, not events that last hours.
-          </p>
+            {/* Planned events */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+              {[
+                { icon: Utensils, label: "AI Demo Days", desc: "Show what you built" },
+                { icon: MapPin, label: "City Meetups", desc: "Starting Bangalore" },
+                { icon: Users, label: "Build Sessions", desc: "Hack together" },
+              ].map((feature, i) => (
+                <div
+                  key={feature.label}
+                  className={cn(
+                    "rounded-2xl neu-pressed p-4 transition-all duration-500",
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
+                  )}
+                  style={{ transitionDelay: isVisible ? `${550 + i * 100}ms` : "0ms" }}
+                >
+                  <feature.icon className="w-5 h-5 text-purple-400 mb-2" />
+                  <p className="text-sm font-medium text-foreground">{feature.label}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{feature.desc}</p>
+                </div>
+              ))}
+            </div>
 
-          <div
-            className={cn(
-              "absolute bottom-12 right-12 opacity-0 transform translate-x-4 transition-all duration-500",
-              hoveredIndex === 1 ? "opacity-100 translate-x-0" : "",
-            )}
-          >
-            <div className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center">
-              <ArrowRight className="w-5 h-5" />
+            {/* Roadmap hint */}
+            <div className="rounded-2xl neu-pressed p-5 text-center">
+              <p className="text-sm text-muted-foreground">
+                Physical events will be unlocked once we have a strong online foundation.
+              </p>
+              <p className="text-xs text-muted-foreground mt-2">We design for relationships that last years — not events that last hours.</p>
             </div>
           </div>
         </div>
-      </div>
+      </Tilt>
     </div>
   )
 }

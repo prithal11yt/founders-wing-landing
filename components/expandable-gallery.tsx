@@ -1,107 +1,115 @@
 "use client"
 
-import { useState } from "react"
-import { Trophy, Coffee, Utensils, Plane } from "lucide-react"
+import { useState, useEffect, useRef } from "react"
+import { Trophy, Coffee, Utensils, Plane, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { TiltCard } from "@/components/tilt-card"
 
 const items = [
   {
     id: 1,
     title: "Pickleball Tournaments",
     category: "Wellness & Sport",
-    description: "Friendly competition to break a sweat and break the ice. Health is wealth.",
+    description: "Friendly competition to break a sweat and break the ice. Because the best conversations happen when you're not trying to network.",
     icon: Trophy,
-    image: "/people-playing-pickleball-sunny-day-active-lifesty.jpg",
+    iconColor: "text-accent-cyan",
   },
   {
     id: 2,
     title: "Coffee Roundtables",
     category: "Deep Dives",
-    description: "Intimate, problem-solving sessions in curated cafes. Specific topics, no fluff.",
+    description: "Intimate, problem-solving sessions in curated cafes. One topic, 8 founders, zero fluff. Bring your hardest AI challenge.",
     icon: Coffee,
-    image: "/coffee-shop-meeting-roundtable-discussion-cozy-atm.jpg",
+    iconColor: "text-blue-400",
   },
   {
     id: 3,
     title: "Luxury Dinners",
     category: "Networking",
-    description: "High-end culinary experiences. Great food, better company, and meaningful conversation.",
+    description: "High-end culinary experiences with curated seating. Great food, better company, and the kind of conversation you can't find on Slack.",
     icon: Utensils,
-    image: "/luxury-fine-dining-restaurant-table-setting-evenin.jpg",
+    iconColor: "text-purple-400",
   },
   {
     id: 4,
-    title: "Founder Trips",
+    title: "Founder Retreats",
     category: "Retreats",
-    description: "Escaping the daily grind. Hiking, exploring, and recharging with fellow builders.",
+    description: "Multi-day escapes to recharge and strategize. Hike, explore, and build deeper bonds with fellow AI-first founders.",
     icon: Plane,
-    image: "/scenic-mountain-hiking-group-adventure-travel-natu.jpg",
+    iconColor: "text-accent-cyan",
   },
 ]
 
 export function ExpandableGallery() {
-  const [activeId, setActiveId] = useState<number | null>(1)
+  const [activeId, setActiveId] = useState<number | null>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true)
+      },
+      { threshold: 0.1 }
+    )
+    if (sectionRef.current) observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <div className="flex flex-col lg:flex-row gap-4 h-[600px] lg:h-[500px] w-full">
-      {items.map((item) => (
-        <div
+    <div ref={sectionRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {items.map((item, index) => (
+        <TiltCard
           key={item.id}
-          className={cn(
-            "relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-500 ease-in-out border border-white/10",
-            activeId === item.id ? "flex-[3]" : "flex-[1] hover:flex-[1.5]",
-          )}
-          onMouseEnter={() => setActiveId(item.id)}
-          onClick={() => setActiveId(item.id)}
+          tiltAmount={12}
         >
-          <div className="absolute inset-0">
-            <img
-              src={item.image || "/placeholder.svg"}
-              alt={item.title}
-              className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-            />
-            <div
-              className={cn(
-                "absolute inset-0 bg-black/40 transition-opacity duration-500",
-                activeId === item.id ? "opacity-20" : "opacity-60",
-              )}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-          </div>
-
-          <div className="relative h-full flex flex-col justify-end p-6">
-            <div className={cn("transition-all duration-500", activeId === item.id ? "mb-4" : "mb-2")}>
-              <div className="flex items-center gap-2 text-zinc-300 mb-2">
-                <item.icon className="w-4 h-4" />
-                <span
-                  className={cn(
-                    "text-sm font-medium transition-opacity duration-300",
-                    activeId === item.id ? "opacity-100" : "opacity-0 lg:opacity-100",
-                  )}
-                >
-                  {item.category}
-                </span>
-              </div>
-              <h3
-                className={cn(
-                  "font-bold text-white transition-all duration-300",
-                  activeId === item.id ? "text-2xl" : "text-xl",
-                )}
-              >
-                {item.title}
-              </h3>
+          <div
+            className={cn(
+              "group relative rounded-3xl p-6 transition-all duration-500 cursor-pointer h-full neu-flat neu-interactive flex flex-col",
+              activeId === item.id && "neu-pressed !transform-none",
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
+            )}
+            style={{ transitionDelay: isVisible ? `${index * 100}ms` : "0ms" }}
+            onMouseEnter={() => setActiveId(item.id)}
+            onMouseLeave={() => setActiveId(null)}
+          >
+            {/* Icon */}
+            <div className={cn(
+              "w-12 h-12 rounded-2xl flex items-center justify-center mb-5 transition-transform duration-500 group-hover:scale-110 neu-convex shrink-0",
+            )}>
+              <item.icon className={cn("w-6 h-6", item.iconColor)} />
             </div>
 
-            <p
-              className={cn(
-                "text-zinc-300 text-sm transition-all duration-500 overflow-hidden",
-                activeId === item.id ? "max-h-20 opacity-100" : "max-h-0 opacity-0",
-              )}
-            >
-              {item.description}
+            {/* Category tag */}
+            <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider mb-2">
+              {item.category}
             </p>
+
+            {/* Title */}
+            <h3 className="text-xl font-bold text-foreground mb-3 group-hover:translate-x-1 transition-transform duration-300">
+              {item.title}
+            </h3>
+
+            {/* Description */}
+            <div className="flex-1 flex flex-col justify-end">
+              <p className={cn(
+                "text-sm text-muted-foreground leading-relaxed transition-all duration-500",
+                activeId === item.id ? "opacity-100 max-h-32" : "opacity-70 max-h-20",
+              )}>
+                {item.description}
+              </p>
+
+              {/* Arrow indicator on hover */}
+              <div className={cn(
+                "mt-4 flex items-center gap-1 text-xs font-medium transition-all duration-300",
+                activeId === item.id ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2",
+                item.iconColor,
+              )}>
+                Learn more <ChevronRight className="w-3 h-3" />
+              </div>
+            </div>
           </div>
-        </div>
+        </TiltCard>
       ))}
     </div>
   )

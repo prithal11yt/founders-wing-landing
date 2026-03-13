@@ -1,24 +1,25 @@
 import React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import "./globals.css"
 
-const geistSans = Geist({
+const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
 })
 
-const geistMono = Geist_Mono({
+const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
 })
 
 export const metadata: Metadata = {
-  title: "Founders Wing | Invite-Only Community",
-  description: "An exclusive community for ambitious founders building the future.",
+  title: "Founders Wing | AI-First Founder Community",
+  description: "An invite-only community for founders who want to learn, network, and build with AI. Stay ahead with real strategies, not hype.",
   generator: 'v0.app',
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.png",
+    apple: "/favicon.png",
   }
 }
 
@@ -28,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white min-h-screen`}>
+    <html lang="en">
+      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased min-h-screen`}>
         {children}
       </body>
     </html>

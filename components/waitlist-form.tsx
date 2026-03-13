@@ -66,8 +66,8 @@ export function WaitlistForm() {
         <div className="w-16 h-16 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/20">
           <CheckCircle2 className="w-8 h-8" />
         </div>
-        <h3 className="text-2xl font-bold text-white">Application Received!</h3>
-        <p className="text-zinc-400 max-w-md mx-auto">
+        <h3 className="text-2xl font-bold text-foreground">Application Received!</h3>
+        <p className="text-muted-foreground max-w-md mx-auto">
           Thank you for applying to Founders Wing. We review every application personally and will reach out within 3-5
           business days.
         </p>
@@ -92,7 +92,7 @@ export function WaitlistForm() {
             })
           }}
           variant="outline"
-          className="mt-6 border-white/10 hover:bg-white hover:text-black"
+          className="mt-6 border-foreground/10 hover:bg-foreground hover:text-background"
         >
           Submit another application
         </Button>
@@ -108,10 +108,10 @@ export function WaitlistForm() {
 
       {/* Personal Information */}
       <div className="space-y-6">
-        <h3 className="text-xl font-semibold text-white">Personal Information</h3>
+        <h3 className="text-xl font-semibold text-foreground">Personal Information</h3>
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="fullName" className="text-zinc-400">
+            <Label htmlFor="fullName" className="text-muted-foreground">
               Full Name <span className="text-red-500">*</span>
             </Label>
             <Input
@@ -121,11 +121,11 @@ export function WaitlistForm() {
               onChange={handleChange}
               required
               placeholder="Jane Doe"
-              className="bg-zinc-900/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-white/20 focus:ring-0"
+              className=""
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-zinc-400">
+            <Label htmlFor="email" className="text-muted-foreground">
               Email Address <span className="text-red-500">*</span>
             </Label>
             <Input
@@ -136,12 +136,12 @@ export function WaitlistForm() {
               onChange={handleChange}
               required
               placeholder="jane@company.com"
-              className="bg-zinc-900/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-white/20 focus:ring-0"
+              className=""
             />
           </div>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="social" className="text-zinc-400">
+          <Label htmlFor="social" className="text-muted-foreground">
             LinkedIn / Twitter / Personal Website <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -151,19 +151,19 @@ export function WaitlistForm() {
             onChange={handleChange}
             required
             placeholder="https://linkedin.com/in/jane-doe"
-            className="bg-zinc-900/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-white/20 focus:ring-0"
+            className=""
           />
         </div>
       </div>
 
       {/* Startup Details */}
-      <div className="space-y-6 pt-6 border-t border-white/10">
-        <h3 className="text-xl font-semibold text-white">Your Startup</h3>
+      <div className="space-y-6 pt-6 border-t border-foreground/10">
+        <h3 className="text-xl font-semibold text-foreground">Your Startup</h3>
         <div className="space-y-2">
-          <Label htmlFor="building" className="text-zinc-400">
+          <Label htmlFor="building" className="text-muted-foreground">
             What are you building right now? <span className="text-red-500">*</span>
           </Label>
-          <p className="text-xs text-zinc-500 mb-2">
+          <p className="text-xs text-muted-foreground mb-2">
             💡 What problem are you solving? Who is it for? What stage are you at?
           </p>
           <Textarea
@@ -173,13 +173,13 @@ export function WaitlistForm() {
             onChange={handleChange}
             required
             placeholder="Tell us about your startup, the problem you're solving, and your current stage..."
-            className="bg-zinc-900/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-white/20 focus:ring-0 min-h-[100px]"
+            className="min-h-[100px]"
           />
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="monthsWorking" className="text-zinc-400">
+            <Label htmlFor="monthsWorking" className="text-muted-foreground">
               How long have you been working on this startup? <span className="text-red-500">*</span>
             </Label>
             <select
@@ -188,7 +188,7 @@ export function WaitlistForm() {
               value={formData.monthsWorking}
               onChange={handleChange}
               required
-              className="w-full bg-zinc-900/50 border border-white/10 text-white placeholder:text-zinc-600 focus:border-white/20 focus:ring-0 rounded-lg px-3 py-2"
+              className="w-full neu-pressed rounded-2xl text-foreground placeholder:text-muted-foreground/60 focus:ring-1 focus:ring-accent-cyan outline-none px-4 py-3"
             >
               <option value="">Select duration</option>
               <option value="less-3">Less than 3 months</option>
@@ -199,7 +199,7 @@ export function WaitlistForm() {
             </select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="currentStage" className="text-zinc-400">
+            <Label htmlFor="currentStage" className="text-muted-foreground">
               Current stage of your startup <span className="text-red-500">*</span>
             </Label>
             <select
@@ -208,7 +208,7 @@ export function WaitlistForm() {
               value={formData.currentStage}
               onChange={handleChange}
               required
-              className="w-full bg-zinc-900/50 border border-white/10 text-white placeholder:text-zinc-600 focus:border-white/20 focus:ring-0 rounded-lg px-3 py-2"
+              className="w-full neu-pressed rounded-2xl text-foreground placeholder:text-muted-foreground/60 focus:ring-1 focus:ring-accent-cyan outline-none px-4 py-3"
             >
               <option value="">Select stage</option>
               <option value="idea">Idea stage (no product yet)</option>
@@ -221,7 +221,7 @@ export function WaitlistForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="workingFullTime" className="text-zinc-400">
+          <Label htmlFor="workingFullTime" className="text-muted-foreground">
             Are you working on this full-time? <span className="text-red-500">*</span>
           </Label>
           <div className="space-y-3">
@@ -240,7 +240,7 @@ export function WaitlistForm() {
                   className="w-4 h-4"
                   required
                 />
-                <span className="text-zinc-300 group-hover:text-white transition-colors">{option.label}</span>
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors">{option.label}</span>
               </label>
             ))}
           </div>
@@ -248,13 +248,13 @@ export function WaitlistForm() {
       </div>
 
       {/* Community Fit */}
-      <div className="space-y-6 pt-6 border-t border-white/10">
-        <h3 className="text-xl font-semibold text-white">Community Fit</h3>
+      <div className="space-y-6 pt-6 border-t border-foreground/10">
+        <h3 className="text-xl font-semibold text-foreground">Community Fit</h3>
         <div className="space-y-2">
-          <Label htmlFor="joinReason" className="text-zinc-400">
+          <Label htmlFor="joinReason" className="text-muted-foreground">
             Why do you want to join this community? <span className="text-red-500">*</span>
           </Label>
-          <p className="text-xs text-zinc-500 mb-2">
+          <p className="text-xs text-muted-foreground mb-2">
             💭 What are you missing right now that you think a founder community could help with?
           </p>
           <Textarea
@@ -264,12 +264,12 @@ export function WaitlistForm() {
             onChange={handleChange}
             required
             placeholder="Share your thoughts about what you're looking for in a community..."
-            className="bg-zinc-900/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-white/20 focus:ring-0 min-h-[100px]"
+            className="min-h-[100px]"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="challenge" className="text-zinc-400">
+          <Label htmlFor="challenge" className="text-muted-foreground">
             What's the biggest challenge you're facing as a founder right now? <span className="text-red-500">*</span>
           </Label>
           <Textarea
@@ -279,12 +279,12 @@ export function WaitlistForm() {
             onChange={handleChange}
             required
             placeholder="Be specific and honest..."
-            className="bg-zinc-900/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-white/20 focus:ring-0 min-h-[100px]"
+            className="min-h-[100px]"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="contribute" className="text-zinc-400">
+          <Label htmlFor="contribute" className="text-muted-foreground">
             What do you think you can contribute to other founders in the community?{" "}
             <span className="text-red-500">*</span>
           </Label>
@@ -295,17 +295,17 @@ export function WaitlistForm() {
             onChange={handleChange}
             required
             placeholder="Skills, experiences, connections, or wisdom you can share..."
-            className="bg-zinc-900/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-white/20 focus:ring-0 min-h-[100px]"
+            className="min-h-[100px]"
           />
         </div>
       </div>
 
       {/* Paid Community Information */}
-      <div className="space-y-6 pt-6 border-t border-white/10 bg-blue-500/10 border border-blue-500/20 rounded-lg p-6">
+      <div className="space-y-6 pt-6 border-t border-foreground/10 neu-flat rounded-3xl p-8">
         <div className="space-y-3">
-          <h3 className="text-lg font-semibold text-white">💳 Paid Community</h3>
-          <p className="text-zinc-300 text-sm leading-relaxed">
-            This is a <span className="font-semibold">paid, invite-only community</span>. We charge to keep the
+          <h3 className="text-xl font-semibold text-foreground">💳 Paid Community</h3>
+          <p className="text-muted-foreground text-base leading-relaxed">
+            This is a <span className="font-semibold text-foreground">paid, invite-only community</span>. We charge to keep the
             community high-quality and to fund community tools, facilitation, and member-only events. By applying, you
             acknowledge that membership requires a monthly fee.
           </p>
@@ -313,7 +313,7 @@ export function WaitlistForm() {
 
         <div className="space-y-4 pt-4">
           <div className="space-y-2">
-            <Label htmlFor="monthlyBudget" className="text-zinc-400">
+            <Label htmlFor="monthlyBudget" className="text-muted-foreground">
               How much would you be willing to pay per month to be part of this community?{" "}
               <span className="text-red-500">*</span>
             </Label>
@@ -323,7 +323,7 @@ export function WaitlistForm() {
               value={formData.monthlyBudget}
               onChange={handleChange}
               required
-              className="w-full bg-zinc-900/50 border border-white/10 text-white placeholder:text-zinc-600 focus:border-white/20 focus:ring-0 rounded-lg px-3 py-2"
+              className="w-full neu-pressed rounded-2xl text-foreground placeholder:text-muted-foreground/60 focus:ring-1 focus:ring-accent-cyan outline-none px-4 py-3"
             >
               <option value="">Select your budget</option>
               <option value="499">₹499</option>
@@ -335,7 +335,7 @@ export function WaitlistForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="paidCommunity" className="text-zinc-400">
+            <Label htmlFor="paidCommunity" className="text-muted-foreground">
               If accepted, are you comfortable paying for this community to stay exclusive and high-signal?{" "}
               <span className="text-red-500">*</span>
             </Label>
@@ -354,7 +354,7 @@ export function WaitlistForm() {
                     className="w-4 h-4"
                     required
                   />
-                  <span className="text-zinc-300 group-hover:text-white transition-colors">{option.label}</span>
+                  <span className="text-muted-foreground group-hover:text-foreground transition-colors">{option.label}</span>
                 </label>
               ))}
             </div>
@@ -363,10 +363,10 @@ export function WaitlistForm() {
       </div>
 
       {/* Additional Info */}
-      <div className="space-y-6 pt-6 border-t border-white/10">
-        <h3 className="text-xl font-semibold text-white">Additional Information</h3>
+      <div className="space-y-6 pt-6 border-t border-foreground/10">
+        <h3 className="text-xl font-semibold text-foreground">Additional Information</h3>
         <div className="space-y-2">
-          <Label htmlFor="heardFrom" className="text-zinc-400">
+          <Label htmlFor="heardFrom" className="text-muted-foreground">
             How did you hear about this community? <span className="text-red-500">*</span>
           </Label>
           <select
@@ -375,7 +375,7 @@ export function WaitlistForm() {
             value={formData.heardFrom}
             onChange={handleChange}
             required
-            className="w-full bg-zinc-900/50 border border-white/10 text-white placeholder:text-zinc-600 focus:border-white/20 focus:ring-0 rounded-lg px-3 py-2"
+            className="w-full neu-pressed rounded-2xl text-foreground placeholder:text-muted-foreground/60 focus:ring-1 focus:ring-accent-cyan outline-none px-4 py-3"
           >
             <option value="">Select source</option>
             <option value="youtube">YouTube</option>
@@ -386,7 +386,7 @@ export function WaitlistForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="otherInfo" className="text-zinc-400">
+          <Label htmlFor="otherInfo" className="text-muted-foreground">
             Anything else you think we should know about you?
           </Label>
           <Textarea
@@ -395,7 +395,7 @@ export function WaitlistForm() {
             value={formData.otherInfo}
             onChange={handleChange}
             placeholder="Optional: Share anything else that would help us understand you better..."
-            className="bg-zinc-900/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-white/20 focus:ring-0 min-h-[80px]"
+            className="min-h-[80px]"
           />
         </div>
       </div>
@@ -403,7 +403,7 @@ export function WaitlistForm() {
       <Button
         type="submit"
         size="lg"
-        className="w-full bg-white text-black hover:bg-zinc-200 h-12 text-base font-medium rounded-full mt-8"
+        className="w-full neu-flat neu-interactive rounded-2xl h-14 text-lg font-semibold mt-8 text-foreground"
         disabled={isSubmitting}
       >
         {isSubmitting ? (
