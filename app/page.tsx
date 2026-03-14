@@ -16,7 +16,8 @@ import { AIPulse } from "@/components/ai-pulse"
 import { ScrollReveal, AnimatedCounter, TextReveal, Parallax } from "@/components/scroll-reveal"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { MagneticButton } from "@/components/magnetic-button"
-import { SplineHero } from "@/components/spline-hero"
+
+import { CanvasCursorTrail } from "@/components/canvas-cursor-trail"
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -30,6 +31,7 @@ export default function LandingPage() {
     <div className="flex flex-col min-h-screen bg-background text-foreground selection:bg-foreground selection:text-background">
       <ScrollProgress />
       <InteractiveBackground />
+      <CanvasCursorTrail />
       {/* Navigation */}
       <header className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-5xl z-50 neu-convex rounded-full px-2 py-1">
         <div className="container mx-auto px-4 h-14 flex items-center justify-between">
@@ -110,8 +112,7 @@ export default function LandingPage() {
       <main className="flex-1">
         {/* ═══════════════ Hero Section ═══════════════ */}
         <section className="relative pt-40 pb-20 md:pt-48 md:pb-32 overflow-hidden">
-          {/* Spline 3D Background */}
-          <SplineHero />
+
           {/* Subtle radial gradient overlay */}
           <div className="absolute inset-0 pointer-events-none" style={{
             background: 'radial-gradient(ellipse 80% 60% at 50% 30%, rgba(2,132,199,0.06) 0%, transparent 70%)',
