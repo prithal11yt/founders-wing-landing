@@ -16,7 +16,7 @@ import { AIPulse } from "@/components/ai-pulse"
 import { ScrollReveal, AnimatedCounter, TextReveal, Parallax } from "@/components/scroll-reveal"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { MagneticButton } from "@/components/magnetic-button"
-
+import { CyberpunkGrid } from "@/components/cyberpunk-grid"
 import { CanvasCursorTrail } from "@/components/canvas-cursor-trail"
 
 export default function LandingPage() {
@@ -118,18 +118,9 @@ export default function LandingPage() {
             background: 'radial-gradient(ellipse 80% 60% at 50% 30%, rgba(2,132,199,0.06) 0%, transparent 70%)',
           }} />
 
-          {/* Glassmorphism floating pills */}
-          <div className="absolute top-32 left-[8%] hidden lg:flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-md bg-white/30 border border-white/40 shadow-lg animate-float text-xs font-medium text-foreground/70 select-none z-20" style={{ animationDelay: '0s' }}>
-            <span className="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_6px_rgba(74,222,128,0.6)]" />
-            12 founders online
-          </div>
-          <div className="absolute top-52 right-[10%] hidden lg:flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-md bg-white/30 border border-white/40 shadow-lg animate-float text-xs font-medium text-foreground/70 select-none z-20" style={{ animationDelay: '2s' }}>
-            <span className="w-2 h-2 rounded-full bg-accent-cyan shadow-[0_0_6px_rgba(2,132,199,0.6)]" />
-            New AI deep dive starting
-          </div>
-          <div className="absolute bottom-24 left-[12%] hidden lg:flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-md bg-white/30 border border-white/40 shadow-lg animate-float text-xs font-medium text-foreground/70 select-none z-20" style={{ animationDelay: '4s' }}>
-            🔥 3 new playbooks this week
-          </div>
+          {/* Cyberpunk Perspective Grid */}
+          <CyberpunkGrid />
+          
           <div className="container mx-auto px-4 relative z-10 pointer-events-none">
             <div className="max-w-4xl mx-auto text-center space-y-8 pointer-events-auto">
               {/* Badge */}

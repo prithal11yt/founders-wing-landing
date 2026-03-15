@@ -87,6 +87,7 @@ export function ScrollReveal({
         setIsMobile(window.innerWidth < 768)
     }, [])
 
+    const Comp: any = Component;
     const styles = getVariantStyles(isMobile)[variant]
 
     // Cap delay and duration on mobile for snappier feel
@@ -103,8 +104,8 @@ export function ScrollReveal({
     if (staggerChildren > 0) {
         const effectiveStagger = isMobile ? Math.min(staggerChildren, 80) : staggerChildren
         return (
-            <Component
-                ref={ref as React.Ref<HTMLDivElement>}
+            <Comp
+                ref={ref as any}
                 className={cn(className)}
             >
                 {React.Children.map(children, (child, index) => {
@@ -121,18 +122,18 @@ export function ScrollReveal({
                         </div>
                     )
                 })}
-            </Component>
+            </Comp>
         )
     }
 
     return (
-        <Component
-            ref={ref as React.Ref<HTMLDivElement>}
+        <Comp
+            ref={ref as any}
             className={cn(className)}
             style={baseStyle}
         >
             {children}
-        </Component>
+        </Comp>
     )
 }
 
