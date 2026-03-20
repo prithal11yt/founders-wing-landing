@@ -1,0 +1,83 @@
+'use client'
+
+import { Users, MessageSquare, Video, TrendingUp } from 'lucide-react'
+import { ScrollReveal, AnimatedCounter } from '@/components/scroll-reveal'
+
+const stats = [
+  {
+    icon: Users,
+    value: 5000,
+    suffix: '+',
+    label: 'Founders in our free community',
+    desc: 'Built organically through YouTube and word of mouth — no ads, no gimmicks.',
+    color: 'text-accent-cyan',
+    bg: 'bg-accent-cyan/10 border-accent-cyan/20',
+  },
+  {
+    icon: Video,
+    value: 200,
+    suffix: '+',
+    label: 'Videos on business & AI',
+    desc: 'Hundreds of videos helping entrepreneurs navigate AI, start businesses, and avoid costly mistakes.',
+    color: 'text-violet-400',
+    bg: 'bg-violet-500/10 border-violet-500/20',
+  },
+  {
+    icon: TrendingUp,
+    value: 5,
+    suffix: '+ years',
+    label: 'Building businesses',
+    desc: 'From SEO agency to content brand — real operational experience, not theory.',
+    color: 'text-amber-400',
+    bg: 'bg-amber-500/10 border-amber-500/20',
+  },
+  {
+    icon: MessageSquare,
+    value: 50,
+    suffix: '',
+    label: 'Seats per quarter',
+    desc: 'Founders Wing is the premium inner circle — small by design so every member gets real value.',
+    color: 'text-emerald-400',
+    bg: 'bg-emerald-500/10 border-emerald-500/20',
+  },
+]
+
+export function SocialProof() {
+  return (
+    <section className="py-24 relative overflow-hidden">
+      <div className="container mx-auto px-4 relative z-10">
+        <ScrollReveal variant="fade-up" duration={800}>
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+            <p className="text-sm font-medium tracking-widest uppercase text-accent-cyan">Why founders trust us</p>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
+              Built on real traction, not hype
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              We didn&apos;t start with a landing page. We started with a free community of thousands — and learned what founders actually need.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
+          {stats.map((s, i) => (
+            <ScrollReveal key={s.label} variant="fade-up" delay={100 + i * 100} duration={800}>
+              <div className="neu-flat rounded-2xl p-6 h-full flex flex-col">
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center border mb-4 ${s.bg}`}>
+                  <s.icon className={`w-5 h-5 ${s.color}`} />
+                </div>
+                <div className="flex items-baseline gap-1 mb-1">
+                  <span className="text-3xl font-extrabold text-foreground tracking-tighter tabular-nums">
+                    <AnimatedCounter value={s.value} />
+                  </span>
+                  <span className="text-lg font-bold text-muted-foreground">{s.suffix}</span>
+                </div>
+                <p className="text-sm font-medium text-foreground mb-2">{s.label}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed flex-1">{s.desc}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
