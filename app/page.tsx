@@ -78,7 +78,7 @@ export default function LandingPage() {
 
       {/* Mobile menu — rendered outside header pill to prevent clipping */}
       <div
-        className={`fixed top-[76px] left-1/2 -translate-x-1/2 w-[95%] max-w-5xl z-50 md:hidden overflow-hidden transition-all duration-300 ease-out rounded-2xl ${
+        className={`fixed top-[64px] md:top-[76px] left-1/2 -translate-x-1/2 w-[92%] md:w-[95%] max-w-5xl z-50 md:hidden overflow-hidden transition-all duration-300 ease-out rounded-2xl ${
           mobileMenuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
         }`}
       >
@@ -117,7 +117,7 @@ export default function LandingPage() {
           }} />
 
           <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-4xl mx-auto text-center space-y-8">
+            <div className="max-w-4xl mx-auto text-center space-y-5 md:space-y-8">
               {/* Badge */}
               <ScrollReveal variant="fade-down" delay={200} duration={1000}>
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl neu-pressed text-xs font-medium text-muted-foreground select-none">
@@ -142,14 +142,14 @@ export default function LandingPage() {
 
               {/* Subtitle */}
               <ScrollReveal variant="blur-in" delay={700} duration={1000}>
-                <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed text-balance">
+                <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed text-balance">
                   Join 50 vetted founders sharing what actually works in AI — strategies, tools, and honest playbooks. No hype.
                 </p>
               </ScrollReveal>
 
               {/* CTA */}
               <ScrollReveal variant="fade-up" delay={1000} duration={800}>
-                <div className="flex flex-col items-center justify-center gap-5 pt-4">
+                <div className="flex flex-col items-center justify-center gap-3 md:gap-5">
                   <MagneticButton strength={0.25}>
                     <Button
                       size="lg"
@@ -169,42 +169,41 @@ export default function LandingPage() {
 
               {/* Mini social proof in hero */}
               <ScrollReveal variant="fade-up" delay={1200} duration={800}>
-                <div className="flex flex-col items-center gap-4 pt-6">
+                <div className="flex flex-col items-center gap-3 md:gap-4">
                   {/* Avatar row */}
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 md:gap-3">
                     <div className="flex -space-x-2">
                       {['AM', 'PS', 'RK', 'NK', 'VT'].map((initials, i) => (
-                        <div key={initials} className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-700 to-slate-800 border-2 border-background flex items-center justify-center text-[10px] font-bold text-muted-foreground" style={{ zIndex: 5 - i }}>
+                        <div key={initials} className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-slate-700 to-slate-800 border-2 border-background flex items-center justify-center text-[9px] md:text-[10px] font-bold text-muted-foreground" style={{ zIndex: 5 - i }}>
                           {initials}
                         </div>
                       ))}
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-xs md:text-sm text-muted-foreground">
                       From a community of <span className="text-foreground font-medium">5,000+ founders</span>
                     </p>
                   </div>
 
-                  {/* Stats strip */}
-                  <div className="inline-flex flex-col md:flex-row items-center justify-between gap-3 md:gap-8 px-5 py-3 md:px-8 md:py-4 neu-flat rounded-2xl md:rounded-full text-sm">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl font-extrabold text-foreground tracking-tighter tabular-nums">
+                  {/* Stats strip — always horizontal */}
+                  <div className="inline-flex items-center gap-3 md:gap-8 px-4 py-2.5 md:px-8 md:py-4 neu-flat rounded-full text-sm">
+                    <div className="flex items-center gap-1 md:gap-2">
+                      <span className="text-base md:text-xl font-extrabold text-foreground tracking-tighter tabular-nums">
                         <AnimatedCounter value={50} />
                       </span>
-                      <span className="text-xs text-muted-foreground">members / quarter</span>
+                      <span className="text-[10px] md:text-xs text-muted-foreground">/quarter</span>
                     </div>
 
-                    <div className="hidden md:block w-px h-4 bg-white/10"></div>
+                    <div className="w-px h-3 md:h-4 bg-white/10"></div>
 
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl font-extrabold text-foreground tracking-tighter">Vetted</span>
-                      <span className="text-xs text-muted-foreground">every application</span>
+                    <div className="flex items-center gap-1 md:gap-2">
+                      <span className="text-base md:text-xl font-extrabold text-foreground tracking-tighter">Vetted</span>
                     </div>
 
-                    <div className="hidden md:block w-px h-4 bg-white/10"></div>
+                    <div className="w-px h-3 md:h-4 bg-white/10"></div>
 
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl font-extrabold text-foreground tracking-tighter">&#8377;1,999<span className="text-base text-muted-foreground/50">+</span></span>
-                      <span className="text-xs text-muted-foreground">/ month</span>
+                    <div className="flex items-center gap-1 md:gap-2">
+                      <span className="text-base md:text-xl font-extrabold text-foreground tracking-tighter">&#8377;1,999<span className="text-sm md:text-base text-muted-foreground/50">+</span></span>
+                      <span className="text-[10px] md:text-xs text-muted-foreground">/mo</span>
                     </div>
                   </div>
                 </div>
