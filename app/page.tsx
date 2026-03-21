@@ -34,8 +34,8 @@ export default function LandingPage() {
       <InteractiveBackground />
 
       {/* ═══════════════ Navigation ═══════════════ */}
-      <header className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-5xl z-50 neu-convex rounded-full px-2 py-1">
-        <div className="container mx-auto px-4 h-14 flex items-center justify-between">
+      <header className="fixed top-3 md:top-4 left-1/2 -translate-x-1/2 w-[92%] md:w-[95%] max-w-5xl z-50 neu-convex rounded-full px-2 py-1">
+        <div className="container mx-auto px-3 md:px-4 h-12 md:h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <WingMeshLogo size={28} />
             <span className="font-semibold tracking-tight">Founders Wing</span>
@@ -110,7 +110,7 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* ═══════════════ Hero Section ═══════════════ */}
-        <section className="relative pt-40 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+        <section className="relative pt-28 pb-16 md:pt-48 md:pb-32 overflow-hidden">
           {/* Subtle radial gradient overlay */}
           <div className="absolute inset-0 pointer-events-none" style={{
             background: 'radial-gradient(ellipse 80% 60% at 50% 30%, rgba(2,132,199,0.06) 0%, transparent 70%)',
@@ -132,7 +132,7 @@ export default function LandingPage() {
               {/* Headline */}
               <ScrollReveal variant="fade-up" delay={400} duration={1200}>
                 <div className="space-y-3">
-                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
+                  <h1 className="text-3xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
                     AI is moving fast.
                     <br />
                     <span className="text-gradient-cyan">You shouldn&apos;t figure it out alone.</span>
@@ -185,7 +185,7 @@ export default function LandingPage() {
                   </div>
 
                   {/* Stats strip */}
-                  <div className="inline-flex flex-col md:flex-row items-center justify-between gap-5 md:gap-8 px-6 py-3 md:px-8 md:py-4 neu-flat rounded-full text-sm">
+                  <div className="inline-flex flex-col md:flex-row items-center justify-between gap-3 md:gap-8 px-5 py-3 md:px-8 md:py-4 neu-flat rounded-2xl md:rounded-full text-sm">
                     <div className="flex items-center gap-2">
                       <span className="text-xl font-extrabold text-foreground tracking-tighter tabular-nums">
                         <AnimatedCounter value={50} />
@@ -219,11 +219,11 @@ export default function LandingPage() {
         </section>
 
         {/* ═══════════════ Video Section ═══════════════ */}
-        <section className="py-24 relative">
+        <section className="py-16 md:py-24 relative">
           <div className="container mx-auto px-4 max-w-4xl">
             <ScrollReveal variant="fade-up" duration={800}>
-              <div className="text-center mb-12 space-y-4">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Watch: What Is Founders Wing?</h2>
+              <div className="text-center mb-8 md:mb-12 space-y-3 md:space-y-4">
+                <h2 className="text-2xl md:text-4xl font-bold tracking-tight">Watch: What Is Founders Wing?</h2>
                 <p className="text-muted-foreground">
                   A 3-minute overview from the founder on why this community exists and what to expect as a member.
                 </p>
@@ -249,7 +249,7 @@ export default function LandingPage() {
         </div>
 
         {/* ═══════════════ What You Get (Merged Vision + Community) ═══════════════ */}
-        <section id="community" className="py-24 relative overflow-hidden">
+        <section id="community" className="py-16 md:py-24 relative overflow-hidden">
           {/* Background glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[1200px] h-[800px] bg-gradient-to-r from-emerald-500/10 via-cyan-500/5 to-indigo-500/10 rounded-full blur-[120px] pointer-events-none opacity-50 z-0"></div>
 
@@ -283,13 +283,13 @@ export default function LandingPage() {
         </div>
 
         {/* ═══════════════ Offline Experiences ═══════════════ */}
-        <section id="events" className="py-24 relative overflow-hidden">
+        <section id="events" className="py-16 md:py-24 relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
             <ScrollReveal variant="fade-left" duration={800}>
               <div className="mb-16">
-                <div className="flex items-center gap-3 mb-4">
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Offline Meetups &amp; Experiences</h2>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-xs font-medium text-violet-400 whitespace-nowrap">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-4">
+                  <h2 className="text-2xl md:text-4xl font-bold tracking-tight">Offline Meetups &amp; Experiences</h2>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-xs font-medium text-violet-400 whitespace-nowrap w-fit">
                     Coming Q3 2026
                   </span>
                 </div>
@@ -311,7 +311,7 @@ export default function LandingPage() {
         </div>
 
         {/* ═══════════════ Waitlist Form ═══════════════ */}
-        <section id="apply" className="py-24 relative">
+        <section id="apply" className="py-16 md:py-24 relative">
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl mx-auto">
               <ScrollReveal variant="fade-up" duration={800}>
@@ -324,7 +324,7 @@ export default function LandingPage() {
               </ScrollReveal>
 
               <ScrollReveal variant="scale-up" delay={200} duration={1000}>
-                <GlowingCard className="p-8 md:p-10">
+                <GlowingCard className="p-5 md:p-10">
                   <WaitlistForm />
                 </GlowingCard>
               </ScrollReveal>
@@ -334,9 +334,9 @@ export default function LandingPage() {
       </main>
 
       {/* ═══════════════ Footer ═══════════════ */}
-      <footer className="relative z-10 py-12 mt-12 border-t border-foreground/5">
+      <footer className="relative z-10 py-10 mt-12 border-t border-foreground/5">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between md:gap-8">
             {/* Logo + tagline */}
             <div className="flex flex-col items-center md:items-start gap-2">
               <div className="flex items-center gap-2">
@@ -347,7 +347,7 @@ export default function LandingPage() {
             </div>
 
             {/* Links */}
-            <div className="flex items-center gap-6 text-sm text-muted-foreground">
+            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-sm text-muted-foreground">
               <Link href="https://twitter.com/founderswing" className="hover:text-foreground transition-colors">
                 Twitter
               </Link>
@@ -363,7 +363,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-foreground/5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+          <div className="mt-6 pt-6 border-t border-foreground/5 flex flex-col items-center gap-3 md:flex-row md:justify-between text-xs text-muted-foreground">
             <p>&copy; 2026 Founders Wing. All rights reserved.</p>
             <div className="flex items-center gap-4">
               <Link href="#" className="hover:text-foreground transition-colors">Privacy Policy</Link>

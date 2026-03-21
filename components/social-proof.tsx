@@ -58,21 +58,21 @@ export function SocialProof() {
           </div>
         </ScrollReveal>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5 max-w-5xl mx-auto">
           {stats.map((s, i) => (
             <ScrollReveal key={s.label} variant="fade-up" delay={100 + i * 100} duration={800}>
-              <div className="neu-flat rounded-2xl p-6 h-full flex flex-col">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center border mb-4 ${s.bg}`}>
-                  <s.icon className={`w-5 h-5 ${s.color}`} />
+              <div className="neu-flat rounded-2xl p-4 md:p-6 h-full flex flex-col">
+                <div className={`w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center border mb-3 md:mb-4 ${s.bg}`}>
+                  <s.icon className={`w-4 h-4 md:w-5 md:h-5 ${s.color}`} />
                 </div>
                 <div className="flex items-baseline gap-1 mb-1">
-                  <span className="text-3xl font-extrabold text-foreground tracking-tighter tabular-nums">
+                  <span className="text-2xl md:text-3xl font-extrabold text-foreground tracking-tighter tabular-nums">
                     <AnimatedCounter value={s.value} />
                   </span>
-                  <span className="text-lg font-bold text-muted-foreground">{s.suffix}</span>
+                  <span className="text-sm md:text-lg font-bold text-muted-foreground">{s.suffix}</span>
                 </div>
-                <p className="text-sm font-medium text-foreground mb-2">{s.label}</p>
-                <p className="text-xs text-muted-foreground leading-relaxed flex-1">{s.desc}</p>
+                <p className="text-xs md:text-sm font-medium text-foreground mb-1 md:mb-2">{s.label}</p>
+                <p className="text-[11px] md:text-xs text-muted-foreground leading-relaxed flex-1 hidden sm:block">{s.desc}</p>
               </div>
             </ScrollReveal>
           ))}

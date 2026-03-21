@@ -83,7 +83,7 @@ export function InteractiveBento() {
           ref={cardRef}
           onMouseMove={handleCardMouseMove}
           onMouseLeave={() => setGlow(prev => ({ ...prev, active: false }))}
-          className="group relative rounded-3xl neu-flat p-8 md:p-10 overflow-hidden"
+          className="group relative rounded-3xl neu-flat p-5 md:p-10 overflow-hidden"
         >
           <CursorGlow x={glow.x} y={glow.y} active={glow.active} color="rgba(2,132,199,0.12)" />
 
@@ -97,15 +97,15 @@ export function InteractiveBento() {
               Active Now
             </div>
 
-            <div className="flex items-start gap-6 mb-8">
-              <div className="w-14 h-14 rounded-2xl neu-convex flex items-center justify-center shrink-0">
-                <Globe className="w-7 h-7 text-emerald-400" />
+            <div className="flex items-start gap-4 md:gap-6 mb-6 md:mb-8">
+              <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl neu-convex flex items-center justify-center shrink-0">
+                <Globe className="w-5 h-5 md:w-7 md:h-7 text-emerald-400" />
               </div>
               <div>
-                <h3 className="text-3xl font-bold mb-2 text-foreground">
+                <h3 className="text-xl md:text-3xl font-bold mb-1 md:mb-2 text-foreground">
                   The Online Hub
                 </h3>
-                <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl">
+                <p className="text-muted-foreground text-sm md:text-lg leading-relaxed max-w-2xl">
                   A private space where founders share which AI tools actually work, how they integrated them, and what to avoid. Real answers, not hype threads.
                 </p>
               </div>

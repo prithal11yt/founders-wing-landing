@@ -68,7 +68,7 @@ export function WhoThisIsFor() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-24 relative overflow-hidden">
+    <section ref={sectionRef} className="py-16 md:py-24 relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10 max-w-5xl">
         <div className="text-center mb-16">
           <h2
@@ -118,8 +118,8 @@ export function WhoThisIsFor() {
           )}
           style={{ transitionDelay: isVisible ? '600ms' : '0ms' }}
         >
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest mb-4">Not the right fit if you…</p>
-          <div className="grid sm:grid-cols-3 gap-4">
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest mb-3 md:mb-4">Not the right fit if you…</p>
+          <div className="grid sm:grid-cols-3 gap-3 md:gap-4">
             {notForYou.map((item) => (
               <div key={item.title} className="flex items-start gap-3 opacity-60">
                 <X className="w-4 h-4 text-red-400/70 shrink-0 mt-0.5" />

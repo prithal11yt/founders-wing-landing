@@ -37,7 +37,7 @@ const faqs = [
 
 export function FAQSection() {
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section className="py-16 md:py-24 relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10 max-w-3xl">
         <ScrollReveal variant="fade-up" duration={800}>
           <div className="text-center mb-16 space-y-4">

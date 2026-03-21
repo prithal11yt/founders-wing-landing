@@ -57,7 +57,7 @@ export function ExpandableGallery() {
   }, [])
 
   return (
-    <div ref={sectionRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div ref={sectionRef} className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
       {items.map((item, index) => (
         <TiltCard
           key={item.id}
@@ -65,7 +65,7 @@ export function ExpandableGallery() {
         >
           <div
             className={cn(
-              "group relative rounded-3xl p-6 transition-all duration-500 cursor-pointer h-full neu-flat neu-interactive flex flex-col",
+              "group relative rounded-2xl md:rounded-3xl p-4 md:p-6 transition-all duration-500 cursor-pointer h-full neu-flat neu-interactive flex flex-col",
               activeId === item.id && "neu-pressed !transform-none",
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
             )}
@@ -75,25 +75,25 @@ export function ExpandableGallery() {
           >
             {/* Icon */}
             <div className={cn(
-              "w-12 h-12 rounded-2xl flex items-center justify-center mb-5 transition-transform duration-500 group-hover:scale-110 neu-convex shrink-0",
+              "w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-5 transition-transform duration-500 group-hover:scale-110 neu-convex shrink-0",
             )}>
-              <item.icon className={cn("w-6 h-6", item.iconColor)} />
+              <item.icon className={cn("w-5 h-5 md:w-6 md:h-6", item.iconColor)} />
             </div>
 
             {/* Category tag */}
-            <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider mb-2">
+            <p className="text-[10px] md:text-xs text-muted-foreground font-medium uppercase tracking-wider mb-1 md:mb-2">
               {item.category}
             </p>
 
             {/* Title */}
-            <h3 className="text-xl font-bold text-foreground mb-3 group-hover:translate-x-1 transition-transform duration-300">
+            <h3 className="text-base md:text-xl font-bold text-foreground mb-2 md:mb-3 group-hover:translate-x-1 transition-transform duration-300">
               {item.title}
             </h3>
 
             {/* Description */}
             <div className="flex-1 flex flex-col justify-end">
               <p className={cn(
-                "text-sm text-muted-foreground leading-relaxed transition-all duration-500",
+                "text-xs md:text-sm text-muted-foreground leading-relaxed transition-all duration-500",
                 activeId === item.id ? "opacity-100 max-h-32" : "opacity-70 max-h-20",
               )}>
                 {item.description}
