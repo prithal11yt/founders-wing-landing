@@ -217,8 +217,8 @@ export default function LandingPage() {
           }} />
         </section>
 
-        {/* ═══════════════ Video Section ═══════════════ */}
-        <section className="py-16 md:py-24 relative">
+        {/* ═══════════════ Video Section — HIDDEN until video is ready ═══════════════ */}
+        {/* <section className="py-16 md:py-24 relative">
           <div className="container mx-auto px-4 max-w-4xl">
             <ScrollReveal variant="fade-up" duration={800}>
               <div className="text-center mb-8 md:mb-12 space-y-3 md:space-y-4">
@@ -234,10 +234,10 @@ export default function LandingPage() {
               </div>
             </ScrollReveal>
           </div>
-        </section>
+        </section> */}
 
-        {/* ═══════════════ Meet the Founder ═══════════════ */}
-        <MeetFounder />
+        {/* ═══════════════ Meet the Founder — HIDDEN until photo/content ready ═══════════════ */}
+        {/* <MeetFounder /> */}
 
         {/* ═══════════════ Social Proof ═══════════════ */}
         <SocialProof />
