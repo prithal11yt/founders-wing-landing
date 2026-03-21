@@ -2,9 +2,6 @@
 
 import { useEffect, useState, useCallback, useRef } from 'react'
 
-const SB_URL = 'https://ocxwbraowxnjztboklkn.supabase.co'
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jeHdicmFvd3huanp0Ym9rbGtuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgzNzQ1MTEsImV4cCI6MjA4Mzk1MDUxMX0.PakhNsVv9EPmxYA74ebhJmvf7W6cQNKmTR7dLTyuzPg'
-
 type Lead = {
   id: number
   created_at: string
@@ -92,12 +89,11 @@ export default function LeadsPage() {
     setUserEmail('')
   }
 
-  // Fetch data
+  // Fetch data via secure server-side API
   const fetchData = useCallback(async () => {
     try {
-      const r = await fetch(`${SB_URL}/rest/v1/waitlist_applications?select=*&order=created_at.desc`, {
-        headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` },
-      })
+      const r = await fetch('/api/leads/data')
+      if (r.status === 401) { setAuthenticated(false); return }
       const data = await r.json()
       setAllData(data)
       setLoading(false)
@@ -150,13 +146,14 @@ export default function LeadsPage() {
     })(),
   }
 
-  // Actions
+  // Actions via secure server-side API
   async function updateField(id: number, field: string, value: string | boolean) {
-    await fetch(`${SB_URL}/rest/v1/waitlist_applications?id=eq.${id}`, {
+    const r = await fetch('/api/leads/update', {
       method: 'PATCH',
-      headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
-      body: JSON.stringify({ [field]: value }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, field, value }),
     })
+    if (r.status === 401) { setAuthenticated(false); return }
     setAllData(prev => prev.map(d => (d.id === id ? { ...d, [field]: value } : d)))
   }
 

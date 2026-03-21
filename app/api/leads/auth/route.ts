@@ -1,7 +1,24 @@
 import { NextRequest, NextResponse } from "next/server"
+import crypto from "crypto"
 
 const ALLOWED_EMAIL = "prithalbhardwaj@gmail.com"
-const ACCESS_PASSWORD = "founderswing2026"
+
+function getSecret(): string {
+  const secret = process.env.LEADS_AUTH_SECRET
+  if (!secret) throw new Error("LEADS_AUTH_SECRET not configured")
+  return secret
+}
+
+function getPassword(): string {
+  return process.env.LEADS_PASSWORD || "founderswing2026"
+}
+
+function signToken(payload: object): string {
+  const secret = getSecret()
+  const data = Buffer.from(JSON.stringify(payload)).toString("base64url")
+  const signature = crypto.createHmac("sha256", secret).update(data).digest("base64url")
+  return `${data}.${signature}`
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,27 +28,38 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Email and password required" }, { status: 400 })
     }
 
-    if (email.toLowerCase() !== ALLOWED_EMAIL || password !== ACCESS_PASSWORD) {
+    // Constant-time comparison to prevent timing attacks
+    const emailMatch = email.toLowerCase() === ALLOWED_EMAIL
+    const passwordMatch = crypto.timingSafeEqual(
+      Buffer.from(password),
+      Buffer.from(getPassword().padEnd(password.length).slice(0, password.length))
+    ) && password === getPassword()
+
+    if (!emailMatch || !passwordMatch) {
+      // Add small delay to prevent brute force
+      await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 500))
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
     }
 
-    // Create a simple token (email + timestamp + secret hash)
-    const token = Buffer.from(
-      JSON.stringify({ email: ALLOWED_EMAIL, exp: Date.now() + 24 * 60 * 60 * 1000 })
-    ).toString("base64")
+    const token = signToken({
+      email: ALLOWED_EMAIL,
+      iat: Date.now(),
+      exp: Date.now() + 24 * 60 * 60 * 1000,
+    })
 
     const response = NextResponse.json({ success: true, email: ALLOWED_EMAIL })
 
     response.cookies.set("fw_leads_token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
       sameSite: "strict",
-      maxAge: 86400, // 24 hours
+      maxAge: 86400,
       path: "/",
     })
 
     return response
-  } catch {
+  } catch (err) {
+    console.error("[leads/auth] Error:", err)
     return NextResponse.json({ error: "Server error" }, { status: 500 })
   }
 }
