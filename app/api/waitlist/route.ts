@@ -10,13 +10,10 @@ export async function POST(request: NextRequest) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
-    console.log("[waitlist] SUPABASE_URL exists:", !!supabaseUrl)
-    console.log("[waitlist] SERVICE_ROLE_KEY exists:", !!supabaseKey)
-
     if (!supabaseUrl || !supabaseKey) {
-      console.error("[waitlist] Missing env vars - URL:", !!supabaseUrl, "KEY:", !!supabaseKey)
+      console.error("[waitlist] Missing Supabase environment variables")
       return NextResponse.json(
-        { error: "Server configuration error", debug: { hasUrl: !!supabaseUrl, hasKey: !!supabaseKey } },
+        { error: "Server configuration error" },
         { status: 500 },
       )
     }
