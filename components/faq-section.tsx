@@ -6,32 +6,36 @@ import { ScrollReveal } from '@/components/scroll-reveal'
 
 const faqs = [
   {
+    q: "I haven't started anything yet — is this for me?",
+    a: "Yes, 100%. Most of our members are in the same boat — full of ideas but stuck overthinking. This community is specifically designed to help you go from 'I want to start' to actually launching. You don't need experience, just the willingness to take action.",
+  },
+  {
+    q: 'How much does it cost?',
+    a: "We offer two plans: ₹2,999 for 6 months (just ₹500/month) or ₹4,999 for a full year (just ₹417/month). No monthly option — we want committed members who are serious about building, not people who sign up and forget.",
+  },
+  {
+    q: 'What do I actually get inside?',
+    a: "Weekly AI tool breakdowns with real use cases, accountability groups (4-5 founders at your stage), step-by-step launch playbooks, monthly live Q&As with Prithal, and a private community of action-takers. Think of it as your founder support system.",
+  },
+  {
     q: 'What platform does the community run on?',
-    a: 'We run on a private, invite-only platform with dedicated channels for AI strategy, tool comparisons, implementation help, and weekly deep dives. You get access the moment your application is approved.',
+    a: 'We run on a private platform with channels for business ideas, AI tools, progress updates, and weekly sessions. You get instant access once your application is approved.',
   },
   {
-    q: 'What does the monthly fee include?',
-    a: 'Your membership covers full access to the online community, weekly AI deep dive sessions, the curated tool & prompt library, early access to new AI models and strategies, and priority invitations to physical events when they launch.',
-  },
-  {
-    q: 'How are members selected?',
-    a: "We review every application personally. We're looking for founders who are actively building with AI, have something concrete to contribute, and are willing to engage — not lurk. We care less about your resume and more about what you're doing right now.",
+    q: 'How is this different from your free WhatsApp group?',
+    a: "The free group is great for general discussion, but it's 5,000+ people. Founders Wing is smaller, focused, and action-oriented. You get structured playbooks, accountability partners, direct access to Prithal, and members who are committed (because they paid to be here).",
   },
   {
     q: 'What is the time commitment?',
-    a: "There's no mandatory time commitment. Most members engage 2-3 times per week — dropping into discussions, sharing wins or challenges, and attending the weekly deep dive. You get out what you put in.",
+    a: "There's no mandatory hours. Most members spend 2-3 hours per week — joining the weekly session, checking in with their accountability group, and sharing progress. The key is consistency, not hours.",
   },
   {
-    q: 'Can I cancel anytime?',
-    a: 'Yes. Membership is month-to-month with no lock-in. If the community stops being valuable, you can cancel with one click. We earn your membership every month.',
-  },
-  {
-    q: 'Is this only for Indian founders?',
-    a: "We started in India and our physical events will initially be in Bangalore, but the online community is global. If you're building with AI and meet our criteria, you're welcome regardless of location.",
+    q: 'Can I get a refund?',
+    a: "If you join and feel it's not right for you within the first 14 days, we'll refund you — no questions asked. After that, your access continues for the full duration of your plan.",
   },
   {
     q: 'What happens after I apply?',
-    a: "We review applications within 3-5 business days. If you're a fit, you'll receive an email with your invitation and onboarding details. If we need more information, we'll reach out directly.",
+    a: "We review applications within 3-5 days. We're looking for people who are genuinely serious about starting — not lurkers. If approved, you'll get an email with payment link and onboarding details.",
   },
 ]
 

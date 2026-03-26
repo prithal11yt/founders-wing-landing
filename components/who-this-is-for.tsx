@@ -7,22 +7,22 @@ import { cn } from '@/lib/utils'
 const forYou = [
   {
     icon: Bot,
-    title: 'Using AI in your startup',
-    desc: "You're integrating AI into your product or ops — and overwhelmed by the 500 tools out there.",
+    title: 'Want to start but feel stuck',
+    desc: "You have ideas but can't stop overthinking. You need clarity, direction, and people who push you to act.",
     color: 'text-accent-cyan',
     bg: 'bg-accent-cyan/10 border-accent-cyan/20',
   },
   {
     icon: Users,
-    title: "Need founders who've done it",
-    desc: "Making AI decisions alone — which model, which tool, build vs buy. You want peers who've already made those bets.",
+    title: 'Want your first income stream',
+    desc: "You're tired of consuming content and ready to build something real — even if you don't know exactly what yet.",
     color: 'text-blue-400',
     bg: 'bg-blue-400/10 border-blue-400/20',
   },
   {
     icon: Share2,
-    title: 'Will share what you learn',
-    desc: "You don't need to be technical. But you're willing to share wins, failures, and honest experience.",
+    title: 'Believe AI is the cheat code',
+    desc: "You know AI can help you move 10x faster. You just need the right tools, playbooks, and people around you.",
     color: 'text-emerald-400',
     bg: 'bg-emerald-400/10 border-emerald-400/20',
   },
@@ -31,18 +31,18 @@ const forYou = [
 const notForYou = [
   {
     icon: GraduationCap,
-    title: 'Want a course',
-    desc: 'This is a peer network, not ed-tech. No curriculum, no modules.',
+    title: 'Want spoon-fed courses',
+    desc: 'This is a community, not a course. We give you tools and accountability — you do the work.',
   },
   {
     icon: Megaphone,
-    title: 'Pitching services',
-    desc: 'Agencies and consultants looking for leads will be removed.',
+    title: 'Here to sell or pitch',
+    desc: 'Agencies and freelancers looking for leads will be removed immediately.',
   },
   {
     icon: Eye,
-    title: 'Exploring casually',
-    desc: 'We require active building. Hobby interest isn\'t the right fit.',
+    title: 'Just want to lurk',
+    desc: "If you're not willing to take action and share your journey, this isn't the right fit.",
   },
 ]
 

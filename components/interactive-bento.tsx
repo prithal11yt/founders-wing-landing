@@ -23,26 +23,26 @@ function CursorGlow({ x, y, active, color = "rgba(2,132,199,0.15)" }: { x: numbe
 const includedFeatures = [
   {
     icon: Brain,
-    label: "Weekly AI Deep Dives",
-    desc: "Watch founders walk through exactly how they integrated AI — which tools, what worked, what didn't",
+    label: "Weekly AI Breakdowns",
+    desc: "Which AI tools actually help you make money? We break down one tool or strategy every week — with real use cases",
     color: "text-accent-cyan",
   },
   {
     icon: Network,
-    label: "Ask Founders Who've Done It",
-    desc: "Stuck choosing between AI tools? Ask 50 founders who already tested them in production",
+    label: "Accountability Groups",
+    desc: "Get matched with 4-5 founders at your stage. Weekly check-ins so you stop planning and start doing",
     color: "text-blue-400",
   },
   {
     icon: Wrench,
-    label: "Tested Tool & Prompt Library",
-    desc: "Skip the trial-and-error. Use AI workflows and prompts already proven by other founders",
+    label: "AI Business Playbooks",
+    desc: "Step-by-step templates to launch your first AI-powered service, product, or income stream",
     color: "text-violet-400",
   },
   {
     icon: Zap,
-    label: "Early Signals & Intel",
-    desc: "Know which new AI tools and models matter before they hit your Twitter feed",
+    label: "Direct Access to Prithal",
+    desc: "Monthly live Q&As, community posts, and direct feedback on your ideas from someone who's been there",
     color: "text-amber-400",
   },
 ]
@@ -103,10 +103,10 @@ export function InteractiveBento() {
               </div>
               <div>
                 <h3 className="text-xl md:text-3xl font-bold mb-1 md:mb-2 text-foreground">
-                  The Online Hub
+                  The Community Hub
                 </h3>
                 <p className="text-muted-foreground text-sm md:text-lg leading-relaxed max-w-2xl">
-                  A private space where founders share which AI tools actually work, how they integrated them, and what to avoid. Real answers, not hype threads.
+                  A private space where aspiring founders share progress, ask questions, and help each other launch — powered by AI tools and real accountability.
                 </p>
               </div>
             </div>
@@ -114,9 +114,9 @@ export function InteractiveBento() {
             {/* Feature grid */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
               {[
-                { icon: MessageSquare, label: "AI Strategy Channels", desc: "Real-time discussions" },
-                { icon: Video, label: "Weekly Deep Dives", desc: "Live implementation sessions" },
-                { icon: BookOpen, label: "Tool & Prompt Library", desc: "Curated, tested resources" },
+                { icon: MessageSquare, label: "Founder Channels", desc: "Ideas, wins & challenges" },
+                { icon: Video, label: "Weekly AI Sessions", desc: "Live tool walkthroughs" },
+                { icon: BookOpen, label: "Launch Playbooks", desc: "Step-by-step templates" },
               ].map((feature, i) => (
                 <div
                   key={feature.label}
@@ -141,7 +141,7 @@ export function InteractiveBento() {
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground mb-1">Rohan · 2min ago</p>
-                  <p className="text-sm text-foreground leading-snug">Just switched from ChatGPT to Claude for our customer support automation — cut costs by 60% and response quality went up. Happy to share the exact setup.</p>
+                  <p className="text-sm text-foreground leading-snug">Finally launched my AI content service last week after 3 months of overthinking. Got my first paying client yesterday. This community pushed me to just start. 🚀</p>
                 </div>
               </div>
             </div>

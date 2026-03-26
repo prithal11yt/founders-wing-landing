@@ -8,7 +8,7 @@ const stats = [
     icon: Users,
     value: 5000,
     suffix: '+',
-    label: 'Founders in our free community',
+    label: 'Aspiring founders in our free community',
     desc: 'Built organically through YouTube and word of mouth — no ads, no gimmicks.',
     color: 'text-accent-cyan',
     bg: 'bg-accent-cyan/10 border-accent-cyan/20',
@@ -18,7 +18,7 @@ const stats = [
     value: 200,
     suffix: '+',
     label: 'Videos on business & AI',
-    desc: 'Hundreds of videos helping entrepreneurs navigate AI, start businesses, and avoid costly mistakes.',
+    desc: 'From first business ideas to AI tools — real, actionable content for people who are just getting started.',
     color: 'text-violet-400',
     bg: 'bg-violet-500/10 border-violet-500/20',
   },
@@ -33,10 +33,10 @@ const stats = [
   },
   {
     icon: MessageSquare,
-    value: 50,
-    suffix: '',
-    label: 'Seats per quarter',
-    desc: 'Founders Wing is the premium inner circle — small by design so every member gets real value.',
+    value: 14,
+    suffix: '-day refund',
+    label: 'No-questions-asked guarantee',
+    desc: "Try it risk-free. If it's not for you within 14 days, get a full refund.",
     color: 'text-emerald-400',
     bg: 'bg-emerald-500/10 border-emerald-500/20',
   },
@@ -50,10 +50,10 @@ export function SocialProof() {
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
             <p className="text-sm font-medium tracking-widest uppercase text-accent-cyan">Why founders trust us</p>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-              Built on real traction, not hype
+              Built by a founder, for founders
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              We didn&apos;t start with a landing page. We started with a free community of thousands — and learned what founders actually need.
+              Prithal built a 5,000+ founder community on YouTube before creating this. Founders Wing is the next step — for people ready to stop watching and start doing.
             </p>
           </div>
         </ScrollReveal>

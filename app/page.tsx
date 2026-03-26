@@ -125,7 +125,7 @@ export default function LandingPage() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-cyan opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-cyan"></span>
                   </span>
-                  Q2 2026 Cohort · 50 Spots · Invite-Only
+                  Now Open · Limited Spots · AI-Powered Growth
                 </div>
               </ScrollReveal>
 
@@ -133,9 +133,9 @@ export default function LandingPage() {
               <ScrollReveal variant="fade-up" delay={400} duration={1200}>
                 <div className="space-y-3">
                   <h1 className="text-3xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
-                    AI is moving fast.
+                    Stop overthinking.
                     <br />
-                    <span className="text-gradient-cyan">You shouldn&apos;t figure it out alone.</span>
+                    <span className="text-gradient-cyan">Start building with AI.</span>
                   </h1>
                 </div>
               </ScrollReveal>
@@ -143,7 +143,7 @@ export default function LandingPage() {
               {/* Subtitle */}
               <ScrollReveal variant="blur-in" delay={700} duration={1000}>
                 <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed text-balance">
-                  Join 50 vetted founders sharing what actually works in AI — strategies, tools, and honest playbooks. No hype.
+                  Join a community of aspiring founders who are done waiting and finally launching their first business — using AI as their unfair advantage.
                 </p>
               </ScrollReveal>
 
@@ -163,7 +163,7 @@ export default function LandingPage() {
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </MagneticButton>
-                  <p className="text-sm text-muted-foreground">Rolling admissions · Every application reviewed personally</p>
+                  <p className="text-sm text-muted-foreground">No fluff, no courses — just founders helping founders</p>
                 </div>
               </ScrollReveal>
 
@@ -180,30 +180,27 @@ export default function LandingPage() {
                       ))}
                     </div>
                     <p className="text-xs md:text-sm text-muted-foreground">
-                      From a community of <span className="text-foreground font-medium">5,000+ founders</span>
+                      From a community of <span className="text-foreground font-medium">5,000+ aspiring founders</span>
                     </p>
                   </div>
 
                   {/* Stats strip — always horizontal */}
                   <div className="inline-flex items-center gap-3 md:gap-8 px-4 py-2.5 md:px-8 md:py-4 neu-flat rounded-full text-sm">
                     <div className="flex items-center gap-1 md:gap-2">
-                      <span className="text-base md:text-xl font-extrabold text-foreground tracking-tighter tabular-nums">
-                        <AnimatedCounter value={50} />
-                      </span>
-                      <span className="text-[10px] md:text-xs text-muted-foreground">/quarter</span>
+                      <span className="text-base md:text-xl font-extrabold text-foreground tracking-tighter">AI-First</span>
                     </div>
 
                     <div className="w-px h-3 md:h-4 bg-white/10"></div>
 
                     <div className="flex items-center gap-1 md:gap-2">
-                      <span className="text-base md:text-xl font-extrabold text-foreground tracking-tighter">Vetted</span>
+                      <span className="text-base md:text-xl font-extrabold text-foreground tracking-tighter">Action-Only</span>
                     </div>
 
                     <div className="w-px h-3 md:h-4 bg-white/10"></div>
 
                     <div className="flex items-center gap-1 md:gap-2">
-                      <span className="text-base md:text-xl font-extrabold text-foreground tracking-tighter">&#8377;1,999<span className="text-sm md:text-base text-muted-foreground/50">+</span></span>
-                      <span className="text-[10px] md:text-xs text-muted-foreground">/mo</span>
+                      <span className="text-base md:text-xl font-extrabold text-foreground tracking-tighter">&#8377;2,999</span>
+                      <span className="text-[10px] md:text-xs text-muted-foreground">/6mo</span>
                     </div>
                   </div>
                 </div>
@@ -244,7 +241,7 @@ export default function LandingPage() {
 
         {/* CTA after social proof */}
         <div className="py-4">
-          <CTAStrip text="50 spots per quarter. Applications open now." buttonText="Apply to Join" />
+          <CTAStrip text="Done overthinking? Join founders who are actually starting." buttonText="Join Now" />
         </div>
 
         {/* ═══════════════ What You Get (Merged Vision + Community) ═══════════════ */}
@@ -260,7 +257,7 @@ export default function LandingPage() {
                 </div>
                 <h2 className="text-3xl md:text-5xl font-bold tracking-tight">What You Get Inside</h2>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Stop guessing which AI tools matter. Get real answers from founders who&apos;ve already tested, deployed, and scaled.
+                  Everything you need to go from &quot;I want to start&quot; to actually building — with AI tools, accountability, and founders who get it.
                 </p>
               </div>
             </ScrollReveal>
@@ -278,7 +275,7 @@ export default function LandingPage() {
 
         {/* CTA after Who This Is For */}
         <div className="py-4">
-          <CTAStrip text="Sound like you? Let's talk." buttonText="Start Your Application" />
+          <CTAStrip text="₹2,999 for 6 months. ₹4,999 for a full year." buttonText="Join the Community" />
         </div>
 
         {/* ═══════════════ Offline Experiences ═══════════════ */}
@@ -315,9 +312,9 @@ export default function LandingPage() {
             <div className="max-w-3xl mx-auto">
               <ScrollReveal variant="fade-up" duration={800}>
                 <div className="text-center mb-12 space-y-4">
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Join the Waitlist</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Join Founders Wing</h2>
                   <p className="text-muted-foreground">
-                    We review every application personally. We care less about resumes and more about what you&apos;re building with AI, how you think, and whether you&apos;ll actively contribute to the community.
+                    Tell us a bit about yourself and where you are in your journey. We review every application to make sure this community stays high-quality and action-oriented.
                   </p>
                 </div>
               </ScrollReveal>
