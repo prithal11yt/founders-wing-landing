@@ -19,6 +19,7 @@ import { MagneticButton } from "@/components/magnetic-button"
 import { WingMeshLogo } from "@/components/logo"
 import { MeetFounder } from "@/components/meet-founder"
 import { CTAStrip } from "@/components/cta-strip"
+import { ValueStack } from "@/components/value-stack"
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -42,13 +43,13 @@ export default function LandingPage() {
           </div>
           <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
             <Link href="#community" className="hover:text-foreground transition-colors">
-              Community
+              What You Get
+            </Link>
+            <Link href="#pricing" className="hover:text-foreground transition-colors">
+              Pricing
             </Link>
             <Link href="#who" className="hover:text-foreground transition-colors">
               Who It&apos;s For
-            </Link>
-            <Link href="#events" className="hover:text-foreground transition-colors">
-              Events
             </Link>
             <Link href="#faq" className="hover:text-foreground transition-colors">
               FAQ
@@ -62,7 +63,7 @@ export default function LandingPage() {
             <a href="#apply" onClick={(e) => {
               e.preventDefault()
               document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })
-            }}>Join Waitlist</a>
+            }}>Join Now</a>
           </Button>
 
           {/* Mobile hamburger */}
@@ -84,11 +85,10 @@ export default function LandingPage() {
       >
         <nav className="neu-flat flex flex-col px-6 py-4 gap-1 rounded-2xl">
           {[
-            { label: "Community", id: "community" },
+            { label: "What You Get", id: "community" },
+            { label: "Pricing", id: "pricing" },
             { label: "Who It's For", id: "who" },
-            { label: "Events", id: "events" },
             { label: "FAQ", id: "faq" },
-            { label: "Waitlist", id: "apply" },
           ].map((item) => (
             <button
               key={item.id}
@@ -102,7 +102,7 @@ export default function LandingPage() {
             className="mt-3 w-full rounded-full neu-button-primary h-12 text-base font-medium transition-colors"
             onClick={() => scrollTo("apply")}
           >
-            Join the Waitlist
+            Join Now
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </nav>
@@ -268,6 +268,9 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* ═══════════════ Value Stack & Pricing ═══════════════ */}
+        <ValueStack />
+
         {/* ═══════════════ Who This Is For ═══════════════ */}
         <div id="who">
           <WhoThisIsFor />
@@ -275,31 +278,8 @@ export default function LandingPage() {
 
         {/* CTA after Who This Is For */}
         <div className="py-4">
-          <CTAStrip text="₹2,999 for 6 months. ₹4,999 for a full year." buttonText="Join the Community" />
+          <CTAStrip text="14-day money-back guarantee. Zero risk." buttonText="Join Now — ₹2,999" />
         </div>
-
-        {/* ═══════════════ Offline Experiences ═══════════════ */}
-        <section id="events" className="py-16 md:py-24 relative overflow-hidden">
-          <div className="container mx-auto px-4 relative z-10">
-            <ScrollReveal variant="fade-left" duration={800}>
-              <div className="mb-16">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-4">
-                  <h2 className="text-2xl md:text-4xl font-bold tracking-tight">Offline Meetups &amp; Experiences</h2>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-xs font-medium text-violet-400 whitespace-nowrap w-fit">
-                    Coming Q3 2026
-                  </span>
-                </div>
-                <p className="text-muted-foreground max-w-2xl">
-                  Once the online community is thriving, we bring founders together IRL. Starting in Bangalore with intimate, curated gatherings — not conferences.
-                </p>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal variant="fade-up" delay={200} duration={800}>
-              <ExpandableGallery />
-            </ScrollReveal>
-          </div>
-        </section>
 
         {/* ═══════════════ FAQ ═══════════════ */}
         <div id="faq">
@@ -339,7 +319,7 @@ export default function LandingPage() {
                 <WingMeshLogo size={22} />
                 <span className="font-semibold tracking-tight">Founders Wing</span>
               </div>
-              <p className="text-sm text-muted-foreground">AI-first founder community. Invite-only.</p>
+              <p className="text-sm text-muted-foreground">Where aspiring founders stop overthinking and start building.</p>
             </div>
 
             {/* Links */}
