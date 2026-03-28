@@ -16,7 +16,7 @@ import { FAQSection } from "@/components/faq-section"
 import { ScrollReveal, AnimatedCounter } from "@/components/scroll-reveal"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { MagneticButton } from "@/components/magnetic-button"
-import { WingMeshLogo } from "@/components/logo"
+import Image from "next/image"
 import { MeetFounder } from "@/components/meet-founder"
 import { CTAStrip } from "@/components/cta-strip"
 import { ValueStack } from "@/components/value-stack"
@@ -38,7 +38,7 @@ export default function LandingPage() {
       <header className="fixed top-3 md:top-4 left-1/2 -translate-x-1/2 w-[92%] md:w-[95%] max-w-5xl z-50 neu-convex rounded-full px-2 py-1">
         <div className="container mx-auto px-3 md:px-4 h-12 md:h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <WingMeshLogo size={28} />
+            <Image src="/logo-icon.png" alt="Founders Wing" width={28} height={28} className="object-contain" />
             <span className="font-semibold tracking-tight">Founders Wing</span>
           </div>
           <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
@@ -316,7 +316,7 @@ export default function LandingPage() {
             {/* Logo + tagline */}
             <div className="flex flex-col items-center md:items-start gap-2">
               <div className="flex items-center gap-2">
-                <WingMeshLogo size={22} />
+                <Image src="/logo-icon.png" alt="Founders Wing" width={22} height={22} className="object-contain" />
                 <span className="font-semibold tracking-tight">Founders Wing</span>
               </div>
               <p className="text-sm text-muted-foreground">Where aspiring founders stop overthinking and start building.</p>
