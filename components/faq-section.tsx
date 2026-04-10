@@ -6,6 +6,10 @@ import { ScrollReveal } from '@/components/scroll-reveal'
 
 const faqs = [
   {
+    q: "What is the 'First ₹10K in 30 Days' challenge?",
+    a: "It's our flagship 30-day sprint where a cohort of founders each pick an AI-friendly idea, build together, and race to earn their first ₹10,000. You get daily action prompts, a live leaderboard to track everyone's progress, an accountability buddy, weekly group calls with Prithal, and a private sprint channel. New cohorts start every month.",
+  },
+  {
     q: "I haven't started anything yet — is this for me?",
     a: "Yes, 100%. Most of our members are in the same boat — full of ideas but stuck overthinking. This community is specifically designed to help you go from 'I want to start' to actually launching. You don't need experience, just the willingness to take action.",
   },
@@ -23,15 +27,15 @@ const faqs = [
   },
   {
     q: 'How is this different from your free WhatsApp group?',
-    a: "The free group is great for general discussion, but it's 5,000+ people. Founders Wing is smaller, focused, and action-oriented. You get structured playbooks, accountability partners, direct access to Prithal, and members who are committed (because they paid to be here).",
+    a: "The free WhatsApp group is great for general discussion, but it's 5,000+ people. Founders Wing is smaller, focused, and action-oriented. You get structured sprints, accountability partners, leaderboard competitions, and members who are committed (because they paid to be here).",
   },
   {
     q: 'What is the time commitment?',
     a: "There's no mandatory hours. Most members spend 2-3 hours per week — joining the weekly session, checking in with their accountability group, and sharing progress. The key is consistency, not hours.",
   },
   {
-    q: 'Can I get a refund?',
-    a: "If you join and feel it's not right for you within the first 14 days, we'll refund you — no questions asked. After that, your access continues for the full duration of your plan.",
+    q: 'Can I cancel?',
+    a: "Your access continues for the full duration of your plan (6 or 12 months). After that, you can choose not to renew. There are no refunds — we want members who are committed to showing up and doing the work.",
   },
   {
     q: 'What happens after I apply?',

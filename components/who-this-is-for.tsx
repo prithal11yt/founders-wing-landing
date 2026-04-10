@@ -7,21 +7,21 @@ import { cn } from '@/lib/utils'
 const forYou = [
   {
     icon: Bot,
-    title: 'Want to start but feel stuck',
+    title: 'Stuck watching tutorials instead of building',
     desc: "You have ideas but can't stop overthinking. You need clarity, direction, and people who push you to act.",
     color: 'text-accent-cyan',
     bg: 'bg-accent-cyan/10 border-accent-cyan/20',
   },
   {
     icon: Users,
-    title: 'Want your first income stream',
+    title: 'Want to make your first rupee online',
     desc: "You're tired of consuming content and ready to build something real — even if you don't know exactly what yet.",
     color: 'text-blue-400',
     bg: 'bg-blue-400/10 border-blue-400/20',
   },
   {
     icon: Share2,
-    title: 'Believe AI is the cheat code',
+    title: 'Ready to use AI as your unfair advantage',
     desc: "You know AI can help you move 10x faster. You just need the right tools, playbooks, and people around you.",
     color: 'text-emerald-400',
     bg: 'bg-emerald-400/10 border-emerald-400/20',

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Check, ArrowRight, Zap, Crown } from 'lucide-react'
+import { Check, ArrowRight, Zap, Crown, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 
@@ -19,15 +19,26 @@ const valueItems = [
 export function ValueStack() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
+  const [showToast, setShowToast] = useState(false)
+  const [toastDismissed, setToastDismissed] = useState(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setIsVisible(true) },
-      { threshold: 0.1 }
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          if (!toastDismissed) {
+            setTimeout(() => setShowToast(true), 600)
+          }
+        } else {
+          if (!toastDismissed) setShowToast(false)
+        }
+      },
+      { threshold: 0.15 }
     )
     if (sectionRef.current) observer.observe(sectionRef.current)
     return () => observer.disconnect()
-  }, [])
+  }, [toastDismissed])
 
   const scrollToApply = () => {
     document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth' })
@@ -88,6 +99,22 @@ export function ValueStack() {
           </div>
         </div>
 
+        {/* Cohort scarcity */}
+        <div className={cn(
+          "mb-6 flex items-center justify-center gap-3 transition-all duration-700 delay-450",
+          isVisible ? "opacity-100" : "opacity-0"
+        )}>
+          <div className="flex -space-x-2">
+            {["RM", "SK", "AT", "PK", "VR"].map((i) => (
+              <div key={i} className="w-7 h-7 rounded-full bg-white/10 border-2 border-background flex items-center justify-center text-[9px] font-bold text-muted-foreground">{i}</div>
+            ))}
+          </div>
+          <p className="text-sm text-muted-foreground">
+            <span className="text-foreground font-semibold">9 of 20 spots</span> filled for the May cohort
+          </p>
+          <span className="text-xs px-2.5 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-medium animate-pulse">11 left</span>
+        </div>
+
         {/* Pricing cards */}
         <div className={cn(
           "grid md:grid-cols-2 gap-4 md:gap-6 transition-all duration-700 delay-500",
@@ -105,7 +132,7 @@ export function ValueStack() {
             <p className="text-muted-foreground text-sm mb-6">for 6 months · just ₹500/mo</p>
 
             <ul className="space-y-2.5 mb-8">
-              {['Full community access', 'Weekly live sessions', 'All playbooks & templates', '30-day challenge', '14-day refund guarantee'].map(f => (
+              {['Full community access', 'Weekly live sessions', 'All playbooks & templates', '30-day challenge', 'Sprint leaderboard access'].map(f => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-foreground/80">
                   <Check className="w-4 h-4 text-emerald-400 shrink-0" />
                   {f}
@@ -142,7 +169,7 @@ export function ValueStack() {
             <p className="text-muted-foreground text-sm mb-6">for 12 months · just ₹417/mo</p>
 
             <ul className="space-y-2.5 mb-8">
-              {['Everything in Starter', '6 extra months of access', 'Priority Hot Seat spots', 'Founding member badge', '14-day refund guarantee'].map(f => (
+              {['Everything in Starter', '6 extra months of access', 'Priority Hot Seat spots', 'Founding member badge', 'Sprint leaderboard access'].map(f => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-foreground/80">
                   <Check className="w-4 h-4 text-emerald-400 shrink-0" />
                   {f}
@@ -166,8 +193,42 @@ export function ValueStack() {
           isVisible ? "opacity-100" : "opacity-0"
         )}>
           <p className="text-sm text-muted-foreground">
-            14-day money-back guarantee · No questions asked · Cancel anytime after plan ends
+            Instant access after approval · Cancel anytime after plan ends
           </p>
+        </div>
+      </div>
+
+      {/* Floating price anchor toast */}
+      <div className={cn(
+        "fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-md transition-all duration-500 ease-out",
+        showToast && !toastDismissed
+          ? "opacity-100 translate-y-0 pointer-events-auto"
+          : "opacity-0 translate-y-8 pointer-events-none"
+      )}>
+        <div className="relative rounded-2xl border border-amber-500/30 bg-[#0f1623]/95 backdrop-blur-xl shadow-[0_8px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(245,158,11,0.15)] px-5 py-4 flex items-start gap-4">
+          {/* Glow accent */}
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-500/10 via-transparent to-transparent pointer-events-none" />
+
+          <div className="text-2xl shrink-0 mt-0.5">💡</div>
+
+          <div className="flex-1 relative z-10">
+            <p className="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-1">Think about it this way</p>
+            <p className="text-sm text-foreground leading-relaxed">
+              <span className="font-bold">₹500/month</span>
+              <span className="text-muted-foreground"> — less than one Swiggy order.</span>
+            </p>
+            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+              One offline workshop = ₹3,000–5,000 for a single day. Here you get <span className="text-foreground font-medium">26 live sessions + community + sprint access</span> for 6 months.
+            </p>
+          </div>
+
+          <button
+            onClick={() => { setShowToast(false); setToastDismissed(true) }}
+            className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-white/10 transition-all relative z-10 mt-0.5"
+            aria-label="Dismiss"
+          >
+            <X className="w-3.5 h-3.5" />
+          </button>
         </div>
       </div>
     </section>

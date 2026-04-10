@@ -33,18 +33,9 @@ export async function POST(request: NextRequest) {
         {
           full_name: body.fullName,
           email: body.email,
-          social_links: body.social,
-          what_building: body.building,
-          months_working: body.monthsWorking,
-          current_stage: body.currentStage,
-          working_full_time: body.workingFullTime,
-          join_reason: body.joinReason,
-          biggest_challenge: body.challenge,
-          can_contribute: body.contribute,
-          monthly_budget: body.monthlyBudget,
-          paid_community_willing: body.paidCommunity,
+          what_building: body.idea,
+          join_reason: body.goal,
           heard_from: body.heardFrom,
-          other_info: body.otherInfo,
         },
       ])
       .select()

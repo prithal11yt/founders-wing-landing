@@ -8,7 +8,7 @@ const stats = [
     icon: Users,
     value: 5000,
     suffix: '+',
-    label: 'Aspiring founders in our free community',
+    label: 'Aspiring founders in our WhatsApp community',
     desc: 'Built organically through YouTube and word of mouth — no ads, no gimmicks.',
     color: 'text-accent-cyan',
     bg: 'bg-accent-cyan/10 border-accent-cyan/20',
@@ -33,10 +33,10 @@ const stats = [
   },
   {
     icon: MessageSquare,
-    value: 14,
-    suffix: '-day refund',
-    label: 'No-questions-asked guarantee',
-    desc: "Try it risk-free. If it's not for you within 14 days, get a full refund.",
+    value: 36,
+    suffix: 'K+ subscribers',
+    label: 'YouTube channel',
+    desc: "The Solo Entrepreneur — real, actionable content on business and AI that built this community.",
     color: 'text-emerald-400',
     bg: 'bg-emerald-500/10 border-emerald-500/20',
   },
@@ -50,10 +50,10 @@ export function SocialProof() {
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
             <p className="text-sm font-medium tracking-widest uppercase text-accent-cyan">Why founders trust us</p>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-              Built by a founder, for founders
+              The community where aspiring founders finally ship.
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Prithal built a 5,000+ founder community on YouTube before creating this. Founders Wing is the next step — for people ready to stop watching and start doing.
+              From a 36K+ subscriber YouTube channel to a 5,000-member WhatsApp community — Prithal has been helping aspiring founders start for years. Founders Wing is the next level.
             </p>
           </div>
         </ScrollReveal>

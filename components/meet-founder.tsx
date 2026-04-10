@@ -29,22 +29,21 @@ export function MeetFounder() {
                   Prithal Bhardwaj
                 </h2>
                 <p className="text-muted-foreground text-xs md:text-sm mb-5">
-                  Entrepreneur · SEO Specialist · Creator of The Solo Entrepreneur
+                  Builder · Creator · 36K+ on YouTube
                 </p>
 
                 <div className="space-y-3 text-muted-foreground leading-relaxed text-sm md:text-[15px]">
                   <p>
-                    I&apos;ve spent the last <span className="text-foreground font-medium">5+ years building businesses</span> — from running an SEO agency at{' '}
-                    <span className="text-foreground font-medium">WeDoRankings</span> to creating hundreds of videos helping entrepreneurs start and scale.
+                    I spent <span className="text-foreground font-medium">5+ years building businesses</span> — from an SEO agency to a content brand with hundreds of videos — so I could help people who are exactly where I was when I started: full of ideas, zero clue how to execute.
                   </p>
                   <p>
-                    Through my YouTube channel, I&apos;ve built a community of{' '}
-                    <span className="text-foreground font-medium">5,000+ founders</span> who want real, no-BS advice on business and AI.
-                    But free communities have limits — the signal gets drowned in noise.
+                    My YouTube channel grew to{' '}
+                    <span className="text-foreground font-medium">36,000+ subscribers</span> and I built a{' '}
+                    <span className="text-foreground font-medium">5,000+ member WhatsApp community</span>. But free communities plateau — most members watch, like, and never ship anything.
                   </p>
                   <p>
-                    <span className="text-foreground font-medium">Founders Wing is the inner circle.</span>{' '}
-                    A small, curated group where every member is vetted, every conversation has depth, and the only agenda is helping each other win with AI.
+                    <span className="text-foreground font-medium">Founders Wing is for the doers.</span>{' '}
+                    If you&apos;re tired of being a perpetual beginner and want someone in your corner while you build your first real thing — this is the room.
                   </p>
                 </div>
 
