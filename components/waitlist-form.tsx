@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Send, Loader2 } from "lucide-react"
 
-export function WaitlistForm() {
+export function WaitlistForm({ spotsCount = 25 }: { spotsCount?: number }) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -150,14 +150,14 @@ export function WaitlistForm() {
           </>
         ) : (
           <>
-            Apply to Join
+            Get Membership
             <Send className="w-4 h-4 ml-2" />
           </>
         )}
       </Button>
 
       <p className="text-center text-xs text-muted-foreground">
-        25 of 50 founding spots filled · Instant access after payment
+        {spotsCount} of 50 founding spots filled · Instant access after payment
       </p>
     </form>
   )

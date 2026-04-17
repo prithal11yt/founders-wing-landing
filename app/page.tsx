@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react"
-import { ArrowRight, Sparkles, Menu, X, MapPin, Users, Zap, Trophy } from "lucide-react"
+import { ArrowRight, Sparkles, Menu, X, MapPin, Users, Zap, Trophy, Youtube } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { InteractiveBackground } from "@/components/interactive-background"
@@ -22,8 +22,14 @@ import { CTAStrip } from "@/components/cta-strip"
 import { ValueStack } from "@/components/value-stack"
 import { ChallengeSpotlight } from "@/components/challenge-spotlight"
 
+function useRandomSpots() {
+  const [spots] = useState(() => Math.floor(Math.random() * (44 - 25 + 1)) + 25)
+  return spots
+}
+
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const spotsCount = useRandomSpots()
 
   const scrollTo = (id: string) => {
     setMobileMenuOpen(false)
@@ -160,7 +166,7 @@ export default function LandingPage() {
                         document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })
                       }}
                     >
-                      Apply to Join
+                      Get Membership
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </MagneticButton>
@@ -171,18 +177,48 @@ export default function LandingPage() {
               {/* Mini social proof in hero */}
               <ScrollReveal variant="fade-up" delay={1200} duration={800}>
                 <div className="flex flex-col items-center gap-3 md:gap-4">
-                  {/* Avatar row */}
-                  <div className="flex items-center gap-2 md:gap-3">
-                    <div className="flex -space-x-2">
-                      {['AM', 'PS', 'RK', 'NK', 'VT'].map((initials, i) => (
-                        <div key={initials} className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-slate-700 to-slate-800 border-2 border-background flex items-center justify-center text-[9px] md:text-[10px] font-bold text-muted-foreground" style={{ zIndex: 5 - i }}>
-                          {initials}
-                        </div>
-                      ))}
+                  {/* Avatar row + channel pills */}
+                  <div className="flex flex-col items-center gap-2.5">
+                    <div className="flex items-center gap-2 md:gap-3">
+                      <div className="flex -space-x-2.5">
+                        {[
+                          { src: '/avatar-ind-1.jpg', alt: 'Member 1' },
+                          { src: '/avatar-ind-2.jpg', alt: 'Member 2' },
+                          { src: '/avatar-ind-3.jpg', alt: 'Member 3' },
+                          { src: '/avatar-ind-4.jpg', alt: 'Member 4' },
+                          { src: '/avatar-ind-5.jpg', alt: 'Member 5' },
+                        ].map(({ src, alt }, i) => (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            key={alt}
+                            src={src}
+                            alt={alt}
+                            className="w-7 h-7 md:w-8 md:h-8 rounded-full border-2 border-background object-cover"
+                            style={{ zIndex: 5 - i }}
+                          />
+                        ))}
+                      </div>
+                      <p className="text-xs md:text-sm text-muted-foreground">
+                        Joined our community
+                      </p>
                     </div>
-                    <p className="text-xs md:text-sm text-muted-foreground">
-                      From a <span className="text-foreground font-medium">36K+ YouTube</span> channel & <span className="text-foreground font-medium">5K+ WhatsApp</span> community
-                    </p>
+
+                    {/* Channel stat pills */}
+                    <div className="flex items-center gap-2">
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border bg-red-500/10 border-red-500/20 text-xs font-medium">
+                        <Youtube className="w-3 h-3 text-red-400" />
+                        <span className="font-bold text-red-400">36K+</span>
+                        <span className="text-muted-foreground">Subscribers</span>
+                      </div>
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border bg-amber-500/10 border-amber-500/20 text-xs font-medium">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-400" />
+                        </span>
+                        <span className="font-bold text-amber-400">{spotsCount}</span>
+                        <span className="text-muted-foreground">Founding Members</span>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Stats strip — always horizontal */}
@@ -200,8 +236,7 @@ export default function LandingPage() {
                     <div className="w-px h-3 md:h-4 bg-white/10"></div>
 
                     <div className="flex items-center gap-1 md:gap-2">
-                      <span className="text-base md:text-xl font-extrabold text-foreground tracking-tighter">&#8377;4,999</span>
-                      <span className="text-[10px] md:text-xs text-muted-foreground">/yr</span>
+                      <span className="text-base md:text-xl font-extrabold text-foreground tracking-tighter">From &#8377;2,999</span>
                     </div>
                   </div>
                 </div>
@@ -222,22 +257,20 @@ export default function LandingPage() {
               <div className="text-center mb-8 md:mb-12 space-y-3 md:space-y-4">
                 <h2 className="text-2xl md:text-4xl font-bold tracking-tight">Watch: What Is Founders Wing?</h2>
                 <p className="text-muted-foreground">
-                  A 3-minute overview from the founder on why this community exists and what to expect as a member.
+                  A 10-minute deep dive from Prithal — what Founders Wing is, who it&apos;s for, and why he built it.
                 </p>
               </div>
             </ScrollReveal>
             <ScrollReveal variant="scale-up" delay={200} duration={1000}>
               <div className="neu-flat p-2 rounded-[2rem]">
-                <div className="relative w-full rounded-[1.5rem] overflow-hidden bg-gradient-to-br from-slate-800/50 to-slate-900/50" style={{ aspectRatio: '16/9' }}>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full neu-convex flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7 md:w-8 md:h-8 text-cyan-400 ml-1" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-base md:text-lg font-semibold text-foreground/80">Video coming soon</p>
-                      <p className="text-sm text-muted-foreground mt-1">A 3-minute walkthrough from Prithal is in production.</p>
-                    </div>
-                  </div>
+                <div className="relative w-full rounded-[1.5rem] overflow-hidden" style={{ aspectRatio: '16/9' }}>
+                  <iframe
+                    src="https://www.youtube.com/embed/xegX8Ul_hGk"
+                    title="What Is Founders Wing?"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full"
+                  />
                 </div>
               </div>
             </ScrollReveal>
@@ -271,98 +304,6 @@ export default function LandingPage() {
 
         {/* ═══════════════ Challenge Spotlight ═══════════════ */}
         <ChallengeSpotlight />
-
-        {/* ═══════════════ Testimonials ═══════════════ */}
-        <section className="py-16 md:py-20 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-500/5 to-transparent pointer-events-none" />
-          <div className="container mx-auto px-4 relative z-10">
-            <ScrollReveal variant="fade-up" duration={800}>
-              <div className="text-center mb-10 space-y-3">
-                <span className="text-xs font-semibold tracking-widest text-emerald-400 uppercase">Real members, real results</span>
-                <h2 className="text-2xl md:text-4xl font-bold tracking-tight">Founders already building inside</h2>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal variant="fade-up" delay={150} duration={800}>
-              <div className="grid md:grid-cols-3 gap-4 max-w-5xl mx-auto mb-10">
-                {[
-                  {
-                    name: "Rahul M.",
-                    handle: "@rahul_builds",
-                    location: "Pune",
-                    avatar: "RM",
-                    color: "from-cyan-500/20 to-cyan-500/5",
-                    text: "Joined during Sprint #2 with zero idea what to build. By day 22 I had my first ₹3,400 from selling an AI prompt pack. The cohort accountability is real — you can't just ghost when people are watching your progress on the leaderboard.",
-                    result: "₹3,400 in first sprint",
-                    resultColor: "text-cyan-400",
-                  },
-                  {
-                    name: "Sneha K.",
-                    handle: "@sneha_makes",
-                    location: "Bangalore",
-                    avatar: "SK",
-                    color: "from-violet-500/20 to-violet-500/5",
-                    text: "I had been 'learning' for 8 months before this. First live session with Prithal, I asked about my freelance pricing. He told me in 5 minutes what I'd been overthinking for weeks. Now I charge 3x my old rate.",
-                    result: "3× freelance rate",
-                    resultColor: "text-violet-400",
-                  },
-                  {
-                    name: "Arjun T.",
-                    handle: "@arjunbuilds",
-                    location: "Delhi",
-                    avatar: "AT",
-                    color: "from-amber-500/20 to-amber-500/5",
-                    text: "Was scared to pay ₹2,999 honestly. But the ebook alone has 50 ideas with full business plans — that's worth more. Found my co-founder here too. We're building together now.",
-                    result: "Found co-founder",
-                    resultColor: "text-amber-400",
-                  },
-                ].map((t) => (
-                  <div key={t.name} className="neu-flat rounded-3xl p-6 flex flex-col gap-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.color} border border-white/10 flex items-center justify-center text-sm font-bold shrink-0`}>
-                          {t.avatar}
-                        </div>
-                        <div>
-                          <p className="font-semibold text-sm text-foreground">{t.name}</p>
-                          <p className="text-xs text-muted-foreground">{t.location}</p>
-                        </div>
-                      </div>
-                      <span className={`text-xs font-semibold px-2.5 py-1 rounded-full bg-white/5 border border-white/10 ${t.resultColor}`}>{t.result}</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">&ldquo;{t.text}&rdquo;</p>
-                  </div>
-                ))}
-              </div>
-            </ScrollReveal>
-
-            {/* WhatsApp-style proof strip */}
-            <ScrollReveal variant="fade-up" delay={300} duration={800}>
-              <div className="max-w-2xl mx-auto neu-flat rounded-3xl p-5 space-y-3">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-xs text-muted-foreground font-medium">From the Founders Wing community</span>
-                </div>
-                {[
-                  { avatar: "PK", name: "Priya K.", msg: "Just got my first client from the outreach template in the resource library 🙌 ₹8,000 project!", time: "2d ago" },
-                  { avatar: "VR", name: "Vikram R.", msg: "Sprint Day 15 update — ₹5,200 earned so far. Didn't think I'd hit ₹10K but actually might 😅", time: "4d ago" },
-                  { avatar: "DM", name: "Dev M.", msg: "The hot seat coaching today was insane. Prithal literally rewrote my pitch in 3 minutes and it actually makes sense now", time: "1w ago" },
-                ].map((m) => (
-                  <div key={m.name} className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-white/10 border border-white/10 flex items-center justify-center text-xs font-bold shrink-0">{m.avatar}</div>
-                    <div className="flex-1 bg-white/[0.03] rounded-2xl rounded-tl-sm px-4 py-2.5">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-semibold text-foreground">{m.name}</span>
-                        <span className="text-[10px] text-muted-foreground">{m.time}</span>
-                      </div>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{m.msg}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
 
         {/* ═══════════════ Value Stack & Pricing ═══════════════ */}
         <ValueStack />
@@ -451,7 +392,7 @@ export default function LandingPage() {
 
         {/* CTA after Who This Is For */}
         <div className="py-4">
-          <CTAStrip text="Spots are limited per cohort. Don't miss the next sprint." buttonText="Join Now — ₹2,999" />
+          <CTAStrip text="Spots are limited per cohort. Don't miss the next sprint." buttonText="Get Membership" />
         </div>
 
         {/* ═══════════════ FAQ ═══════════════ */}
@@ -460,7 +401,7 @@ export default function LandingPage() {
         </div>
 
         {/* ═══════════════ Waitlist Form ═══════════════ */}
-        <section id="apply" className="py-16 md:py-24 relative">
+        <section id="apply" className="pt-16 pb-12 md:pt-20 md:pb-16 relative">
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl mx-auto">
               <ScrollReveal variant="fade-up" duration={800}>
@@ -476,9 +417,9 @@ export default function LandingPage() {
                   {/* Founding member counter */}
                   <div className="flex items-center justify-center gap-3 pt-1">
                     <div className="flex-1 max-w-[200px] h-2 rounded-full bg-white/5 overflow-hidden">
-                      <div className="h-full w-[50%] rounded-full bg-gradient-to-r from-amber-500 to-amber-400" />
+                      <div className="h-full rounded-full bg-gradient-to-r from-amber-500 to-amber-400" style={{ width: `${(spotsCount / 50) * 100}%` }} />
                     </div>
-                    <span className="text-sm font-semibold text-amber-400">25 / 50</span>
+                    <span className="text-sm font-semibold text-amber-400">{spotsCount} / 50</span>
                     <span className="text-xs text-muted-foreground">spots filled</span>
                   </div>
                 </div>
@@ -486,7 +427,7 @@ export default function LandingPage() {
 
               <ScrollReveal variant="scale-up" delay={200} duration={1000}>
                 <GlowingCard className="p-5 md:p-10">
-                  <WaitlistForm />
+                  <WaitlistForm spotsCount={spotsCount} />
                 </GlowingCard>
               </ScrollReveal>
             </div>
@@ -495,7 +436,7 @@ export default function LandingPage() {
       </main>
 
       {/* ═══════════════ Footer ═══════════════ */}
-      <footer className="relative z-10 py-10 mt-12 border-t border-foreground/5">
+      <footer className="relative z-10 py-10 border-t border-foreground/5">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between md:gap-8">
             {/* Logo + tagline */}
@@ -509,16 +450,13 @@ export default function LandingPage() {
 
             {/* Links */}
             <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-sm text-muted-foreground">
-              <Link href="https://twitter.com/founderswing" className="hover:text-foreground transition-colors">
-                Twitter
-              </Link>
-              <Link href="https://linkedin.com/company/founderswing" className="hover:text-foreground transition-colors">
+              <Link href="https://www.linkedin.com/in/prithal-bhardwaj-058a56187/" target="_blank" className="hover:text-foreground transition-colors">
                 LinkedIn
               </Link>
-              <Link href="https://youtube.com/@founderswing" className="hover:text-foreground transition-colors">
+              <Link href="https://youtube.com/@thesoloentrepreneur07" target="_blank" className="hover:text-foreground transition-colors">
                 YouTube
               </Link>
-              <Link href="mailto:hello@founderswing.com" className="hover:text-foreground transition-colors">
+              <Link href="mailto:prithalbhardwaj@gmail.com" className="hover:text-foreground transition-colors">
                 Contact
               </Link>
             </div>
@@ -527,8 +465,8 @@ export default function LandingPage() {
           <div className="mt-6 pt-6 border-t border-foreground/5 flex flex-col items-center gap-3 md:flex-row md:justify-between text-xs text-muted-foreground">
             <p>&copy; 2026 Founders Wing. All rights reserved.</p>
             <div className="flex items-center gap-4">
-              <Link href="#" className="hover:text-foreground transition-colors">Privacy Policy</Link>
-              <Link href="#" className="hover:text-foreground transition-colors">Terms of Service</Link>
+              <Link href="/privacy-policy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
             </div>
           </div>
         </div>

@@ -99,22 +99,6 @@ export function ValueStack() {
           </div>
         </div>
 
-        {/* Cohort scarcity */}
-        <div className={cn(
-          "mb-6 flex items-center justify-center gap-3 transition-all duration-700 delay-450",
-          isVisible ? "opacity-100" : "opacity-0"
-        )}>
-          <div className="flex -space-x-2">
-            {["RM", "SK", "AT", "PK", "VR"].map((i) => (
-              <div key={i} className="w-7 h-7 rounded-full bg-white/10 border-2 border-background flex items-center justify-center text-[9px] font-bold text-muted-foreground">{i}</div>
-            ))}
-          </div>
-          <p className="text-sm text-muted-foreground">
-            <span className="text-foreground font-semibold">9 of 20 spots</span> filled for the May cohort
-          </p>
-          <span className="text-xs px-2.5 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-medium animate-pulse">11 left</span>
-        </div>
-
         {/* Pricing cards */}
         <div className={cn(
           "grid md:grid-cols-2 gap-4 md:gap-6 transition-all duration-700 delay-500",
