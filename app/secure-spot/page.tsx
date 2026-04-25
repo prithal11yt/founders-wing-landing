@@ -9,8 +9,8 @@ import Link from "next/link"
 
 // 👇 PASTE YOUR RAZORPAY PAYMENT LINKS HERE
 const PAYMENT_LINKS = {
-  starter: "https://rzp.io/rzp/6qNUgZC",  // ₹2,999 / 6 months
-  annual:  "https://rzp.io/rzp/9txQqcr",  // ₹4,999 / year
+  starter: "https://rzp.io/rzp/starter-6months",  // ₹2,999 / 6 months
+  annual:  "https://rzp.io/rzp/annual-12months",  // ₹4,999 / year
 }
 
 const HOLD_HOURS = 24

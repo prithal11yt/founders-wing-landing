@@ -7,24 +7,15 @@ type Lead = {
   created_at: string
   full_name: string
   email: string
-  social_links: string
   what_building: string
-  months_working: string
-  current_stage: string
-  working_full_time: string
   join_reason: string
-  biggest_challenge: string
-  can_contribute: string
-  monthly_budget: string
-  paid_community_willing: string
   heard_from: string
-  other_info: string
   status?: string
   starred?: boolean
   notes?: string
 }
 
-type ViewFilter = 'all' | 'new' | 'reviewed' | 'shortlisted' | 'rejected' | 'starred' | 'willing' | 'fulltime'
+type ViewFilter = 'all' | 'new' | 'reviewed' | 'shortlisted' | 'rejected' | 'starred'
 
 export default function LeadsPage() {
   const [authenticated, setAuthenticated] = useState(false)
@@ -119,10 +110,8 @@ export default function LeadsPage() {
       if (currentView === 'shortlisted' && s !== 'shortlisted') return false
       if (currentView === 'rejected' && s !== 'rejected') return false
       if (currentView === 'starred' && !d.starred) return false
-      if (currentView === 'willing' && d.paid_community_willing !== 'yes') return false
-      if (currentView === 'fulltime' && d.working_full_time !== 'full-time') return false
       if (q) {
-        const haystack = [d.full_name, d.email, d.what_building, d.biggest_challenge, d.join_reason].join(' ').toLowerCase()
+        const haystack = [d.full_name, d.email, d.what_building, d.join_reason, d.heard_from].join(' ').toLowerCase()
         if (!haystack.includes(q)) return false
       }
       return true
@@ -138,12 +127,6 @@ export default function LeadsPage() {
     reviewed: allData.filter(d => d.status === 'reviewed').length,
     rejected: allData.filter(d => d.status === 'rejected').length,
     starred: allData.filter(d => d.starred).length,
-    willing: allData.filter(d => d.paid_community_willing === 'yes').length,
-    fulltime: allData.filter(d => d.working_full_time === 'full-time').length,
-    avgBudget: (() => {
-      const b = allData.map(d => parseInt(d.monthly_budget) || 0).filter(x => x > 0)
-      return b.length ? '₹' + Math.round(b.reduce((a, c) => a + c, 0) / b.length).toLocaleString() : '-'
-    })(),
   }
 
   // Actions via secure server-side API
@@ -175,12 +158,27 @@ export default function LeadsPage() {
     setSelected(new Set())
   }
 
+  async function deleteLeads(ids: number[]) {
+    if (!confirm(`Delete ${ids.length} lead${ids.length > 1 ? 's' : ''}? This cannot be undone.`)) return
+    const r = await fetch('/api/leads/delete', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ids }),
+    })
+    if (r.status === 401) { setAuthenticated(false); return }
+    if (r.ok) {
+      setAllData(prev => prev.filter(d => !ids.includes(d.id)))
+      setSelected(new Set())
+      if (panelLead && ids.includes(panelLead.id)) setPanelLead(null)
+    }
+  }
+
   function exportCSV() {
     const data = filtered.length ? filtered : allData
     if (!data.length) return
-    const headers = ['ID', 'Date', 'Name', 'Email', 'Social', 'Building', 'Months', 'Stage', 'Full-time', 'Join Reason', 'Challenge', 'Contribute', 'Budget', 'Will Pay', 'Source', 'Other', 'Status', 'Notes']
+    const headers = ['ID', 'Date', 'Name', 'Email', 'Building', 'Goal', 'Source', 'Status', 'Notes']
     const rows = data.map(d =>
-      [d.id, d.created_at, d.full_name, d.email, d.social_links, d.what_building, d.months_working, d.current_stage, d.working_full_time, d.join_reason, d.biggest_challenge, d.can_contribute, d.monthly_budget, d.paid_community_willing, d.heard_from, d.other_info, d.status || 'new', d.notes || '']
+      [d.id, d.created_at, d.full_name, d.email, d.what_building, d.join_reason, d.heard_from, d.status || 'new', d.notes || '']
         .map(v => `"${String(v || '').replace(/"/g, '""')}"`)
         .join(',')
     )
@@ -193,7 +191,7 @@ export default function LeadsPage() {
 
   const viewTitles: Record<string, string> = {
     all: 'All Leads', new: 'New Leads', reviewed: 'Reviewed', shortlisted: 'Shortlisted',
-    rejected: 'Rejected', starred: 'Starred', willing: 'Willing to Pay', fulltime: 'Full-time Founders',
+    rejected: 'Rejected', starred: 'Starred',
   }
 
   // ─── RENDER ───
@@ -334,11 +332,6 @@ export default function LeadsPage() {
               </button>
             ))}
           </nav>
-          <div className="l-sidebar-label">Filters</div>
-          <nav className="l-nav">
-            <button className={`l-nav-item ${currentView === 'willing' ? 'active' : ''}`} onClick={() => setCurrentView('willing')}>Willing to Pay</button>
-            <button className={`l-nav-item ${currentView === 'fulltime' ? 'active' : ''}`} onClick={() => setCurrentView('fulltime')}>Full-time Founders</button>
-          </nav>
           <div className="l-sidebar-footer">
             <div className="l-user">{userEmail}</div>
             <button onClick={logout}>Sign Out</button>
@@ -365,8 +358,8 @@ export default function LeadsPage() {
             <div className="l-stat"><div className="l-stat-label">Total Leads</div><div className="l-stat-value">{stats.total}</div></div>
             <div className="l-stat"><div className="l-stat-label">New</div><div className="l-stat-value" style={{ color: '#3b82f6' }}>{stats.new}</div></div>
             <div className="l-stat"><div className="l-stat-label">Shortlisted</div><div className="l-stat-value" style={{ color: '#10b981' }}>{stats.shortlisted}</div></div>
-            <div className="l-stat"><div className="l-stat-label">Willing to Pay</div><div className="l-stat-value" style={{ color: '#f59e0b' }}>{stats.willing}</div></div>
-            <div className="l-stat"><div className="l-stat-label">Avg Budget</div><div className="l-stat-value" style={{ color: '#8b5cf6' }}>{stats.avgBudget}</div></div>
+            <div className="l-stat"><div className="l-stat-label">Reviewed</div><div className="l-stat-value" style={{ color: '#f59e0b' }}>{stats.reviewed}</div></div>
+            <div className="l-stat"><div className="l-stat-label">Starred</div><div className="l-stat-value" style={{ color: '#8b5cf6' }}>{stats.starred}</div></div>
           </div>
 
           {/* Bulk Actions */}
@@ -377,6 +370,7 @@ export default function LeadsPage() {
                 <button className="l-btn" onClick={() => bulkAction('shortlisted')}>Shortlist</button>
                 <button className="l-btn" onClick={() => bulkAction('reviewed')}>Mark Reviewed</button>
                 <button className="l-btn" onClick={() => bulkAction('rejected')} style={{ color: '#ef4444' }}>Reject</button>
+                <button className="l-btn" onClick={() => deleteLeads([...selected])} style={{ color: '#ef4444', borderColor: 'rgba(239,68,68,0.3)' }}>Delete</button>
               </div>
             </div>
           )}
@@ -396,9 +390,8 @@ export default function LeadsPage() {
                     <th>Name</th>
                     <th>Email</th>
                     <th>Building</th>
-                    <th>Stage</th>
-                    <th>Budget</th>
-                    <th>Will Pay</th>
+                    <th>Goal</th>
+                    <th>Source</th>
                     <th>Status</th>
                     <th>Applied</th>
                   </tr>
@@ -414,9 +407,8 @@ export default function LeadsPage() {
                         <td className="l-td-name" onClick={() => setPanelLead(d)}>{d.full_name}</td>
                         <td className="l-td-email">{d.email}</td>
                         <td>{d.what_building}</td>
-                        <td><span className="l-pill" style={{ background: 'rgba(139,92,246,0.12)', color: '#8b5cf6' }}>{d.current_stage}</span></td>
-                        <td style={{ fontVariantNumeric: 'tabular-nums' }}>₹{d.monthly_budget}</td>
-                        <td><span style={{ fontWeight: 600, color: d.paid_community_willing === 'yes' ? '#10b981' : '#475569' }}>{d.paid_community_willing === 'yes' ? 'Yes' : 'No'}</span></td>
+                        <td>{d.join_reason}</td>
+                        <td style={{ color: '#475569' }}>{d.heard_from}</td>
                         <td><span className={`l-pill l-pill-${st}`}>{st.charAt(0).toUpperCase() + st.slice(1)}</span></td>
                         <td style={{ color: '#475569', fontSize: 12 }}>{date}</td>
                       </tr>
@@ -450,32 +442,19 @@ export default function LeadsPage() {
                     {s.charAt(0).toUpperCase() + s.slice(1)}
                   </button>
                 ))}
+                <button className="l-btn" style={{ color: '#ef4444', borderColor: 'rgba(239,68,68,0.3)' }} onClick={() => deleteLeads([panelLead.id])}>
+                  Delete
+                </button>
               </div>
               <div className="l-panel-body">
                 <div className="l-panel-section">
-                  <div className="l-panel-section-title">Profile</div>
-                  <div className="l-panel-row">
-                    <div className="l-panel-field"><div className="l-panel-field-label">Social</div><div className="l-panel-field-value">{panelLead.social_links}</div></div>
-                    <div className="l-panel-field"><div className="l-panel-field-label">Working</div><div className="l-panel-field-value">{panelLead.working_full_time} · {panelLead.months_working}</div></div>
-                  </div>
-                  <div className="l-panel-row">
-                    <div className="l-panel-field"><div className="l-panel-field-label">Stage</div><div className="l-panel-field-value">{panelLead.current_stage}</div></div>
-                    <div className="l-panel-field"><div className="l-panel-field-label">Budget</div><div className="l-panel-field-value">₹{panelLead.monthly_budget}/mo · {panelLead.paid_community_willing === 'yes' ? 'Will pay' : "Won't pay"}</div></div>
-                  </div>
-                </div>
-                <div className="l-panel-section">
                   <div className="l-panel-section-title">Application</div>
-                  <div className="l-panel-field"><div className="l-panel-field-label">What they&apos;re building</div><div className="l-panel-field-value">{panelLead.what_building}</div></div>
-                  <div className="l-panel-field"><div className="l-panel-field-label">Why they want to join</div><div className="l-panel-field-value">{panelLead.join_reason}</div></div>
-                  <div className="l-panel-field"><div className="l-panel-field-label">Biggest challenge</div><div className="l-panel-field-value">{panelLead.biggest_challenge}</div></div>
-                  <div className="l-panel-field"><div className="l-panel-field-label">How they can contribute</div><div className="l-panel-field-value">{panelLead.can_contribute}</div></div>
+                  <div className="l-panel-field"><div className="l-panel-field-label">What they&apos;re building / idea</div><div className="l-panel-field-value">{panelLead.what_building}</div></div>
+                  <div className="l-panel-field"><div className="l-panel-field-label">Goal in next 3 months</div><div className="l-panel-field-value">{panelLead.join_reason}</div></div>
                 </div>
                 <div className="l-panel-section">
                   <div className="l-panel-section-title">Meta</div>
-                  <div className="l-panel-row">
-                    <div className="l-panel-field"><div className="l-panel-field-label">Source</div><div className="l-panel-field-value">{panelLead.heard_from}</div></div>
-                    <div className="l-panel-field"><div className="l-panel-field-label">Additional</div><div className="l-panel-field-value">{panelLead.other_info || '—'}</div></div>
-                  </div>
+                  <div className="l-panel-field"><div className="l-panel-field-label">How they heard about us</div><div className="l-panel-field-value">{panelLead.heard_from}</div></div>
                 </div>
               </div>
               <div className="l-panel-notes">
