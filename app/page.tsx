@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ArrowRight, Sparkles, Menu, X, MapPin, Users, Zap, Trophy, Youtube } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -23,7 +23,10 @@ import { ValueStack } from "@/components/value-stack"
 import { ChallengeSpotlight } from "@/components/challenge-spotlight"
 
 function useRandomSpots() {
-  const [spots] = useState(() => Math.floor(Math.random() * (44 - 25 + 1)) + 25)
+  const [spots, setSpots] = useState(32)
+  useEffect(() => {
+    setSpots(Math.floor(Math.random() * (44 - 25 + 1)) + 25)
+  }, [])
   return spots
 }
 
