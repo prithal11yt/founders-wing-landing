@@ -6,9 +6,11 @@
     "build": "next build",
     "dev": "next dev --port 3001",
     "lint": "eslint .",
-    "start": "next start"
+    "start": "next start",
+    "generate-seo": "node scripts/generate-seo-content.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.97.0",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",

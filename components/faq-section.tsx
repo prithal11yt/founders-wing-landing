@@ -43,7 +43,13 @@ const faqs = [
   },
 ]
 
-export function FAQSection() {
+interface FaqItem {
+  q: string
+  a: string
+}
+
+export function FAQSection({ faqs: customFaqs }: { faqs?: FaqItem[] } = {}) {
+  const items = customFaqs ?? faqs
   return (
     <section className="py-16 md:py-24 relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10 max-w-3xl">
@@ -58,7 +64,7 @@ export function FAQSection() {
 
         <ScrollReveal variant="fade-up" delay={200} duration={800}>
           <Accordion.Root type="single" collapsible className="space-y-3">
-            {faqs.map((faq, i) => (
+            {items.map((faq, i) => (
               <Accordion.Item
                 key={i}
                 value={`faq-${i}`}

@@ -438,6 +438,33 @@ export default function LandingPage() {
         </section>
       </main>
 
+      {/* ═══════════════ Explore Resources ═══════════════ */}
+      <section className="relative z-10 py-10 border-t border-foreground/5">
+        <div className="container mx-auto px-4">
+          <p className="text-xs font-medium tracking-widest uppercase text-muted-foreground mb-5">Explore Resources</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
+            {[
+              { href: '/community/founder-community-india', label: 'Founder Community India' },
+              { href: '/guide/how-to-make-first-money-online-india', label: 'Make First Money Online' },
+              { href: '/tools/ai-tools-for-founders-india', label: 'AI Tools for Founders' },
+              { href: '/challenge/first-10k-challenge-india', label: '₹10K Challenge India' },
+              { href: '/community/ai-founder-community', label: 'AI Founder Community' },
+              { href: '/guide/how-to-start-online-business-india', label: 'Start Online Business India' },
+              { href: '/guide/online-business-ideas-india-2025', label: 'Online Business Ideas 2025' },
+              { href: '/community/entrepreneur-community-india', label: 'Entrepreneur Community India' },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-muted-foreground hover:text-foreground transition-colors py-1"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ═══════════════ Footer ═══════════════ */}
       <footer className="relative z-10 py-10 border-t border-foreground/5">
         <div className="container mx-auto px-4">

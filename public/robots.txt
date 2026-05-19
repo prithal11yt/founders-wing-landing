@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /leads/
+Disallow: /api/
+
+Sitemap: https://founderwing.com/sitemap.xml
