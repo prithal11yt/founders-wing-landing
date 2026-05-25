@@ -1,168 +1,150 @@
 import Link from "next/link"
+import Image from "next/image"
 import type React from "react"
-import { ArrowRight, Lightbulb, Sparkles, Target } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { ArrowRight } from "lucide-react"
 
-function InlineText({ text }: { text: string }) {
-  const parts = text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g).filter(Boolean)
+/* ─────────────── Callout ─────────────── */
+export function Callout({
+  type = "tip",
+  children,
+}: {
+  type?: "tip" | "warning" | "insight"
+  children: React.ReactNode
+}) {
+  const styles = {
+    tip: "border-sky-500/30 bg-sky-500/5 text-sky-300",
+    warning: "border-amber-500/30 bg-amber-500/5 text-amber-300",
+    insight: "border-violet-500/30 bg-violet-500/5 text-violet-300",
+  }
+  const labels = { tip: "💡 Tip", warning: "⚠️ Note", insight: "🔍 Insight" }
 
   return (
-    <>
-      {parts.map((part, index) => {
-        const bold = part.match(/^\*\*([^*]+)\*\*$/)
-        if (bold) return <strong key={index} className="font-semibold text-foreground">{bold[1]}</strong>
-
-        const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
-        if (link) {
-          const href = link[2]
-          const isInternal = href.startsWith("/")
-          const className = "text-cyan-300 underline decoration-cyan-400/40 underline-offset-4 hover:text-cyan-200"
-          return isInternal ? (
-            <Link key={index} href={href} className={className}>{link[1]}</Link>
-          ) : (
-            <a key={index} href={href} target="_blank" rel="noopener noreferrer" className={className}>{link[1]}</a>
-          )
-        }
-
-        return part
-      })}
-    </>
+    <div className={`my-6 rounded-xl border px-5 py-4 ${styles[type]}`}>
+      <p className="mb-1 text-xs font-semibold uppercase tracking-widest opacity-70">{labels[type]}</p>
+      <div className="text-sm leading-relaxed text-foreground/80">{children}</div>
+    </div>
   )
 }
 
-function BlogCTA({ variant = "membership" }: { variant?: string }) {
-  const copy: Record<string, { eyebrow: string; title: string; body: string; button: string }> = {
+/* ─────────────── JoinCTA ─────────────── */
+export function JoinCTA({ variant = "membership" }: { variant?: string }) {
+  const messages: Record<string, { headline: string; sub: string }> = {
     membership: {
-      eyebrow: "Founders Wing",
-      title: "Build with people who are done overthinking.",
-      body: "Join weekly live sessions, AI-first playbooks, accountability, and a private community of aspiring founders taking action.",
-      button: "Become a Founding Member",
+      headline: "Stop reading about it. Start building.",
+      sub: "Join Founders Wing — India's action-first founder community. From ₹2,999.",
     },
     "10k-sprint": {
-      eyebrow: "30-Day Sprint",
-      title: "Want help earning your first ₹10K online?",
-      body: "Founders Wing members get access to the First ₹10K sprint, templates, check-ins, and a leaderboard built for momentum.",
-      button: "Join the Sprint",
+      headline: "Want to earn your first ₹10,000 online?",
+      sub: "The ₹10K Sprint Challenge runs every month inside Founders Wing. Join now.",
     },
     accountability: {
-      eyebrow: "Accountability",
-      title: "Stop trying to build alone.",
-      body: "Get founder accountability, live check-ins, and a community that notices whether you shipped or just researched.",
-      button: "Get Accountability",
+      headline: "Looking for accountability that actually works?",
+      sub: "Founders Wing is paid, focused, and built for doers — not lurkers.",
     },
     "ai-tools": {
-      eyebrow: "AI-First Building",
-      title: "Use AI to move faster, not collect more tools.",
-      body: "Learn the practical AI workflows members use for ideas, offers, content, outreach, and validation.",
-      button: "Build With AI",
+      headline: "Get weekly AI tool breakdowns for founders.",
+      sub: "Every week inside Founders Wing: one new AI tool, one real workflow, zero fluff.",
+    },
+    // legacy aliases
+    default: {
+      headline: "Stop reading about it. Start building.",
+      sub: "Join Founders Wing — India's action-first founder community. From ₹2,999.",
+    },
+    community: {
+      headline: "Looking for a founder community that actually delivers?",
+      sub: "Founders Wing is paid, focused, and built for doers — not lurkers.",
     },
   }
-  const item = copy[variant] || copy.membership
+  const { headline, sub } = messages[variant] ?? messages.membership
 
   return (
-    <div className="my-10 rounded-3xl border border-cyan-500/20 bg-cyan-500/[0.06] p-5 md:p-7">
-      <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-cyan-300">{item.eyebrow}</p>
-      <h3 className="mb-2 text-xl font-bold tracking-tight text-foreground md:text-2xl">{item.title}</h3>
-      <p className="mb-5 text-sm leading-relaxed text-muted-foreground md:text-base">{item.body}</p>
-      <Button asChild className="rounded-full neu-button-primary">
-        <Link href="/#apply">
-          {item.button}
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Link>
-      </Button>
+    <div className="my-8 rounded-2xl border border-sky-500/20 bg-sky-500/5 p-6">
+      <p className="mb-1 text-lg font-bold text-foreground">{headline}</p>
+      <p className="mb-4 text-sm text-muted-foreground">{sub}</p>
+      <Link
+        href="/secure-spot"
+        className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-6 py-2.5 text-sm font-semibold text-white hover:bg-sky-400 transition-colors"
+      >
+        Get Membership <ArrowRight className="h-4 w-4" />
+      </Link>
     </div>
   )
 }
 
-function Callout({ line }: { line: string }) {
-  const [rawType, ...rest] = line.replace(/^::callout\s*/, "").split("::")
-  const type = rawType || "insight"
-  const body = rest.join("::").trim()
-  const Icon = type === "tip" ? Lightbulb : type === "warning" ? Target : Sparkles
-
-  return (
-    <div className={cn(
-      "my-7 flex gap-3 rounded-2xl border p-4",
-      type === "warning" ? "border-amber-500/25 bg-amber-500/10" : "border-cyan-500/20 bg-cyan-500/10",
-    )}>
-      <Icon className={cn("mt-0.5 h-5 w-5 shrink-0", type === "warning" ? "text-amber-300" : "text-cyan-300")} />
-      <p className="text-sm leading-relaxed text-foreground/80"><InlineText text={body} /></p>
+/* ─────────────── mdxComponents map ─────────────── */
+export const mdxComponents = {
+  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h2 className="mt-10 mb-4 text-2xl font-bold tracking-tight text-foreground scroll-mt-20" {...props} />
+  ),
+  h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h3 className="mt-8 mb-3 text-xl font-semibold text-foreground scroll-mt-20" {...props} />
+  ),
+  h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h4 className="mt-6 mb-2 text-lg font-semibold text-foreground" {...props} />
+  ),
+  p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
+    <p className="mb-5 leading-relaxed text-foreground/80" {...props} />
+  ),
+  ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
+    <ul className="mb-5 ml-5 list-disc space-y-1.5 text-foreground/80" {...props} />
+  ),
+  ol: (props: React.OlHTMLAttributes<HTMLOListElement>) => (
+    <ol className="mb-5 ml-5 list-decimal space-y-1.5 text-foreground/80" {...props} />
+  ),
+  li: (props: React.LiHTMLAttributes<HTMLLIElement>) => (
+    <li className="leading-relaxed" {...props} />
+  ),
+  blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
+    <blockquote className="my-6 border-l-4 border-sky-500/50 pl-5 italic text-muted-foreground" {...props} />
+  ),
+  strong: (props: React.HTMLAttributes<HTMLElement>) => (
+    <strong className="font-semibold text-foreground" {...props} />
+  ),
+  a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
+    <a
+      className="text-sky-400 underline underline-offset-4 hover:text-sky-300 transition-colors"
+      target={props.href?.startsWith("/") ? undefined : "_blank"}
+      rel={props.href?.startsWith("/") ? undefined : "noopener noreferrer"}
+      {...props}
+    />
+  ),
+  hr: () => <hr className="my-10 border-white/10" />,
+  table: (props: React.HTMLAttributes<HTMLTableElement>) => (
+    <div className="my-6 overflow-x-auto rounded-xl border border-white/10">
+      <table className="w-full text-sm" {...props} />
     </div>
-  )
-}
-
-export function MarkdownContent({ content, cta }: { content: string; cta?: string }) {
-  const lines = content.split("\n")
-  const blocks: React.ReactNode[] = []
-  let index = 0
-
-  while (index < lines.length) {
-    const line = lines[index].trim()
-    if (!line) {
-      index += 1
-      continue
-    }
-
-    if (line.startsWith("<JoinCTA")) {
-      const variant = line.match(/variant="([^"]+)"/)?.[1] || cta
-      blocks.push(<BlogCTA key={index} variant={variant} />)
-      index += 1
-      continue
-    }
-
-    if (line.startsWith("::callout")) {
-      blocks.push(<Callout key={index} line={line} />)
-      index += 1
-      continue
-    }
-
-    if (line.startsWith("### ")) {
-      blocks.push(<h3 key={index} className="mb-3 mt-8 text-xl font-bold tracking-tight text-foreground"><InlineText text={line.slice(4)} /></h3>)
-      index += 1
-      continue
-    }
-
-    if (line.startsWith("## ")) {
-      blocks.push(<h2 key={index} className="mb-4 mt-12 text-2xl font-bold tracking-tight text-foreground md:text-3xl"><InlineText text={line.slice(3)} /></h2>)
-      index += 1
-      continue
-    }
-
-    if (line.startsWith("> ")) {
-      blocks.push(<blockquote key={index} className="my-7 border-l-2 border-cyan-400/60 pl-5 text-lg font-medium leading-relaxed text-foreground"><InlineText text={line.slice(2)} /></blockquote>)
-      index += 1
-      continue
-    }
-
-    if (line.startsWith("- ")) {
-      const items: string[] = []
-      while (lines[index]?.trim().startsWith("- ")) {
-        items.push(lines[index].trim().slice(2))
-        index += 1
-      }
-      blocks.push(
-        <ul key={index} className="my-5 space-y-2">
-          {items.map((item) => (
-            <li key={item} className="flex gap-3 text-muted-foreground">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" />
-              <span className="leading-relaxed"><InlineText text={item} /></span>
-            </li>
-          ))}
-        </ul>
-      )
-      continue
-    }
-
-    const paragraph: string[] = [line]
-    index += 1
-    while (lines[index]?.trim() && !/^(## |### |- |> |<JoinCTA|::callout)/.test(lines[index].trim())) {
-      paragraph.push(lines[index].trim())
-      index += 1
-    }
-
-    blocks.push(<p key={index} className="my-5 text-base leading-8 text-muted-foreground md:text-lg"><InlineText text={paragraph.join(" ")} /></p>)
-  }
-
-  return <div>{blocks}</div>
+  ),
+  thead: (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
+    <thead className="bg-white/5 text-xs uppercase tracking-wider text-muted-foreground" {...props} />
+  ),
+  tbody: (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
+    <tbody className="divide-y divide-white/5" {...props} />
+  ),
+  tr: (props: React.HTMLAttributes<HTMLTableRowElement>) => (
+    <tr className="hover:bg-white/[0.02] transition-colors" {...props} />
+  ),
+  th: (props: React.ThHTMLAttributes<HTMLTableCellElement>) => (
+    <th className="px-4 py-3 text-left font-semibold text-foreground" {...props} />
+  ),
+  td: (props: React.TdHTMLAttributes<HTMLTableCellElement>) => (
+    <td className="px-4 py-3 text-foreground/80 align-top" {...props} />
+  ),
+  code: (props: React.HTMLAttributes<HTMLElement>) => (
+    <code className="rounded bg-white/10 px-1.5 py-0.5 text-sm font-mono text-sky-300" {...props} />
+  ),
+  pre: (props: React.HTMLAttributes<HTMLPreElement>) => (
+    <pre className="my-6 overflow-x-auto rounded-xl bg-white/5 border border-white/10 p-5 text-sm font-mono text-foreground/80 leading-relaxed" {...props} />
+  ),
+  img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      className="my-8 w-full rounded-xl object-cover"
+      loading="lazy"
+      alt={props.alt ?? ""}
+      {...props}
+    />
+  ),
+  // Custom MDX components
+  Callout,
+  JoinCTA,
 }
