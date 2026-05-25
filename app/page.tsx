@@ -480,6 +480,9 @@ export default function LandingPage() {
 
             {/* Links */}
             <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-sm text-muted-foreground">
+              <Link href="/blog" className="hover:text-foreground transition-colors">
+                Blog
+              </Link>
               <Link href="https://www.linkedin.com/in/prithal-bhardwaj-058a56187/" target="_blank" className="hover:text-foreground transition-colors">
                 LinkedIn
               </Link>
