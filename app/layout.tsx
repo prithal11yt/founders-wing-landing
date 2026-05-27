@@ -19,7 +19,7 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
 })
 
-const BASE_URL = 'https://founderwing.com'
+const BASE_URL = 'https://founderswing.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
