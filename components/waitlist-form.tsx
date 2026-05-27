@@ -7,11 +7,18 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Send, Loader2 } from "lucide-react"
+import { Send, Loader2, CheckCircle2 } from "lucide-react"
 
-export function WaitlistForm({ spotsCount = 25 }: { spotsCount?: number }) {
+export function WaitlistForm({
+  spotsCount = 25,
+  comingSoon = false,
+}: {
+  spotsCount?: number
+  comingSoon?: boolean
+}) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     fullName: "",
@@ -37,8 +44,12 @@ export function WaitlistForm({ spotsCount = 25 }: { spotsCount?: number }) {
         throw new Error("Failed to submit application")
       }
 
-      const name = encodeURIComponent(formData.fullName)
-      router.push(`/secure-spot?name=${name}`)
+      if (comingSoon) {
+        setSubmitted(true)
+      } else {
+        const name = encodeURIComponent(formData.fullName)
+        router.push(`/secure-spot?name=${name}`)
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to submit application")
     } finally {
@@ -49,6 +60,18 @@ export function WaitlistForm({ spotsCount = 25 }: { spotsCount?: number }) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  if (submitted) {
+    return (
+      <div className="flex flex-col items-center gap-4 py-10 text-center">
+        <CheckCircle2 className="h-12 w-12 text-sky-400" />
+        <h3 className="text-xl font-bold text-foreground">You're on the list!</h3>
+        <p className="text-muted-foreground max-w-sm">
+          We'll personally reach out to you the moment Founders Wing opens its doors. Keep building 🚀
+        </p>
+      </div>
+    )
   }
 
   return (
@@ -148,6 +171,11 @@ export function WaitlistForm({ spotsCount = 25 }: { spotsCount?: number }) {
             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
             Submitting...
           </>
+        ) : comingSoon ? (
+          <>
+            Notify Me at Launch
+            <Send className="w-4 h-4 ml-2" />
+          </>
         ) : (
           <>
             Get Membership
@@ -157,7 +185,9 @@ export function WaitlistForm({ spotsCount = 25 }: { spotsCount?: number }) {
       </Button>
 
       <p className="text-center text-xs text-muted-foreground">
-        {spotsCount} of 50 founding spots filled · Instant access after payment
+        {comingSoon
+          ? "Free to join the waitlist · No credit card required"
+          : `${spotsCount} of 50 founding spots filled · Instant access after payment`}
       </p>
     </form>
   )
