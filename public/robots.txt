@@ -3,4 +3,4 @@ Allow: /
 Disallow: /leads/
 Disallow: /api/
 
-Sitemap: https://founderwing.com/sitemap.xml
+Sitemap: https://www.founderswing.com/sitemap.xml

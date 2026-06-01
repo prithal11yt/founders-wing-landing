@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { seoPages } from '@/lib/seo-pages'
 import { getAllPosts } from '@/lib/blog'
 
-const BASE_URL = 'https://founderswing.com'
+const BASE_URL = 'https://www.founderswing.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [

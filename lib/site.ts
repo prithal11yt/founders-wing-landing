@@ -1,4 +1,4 @@
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://founderswing.com"
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.founderswing.com"
 
 export const SITE_NAME = "Founders Wing"
 
