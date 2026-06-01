@@ -42,6 +42,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: "summary_large_image",
       title: post.title,
       description: post.description,
+      images: post.heroImage ? [`${SITE_URL}${post.heroImage}`] : [`${SITE_URL}/opengraph-image`],
     },
   }
 }
