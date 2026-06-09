@@ -7,6 +7,7 @@ type Lead = {
   created_at: string
   full_name: string
   email: string
+  whatsapp?: string
   what_building: string
   join_reason: string
   heard_from: string
@@ -111,7 +112,7 @@ export default function LeadsPage() {
       if (currentView === 'rejected' && s !== 'rejected') return false
       if (currentView === 'starred' && !d.starred) return false
       if (q) {
-        const haystack = [d.full_name, d.email, d.what_building, d.join_reason, d.heard_from].join(' ').toLowerCase()
+        const haystack = [d.full_name, d.email, d.whatsapp, d.what_building, d.join_reason, d.heard_from].join(' ').toLowerCase()
         if (!haystack.includes(q)) return false
       }
       return true
@@ -176,9 +177,9 @@ export default function LeadsPage() {
   function exportCSV() {
     const data = filtered.length ? filtered : allData
     if (!data.length) return
-    const headers = ['ID', 'Date', 'Name', 'Email', 'Building', 'Goal', 'Source', 'Status', 'Notes']
+    const headers = ['ID', 'Date', 'Name', 'Email', 'WhatsApp', 'Building', 'Goal', 'Source', 'Status', 'Notes']
     const rows = data.map(d =>
-      [d.id, d.created_at, d.full_name, d.email, d.what_building, d.join_reason, d.heard_from, d.status || 'new', d.notes || '']
+      [d.id, d.created_at, d.full_name, d.email, d.whatsapp || '', d.what_building, d.join_reason, d.heard_from, d.status || 'new', d.notes || '']
         .map(v => `"${String(v || '').replace(/"/g, '""')}"`)
         .join(',')
     )
@@ -406,6 +407,7 @@ export default function LeadsPage() {
                         <td><button className={`l-star ${d.starred ? 'starred' : ''}`} onClick={() => updateField(d.id, 'starred', !d.starred)}>{d.starred ? '★' : '☆'}</button></td>
                         <td className="l-td-name" onClick={() => setPanelLead(d)}>{d.full_name}</td>
                         <td className="l-td-email">{d.email}</td>
+                        <td style={{ color: '#22d3ee', fontSize: 12 }}>{d.whatsapp || '—'}</td>
                         <td>{d.what_building}</td>
                         <td>{d.join_reason}</td>
                         <td style={{ color: '#475569' }}>{d.heard_from}</td>
@@ -429,6 +431,7 @@ export default function LeadsPage() {
                 <div>
                   <div className="l-panel-name">{panelLead.full_name}</div>
                   <div className="l-panel-email">{panelLead.email}</div>
+                  {panelLead.whatsapp && <div style={{ fontSize: 12, color: '#22d3ee', marginTop: 2 }}>📱 {panelLead.whatsapp}</div>}
                   <div className="l-panel-date">Applied {new Date(panelLead.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
                 </div>
                 <button className="l-panel-close" onClick={() => setPanelLead(null)}>&times;</button>
@@ -449,6 +452,7 @@ export default function LeadsPage() {
               <div className="l-panel-body">
                 <div className="l-panel-section">
                   <div className="l-panel-section-title">Application</div>
+                  <div className="l-panel-field"><div className="l-panel-field-label">WhatsApp</div><div className="l-panel-field-value" style={{ color: '#22d3ee' }}>{panelLead.whatsapp || '—'}</div></div>
                   <div className="l-panel-field"><div className="l-panel-field-label">What they&apos;re building / idea</div><div className="l-panel-field-value">{panelLead.what_building}</div></div>
                   <div className="l-panel-field"><div className="l-panel-field-label">Goal in next 3 months</div><div className="l-panel-field-value">{panelLead.join_reason}</div></div>
                 </div>

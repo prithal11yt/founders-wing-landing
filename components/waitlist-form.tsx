@@ -23,6 +23,7 @@ export function WaitlistForm({
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
+    whatsapp: "",
     idea: "",
     goal: "",
     heardFrom: "",
@@ -105,6 +106,23 @@ export function WaitlistForm({
             placeholder="arjun@gmail.com"
           />
         </div>
+      </div>
+
+      {/* WhatsApp */}
+      <div className="space-y-2">
+        <Label htmlFor="whatsapp" className="text-muted-foreground">
+          WhatsApp Number <span className="text-red-500">*</span>
+        </Label>
+        <p className="text-xs text-muted-foreground">We'll notify you on WhatsApp when we launch. Include country code (e.g. +91 98765 43210).</p>
+        <Input
+          id="whatsapp"
+          name="whatsapp"
+          type="tel"
+          value={formData.whatsapp}
+          onChange={handleChange}
+          required
+          placeholder="+91 98765 43210"
+        />
       </div>
 
       {/* Idea */}

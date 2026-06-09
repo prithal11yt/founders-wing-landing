@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
         {
           full_name: body.fullName,
           email: body.email,
+          whatsapp: body.whatsapp ?? null,
           what_building: body.idea,
           join_reason: body.goal,
           heard_from: body.heardFrom,
