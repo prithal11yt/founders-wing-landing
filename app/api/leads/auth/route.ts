@@ -10,7 +10,9 @@ function getSecret(): string {
 }
 
 function getPassword(): string {
-  return process.env.LEADS_PASSWORD || "founderswing2026"
+  const password = process.env.LEADS_PASSWORD
+  if (!password) throw new Error("LEADS_PASSWORD not configured")
+  return password
 }
 
 function signToken(payload: object): string {
