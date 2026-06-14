@@ -48,8 +48,12 @@ export function WaitlistForm({
       if (comingSoon) {
         setSubmitted(true)
       } else {
-        const name = encodeURIComponent(formData.fullName)
-        router.push(`/secure-spot?name=${name}`)
+        const query = new URLSearchParams({
+          name: formData.fullName,
+          email: formData.email,
+          whatsapp: formData.whatsapp,
+        })
+        router.push(`/secure-spot?${query.toString()}`)
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to submit application")

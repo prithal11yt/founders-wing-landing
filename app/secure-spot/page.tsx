@@ -7,10 +7,12 @@ import { CheckCircle2, Clock, ArrowRight, ShieldCheck, Users, Zap } from "lucide
 import { WingMeshLogo } from "@/components/logo"
 import Link from "next/link"
 
-// 👇 PASTE YOUR RAZORPAY PAYMENT LINKS HERE
-const PAYMENT_LINKS = {
-  starter: "https://rzp.io/rzp/starter-6months",  // ₹2,999 / 6 months
-  annual:  "https://rzp.io/rzp/annual-12months",  // ₹4,999 / year
+// Checkout is hosted on thesoloentrepreneur.in (verified Razorpay account)
+const CHECKOUT_BASE_URL = "https://www.thesoloentrepreneur.in/fw-membership"
+
+function getCheckoutUrl(plan: "starter" | "annual", info: { name: string; email: string; whatsapp: string }) {
+  const query = new URLSearchParams({ plan, ...info })
+  return `${CHECKOUT_BASE_URL}?${query.toString()}`
 }
 
 const HOLD_HOURS = 24
@@ -60,7 +62,10 @@ function CountdownTimer() {
 function SecureSpotContent() {
   const params = useSearchParams()
   const name = params.get("name") || ""
+  const email = params.get("email") || ""
+  const whatsapp = params.get("whatsapp") || ""
   const firstName = name.split(" ")[0]
+  const checkoutInfo = { name, email, whatsapp }
 
   return (
     <div className="min-h-screen bg-[#030712] text-white flex flex-col">
@@ -112,7 +117,7 @@ function SecureSpotContent() {
 
               {/* Starter */}
               <a
-                href={PAYMENT_LINKS.starter}
+                href={getCheckoutUrl("starter", checkoutInfo)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.02] hover:border-cyan-500/40 hover:bg-cyan-500/5 p-4 transition-all duration-200"
@@ -132,7 +137,7 @@ function SecureSpotContent() {
 
               {/* Annual - recommended */}
               <a
-                href={PAYMENT_LINKS.annual}
+                href={getCheckoutUrl("annual", checkoutInfo)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center justify-between rounded-2xl border border-cyan-500/30 bg-cyan-500/5 hover:border-cyan-500/60 hover:bg-cyan-500/10 p-4 transition-all duration-200 relative overflow-hidden"
