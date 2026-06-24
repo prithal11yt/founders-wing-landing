@@ -22,6 +22,15 @@ yarn-error.log*
 # vercel
 .vercel
 
+# netlify build output
+.netlify/
+
+# leftover nested scratch project (own node_modules, not imported)
+/v2/
+
+# graphify knowledge graph output
+graphify-out/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
