@@ -12,11 +12,27 @@ type Lead = {
   join_reason: string
   heard_from: string
   status?: string
+  call_status?: string
   starred?: boolean
   notes?: string
 }
 
-type ViewFilter = 'all' | 'new' | 'reviewed' | 'shortlisted' | 'rejected' | 'starred'
+const CALL_STATUSES = [
+  { value: 'not_called',     label: '— Not Called',     color: 'transparent',              text: '#475569' },
+  { value: 'no_answer',      label: '📵 No Answer',      color: 'rgba(251,146,60,0.08)',    text: '#fb923c' },
+  { value: 'callback',       label: '🔁 Callback',       color: 'rgba(250,204,21,0.08)',    text: '#facc15' },
+  { value: 'not_interested', label: '🔴 Not Interested', color: 'rgba(239,68,68,0.08)',     text: '#ef4444' },
+  { value: 'less_convinced', label: '🟡 Less Convinced', color: 'rgba(234,179,8,0.1)',      text: '#eab308' },
+  { value: 'interested',     label: '🟢 Interested',     color: 'rgba(34,197,94,0.08)',     text: '#22c55e' },
+  { value: 'very_convinced', label: '✅ Very Convinced', color: 'rgba(16,185,129,0.12)',    text: '#10b981' },
+  { value: 'converted',      label: '💰 Converted',      color: 'rgba(6,182,212,0.12)',     text: '#06b6d4' },
+]
+
+function callStatusMeta(v?: string) {
+  return CALL_STATUSES.find(s => s.value === (v || 'not_called')) ?? CALL_STATUSES[0]
+}
+
+type ViewFilter = 'all' | 'new' | 'reviewed' | 'shortlisted' | 'rejected' | 'starred' | 'members'
 
 export default function LeadsPage() {
   const [authenticated, setAuthenticated] = useState(false)
@@ -111,6 +127,7 @@ export default function LeadsPage() {
       if (currentView === 'shortlisted' && s !== 'shortlisted') return false
       if (currentView === 'rejected' && s !== 'rejected') return false
       if (currentView === 'starred' && !d.starred) return false
+      if (currentView === 'members' && d.call_status !== 'converted') return false
       if (q) {
         const haystack = [d.full_name, d.email, d.whatsapp, d.what_building, d.join_reason, d.heard_from].join(' ').toLowerCase()
         if (!haystack.includes(q)) return false
@@ -128,6 +145,9 @@ export default function LeadsPage() {
     reviewed: allData.filter(d => d.status === 'reviewed').length,
     rejected: allData.filter(d => d.status === 'rejected').length,
     starred: allData.filter(d => d.starred).length,
+    converted: allData.filter(d => d.call_status === 'converted').length,
+    very_convinced: allData.filter(d => d.call_status === 'very_convinced').length,
+    not_called: allData.filter(d => !d.call_status || d.call_status === 'not_called').length,
   }
 
   // Actions via secure server-side API
@@ -192,7 +212,7 @@ export default function LeadsPage() {
 
   const viewTitles: Record<string, string> = {
     all: 'All Leads', new: 'New Leads', reviewed: 'Reviewed', shortlisted: 'Shortlisted',
-    rejected: 'Rejected', starred: 'Starred',
+    rejected: 'Rejected', starred: 'Starred', members: '💰 Members',
   }
 
   // ─── RENDER ───
@@ -301,6 +321,8 @@ export default function LeadsPage() {
         .l-spinner { width: 28px; height: 28px; border: 3px solid rgba(6,182,212,0.12); border-top-color: #06b6d4; border-radius: 50%; animation: l-spin 0.7s linear infinite; margin: 0 auto 14px; }
         @keyframes l-spin { to { transform: rotate(360deg); } }
         .l-check { width: 16px; height: 16px; accent-color: #06b6d4; cursor: pointer; }
+        .l-call-select { background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 4px 6px; font-size: 11px; font-family: inherit; cursor: pointer; outline: none; min-width: 130px; }
+        .l-call-select:hover { border-color: rgba(255,255,255,0.2); }
         @media (max-width: 768px) {
           .l-sidebar { display: none; }
           .l-stats { grid-template-columns: repeat(3, 1fr); }
@@ -332,6 +354,15 @@ export default function LeadsPage() {
                 <span className="l-nav-count">{item.count}</span>
               </button>
             ))}
+            <div style={{ height: 1, background: 'rgba(255,255,255,0.06)', margin: '8px 0' }} />
+            {([
+              { key: 'members', label: '💰 Members', count: stats.converted },
+            ] as { key: ViewFilter; label: string; count: number }[]).map(item => (
+              <button key={item.key} className={`l-nav-item ${currentView === item.key ? 'active' : ''}`} onClick={() => { setCurrentView(item.key); setSelected(new Set()) }}>
+                {item.label}
+                <span className="l-nav-count">{item.count}</span>
+              </button>
+            ))}
           </nav>
           <div className="l-sidebar-footer">
             <div className="l-user">{userEmail}</div>
@@ -357,9 +388,9 @@ export default function LeadsPage() {
           {/* Stats */}
           <div className="l-stats">
             <div className="l-stat"><div className="l-stat-label">Total Leads</div><div className="l-stat-value">{stats.total}</div></div>
-            <div className="l-stat"><div className="l-stat-label">New</div><div className="l-stat-value" style={{ color: '#3b82f6' }}>{stats.new}</div></div>
-            <div className="l-stat"><div className="l-stat-label">Shortlisted</div><div className="l-stat-value" style={{ color: '#10b981' }}>{stats.shortlisted}</div></div>
-            <div className="l-stat"><div className="l-stat-label">Reviewed</div><div className="l-stat-value" style={{ color: '#f59e0b' }}>{stats.reviewed}</div></div>
+            <div className="l-stat"><div className="l-stat-label">Not Called</div><div className="l-stat-value" style={{ color: '#475569' }}>{stats.not_called}</div></div>
+            <div className="l-stat"><div className="l-stat-label">Very Convinced</div><div className="l-stat-value" style={{ color: '#10b981' }}>{stats.very_convinced}</div></div>
+            <div className="l-stat"><div className="l-stat-label">Converted 💰</div><div className="l-stat-value" style={{ color: '#06b6d4' }}>{stats.converted}</div></div>
             <div className="l-stat"><div className="l-stat-label">Starred</div><div className="l-stat-value" style={{ color: '#8b5cf6' }}>{stats.starred}</div></div>
           </div>
 
@@ -389,10 +420,10 @@ export default function LeadsPage() {
                     <th style={{ width: 40, textAlign: 'center' }}><input type="checkbox" className="l-check" checked={selected.size === filtered.length && filtered.length > 0} onChange={e => toggleAll(e.target.checked)} /></th>
                     <th style={{ width: 36 }}></th>
                     <th>Name</th>
-                    <th>Email</th>
+                    <th>WhatsApp</th>
                     <th>Building</th>
-                    <th>Goal</th>
                     <th>Source</th>
+                    <th>Call Status</th>
                     <th>Status</th>
                     <th>Applied</th>
                   </tr>
@@ -400,17 +431,30 @@ export default function LeadsPage() {
                 <tbody>
                   {filtered.map(d => {
                     const st = d.status || 'new'
+                    const cs = callStatusMeta(d.call_status)
                     const date = new Date(d.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
                     return (
-                      <tr key={d.id}>
+                      <tr key={d.id} style={{ background: cs.color }}>
                         <td style={{ textAlign: 'center' }}><input type="checkbox" className="l-check" checked={selected.has(d.id)} onChange={e => toggleSelect(d.id, e.target.checked)} /></td>
                         <td><button className={`l-star ${d.starred ? 'starred' : ''}`} onClick={() => updateField(d.id, 'starred', !d.starred)}>{d.starred ? '★' : '☆'}</button></td>
                         <td className="l-td-name" onClick={() => setPanelLead(d)}>{d.full_name}</td>
-                        <td className="l-td-email">{d.email}</td>
                         <td style={{ color: '#22d3ee', fontSize: 12 }}>{d.whatsapp || '—'}</td>
                         <td>{d.what_building}</td>
-                        <td>{d.join_reason}</td>
                         <td style={{ color: '#475569' }}>{d.heard_from}</td>
+                        <td>
+                          <select
+                            className="l-call-select"
+                            value={d.call_status || 'not_called'}
+                            style={{ color: cs.text }}
+                            onChange={async e => {
+                              await updateField(d.id, 'call_status', e.target.value)
+                            }}
+                          >
+                            {CALL_STATUSES.map(s => (
+                              <option key={s.value} value={s.value}>{s.label}</option>
+                            ))}
+                          </select>
+                        </td>
                         <td><span className={`l-pill l-pill-${st}`}>{st.charAt(0).toUpperCase() + st.slice(1)}</span></td>
                         <td style={{ color: '#475569', fontSize: 12 }}>{date}</td>
                       </tr>
@@ -436,18 +480,36 @@ export default function LeadsPage() {
                 </div>
                 <button className="l-panel-close" onClick={() => setPanelLead(null)}>&times;</button>
               </div>
-              <div className="l-panel-actions">
-                {(['shortlisted', 'reviewed', 'rejected'] as const).map(s => (
-                  <button key={s} className={`l-btn ${panelLead.status === s ? 'l-btn-primary' : ''}`} style={s === 'rejected' ? { color: '#ef4444' } : {}} onClick={async () => {
-                    await updateField(panelLead.id, 'status', s)
-                    setPanelLead({ ...panelLead, status: s })
-                  }}>
-                    {s.charAt(0).toUpperCase() + s.slice(1)}
+              <div className="l-panel-actions" style={{ flexDirection: 'column', gap: 10 }}>
+                <div style={{ display: 'flex', gap: 8, width: '100%' }}>
+                  <div style={{ fontSize: 10, textTransform: 'uppercase' as const, letterSpacing: '0.06em', color: '#475569', fontWeight: 600, alignSelf: 'center', whiteSpace: 'nowrap' }}>Call</div>
+                  <select
+                    className="l-call-select"
+                    value={panelLead.call_status || 'not_called'}
+                    style={{ color: callStatusMeta(panelLead.call_status).text, flex: 1, fontSize: 13 }}
+                    onChange={async e => {
+                      await updateField(panelLead.id, 'call_status', e.target.value)
+                      setPanelLead({ ...panelLead, call_status: e.target.value })
+                    }}
+                  >
+                    {CALL_STATUSES.map(s => (
+                      <option key={s.value} value={s.value}>{s.label}</option>
+                    ))}
+                  </select>
+                </div>
+                <div style={{ display: 'flex', gap: 8, width: '100%' }}>
+                  {(['shortlisted', 'reviewed', 'rejected'] as const).map(s => (
+                    <button key={s} className={`l-btn ${panelLead.status === s ? 'l-btn-primary' : ''}`} style={s === 'rejected' ? { color: '#ef4444', flex: 1, justifyContent: 'center' } : { flex: 1, justifyContent: 'center' }} onClick={async () => {
+                      await updateField(panelLead.id, 'status', s)
+                      setPanelLead({ ...panelLead, status: s })
+                    }}>
+                      {s.charAt(0).toUpperCase() + s.slice(1)}
+                    </button>
+                  ))}
+                  <button className="l-btn" style={{ color: '#ef4444', borderColor: 'rgba(239,68,68,0.3)', flex: 1, justifyContent: 'center' }} onClick={() => deleteLeads([panelLead.id])}>
+                    Delete
                   </button>
-                ))}
-                <button className="l-btn" style={{ color: '#ef4444', borderColor: 'rgba(239,68,68,0.3)' }} onClick={() => deleteLeads([panelLead.id])}>
-                  Delete
-                </button>
+                </div>
               </div>
               <div className="l-panel-body">
                 <div className="l-panel-section">
