@@ -158,6 +158,11 @@ export default function LeadsPage() {
       body: JSON.stringify({ id, field, value }),
     })
     if (r.status === 401) { setAuthenticated(false); return }
+    if (!r.ok) {
+      const err = await r.json().catch(() => ({}))
+      alert(`Save failed: ${err.error || r.status}`)
+      return
+    }
     setAllData(prev => prev.map(d => (d.id === id ? { ...d, [field]: value } : d)))
   }
 
