@@ -26,7 +26,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     // Only allow updating specific safe fields
-    const allowedFields = ["status", "starred", "notes"]
+    const allowedFields = ["status", "starred", "notes", "call_status"]
     if (!allowedFields.includes(field)) {
       return NextResponse.json({ error: "Field not allowed" }, { status: 403 })
     }
