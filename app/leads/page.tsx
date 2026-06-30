@@ -128,6 +128,7 @@ export default function LeadsPage() {
       if (currentView === 'rejected' && s !== 'rejected') return false
       if (currentView === 'starred' && !d.starred) return false
       if (currentView === 'members' && d.call_status !== 'converted') return false
+      if (currentView !== 'members' && d.call_status === 'converted') return false
       if (q) {
         const haystack = [d.full_name, d.email, d.whatsapp, d.what_building, d.join_reason, d.heard_from].join(' ').toLowerCase()
         if (!haystack.includes(q)) return false
