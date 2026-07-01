@@ -1,3 +1,5 @@
-export default function WebsiteTest() {
-  return <div>test-website-route</div>
+import { redirect } from "next/navigation"
+
+export default function WebsiteRedirect() {
+  redirect("/")
 }
