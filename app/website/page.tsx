@@ -1,1 +1,3 @@
-export { default } from "../page.full"
+export default function WebsiteTest() {
+  return <div>test-website-route</div>
+}
