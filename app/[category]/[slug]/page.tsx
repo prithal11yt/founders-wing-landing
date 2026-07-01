@@ -120,7 +120,7 @@ export default async function SeoPage({
 
       <div className="min-h-screen bg-background text-foreground">
         {/* Nav */}
-        <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-4xl">
+        <nav className="fixed top-[56px] md:top-[60px] left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-4xl">
           <div className="neu-flat rounded-full px-5 py-3 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <img src="/logo.png" alt="Founders Wing" className="h-6 w-auto" />
@@ -136,7 +136,7 @@ export default async function SeoPage({
         </nav>
 
         {/* Hero */}
-        <section className="pt-36 pb-16 px-4">
+        <section className="pt-[188px] pb-16 px-4">
           <div className="container mx-auto max-w-3xl">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-xs text-muted-foreground mb-8">

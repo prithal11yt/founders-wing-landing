@@ -37,7 +37,7 @@ export function FoundingPriceBanner() {
   return (
     <Link
       href="/#apply"
-      className="sticky top-0 z-[60] flex flex-wrap items-center justify-center gap-2 sm:gap-3 bg-black border-b border-white/10 px-4 py-2.5 text-center hover:bg-neutral-900 transition-colors"
+      className="fixed top-0 left-0 right-0 z-[70] h-10 md:h-11 flex flex-wrap items-center justify-center gap-2 sm:gap-3 bg-black border-b border-white/10 px-4 text-center hover:bg-neutral-900 transition-colors"
     >
       <span className="text-xs sm:text-sm font-medium text-gray-100">
         Founding member price closes today at 8:30 PM

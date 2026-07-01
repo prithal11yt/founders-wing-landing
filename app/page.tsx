@@ -45,7 +45,7 @@ export default function LandingPage() {
       <InteractiveBackground />
 
       {/* ═══════════════ Navigation ═══════════════ */}
-      <header className="fixed top-3 md:top-4 left-1/2 -translate-x-1/2 w-[92%] md:w-[95%] max-w-5xl z-50 neu-convex rounded-full px-2 py-1">
+      <header className="fixed top-[52px] md:top-[60px] left-1/2 -translate-x-1/2 w-[92%] md:w-[95%] max-w-5xl z-50 neu-convex rounded-full px-2 py-1">
         <div className="container mx-auto px-3 md:px-4 h-12 md:h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Image src="/logo-icon.png" alt="Founders Wing" width={28} height={28} className="object-contain" />
@@ -89,7 +89,7 @@ export default function LandingPage() {
 
       {/* Mobile menu — rendered outside header pill to prevent clipping */}
       <div
-        className={`fixed top-[64px] md:top-[76px] left-1/2 -translate-x-1/2 w-[92%] md:w-[95%] max-w-5xl z-50 md:hidden overflow-hidden transition-all duration-300 ease-out rounded-2xl ${
+        className={`fixed top-[104px] md:top-[120px] left-1/2 -translate-x-1/2 w-[92%] md:w-[95%] max-w-5xl z-50 md:hidden overflow-hidden transition-all duration-300 ease-out rounded-2xl ${
           mobileMenuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
         }`}
       >
@@ -120,7 +120,7 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* ═══════════════ Hero Section ═══════════════ */}
-        <section className="relative pt-28 pb-16 md:pt-48 md:pb-32 overflow-hidden">
+        <section className="relative pt-[152px] pb-16 md:pt-[236px] md:pb-32 overflow-hidden">
           {/* Subtle radial gradient overlay */}
           <div className="absolute inset-0 pointer-events-none" style={{
             background: 'radial-gradient(ellipse 80% 60% at 50% 30%, rgba(2,132,199,0.06) 0%, transparent 70%)',
