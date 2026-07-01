@@ -37,15 +37,15 @@ export function FoundingPriceBanner() {
   return (
     <Link
       href="/#apply"
-      className="sticky top-0 z-[60] flex flex-wrap items-center justify-center gap-2 sm:gap-3 bg-gradient-to-r from-amber-500/15 via-amber-400/10 to-amber-500/15 border-b border-amber-500/25 backdrop-blur-sm px-4 py-2.5 text-center hover:from-amber-500/20 hover:to-amber-500/20 transition-colors"
+      className="sticky top-0 z-[60] flex flex-wrap items-center justify-center gap-2 sm:gap-3 bg-black border-b border-white/10 px-4 py-2.5 text-center hover:bg-neutral-900 transition-colors"
     >
-      <span className="text-xs sm:text-sm font-medium text-amber-200">
+      <span className="text-xs sm:text-sm font-medium text-gray-100">
         Founding member price closes today at 8:30 PM
       </span>
       <span className="font-mono font-bold text-xs sm:text-sm text-amber-400 tabular-nums">
         {pad(timeLeft.h)}:{pad(timeLeft.m)}:{pad(timeLeft.s)}
       </span>
-      <span className="hidden sm:inline text-xs text-amber-300/70 underline underline-offset-2">
+      <span className="hidden sm:inline text-xs text-white underline underline-offset-2">
         Join now
       </span>
     </Link>
