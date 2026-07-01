@@ -2,6 +2,7 @@ import React from "react"
 import type { Metadata } from "next"
 import { Inter, JetBrains_Mono, Space_Grotesk } from 'next/font/google'
 import Script from "next/script"
+import { FoundingPriceBanner } from "@/components/founding-price-banner"
 import "./globals.css"
 
 const inter = Inter({
@@ -87,6 +88,7 @@ export default function RootLayout({
         </Script>
       </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} antialiased min-h-screen`}>
+        <FoundingPriceBanner />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
