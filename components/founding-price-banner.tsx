@@ -29,7 +29,7 @@ export function FoundingPriceBanner() {
     return () => clearInterval(id)
   }, [])
 
-  if (pathname?.startsWith("/leads")) return null
+  if (pathname?.startsWith("/leads") || pathname?.startsWith("/admin") || pathname?.startsWith("/members")) return null
   if (expired || !timeLeft) return null
 
   const pad = (n: number) => String(n).padStart(2, "0")

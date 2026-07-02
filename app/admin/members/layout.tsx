@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Members | Founders Wing",
-  description: "Founders Wing member area",
+  title: "Founders Wing — Members",
+  description: "Internal members dashboard",
   robots: { index: false, follow: false },
 }
 
