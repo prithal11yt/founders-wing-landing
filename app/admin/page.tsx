@@ -361,14 +361,10 @@ export default function LeadsPage() {
               </button>
             ))}
             <div style={{ height: 1, background: 'rgba(255,255,255,0.06)', margin: '8px 0' }} />
-            {([
-              { key: 'members', label: '💰 Members', count: stats.converted },
-            ] as { key: ViewFilter; label: string; count: number }[]).map(item => (
-              <button key={item.key} className={`l-nav-item ${currentView === item.key ? 'active' : ''}`} onClick={() => { setCurrentView(item.key); setSelected(new Set()) }}>
-                {item.label}
-                <span className="l-nav-count">{item.count}</span>
-              </button>
-            ))}
+            <a href="/admin/members" className="l-nav-item" style={{ textDecoration: 'none' }}>
+              💰 Members
+              <span className="l-nav-count">→</span>
+            </a>
           </nav>
           <div className="l-sidebar-footer">
             <div className="l-user">{userEmail}</div>

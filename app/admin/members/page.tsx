@@ -230,6 +230,10 @@ export default function MembersPage() {
                 <span className="m-nav-count">{item.count}</span>
               </button>
             ))}
+            <div style={{ height: 1, background: 'rgba(255,255,255,0.06)', margin: '8px 0' }} />
+            <a href="/admin" className="m-nav-item" style={{ textDecoration: 'none' }}>
+              ← Leads Dashboard
+            </a>
           </nav>
           <div className="m-footer">
             <div className="m-user">{userEmail}</div>
