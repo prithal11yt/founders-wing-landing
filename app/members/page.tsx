@@ -104,6 +104,8 @@ export default function MembersPortal() {
 
   // ── Member dashboard ──
   const joined = new Date(member.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
+  // Members 1–19 (inclusive) are Founding Members; everyone after is a regular member.
+  const isFounding = !!member.member_no && member.member_no <= 19
 
   return (
     <div className="min-h-screen bg-[#06090f] text-slate-100" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -124,13 +126,19 @@ export default function MembersPortal() {
 
         {/* Welcome */}
         <div className="rounded-3xl border border-white/[0.06] bg-gradient-to-br from-cyan-500/[0.07] to-transparent p-6 md:p-8 mb-6">
-          <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-2">Founding Member</p>
+          <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-2">
+            {isFounding ? 'Founding Member' : 'Member'}
+          </p>
           <h1 className="text-2xl md:text-3xl font-bold mb-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
             Welcome back, {member.full_name?.split(' ')[0] || 'Founder'}
           </h1>
           {member.member_no && (
             <p className="text-slate-400 text-sm">
-              You&apos;re Founding Member <span className="text-cyan-400 font-semibold">#{member.member_no}</span>
+              {isFounding ? (
+                <>You&apos;re Founding Member <span className="text-cyan-400 font-semibold">#{member.member_no}</span></>
+              ) : (
+                <>You&apos;re Member <span className="text-cyan-400 font-semibold">#{member.member_no}</span></>
+              )}
             </p>
           )}
         </div>
