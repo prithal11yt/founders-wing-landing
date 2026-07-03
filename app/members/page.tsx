@@ -28,6 +28,12 @@ type Goal = {
   profile: Profile
 }
 
+type WingsData = {
+  me: { monthly: number; lifetime: number; givenThisMonth: number; remainingToGive: number; allowance: number }
+  leaderboard: { name: string; member_no: number | null; isMe: boolean; monthly: number; lifetime: number }[]
+  giveTargets: { email: string; name: string }[]
+}
+
 const planLabel = (p: string) => (p === 'annual' ? 'Annual · 12 months' : p === 'starter' ? 'Starter · 6 months' : p)
 
 const STATUS_META: Record<string, { label: string; color: string; bg: string }> = {
@@ -139,13 +145,14 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
   const [mine, setMine] = useState<Goal[]>([])
   const [feed, setFeed] = useState<Goal[]>([])
   const [loadingGoals, setLoadingGoals] = useState(true)
-  const [tab, setTab] = useState<'mine' | 'community'>('mine')
+  const [tab, setTab] = useState<'mine' | 'community' | 'leaderboard'>('mine')
   const [attendance, setAttendance] = useState<{
     latestCall: { id: string; title: string; call_date: string } | null
     attendedLatest: boolean
     attendedCount: number
     totalCalls: number
   } | null>(null)
+  const [wings, setWings] = useState<WingsData | null>(null)
 
   const loadProfile = useCallback(async () => {
     try {
@@ -176,7 +183,14 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
     } catch { /* ignore */ }
   }, [])
 
-  useEffect(() => { loadProfile(); loadGoals(); loadAttendance() }, [loadProfile, loadGoals, loadAttendance])
+  const loadWings = useCallback(async () => {
+    try {
+      const r = await fetch('/api/members/wings')
+      if (r.ok) setWings(await r.json())
+    } catch { /* ignore */ }
+  }, [])
+
+  useEffect(() => { loadProfile(); loadGoals(); loadAttendance(); loadWings() }, [loadProfile, loadGoals, loadAttendance, loadWings])
 
   async function markAttendance() {
     if (!attendance?.latestCall) return
@@ -247,6 +261,8 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
               </div>
             </div>
 
+            {wings && <WingsCard wings={wings} onGiven={() => { loadWings() }} />}
+
             {attendance && <AttendanceCard data={attendance} onMark={markAttendance} />}
 
             {!loadingProfile && <ProfileCard profile={profile} onSaved={setProfile} />}
@@ -257,7 +273,7 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
             <GoalForm onSubmitted={loadGoals} hasProfile={!!profile} />
 
             <div className="flex items-center gap-1 mb-4 mt-8 border-b border-white/[0.06]">
-              {([['mine', 'My Check-ins'], ['community', "What Everyone's Building"]] as const).map(([k, label]) => (
+              {([['mine', 'My Check-ins'], ['community', "What Everyone's Building"], ['leaderboard', '🏆 Leaderboard']] as const).map(([k, label]) => (
                 <button key={k} onClick={() => setTab(k)}
                   className="px-4 py-2.5 text-sm font-medium transition-colors relative"
                   style={{ color: tab === k ? '#06b6d4' : '#64748b' }}>
@@ -267,7 +283,9 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
               ))}
             </div>
 
-            {loadingGoals ? (
+            {tab === 'leaderboard' ? (
+              wings ? <Leaderboard rows={wings.leaderboard} /> : <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>
+            ) : loadingGoals ? (
               <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>
             ) : tab === 'mine' ? (
               mine.length === 0 ? (
@@ -290,6 +308,140 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
             )}
           </div>
         </div>
+      </div>
+    </div>
+  )
+}
+
+function WingsCard({ wings, onGiven }: { wings: WingsData; onGiven: () => void }) {
+  const { me, giveTargets } = wings
+  const [giving, setGiving] = useState(false)
+  const [to, setTo] = useState('')
+  const [amount, setAmount] = useState('')
+  const [note, setNote] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [msg, setMsg] = useState<{ type: 'ok' | 'err'; text: string } | null>(null)
+
+  async function give(e: React.FormEvent) {
+    e.preventDefault()
+    setSaving(true)
+    setMsg(null)
+    try {
+      const r = await fetch('/api/members/wings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ to_email: to, amount: Number(amount), reason: note }),
+      })
+      const d = await r.json()
+      if (r.ok && d.success) {
+        setMsg({ type: 'ok', text: d.bonusAwarded ? 'Sent! 🎉 You gave all 100 — earned a +20 bonus!' : 'Wings sent! 🪽' })
+        setTo(''); setAmount(''); setNote('')
+        setGiving(false)
+        onGiven()
+      } else setMsg({ type: 'err', text: d.error || 'Could not send' })
+    } catch {
+      setMsg({ type: 'err', text: 'Connection failed' })
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  return (
+    <div className="rounded-2xl border border-white/[0.06] bg-gradient-to-br from-amber-500/[0.06] to-transparent p-5">
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-xs font-semibold text-amber-300/90 uppercase tracking-wider">Your Wings 🪽</p>
+      </div>
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        <div>
+          <p className="text-2xl font-bold text-amber-400" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{me.monthly}</p>
+          <p className="text-[10px] text-slate-500 uppercase tracking-wide">This month</p>
+        </div>
+        <div>
+          <p className="text-2xl font-bold text-slate-200" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{me.lifetime}</p>
+          <p className="text-[10px] text-slate-500 uppercase tracking-wide">Lifetime</p>
+        </div>
+      </div>
+
+      <div className="rounded-lg bg-white/[0.03] px-3 py-2 mb-3">
+        <p className="text-[11px] text-slate-400">
+          <span className="text-amber-400 font-semibold">{me.remainingToGive}</span> of {me.allowance} Wings left to give this month
+        </p>
+      </div>
+
+      {msg && (
+        <p className={`text-xs mb-2 ${msg.type === 'ok' ? 'text-emerald-400' : 'text-red-400'}`}>{msg.text}</p>
+      )}
+
+      {!giving ? (
+        <button onClick={() => setGiving(true)} disabled={me.remainingToGive <= 0}
+          className="w-full py-2.5 rounded-xl text-sm font-semibold border border-amber-500/30 text-amber-300 hover:bg-amber-500/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          {me.remainingToGive <= 0 ? 'All Wings given this month 🎉' : 'Give Wings to a member'}
+        </button>
+      ) : (
+        <form onSubmit={give} className="space-y-2.5">
+          <select value={to} onChange={(e) => setTo(e.target.value)} required
+            className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-amber-500/40">
+            <option value="">Choose a member…</option>
+            {giveTargets.map((t) => <option key={t.email} value={t.email}>{t.name}</option>)}
+          </select>
+          <input type="number" min={1} max={me.remainingToGive} value={amount} onChange={(e) => setAmount(e.target.value)} required
+            placeholder={`Amount (max ${me.remainingToGive})`}
+            className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-amber-500/40" />
+          <input value={note} onChange={(e) => setNote(e.target.value)}
+            placeholder="Why? (optional — e.g. helped me debug)"
+            className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-amber-500/40" />
+          <div className="flex gap-2">
+            <button type="submit" disabled={saving}
+              className="flex-1 py-2 rounded-lg text-white text-sm font-semibold disabled:opacity-70"
+              style={{ background: 'linear-gradient(135deg,#f59e0b,#f5a524)' }}>
+              {saving ? 'Sending…' : 'Send Wings'}
+            </button>
+            <button type="button" onClick={() => { setGiving(false); setMsg(null) }} className="px-3 py-2 rounded-lg text-sm text-slate-400 border border-white/[0.06]">
+              Cancel
+            </button>
+          </div>
+        </form>
+      )}
+    </div>
+  )
+}
+
+function Leaderboard({ rows }: { rows: WingsData['leaderboard'] }) {
+  const medal = (i: number) => (i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}`)
+  const allZero = rows.every((r) => r.monthly === 0)
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-3 px-1">
+        <p className="text-xs text-slate-500">Ranked by Wings earned this month · resets monthly</p>
+        <p className="text-xs text-slate-500">🏆 #1 wins FW merch</p>
+      </div>
+      {allZero && (
+        <p className="text-[11px] text-slate-500 bg-white/[0.02] border border-white/[0.06] rounded-lg px-3 py-2 mb-3">
+          No Wings given yet this month — be the first to recognise someone who helped you.
+        </p>
+      )}
+      <div className="rounded-2xl border border-white/[0.06] overflow-hidden">
+        {rows.map((r, i) => (
+          <div key={`${r.name}-${i}`}
+            className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.04] last:border-0"
+            style={{ background: r.isMe ? 'rgba(6,182,212,0.06)' : 'transparent' }}>
+            <span className="w-7 text-center text-sm font-bold" style={{ fontFamily: 'Space Grotesk, sans-serif', color: i < 3 ? '#f59e0b' : '#64748b' }}>
+              {medal(i)}
+            </span>
+            <div className="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold text-white shrink-0"
+              style={{ background: 'linear-gradient(135deg,#0891b2,#06b6d4)' }}>
+              {firstName(r.name)[0]?.toUpperCase()}
+            </div>
+            <span className="flex-1 text-sm text-slate-200 font-medium truncate">
+              {firstName(r.name)}{r.isMe && <span className="text-cyan-400 text-xs font-normal"> (you)</span>}
+            </span>
+            <div className="text-right">
+              <span className="text-sm font-bold text-amber-400" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{r.monthly}</span>
+              <span className="text-[11px] text-slate-600 ml-2">({r.lifetime} lifetime)</span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )

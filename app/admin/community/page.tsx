@@ -34,7 +34,13 @@ export default function AdminCommunity() {
     }
   }, [])
 
-  useEffect(() => { if (authed) load() }, [authed, load])
+  const [wings, setWings] = useState<{ pool: number; used: number; remaining: number; members: { email: string; name: string }[] } | null>(null)
+  const loadWings = useCallback(async () => {
+    const r = await fetch('/api/admin/wings')
+    if (r.ok) setWings(await r.json())
+  }, [])
+
+  useEffect(() => { if (authed) { load(); loadWings() } }, [authed, load, loadWings])
 
   async function createCall(e: React.FormEvent) {
     e.preventDefault()
@@ -74,9 +80,13 @@ export default function AdminCommunity() {
   return (
     <Shell>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-bold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Community · Weekly Calls</h1>
+        <h1 className="text-xl font-bold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Community</h1>
         <a href="/admin" className="text-xs text-slate-500 hover:text-slate-300">← Admin</a>
       </div>
+
+      {wings && <AwardWings wings={wings} onAwarded={loadWings} />}
+
+      <h2 className="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-3 mt-8">Weekly Calls</h2>
 
       <form onSubmit={createCall} className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 mb-6 flex flex-col md:flex-row gap-3 md:items-end">
         <div className="flex-1">
@@ -123,6 +133,69 @@ export default function AdminCommunity() {
         </div>
       )}
     </Shell>
+  )
+}
+
+function AwardWings({ wings, onAwarded }: {
+  wings: { pool: number; used: number; remaining: number; members: { email: string; name: string }[] }
+  onAwarded: () => void
+}) {
+  const [to, setTo] = useState('')
+  const [amount, setAmount] = useState('')
+  const [reason, setReason] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [msg, setMsg] = useState<{ type: 'ok' | 'err'; text: string } | null>(null)
+
+  async function award(e: React.FormEvent) {
+    e.preventDefault()
+    setSaving(true)
+    setMsg(null)
+    try {
+      const r = await fetch('/api/admin/wings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ to_email: to, amount: Number(amount), reason }),
+      })
+      const d = await r.json()
+      if (r.ok && d.success) {
+        setMsg({ type: 'ok', text: 'Wings awarded 🪽' })
+        setTo(''); setAmount(''); setReason('')
+        onAwarded()
+      } else setMsg({ type: 'err', text: d.error || 'Could not award' })
+    } catch {
+      setMsg({ type: 'err', text: 'Connection failed' })
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  return (
+    <div className="rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] p-5 mb-2">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-sm font-semibold text-amber-300 uppercase tracking-wider">Award Wings 🪽</h2>
+        <p className="text-xs text-slate-400">
+          <span className="text-amber-400 font-semibold">{wings.remaining}</span> / {wings.pool} left this month
+        </p>
+      </div>
+      <p className="text-[11px] text-slate-500 mb-3">For hot-seat participation, showing up, helping others — your call.</p>
+      <form onSubmit={award} className="flex flex-col md:flex-row gap-2 md:items-center">
+        <select value={to} onChange={(e) => setTo(e.target.value)} required
+          className="flex-1 px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-amber-500/40">
+          <option value="">Choose a member…</option>
+          {wings.members.map((m) => <option key={m.email} value={m.email}>{m.name}</option>)}
+        </select>
+        <input type="number" min={1} max={wings.remaining} value={amount} onChange={(e) => setAmount(e.target.value)} required placeholder="Amount"
+          className="w-full md:w-24 px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-amber-500/40" />
+        <input value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Reason (optional)"
+          className="flex-1 px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-amber-500/40" />
+        <button type="submit" disabled={saving || wings.remaining <= 0}
+          className="px-4 py-2 rounded-lg text-white text-sm font-semibold disabled:opacity-60 whitespace-nowrap"
+          style={{ background: 'linear-gradient(135deg,#f59e0b,#f5a524)' }}>
+          {saving ? 'Awarding…' : 'Award'}
+        </button>
+      </form>
+      {msg && <p className={`text-xs mt-2 ${msg.type === 'ok' ? 'text-emerald-400' : 'text-red-400'}`}>{msg.text}</p>}
+    </div>
   )
 }
 
