@@ -365,6 +365,10 @@ export default function LeadsPage() {
               💰 Members
               <span className="l-nav-count">→</span>
             </a>
+            <a href="/admin/community" className="l-nav-item" style={{ textDecoration: 'none' }}>
+              🎯 Community
+              <span className="l-nav-count">→</span>
+            </a>
           </nav>
           <div className="l-sidebar-footer">
             <div className="l-user">{userEmail}</div>

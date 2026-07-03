@@ -140,6 +140,12 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
   const [feed, setFeed] = useState<Goal[]>([])
   const [loadingGoals, setLoadingGoals] = useState(true)
   const [tab, setTab] = useState<'mine' | 'community'>('mine')
+  const [attendance, setAttendance] = useState<{
+    latestCall: { id: string; title: string; call_date: string } | null
+    attendedLatest: boolean
+    attendedCount: number
+    totalCalls: number
+  } | null>(null)
 
   const loadProfile = useCallback(async () => {
     try {
@@ -163,7 +169,25 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
     }
   }, [])
 
-  useEffect(() => { loadProfile(); loadGoals() }, [loadProfile, loadGoals])
+  const loadAttendance = useCallback(async () => {
+    try {
+      const r = await fetch('/api/members/attendance')
+      if (r.ok) setAttendance(await r.json())
+    } catch { /* ignore */ }
+  }, [])
+
+  useEffect(() => { loadProfile(); loadGoals(); loadAttendance() }, [loadProfile, loadGoals, loadAttendance])
+
+  async function markAttendance() {
+    if (!attendance?.latestCall) return
+    const r = await fetch('/api/members/attendance', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ call_id: attendance.latestCall.id }),
+    })
+    if (r.ok) loadAttendance()
+    else alert('Could not mark attendance. Try again.')
+  }
 
   async function setGoalStatus(id: string, status: string) {
     const prev = mine
@@ -223,6 +247,8 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
               </div>
             </div>
 
+            {attendance && <AttendanceCard data={attendance} onMark={markAttendance} />}
+
             {!loadingProfile && <ProfileCard profile={profile} onSaved={setProfile} />}
           </div>
 
@@ -265,6 +291,47 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
           </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+function AttendanceCard({ data, onMark }: {
+  data: { latestCall: { id: string; title: string; call_date: string } | null; attendedLatest: boolean; attendedCount: number; totalCalls: number }
+  onMark: () => void
+}) {
+  const { latestCall, attendedLatest, attendedCount, totalCalls } = data
+  const callDate = latestCall
+    ? new Date(latestCall.call_date).toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })
+    : null
+
+  return (
+    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 space-y-4">
+      <div className="flex items-center justify-between">
+        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Live Calls</p>
+        <p className="text-xs text-slate-500">
+          <span className="text-cyan-400 font-semibold">{attendedCount}</span>/{totalCalls} attended
+        </p>
+      </div>
+
+      {!latestCall ? (
+        <p className="text-[13px] text-slate-500">No calls scheduled yet. Your first session is coming soon.</p>
+      ) : (
+        <div>
+          <p className="text-sm font-semibold text-slate-100">{latestCall.title}</p>
+          <p className="text-xs text-slate-500 mt-0.5 mb-3">{callDate}</p>
+          {attendedLatest ? (
+            <div className="flex items-center gap-2 text-sm text-emerald-400 font-medium">
+              <span>✅</span> You marked attendance
+            </div>
+          ) : (
+            <button onClick={onMark}
+              className="w-full py-2.5 rounded-xl text-white text-sm font-semibold"
+              style={{ background: 'linear-gradient(135deg,#0891b2,#06b6d4)' }}>
+              I attended this call
+            </button>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -455,7 +522,7 @@ function GoalRow({ label, value }: { label: string; value: string | null | undef
 }
 
 function MyGoalCard({ goal, onStatus }: { goal: Goal; onStatus: (id: string, status: string) => void }) {
-  const date = new Date(goal.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
+  const date = new Date(goal.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
   return (
     <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 space-y-3">
       <div className="flex items-center justify-between">
@@ -483,7 +550,7 @@ function MyGoalCard({ goal, onStatus }: { goal: Goal; onStatus: (id: string, sta
 }
 
 function FeedGoalCard({ goal, isMe }: { goal: Goal; isMe: boolean }) {
-  const date = new Date(goal.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
+  const date = new Date(goal.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
   return (
     <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 space-y-3">
       <div className="flex items-center justify-between">
