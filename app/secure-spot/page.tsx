@@ -127,10 +127,10 @@ function SecureSpotContent() {
                     <span className="font-semibold text-sm">Starter</span>
                     <span className="text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-muted-foreground">6 months</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Full access · ₹500/mo</p>
+                  <p className="text-xs text-muted-foreground">Full access · ₹1,000/mo</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-lg font-bold">₹2,999</span>
+                  <span className="text-lg font-bold">₹5,999</span>
                   <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all" />
                 </div>
               </a>
@@ -150,10 +150,10 @@ function SecureSpotContent() {
                     <span className="font-semibold text-sm">Annual</span>
                     <span className="text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-muted-foreground">12 months</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Everything + priority hot seat · ₹417/mo</p>
+                  <p className="text-xs text-muted-foreground">Everything + priority hot seat · ₹833/mo</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-lg font-bold text-cyan-400">₹4,999</span>
+                  <span className="text-lg font-bold text-cyan-400">₹9,999</span>
                   <ArrowRight className="w-4 h-4 text-cyan-400 group-hover:translate-x-0.5 transition-all" />
                 </div>
               </a>

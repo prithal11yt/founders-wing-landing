@@ -80,7 +80,7 @@ export default async function Image() {
             lineHeight: 1.5,
           }}
         >
-          India's action-first founder community. From ₹2,999.
+          India's action-first founder community. From ₹5,999.
         </div>
       </div>
     ),

@@ -15,7 +15,7 @@ const faqs = [
   },
   {
     q: 'How much does it cost?',
-    a: "We offer two plans: ₹2,999 for 6 months (just ₹500/month) or ₹4,999 for a full year (just ₹417/month). No monthly option — we want committed members who are serious about building, not people who sign up and forget.",
+    a: "We offer two plans: ₹5,999 for 6 months (just ₹1,000/month) or ₹9,999 for a full year (just ₹833/month). No monthly option — we want committed members who are serious about building, not people who sign up and forget.",
   },
   {
     q: 'What do I actually get inside?',

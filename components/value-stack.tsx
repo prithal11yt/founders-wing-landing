@@ -111,9 +111,9 @@ export function ValueStack() {
               <span className="text-sm font-medium text-cyan-400 uppercase tracking-wider">Starter</span>
             </div>
             <div className="mb-1">
-              <span className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">₹2,999</span>
+              <span className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">₹5,999</span>
             </div>
-            <p className="text-muted-foreground text-sm mb-6">for 6 months · just ₹500/mo</p>
+            <p className="text-muted-foreground text-sm mb-6">for 6 months · just ₹1,000/mo</p>
 
             <ul className="space-y-2.5 mb-8">
               {['Full community access', 'Weekly live sessions', 'All playbooks & templates', '30-day challenge', 'Sprint leaderboard access'].map(f => (
@@ -139,7 +139,7 @@ export function ValueStack() {
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
               <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-cyan-500 text-xs font-bold text-white shadow-[0_0_20px_rgba(2,132,199,0.5)]">
                 <Crown className="w-3.5 h-3.5" />
-                BEST VALUE — SAVE ₹1,000
+                BEST VALUE — SAVE ₹2,000
               </div>
             </div>
 
@@ -148,9 +148,9 @@ export function ValueStack() {
               <span className="text-sm font-medium text-amber-400 uppercase tracking-wider">Committed</span>
             </div>
             <div className="mb-1">
-              <span className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">₹4,999</span>
+              <span className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">₹9,999</span>
             </div>
-            <p className="text-muted-foreground text-sm mb-6">for 12 months · just ₹417/mo</p>
+            <p className="text-muted-foreground text-sm mb-6">for 12 months · just ₹833/mo</p>
 
             <ul className="space-y-2.5 mb-8">
               {['Everything in Starter', '6 extra months of access', 'Priority Hot Seat spots', 'Founding member badge', 'Sprint leaderboard access'].map(f => (
@@ -165,7 +165,7 @@ export function ValueStack() {
               onClick={scrollToApply}
               className="w-full rounded-full h-12 text-base font-semibold neu-button-primary shadow-[0_0_30px_rgba(2,132,199,0.4)] transition-all"
             >
-              Join for ₹4,999/year
+              Join for ₹9,999/year
               <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
           </div>
@@ -198,8 +198,8 @@ export function ValueStack() {
           <div className="flex-1 relative z-10">
             <p className="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-1">Think about it this way</p>
             <p className="text-sm text-foreground leading-relaxed">
-              <span className="font-bold">₹500/month</span>
-              <span className="text-muted-foreground"> — less than one Swiggy order.</span>
+              <span className="font-bold">₹1,000/month</span>
+              <span className="text-muted-foreground"> — about ₹33 a day.</span>
             </p>
             <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
               One offline workshop = ₹3,000–5,000 for a single day. Here you get <span className="text-foreground font-medium">26 live sessions + community + sprint access</span> for 6 months.

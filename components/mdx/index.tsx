@@ -31,7 +31,7 @@ export function JoinCTA({ variant = "membership" }: { variant?: string }) {
   const messages: Record<string, { headline: string; sub: string }> = {
     membership: {
       headline: "Stop reading about it. Start building.",
-      sub: "Join Founders Wing — India's action-first founder community. From ₹2,999.",
+      sub: "Join Founders Wing — India's action-first founder community. From ₹5,999.",
     },
     "10k-sprint": {
       headline: "Want to earn your first ₹10,000 online?",
@@ -48,7 +48,7 @@ export function JoinCTA({ variant = "membership" }: { variant?: string }) {
     // legacy aliases
     default: {
       headline: "Stop reading about it. Start building.",
-      sub: "Join Founders Wing — India's action-first founder community. From ₹2,999.",
+      sub: "Join Founders Wing — India's action-first founder community. From ₹5,999.",
     },
     community: {
       headline: "Looking for a founder community that actually delivers?",
