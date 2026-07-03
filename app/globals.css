@@ -296,6 +296,15 @@ section {
   background: rgba(2, 132, 199, 0.4);
 }
 
+/* Hide scrollbar (e.g. horizontally-scrollable tab strips) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* ═══════════════ Mobile Performance Optimizations ═══════════════ */
 @media (max-width: 768px) {
   .backdrop-blur-sm {

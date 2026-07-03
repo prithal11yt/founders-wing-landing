@@ -38,9 +38,16 @@ export async function GET(request: NextRequest) {
     const attendedCallIds = new Set((myAttendance || []).map((a) => a.call_id))
     const { count: totalCalls } = await supabase.from("fw_calls").select("*", { count: "exact", head: true })
 
+    // Today's date in IST (YYYY-MM-DD). A call can only be marked on or after
+    // its date — before that it's shown as upcoming.
+    const todayIST = new Date(Date.now() + 5.5 * 60 * 60 * 1000).toISOString().slice(0, 10)
+    const canMark = latest ? todayIST >= latest.call_date : false
+
     return NextResponse.json({
       latestCall: latest || null,
       attendedLatest: latest ? attendedCallIds.has(latest.id) : false,
+      canMark,
+      isUpcoming: latest ? !canMark : false,
       attendedCount: attendedCallIds.size,
       totalCalls: totalCalls || 0,
     })
@@ -61,9 +68,14 @@ export async function POST(request: NextRequest) {
 
     const supabase = getSupabase()
 
-    // Confirm the call exists
-    const { data: call } = await supabase.from("fw_calls").select("id").eq("id", call_id).maybeSingle()
+    // Confirm the call exists and its date has arrived
+    const { data: call } = await supabase.from("fw_calls").select("id, call_date").eq("id", call_id).maybeSingle()
     if (!call) return NextResponse.json({ error: "Call not found" }, { status: 404 })
+
+    const todayIST = new Date(Date.now() + 5.5 * 60 * 60 * 1000).toISOString().slice(0, 10)
+    if (todayIST < call.call_date) {
+      return NextResponse.json({ error: "This call hasn't happened yet" }, { status: 400 })
+    }
 
     const { data: member } = await supabase
       .from("fw_memberships")
