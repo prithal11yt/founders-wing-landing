@@ -18,7 +18,24 @@ function authEmail(request: NextRequest): string | null {
   return verifyMemberToken(token)?.email ?? null
 }
 
-// GET → { mine: [...], feed: [latest goal per member] }
+// Attach each goal's member profile (what they're building / who for / problem)
+// so the UI can render full context without a separate round trip.
+async function withProfiles(supabase: ReturnType<typeof getSupabase>, goals: Record<string, unknown>[]) {
+  const emails = [...new Set(goals.map((g) => (g.member_email as string)?.toLowerCase()).filter(Boolean))]
+  if (emails.length === 0) return goals.map((g) => ({ ...g, profile: null }))
+
+  const { data: profiles } = await supabase
+    .from("fw_member_profiles")
+    .select("member_email, what_building, who_its_for, problem")
+    .in(
+      "member_email",
+      emails // exact-case lookup is fine here since we always store lowercased-trimmed emails on write
+    )
+  const byEmail = new Map((profiles || []).map((p) => [p.member_email.toLowerCase(), p]))
+  return goals.map((g) => ({ ...g, profile: byEmail.get((g.member_email as string)?.toLowerCase()) || null }))
+}
+
+// GET → { mine: [...], feed: [latest goal per member] }, each with its member's profile attached
 export async function GET(request: NextRequest) {
   const email = authEmail(request)
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -44,24 +61,26 @@ export async function GET(request: NextRequest) {
       feed.push(g)
     }
 
-    return NextResponse.json({ mine, feed })
+    return NextResponse.json({
+      mine: await withProfiles(supabase, mine),
+      feed: await withProfiles(supabase, feed),
+    })
   } catch (err) {
     console.error("[members/goals] GET error:", err)
     return NextResponse.json({ error: "Server error" }, { status: 500 })
   }
 }
 
-// POST → submit a new weekly goal
+// POST → submit this week's check-in (just the goal + community ask)
 export async function POST(request: NextRequest) {
   const email = authEmail(request)
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   try {
     const body = await request.json()
-    const what_building = (body.what_building || "").trim()
     const goal = (body.goal || "").trim()
-    if (!what_building || !goal) {
-      return NextResponse.json({ error: "What you're building and your goal are required" }, { status: 400 })
+    if (!goal) {
+      return NextResponse.json({ error: "Your 7-day goal is required" }, { status: 400 })
     }
 
     const supabase = getSupabase()
@@ -79,9 +98,6 @@ export async function POST(request: NextRequest) {
       .insert({
         member_email: email,
         member_name: member?.full_name || null,
-        what_building,
-        who_its_for: (body.who_its_for || "").trim() || null,
-        problem: (body.problem || "").trim() || null,
         goal,
         community_ask: (body.community_ask || "").trim() || null,
       })

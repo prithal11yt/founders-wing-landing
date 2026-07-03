@@ -11,17 +11,21 @@ type Member = {
   member_no: number | null
 }
 
+type Profile = {
+  what_building: string
+  who_its_for: string | null
+  problem: string | null
+} | null
+
 type Goal = {
   id: string
   member_email: string
   member_name: string | null
-  what_building: string
-  who_its_for: string | null
-  problem: string | null
   goal: string
   community_ask: string | null
   status: string
   created_at: string
+  profile: Profile
 }
 
 const planLabel = (p: string) => (p === 'annual' ? 'Annual · 12 months' : p === 'starter' ? 'Starter · 6 months' : p)
@@ -130,10 +134,21 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
   const joined = new Date(member.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
   const isFounding = !!member.member_no && member.member_no <= 19
 
+  const [profile, setProfile] = useState<Profile>(null)
+  const [loadingProfile, setLoadingProfile] = useState(true)
   const [mine, setMine] = useState<Goal[]>([])
   const [feed, setFeed] = useState<Goal[]>([])
   const [loadingGoals, setLoadingGoals] = useState(true)
   const [tab, setTab] = useState<'mine' | 'community'>('mine')
+
+  const loadProfile = useCallback(async () => {
+    try {
+      const r = await fetch('/api/members/profile')
+      if (r.ok) { const d = await r.json(); setProfile(d.profile) }
+    } finally {
+      setLoadingProfile(false)
+    }
+  }, [])
 
   const loadGoals = useCallback(async () => {
     try {
@@ -148,7 +163,7 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
     }
   }, [])
 
-  useEffect(() => { loadGoals() }, [loadGoals])
+  useEffect(() => { loadProfile(); loadGoals() }, [loadProfile, loadGoals])
 
   async function setGoalStatus(id: string, status: string) {
     const prev = mine
@@ -164,7 +179,7 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
 
   return (
     <div className="min-h-screen bg-[#06090f] text-slate-100" style={{ fontFamily: 'Inter, sans-serif' }}>
-      <div className="max-w-3xl mx-auto px-4 py-8 md:py-12">
+      <div className="max-w-6xl mx-auto px-6 py-8 md:py-12">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
@@ -179,81 +194,175 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
           </button>
         </div>
 
-        {/* Welcome */}
-        <div className="rounded-3xl border border-white/[0.06] bg-gradient-to-br from-cyan-500/[0.07] to-transparent p-6 md:p-8 mb-6">
-          <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-2">
-            {isFounding ? 'Founding Member' : 'Member'}
-          </p>
-          <h1 className="text-2xl md:text-3xl font-bold mb-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-            Welcome back, {firstName(member.full_name)}
-          </h1>
-          {member.member_no && (
-            <p className="text-slate-400 text-sm">
-              {isFounding
-                ? <>You&apos;re Founding Member <span className="text-cyan-400 font-semibold">#{member.member_no}</span></>
-                : <>You&apos;re Member <span className="text-cyan-400 font-semibold">#{member.member_no}</span></>}
-            </p>
-          )}
-        </div>
-
-        {/* Detail cards */}
-        <div className="grid grid-cols-2 gap-4 mb-8">
-          <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5">
-            <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Your Plan</p>
-            <p className="text-base font-semibold">{planLabel(member.plan)}</p>
-          </div>
-          <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5">
-            <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Member Since</p>
-            <p className="text-base font-semibold">{joined}</p>
-          </div>
-        </div>
-
-        {/* Weekly goal submission */}
-        <GoalForm onSubmitted={loadGoals} />
-
-        {/* Tabs: mine / community */}
-        <div className="flex items-center gap-1 mb-4 mt-8 border-b border-white/[0.06]">
-          {([['mine', 'My Goals'], ['community', "What Everyone's Building"]] as const).map(([k, label]) => (
-            <button key={k} onClick={() => setTab(k)}
-              className="px-4 py-2.5 text-sm font-medium transition-colors relative"
-              style={{ color: tab === k ? '#06b6d4' : '#64748b' }}>
-              {label}
-              {tab === k && <span className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-cyan-400 rounded-full" />}
-            </button>
-          ))}
-        </div>
-
-        {loadingGoals ? (
-          <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>
-        ) : tab === 'mine' ? (
-          mine.length === 0 ? (
-            <p className="text-slate-500 text-sm py-8 text-center">
-              You haven&apos;t set a weekly goal yet. Add one above to get started.
-            </p>
-          ) : (
-            <div className="space-y-4">
-              {mine.map((g) => <MyGoalCard key={g.id} goal={g} onStatus={setGoalStatus} />)}
+        <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-6 items-start">
+          {/* ── Left column: identity + plan + project profile ── */}
+          <div className="space-y-6">
+            <div className="rounded-3xl border border-white/[0.06] bg-gradient-to-br from-cyan-500/[0.07] to-transparent p-6">
+              <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-2">
+                {isFounding ? 'Founding Member' : 'Member'}
+              </p>
+              <h1 className="text-2xl font-bold mb-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                {firstName(member.full_name)}
+              </h1>
+              {member.member_no && (
+                <p className="text-slate-400 text-sm">
+                  {isFounding
+                    ? <>Founding Member <span className="text-cyan-400 font-semibold">#{member.member_no}</span></>
+                    : <>Member <span className="text-cyan-400 font-semibold">#{member.member_no}</span></>}
+                </p>
+              )}
+              <div className="grid grid-cols-2 gap-3 mt-5">
+                <div>
+                  <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Plan</p>
+                  <p className="text-sm font-semibold">{planLabel(member.plan)}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Since</p>
+                  <p className="text-sm font-semibold">{joined}</p>
+                </div>
+              </div>
             </div>
-          )
-        ) : (
-          feed.length === 0 ? (
-            <p className="text-slate-500 text-sm py-8 text-center">No goals shared yet. Be the first!</p>
-          ) : (
-            <div className="space-y-4">
-              {feed.map((g) => <FeedGoalCard key={g.id} goal={g} isMe={g.member_email.toLowerCase() === member.email.toLowerCase()} />)}
+
+            {!loadingProfile && <ProfileCard profile={profile} onSaved={setProfile} />}
+          </div>
+
+          {/* ── Right column: weekly check-in + goals ── */}
+          <div>
+            <GoalForm onSubmitted={loadGoals} hasProfile={!!profile} />
+
+            <div className="flex items-center gap-1 mb-4 mt-8 border-b border-white/[0.06]">
+              {([['mine', 'My Check-ins'], ['community', "What Everyone's Building"]] as const).map(([k, label]) => (
+                <button key={k} onClick={() => setTab(k)}
+                  className="px-4 py-2.5 text-sm font-medium transition-colors relative"
+                  style={{ color: tab === k ? '#06b6d4' : '#64748b' }}>
+                  {label}
+                  {tab === k && <span className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-cyan-400 rounded-full" />}
+                </button>
+              ))}
             </div>
-          )
-        )}
+
+            {loadingGoals ? (
+              <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>
+            ) : tab === 'mine' ? (
+              mine.length === 0 ? (
+                <p className="text-slate-500 text-sm py-8 text-center">
+                  You haven&apos;t checked in this week yet. Add your goal above to get started.
+                </p>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {mine.map((g) => <MyGoalCard key={g.id} goal={g} onStatus={setGoalStatus} />)}
+                </div>
+              )
+            ) : feed.length === 0 ? (
+              <p className="text-slate-500 text-sm py-8 text-center">No check-ins shared yet. Be the first!</p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {feed.map((g) => (
+                  <FeedGoalCard key={g.id} goal={g} isMe={g.member_email.toLowerCase() === member.email.toLowerCase()} />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   )
 }
 
-function GoalForm({ onSubmitted }: { onSubmitted: () => void }) {
+function ProfileCard({ profile, onSaved }: { profile: Profile; onSaved: (p: Profile) => void }) {
+  const [editing, setEditing] = useState(!profile)
+  const [saving, setSaving] = useState(false)
+  const [err, setErr] = useState('')
+  const [f, setF] = useState({
+    what_building: profile?.what_building || '',
+    who_its_for: profile?.who_its_for || '',
+    problem: profile?.problem || '',
+  })
+
+  const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value })
+
+  async function save(e: React.FormEvent) {
+    e.preventDefault()
+    setSaving(true)
+    setErr('')
+    try {
+      const r = await fetch('/api/members/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(f),
+      })
+      const d = await r.json()
+      if (r.ok && d.success) { onSaved(d.profile); setEditing(false) }
+      else setErr(d.error || 'Could not save')
+    } catch {
+      setErr('Connection failed')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  if (!editing && profile) {
+    return (
+      <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 space-y-3">
+        <div className="flex items-center justify-between">
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Your Project</p>
+          <button onClick={() => setEditing(true)} className="text-[11px] text-cyan-400 hover:text-cyan-300">Edit</button>
+        </div>
+        <GoalRow label="Building / exploring" value={profile.what_building} />
+        <GoalRow label="Who it's for" value={profile.who_its_for} />
+        <GoalRow label="Problem" value={profile.problem} />
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={save} className="rounded-2xl border border-cyan-500/20 bg-cyan-500/[0.04] p-5 space-y-3">
+      <p className="text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-1">
+        {profile ? 'Edit your project' : 'Tell the group what you\'re building'}
+      </p>
+      <p className="text-[11px] text-slate-500 mb-2">
+        This stays the same each week — edit it anytime your project changes.
+      </p>
+      <div>
+        <label className="block text-xs font-medium text-slate-400 mb-1">What I&apos;m building or exploring *</label>
+        <textarea value={f.what_building} onChange={set('what_building')} required rows={2}
+          placeholder="e.g. A B2B SaaS tool for automating invoicing…"
+          className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40 resize-none" />
+      </div>
+      <div>
+        <label className="block text-xs font-medium text-slate-400 mb-1">Who it is for</label>
+        <textarea value={f.who_its_for} onChange={set('who_its_for')} rows={2}
+          placeholder="e.g. SaaS founders and product teams…"
+          className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40 resize-none" />
+      </div>
+      <div>
+        <label className="block text-xs font-medium text-slate-400 mb-1">The problem I think they have</label>
+        <textarea value={f.problem} onChange={set('problem')} rows={2}
+          placeholder="e.g. Balancing AI capability with reliability…"
+          className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40 resize-none" />
+      </div>
+      {err && <p className="text-red-400 text-xs">{err}</p>}
+      <div className="flex gap-2">
+        <button type="submit" disabled={saving}
+          className="flex-1 py-2.5 rounded-lg text-white text-sm font-semibold disabled:opacity-70"
+          style={{ background: 'linear-gradient(135deg,#0891b2,#06b6d4)' }}>
+          {saving ? 'Saving…' : 'Save'}
+        </button>
+        {profile && (
+          <button type="button" onClick={() => setEditing(false)} className="px-4 py-2.5 rounded-lg text-sm text-slate-400 border border-white/[0.06]">
+            Cancel
+          </button>
+        )}
+      </div>
+    </form>
+  )
+}
+
+function GoalForm({ onSubmitted, hasProfile }: { onSubmitted: () => void; hasProfile: boolean }) {
   const [open, setOpen] = useState(false)
   const [saving, setSaving] = useState(false)
   const [err, setErr] = useState('')
-  const [f, setF] = useState({ what_building: '', who_its_for: '', problem: '', goal: '', community_ask: '' })
+  const [f, setF] = useState({ goal: '', community_ask: '' })
 
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value })
 
@@ -269,7 +378,7 @@ function GoalForm({ onSubmitted }: { onSubmitted: () => void }) {
       })
       const d = await r.json()
       if (r.ok && d.success) {
-        setF({ what_building: '', who_its_for: '', problem: '', goal: '', community_ask: '' })
+        setF({ goal: '', community_ask: '' })
         setOpen(false)
         onSubmitted()
       } else setErr(d.error || 'Could not save')
@@ -286,20 +395,12 @@ function GoalForm({ onSubmitted }: { onSubmitted: () => void }) {
         className="w-full rounded-2xl border border-cyan-500/30 bg-cyan-500/[0.08] hover:bg-cyan-500/[0.14] transition-colors p-5 text-left flex items-center justify-between group">
         <div>
           <p className="text-sm font-semibold text-cyan-300">Set this week&apos;s goal 🎯</p>
-          <p className="text-xs text-slate-500 mt-0.5">Share what you&apos;re building and your 7-day target with the group.</p>
+          <p className="text-xs text-slate-500 mt-0.5">Just your 7-day target and a question for the group — takes 20 seconds.</p>
         </div>
         <span className="text-cyan-400 text-xl group-hover:translate-x-0.5 transition-transform">+</span>
       </button>
     )
   }
-
-  const fields: { key: keyof typeof f; label: string; placeholder: string; required?: boolean }[] = [
-    { key: 'what_building', label: "What I'm building or exploring", placeholder: 'e.g. A B2B SaaS tool for automating invoicing…', required: true },
-    { key: 'who_its_for', label: 'Who it is for', placeholder: 'e.g. SaaS founders and product teams…' },
-    { key: 'problem', label: 'The problem I think they have', placeholder: 'e.g. Balancing AI capability with reliability…' },
-    { key: 'goal', label: 'My goal for the next 7 days', placeholder: 'e.g. Validate backend feasibility of 2 core ideas…', required: true },
-    { key: 'community_ask', label: 'One specific ask from the community', placeholder: "e.g. What's your biggest bottleneck adopting AI?" },
-  ]
 
   return (
     <form onSubmit={submit} className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 md:p-6 space-y-4">
@@ -307,21 +408,23 @@ function GoalForm({ onSubmitted }: { onSubmitted: () => void }) {
         <p className="text-sm font-semibold text-slate-100">Set this week&apos;s goal</p>
         <button type="button" onClick={() => setOpen(false)} className="text-xs text-slate-500 hover:text-slate-300">Cancel</button>
       </div>
-      {fields.map((fld) => (
-        <div key={fld.key}>
-          <label className="block text-xs font-medium text-slate-400 mb-1.5">
-            {fld.label}{fld.required && <span className="text-cyan-400"> *</span>}
-          </label>
-          <textarea
-            value={f[fld.key]}
-            onChange={set(fld.key)}
-            placeholder={fld.placeholder}
-            required={fld.required}
-            rows={2}
-            className="w-full px-3.5 py-2.5 bg-[#06090f] border border-white/[0.06] rounded-xl text-slate-100 text-sm outline-none focus:border-cyan-500/40 resize-none"
-          />
-        </div>
-      ))}
+      {!hasProfile && (
+        <p className="text-[11px] text-amber-400 bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2">
+          Tip: add your project in the &quot;Your Project&quot; card on the left first, so the group has context for this goal.
+        </p>
+      )}
+      <div>
+        <label className="block text-xs font-medium text-slate-400 mb-1.5">My goal for the next 7 days <span className="text-cyan-400">*</span></label>
+        <textarea value={f.goal} onChange={set('goal')} required rows={2}
+          placeholder="e.g. Validate backend feasibility of 2 core ideas…"
+          className="w-full px-3.5 py-2.5 bg-[#06090f] border border-white/[0.06] rounded-xl text-slate-100 text-sm outline-none focus:border-cyan-500/40 resize-none" />
+      </div>
+      <div>
+        <label className="block text-xs font-medium text-slate-400 mb-1.5">One specific ask from the community</label>
+        <textarea value={f.community_ask} onChange={set('community_ask')} rows={2}
+          placeholder="e.g. What's your biggest bottleneck adopting AI?"
+          className="w-full px-3.5 py-2.5 bg-[#06090f] border border-white/[0.06] rounded-xl text-slate-100 text-sm outline-none focus:border-cyan-500/40 resize-none" />
+      </div>
       {err && <p className="text-red-400 text-xs">{err}</p>}
       <button type="submit" disabled={saving}
         className="w-full py-3 rounded-xl text-white text-sm font-semibold disabled:opacity-70"
@@ -341,7 +444,7 @@ function StatusPill({ status }: { status: string }) {
   )
 }
 
-function GoalRow({ label, value }: { label: string; value: string | null }) {
+function GoalRow({ label, value }: { label: string; value: string | null | undefined }) {
   if (!value) return null
   return (
     <div>
@@ -359,12 +462,9 @@ function MyGoalCard({ goal, onStatus }: { goal: Goal; onStatus: (id: string, sta
         <span className="text-[11px] text-slate-500 font-medium">Week of {date}</span>
         <StatusPill status={goal.status} />
       </div>
-      <GoalRow label="Building / exploring" value={goal.what_building} />
-      <GoalRow label="Who it's for" value={goal.who_its_for} />
-      <GoalRow label="Problem" value={goal.problem} />
       <GoalRow label="7-day goal" value={goal.goal} />
       <GoalRow label="Ask from the group" value={goal.community_ask} />
-      <div className="flex items-center gap-2 pt-1">
+      <div className="flex items-center gap-2 pt-1 flex-wrap">
         <span className="text-[11px] text-slate-500">Mark as:</span>
         {(['in_progress', 'achieved', 'missed'] as const).map((s) => (
           <button key={s} onClick={() => onStatus(goal.id, s)}
@@ -388,7 +488,7 @@ function FeedGoalCard({ goal, isMe }: { goal: Goal; isMe: boolean }) {
     <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold text-white"
+          <div className="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold text-white shrink-0"
             style={{ background: 'linear-gradient(135deg,#0891b2,#06b6d4)' }}>
             {firstName(goal.member_name)[0]?.toUpperCase()}
           </div>
@@ -401,7 +501,11 @@ function FeedGoalCard({ goal, isMe }: { goal: Goal; isMe: boolean }) {
           <StatusPill status={goal.status} />
         </div>
       </div>
-      <GoalRow label="Building / exploring" value={goal.what_building} />
+      {goal.profile?.what_building && (
+        <p className="text-[13px] text-slate-400 italic leading-relaxed">
+          Building: {goal.profile.what_building}
+        </p>
+      )}
       <GoalRow label="7-day goal" value={goal.goal} />
       <GoalRow label="Ask from the group" value={goal.community_ask} />
     </div>
