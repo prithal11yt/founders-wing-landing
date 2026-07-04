@@ -15,7 +15,20 @@ type Profile = {
   what_building: string
   who_its_for: string | null
   problem: string | null
+  link: string | null
 } | null
+
+type DirectoryMember = {
+  name: string
+  member_no: number
+  isFounding: boolean
+  isMe: boolean
+  hasProfile: boolean
+  what_building: string | null
+  who_its_for: string | null
+  problem: string | null
+  link: string | null
+}
 
 type Goal = {
   id: string
@@ -43,6 +56,14 @@ const STATUS_META: Record<string, { label: string; color: string; bg: string }> 
 }
 
 const firstName = (name?: string | null) => (name || 'Founder').split(' ')[0]
+
+// Turn a user-entered link into a safe absolute URL (handles bare domains and @handles).
+function normalizeUrl(raw: string): string {
+  const s = raw.trim()
+  if (/^https?:\/\//i.test(s)) return s
+  if (s.startsWith('@')) return `https://x.com/${s.slice(1)}`
+  return `https://${s}`
+}
 
 export default function MembersPortal() {
   const [checking, setChecking] = useState(true)
@@ -145,7 +166,8 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
   const [mine, setMine] = useState<Goal[]>([])
   const [feed, setFeed] = useState<Goal[]>([])
   const [loadingGoals, setLoadingGoals] = useState(true)
-  const [tab, setTab] = useState<'mine' | 'community' | 'leaderboard'>('mine')
+  const [tab, setTab] = useState<'mine' | 'community' | 'members' | 'leaderboard'>('mine')
+  const [directory, setDirectory] = useState<DirectoryMember[] | null>(null)
   const [attendance, setAttendance] = useState<{
     latestCall: { id: string; title: string; call_date: string } | null
     attendedLatest: boolean
@@ -192,7 +214,14 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
     } catch { /* ignore */ }
   }, [])
 
-  useEffect(() => { loadProfile(); loadGoals(); loadAttendance(); loadWings() }, [loadProfile, loadGoals, loadAttendance, loadWings])
+  const loadDirectory = useCallback(async () => {
+    try {
+      const r = await fetch('/api/members/directory')
+      if (r.ok) { const d = await r.json(); setDirectory(d.directory || []) }
+    } catch { /* ignore */ }
+  }, [])
+
+  useEffect(() => { loadProfile(); loadGoals(); loadAttendance(); loadWings(); loadDirectory() }, [loadProfile, loadGoals, loadAttendance, loadWings, loadDirectory])
 
   async function markAttendance() {
     if (!attendance?.latestCall) return
@@ -267,7 +296,7 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
 
             {attendance && <AttendanceCard data={attendance} onMark={markAttendance} />}
 
-            {!loadingProfile && <ProfileCard profile={profile} onSaved={setProfile} />}
+            {!loadingProfile && <ProfileCard profile={profile} onSaved={(p) => { setProfile(p); loadDirectory() }} />}
           </div>
 
           {/* ── Right column: weekly check-in + goals ── */}
@@ -275,7 +304,7 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
             <GoalForm onSubmitted={loadGoals} hasProfile={!!profile} />
 
             <div className="flex items-center gap-1 mb-5 mt-8 border-b border-white/[0.06] overflow-x-auto no-scrollbar">
-              {([['mine', 'My Check-ins'], ['community', "What Everyone's Building"], ['leaderboard', '🏆 Leaderboard']] as const).map(([k, label]) => (
+              {([['mine', 'My Check-ins'], ['community', "What Everyone's Building"], ['members', '👥 Members'], ['leaderboard', '🏆 Leaderboard']] as const).map(([k, label]) => (
                 <button key={k} onClick={() => setTab(k)}
                   className="px-4 py-3 text-[15px] font-medium transition-colors relative whitespace-nowrap"
                   style={{ color: tab === k ? '#06b6d4' : '#64748b' }}>
@@ -285,7 +314,9 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
               ))}
             </div>
 
-            {tab === 'leaderboard' ? (
+            {tab === 'members' ? (
+              directory ? <MemberDirectory members={directory} /> : <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>
+            ) : tab === 'leaderboard' ? (
               wings ? <Leaderboard rows={wings.leaderboard} /> : <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>
             ) : loadingGoals ? (
               <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>
@@ -408,6 +439,54 @@ function WingsCard({ wings, onGiven }: { wings: WingsData; onGiven: () => void }
   )
 }
 
+function MemberDirectory({ members }: { members: DirectoryMember[] }) {
+  const filled = members.filter((m) => m.hasProfile).length
+  return (
+    <div>
+      <p className="text-[13px] text-slate-500 mb-4 px-1">
+        {members.length} members · {filled} have shared what they&apos;re building. This is who&apos;s in the room 👋
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {members.map((m) => (
+          <div key={m.member_no}
+            className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 space-y-3"
+            style={{ background: m.isMe ? 'rgba(6,182,212,0.05)' : undefined }}>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center text-base font-bold text-white shrink-0"
+                style={{ background: 'linear-gradient(135deg,#0891b2,#06b6d4)' }}>
+                {firstName(m.name)[0]?.toUpperCase()}
+              </div>
+              <div className="min-w-0">
+                <p className="text-[15px] font-semibold text-slate-100 truncate">
+                  {firstName(m.name)}{m.isMe && <span className="text-cyan-400 text-[13px] font-normal"> (you)</span>}
+                </p>
+                <p className="text-[12px] text-slate-500">
+                  {m.isFounding ? 'Founding Member' : 'Member'} #{m.member_no}
+                </p>
+              </div>
+            </div>
+
+            {m.hasProfile ? (
+              <>
+                <GoalRow label="Building" value={m.what_building} />
+                <GoalRow label="Who it's for" value={m.who_its_for} />
+                {m.link && (
+                  <a href={normalizeUrl(m.link)} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-[13px] text-cyan-400 hover:text-cyan-300 font-medium">
+                    🔗 Connect
+                  </a>
+                )}
+              </>
+            ) : (
+              <p className="text-[13px] text-slate-600 italic">Profile coming soon</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function Leaderboard({ rows }: { rows: WingsData['leaderboard'] }) {
   const medal = (i: number) => (i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}`)
   const allZero = rows.every((r) => r.monthly === 0)
@@ -510,9 +589,10 @@ function ProfileCard({ profile, onSaved }: { profile: Profile; onSaved: (p: Prof
     what_building: profile?.what_building || '',
     who_its_for: profile?.who_its_for || '',
     problem: profile?.problem || '',
+    link: profile?.link || '',
   })
 
-  const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value })
+  const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setF({ ...f, [k]: e.target.value })
 
   async function save(e: React.FormEvent) {
     e.preventDefault()
@@ -544,6 +624,12 @@ function ProfileCard({ profile, onSaved }: { profile: Profile; onSaved: (p: Prof
         <GoalRow label="Building / exploring" value={profile.what_building} />
         <GoalRow label="Who it's for" value={profile.who_its_for} />
         <GoalRow label="Problem" value={profile.problem} />
+        {profile.link && (
+          <a href={normalizeUrl(profile.link)} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-[13px] text-cyan-400 hover:text-cyan-300 font-medium">
+            🔗 My link
+          </a>
+        )}
       </div>
     )
   }
@@ -573,6 +659,12 @@ function ProfileCard({ profile, onSaved }: { profile: Profile; onSaved: (p: Prof
         <textarea value={f.problem} onChange={set('problem')} rows={2}
           placeholder="e.g. Balancing AI capability with reliability…"
           className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40 resize-none" />
+      </div>
+      <div>
+        <label className="block text-xs font-medium text-slate-400 mb-1">Your link (optional)</label>
+        <input value={f.link} onChange={set('link')} type="text"
+          placeholder="Twitter, LinkedIn, or website — so others can connect"
+          className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40" />
       </div>
       {err && <p className="text-red-400 text-xs">{err}</p>}
       <div className="flex gap-2">

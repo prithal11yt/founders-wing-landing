@@ -64,6 +64,7 @@ export async function PUT(request: NextRequest) {
           what_building,
           who_its_for: (body.who_its_for || "").trim() || null,
           problem: (body.problem || "").trim() || null,
+          link: (body.link || "").trim() || null,
           updated_at: new Date().toISOString(),
         },
         { onConflict: "member_email" }
