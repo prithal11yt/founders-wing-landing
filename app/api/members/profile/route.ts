@@ -47,6 +47,17 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: "Tell us what you're building or exploring" }, { status: 400 })
     }
 
+    // Sanitize tag arrays: keep short trimmed strings only, capped.
+    const cleanArray = (v: unknown, cap: number): string[] | null => {
+      if (!Array.isArray(v)) return null
+      const arr = v
+        .filter((x): x is string => typeof x === "string")
+        .map((x) => x.trim())
+        .filter(Boolean)
+        .slice(0, cap)
+      return arr.length ? arr : null
+    }
+
     const supabase = getSupabase()
     const { data: member } = await supabase
       .from("fw_memberships")
@@ -67,6 +78,13 @@ export async function PUT(request: NextRequest) {
           occupation: (body.occupation || "").trim() || null,
           location: (body.location || "").trim() || null,
           link: (body.link || "").trim() || null,
+          how_i_help: (body.how_i_help || "").trim() || null,
+          need_help_with: (body.need_help_with || "").trim() || null,
+          stage: (body.stage || "").trim() || null,
+          industry: (body.industry || "").trim() || null,
+          tools: (body.tools || "").trim() || null,
+          skills: cleanArray(body.skills, 12),
+          open_to: cleanArray(body.open_to, 8),
           updated_at: new Date().toISOString(),
         },
         { onConflict: "member_email" }

@@ -11,25 +11,36 @@ type Member = {
   member_no: number | null
 }
 
-type Profile = {
-  what_building: string
-  who_its_for: string | null
-  problem: string | null
+type Bio = {
   occupation: string | null
   location: string | null
   link: string | null
-} | null
+  how_i_help: string | null
+  need_help_with: string | null
+  stage: string | null
+  industry: string | null
+  tools: string | null
+  skills: string[] | null
+  open_to: string[] | null
+}
 
-type DirectoryMember = {
+type Profile = (Bio & {
+  what_building: string
+  who_its_for: string | null
+  problem: string | null
+}) | null
+
+type DirectoryMember = Bio & {
   name: string
   member_no: number
   isFounding: boolean
   isMe: boolean
   hasProfile: boolean
-  occupation: string | null
-  location: string | null
-  link: string | null
 }
+
+const STAGE_OPTIONS = ['Idea', 'Building MVP', 'Launched', 'Making revenue', 'Scaling']
+const SKILL_OPTIONS = ['Marketing', 'Sales', 'Dev', 'Design', 'AI / Automation', 'Fundraising', 'Content', 'Product', 'Ops', 'Finance']
+const OPEN_TO_OPTIONS = ['Advising', 'Partnerships', 'Collaborations', 'Hiring', 'Just here to learn']
 
 type Goal = {
   id: string
@@ -470,9 +481,16 @@ function MemberDirectory({ members }: { members: DirectoryMember[] }) {
             {m.hasProfile ? (
               <>
                 <GoalRow label="What they do" value={m.occupation} />
-                {m.location && (
-                  <p className="text-[13px] text-slate-400">📍 {m.location}</p>
-                )}
+                <div className="flex flex-wrap gap-x-3 gap-y-1">
+                  {m.location && <p className="text-[13px] text-slate-400">📍 {m.location}</p>}
+                  {m.stage && <p className="text-[13px] text-slate-400">🚀 {m.stage}</p>}
+                  {m.industry && <p className="text-[13px] text-slate-400">🏷️ {m.industry}</p>}
+                </div>
+                <ChipList label="Skills" items={m.skills} />
+                <GoalRow label="Can help with" value={m.how_i_help} />
+                <GoalRow label="Needs help with" value={m.need_help_with} />
+                <ChipList label="Open to" items={m.open_to} />
+                <GoalRow label="Tools" value={m.tools} />
                 {m.link && (
                   <a href={normalizeUrl(m.link)} target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-[13px] text-cyan-400 hover:text-cyan-300 font-medium">
@@ -595,9 +613,18 @@ function ProfileCard({ profile, onSaved }: { profile: Profile; onSaved: (p: Prof
     occupation: profile?.occupation || '',
     location: profile?.location || '',
     link: profile?.link || '',
+    how_i_help: profile?.how_i_help || '',
+    need_help_with: profile?.need_help_with || '',
+    stage: profile?.stage || '',
+    industry: profile?.industry || '',
+    tools: profile?.tools || '',
   })
+  const [skills, setSkills] = useState<string[]>(profile?.skills || [])
+  const [openTo, setOpenTo] = useState<string[]>(profile?.open_to || [])
 
-  const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setF({ ...f, [k]: e.target.value })
+  const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => setF({ ...f, [k]: e.target.value })
+  const toggle = (arr: string[], setArr: (v: string[]) => void, v: string) =>
+    setArr(arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v])
 
   async function save(e: React.FormEvent) {
     e.preventDefault()
@@ -607,7 +634,7 @@ function ProfileCard({ profile, onSaved }: { profile: Profile; onSaved: (p: Prof
       const r = await fetch('/api/members/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(f),
+        body: JSON.stringify({ ...f, skills, open_to: openTo }),
       })
       const d = await r.json()
       if (r.ok && d.success) { onSaved(d.profile); setEditing(false) }
@@ -627,11 +654,21 @@ function ProfileCard({ profile, onSaved }: { profile: Profile; onSaved: (p: Prof
           <button onClick={() => setEditing(true)} className="text-[13px] text-cyan-400 hover:text-cyan-300">Edit</button>
         </div>
         <GoalRow label="What you do" value={profile.occupation} />
-        {profile.location && <p className="text-[15px] text-slate-300">📍 {profile.location}</p>}
+        <div className="flex flex-wrap gap-x-4 gap-y-1">
+          {profile.location && <p className="text-[15px] text-slate-300">📍 {profile.location}</p>}
+          {profile.stage && <p className="text-[15px] text-slate-300">🚀 {profile.stage}</p>}
+          {profile.industry && <p className="text-[15px] text-slate-300">🏷️ {profile.industry}</p>}
+        </div>
+        <ChipList label="Skills" items={profile.skills} />
         <div className="h-px bg-white/[0.06]" />
         <GoalRow label="Building / exploring" value={profile.what_building} />
         <GoalRow label="Who it's for" value={profile.who_its_for} />
         <GoalRow label="Problem" value={profile.problem} />
+        <div className="h-px bg-white/[0.06]" />
+        <GoalRow label="How I can help" value={profile.how_i_help} />
+        <GoalRow label="I need help with" value={profile.need_help_with} />
+        <ChipList label="Open to" items={profile.open_to} />
+        <GoalRow label="Tools I swear by" value={profile.tools} />
         {profile.link && (
           <a href={normalizeUrl(profile.link)} target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-[13px] text-cyan-400 hover:text-cyan-300 font-medium">
@@ -669,6 +706,23 @@ function ProfileCard({ profile, onSaved }: { profile: Profile; onSaved: (p: Prof
           placeholder="Twitter, LinkedIn, website, or business link"
           className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40" />
       </div>
+      <div className="grid grid-cols-2 gap-2">
+        <div>
+          <label className="block text-xs font-medium text-slate-400 mb-1">Stage</label>
+          <select value={f.stage} onChange={set('stage')}
+            className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40">
+            <option value="">Select…</option>
+            {STAGE_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
+          </select>
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-slate-400 mb-1">Industry / niche</label>
+          <input value={f.industry} onChange={set('industry')} type="text"
+            placeholder="e.g. SaaS, D2C"
+            className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40" />
+        </div>
+      </div>
+      <ChipSelect label="Your skills" options={SKILL_OPTIONS} selected={skills} onToggle={(v) => toggle(skills, setSkills, v)} />
       <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider pt-2">Your project</p>
       <div>
         <label className="block text-xs font-medium text-slate-400 mb-1">What I&apos;m building or exploring *</label>
@@ -687,6 +741,26 @@ function ProfileCard({ profile, onSaved }: { profile: Profile; onSaved: (p: Prof
         <textarea value={f.problem} onChange={set('problem')} rows={2}
           placeholder="e.g. Balancing AI capability with reliability…"
           className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40 resize-none" />
+      </div>
+      <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider pt-2">Helping each other</p>
+      <div>
+        <label className="block text-xs font-medium text-slate-400 mb-1">How I can help others</label>
+        <textarea value={f.how_i_help} onChange={set('how_i_help')} rows={2}
+          placeholder="e.g. I can help with paid ads, cold email, and hiring…"
+          className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40 resize-none" />
+      </div>
+      <div>
+        <label className="block text-xs font-medium text-slate-400 mb-1">What I need help with right now</label>
+        <textarea value={f.need_help_with} onChange={set('need_help_with')} rows={2}
+          placeholder="e.g. Looking for beta testers and intros to D2C founders…"
+          className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40 resize-none" />
+      </div>
+      <ChipSelect label="Open to" options={OPEN_TO_OPTIONS} selected={openTo} onToggle={(v) => toggle(openTo, setOpenTo, v)} />
+      <div>
+        <label className="block text-xs font-medium text-slate-400 mb-1">Tools I swear by (optional)</label>
+        <input value={f.tools} onChange={set('tools')} type="text"
+          placeholder="e.g. Claude, n8n, Framer, Notion"
+          className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40" />
       </div>
       {err && <p className="text-red-400 text-xs">{err}</p>}
       <div className="flex gap-2">
@@ -797,6 +871,50 @@ function GoalRow({ label, value }: { label: string; value: string | null | undef
     <div>
       <p className="text-[11px] text-slate-500 uppercase tracking-wide font-semibold mb-1">{label}</p>
       <p className="text-[15px] text-slate-200 leading-relaxed">{value}</p>
+    </div>
+  )
+}
+
+// Read-only tag list (skills, open-to) — renders nothing when empty.
+function ChipList({ label, items }: { label: string; items: string[] | null | undefined }) {
+  if (!items || items.length === 0) return null
+  return (
+    <div>
+      <p className="text-[11px] text-slate-500 uppercase tracking-wide font-semibold mb-1.5">{label}</p>
+      <div className="flex flex-wrap gap-1.5">
+        {items.map((it) => (
+          <span key={it} className="px-2.5 py-1 rounded-md text-[12px] font-medium bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
+            {it}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// Multi-select tag picker used in the profile form.
+function ChipSelect({ label, options, selected, onToggle }: {
+  label: string; options: string[]; selected: string[]; onToggle: (v: string) => void
+}) {
+  return (
+    <div>
+      <label className="block text-xs font-medium text-slate-400 mb-1.5">{label}</label>
+      <div className="flex flex-wrap gap-1.5">
+        {options.map((o) => {
+          const on = selected.includes(o)
+          return (
+            <button key={o} type="button" onClick={() => onToggle(o)}
+              className="px-2.5 py-1 rounded-md text-[12px] font-medium border transition-colors"
+              style={{
+                background: on ? 'rgba(6,182,212,0.15)' : 'transparent',
+                color: on ? '#67e8f9' : '#64748b',
+                borderColor: on ? 'rgba(6,182,212,0.4)' : 'rgba(255,255,255,0.08)',
+              }}>
+              {o}
+            </button>
+          )
+        })}
+      </div>
     </div>
   )
 }

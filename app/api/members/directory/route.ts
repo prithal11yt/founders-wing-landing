@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     const supabase = getSupabase()
     const [{ data: members }, { data: profiles }] = await Promise.all([
       supabase.from("fw_memberships").select("full_name, email, created_at").order("created_at", { ascending: true }),
-      supabase.from("fw_member_profiles").select("member_email, occupation, location, link"),
+      supabase.from("fw_member_profiles").select("member_email, occupation, location, link, how_i_help, need_help_with, stage, industry, tools, skills, open_to"),
     ])
 
     const profileByEmail = new Map(
@@ -38,16 +38,30 @@ export async function GET(request: NextRequest) {
       const occupation = p?.occupation || null
       const location = p?.location || null
       const link = p?.link || null
+      const how_i_help = p?.how_i_help || null
+      const need_help_with = p?.need_help_with || null
+      const stage = p?.stage || null
+      const industry = p?.industry || null
+      const tools = p?.tools || null
+      const skills = p?.skills || null
+      const open_to = p?.open_to || null
       return {
         name: m.full_name,
         member_no: i + 1,
         isFounding: i + 1 <= 19,
         isMe: key === lower,
         // A bio exists if they've shared any of the "who they are" fields.
-        hasProfile: !!(occupation || location || link),
+        hasProfile: !!(occupation || location || link || how_i_help || need_help_with || stage || industry || tools || skills?.length || open_to?.length),
         occupation,
         location,
         link,
+        how_i_help,
+        need_help_with,
+        stage,
+        industry,
+        tools,
+        skills,
+        open_to,
       }
     })
 
