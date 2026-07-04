@@ -15,6 +15,8 @@ type Profile = {
   what_building: string
   who_its_for: string | null
   problem: string | null
+  occupation: string | null
+  location: string | null
   link: string | null
 } | null
 
@@ -24,9 +26,8 @@ type DirectoryMember = {
   isFounding: boolean
   isMe: boolean
   hasProfile: boolean
-  what_building: string | null
-  who_its_for: string | null
-  problem: string | null
+  occupation: string | null
+  location: string | null
   link: string | null
 }
 
@@ -444,7 +445,7 @@ function MemberDirectory({ members }: { members: DirectoryMember[] }) {
   return (
     <div>
       <p className="text-[13px] text-slate-500 mb-4 px-1">
-        {members.length} members · {filled} have shared what they&apos;re building. This is who&apos;s in the room 👋
+        {members.length} members · {filled} have shared their bio. This is who&apos;s in the room 👋
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {members.map((m) => (
@@ -468,8 +469,10 @@ function MemberDirectory({ members }: { members: DirectoryMember[] }) {
 
             {m.hasProfile ? (
               <>
-                <GoalRow label="Building" value={m.what_building} />
-                <GoalRow label="Who it's for" value={m.who_its_for} />
+                <GoalRow label="What they do" value={m.occupation} />
+                {m.location && (
+                  <p className="text-[13px] text-slate-400">📍 {m.location}</p>
+                )}
                 {m.link && (
                   <a href={normalizeUrl(m.link)} target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-[13px] text-cyan-400 hover:text-cyan-300 font-medium">
@@ -589,6 +592,8 @@ function ProfileCard({ profile, onSaved }: { profile: Profile; onSaved: (p: Prof
     what_building: profile?.what_building || '',
     who_its_for: profile?.who_its_for || '',
     problem: profile?.problem || '',
+    occupation: profile?.occupation || '',
+    location: profile?.location || '',
     link: profile?.link || '',
   })
 
@@ -618,9 +623,12 @@ function ProfileCard({ profile, onSaved }: { profile: Profile; onSaved: (p: Prof
     return (
       <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 space-y-4">
         <div className="flex items-center justify-between">
-          <p className="text-sm font-semibold text-slate-300 uppercase tracking-wider">Your Project</p>
+          <p className="text-sm font-semibold text-slate-300 uppercase tracking-wider">Your Profile</p>
           <button onClick={() => setEditing(true)} className="text-[13px] text-cyan-400 hover:text-cyan-300">Edit</button>
         </div>
+        <GoalRow label="What you do" value={profile.occupation} />
+        {profile.location && <p className="text-[15px] text-slate-300">📍 {profile.location}</p>}
+        <div className="h-px bg-white/[0.06]" />
         <GoalRow label="Building / exploring" value={profile.what_building} />
         <GoalRow label="Who it's for" value={profile.who_its_for} />
         <GoalRow label="Problem" value={profile.problem} />
@@ -637,11 +645,31 @@ function ProfileCard({ profile, onSaved }: { profile: Profile; onSaved: (p: Prof
   return (
     <form onSubmit={save} className="rounded-2xl border border-cyan-500/20 bg-cyan-500/[0.04] p-5 space-y-3">
       <p className="text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-1">
-        {profile ? 'Edit your project' : 'Tell the group what you\'re building'}
+        {profile ? 'Edit your profile' : 'Set up your profile'}
       </p>
       <p className="text-[11px] text-slate-500 mb-2">
-        This stays the same each week — edit it anytime your project changes.
+        Set this once and edit anytime. Your bio shows in the Members directory; your project shows in What Everyone&apos;s Building.
       </p>
+      <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider pt-1">About you</p>
+      <div>
+        <label className="block text-xs font-medium text-slate-400 mb-1">What you do currently</label>
+        <input value={f.occupation} onChange={set('occupation')} type="text"
+          placeholder="e.g. Run a D2C skincare brand · SWE at Razorpay · Freelance designer"
+          className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40" />
+      </div>
+      <div>
+        <label className="block text-xs font-medium text-slate-400 mb-1">Where you&apos;re from</label>
+        <input value={f.location} onChange={set('location')} type="text"
+          placeholder="e.g. Bangalore"
+          className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40" />
+      </div>
+      <div>
+        <label className="block text-xs font-medium text-slate-400 mb-1">Your link (optional)</label>
+        <input value={f.link} onChange={set('link')} type="text"
+          placeholder="Twitter, LinkedIn, website, or business link"
+          className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40" />
+      </div>
+      <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider pt-2">Your project</p>
       <div>
         <label className="block text-xs font-medium text-slate-400 mb-1">What I&apos;m building or exploring *</label>
         <textarea value={f.what_building} onChange={set('what_building')} required rows={2}
@@ -659,12 +687,6 @@ function ProfileCard({ profile, onSaved }: { profile: Profile; onSaved: (p: Prof
         <textarea value={f.problem} onChange={set('problem')} rows={2}
           placeholder="e.g. Balancing AI capability with reliability…"
           className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40 resize-none" />
-      </div>
-      <div>
-        <label className="block text-xs font-medium text-slate-400 mb-1">Your link (optional)</label>
-        <input value={f.link} onChange={set('link')} type="text"
-          placeholder="Twitter, LinkedIn, or website — so others can connect"
-          className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-cyan-500/40" />
       </div>
       {err && <p className="text-red-400 text-xs">{err}</p>}
       <div className="flex gap-2">

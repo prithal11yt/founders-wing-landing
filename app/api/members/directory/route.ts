@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     const supabase = getSupabase()
     const [{ data: members }, { data: profiles }] = await Promise.all([
       supabase.from("fw_memberships").select("full_name, email, created_at").order("created_at", { ascending: true }),
-      supabase.from("fw_member_profiles").select("member_email, what_building, who_its_for, problem, link"),
+      supabase.from("fw_member_profiles").select("member_email, occupation, location, link"),
     ])
 
     const profileByEmail = new Map(
@@ -35,16 +35,19 @@ export async function GET(request: NextRequest) {
     const directory = (members || []).map((m, i) => {
       const key = m.email.toLowerCase()
       const p = profileByEmail.get(key)
+      const occupation = p?.occupation || null
+      const location = p?.location || null
+      const link = p?.link || null
       return {
         name: m.full_name,
         member_no: i + 1,
         isFounding: i + 1 <= 19,
         isMe: key === lower,
-        hasProfile: !!p,
-        what_building: p?.what_building || null,
-        who_its_for: p?.who_its_for || null,
-        problem: p?.problem || null,
-        link: p?.link || null,
+        // A bio exists if they've shared any of the "who they are" fields.
+        hasProfile: !!(occupation || location || link),
+        occupation,
+        location,
+        link,
       }
     })
 
