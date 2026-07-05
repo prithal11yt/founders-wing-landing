@@ -21,16 +21,14 @@ function authEmail(request: NextRequest): string | null {
 // Attach each goal's member profile (what they're building / who for / problem)
 // so the UI can render full context without a separate round trip.
 async function withProfiles(supabase: ReturnType<typeof getSupabase>, goals: Record<string, unknown>[]) {
-  const emails = [...new Set(goals.map((g) => (g.member_email as string)?.toLowerCase()).filter(Boolean))]
-  if (emails.length === 0) return goals.map((g) => ({ ...g, profile: null }))
+  if (goals.length === 0) return goals
 
+  // Fetch all profiles (bounded by member count) rather than filtering by email —
+  // emails aren't stored consistently lower-cased, so an .in() filter against
+  // lower-cased values would silently miss any mixed-case address.
   const { data: profiles } = await supabase
     .from("fw_member_profiles")
     .select("member_email, what_building, who_its_for, problem")
-    .in(
-      "member_email",
-      emails // exact-case lookup is fine here since we always store lowercased-trimmed emails on write
-    )
   const byEmail = new Map((profiles || []).map((p) => [p.member_email.toLowerCase(), p]))
   return goals.map((g) => ({ ...g, profile: byEmail.get((g.member_email as string)?.toLowerCase()) || null }))
 }
