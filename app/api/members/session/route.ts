@@ -41,6 +41,18 @@ export function verifyMemberToken(token: string): { email: string } | null {
   }
 }
 
+// Hidden reference/demo profile. This email can log in and see a fully-filled
+// example profile, but it is NOT a row in fw_memberships — so it never appears
+// in the members directory, member count, or leaderboard.
+const DEMO_EMAIL = "prithalbhardwaj@gmail.com"
+const DEMO_MEMBER = {
+  id: "demo",
+  full_name: "Prithal Bhardwaj",
+  email: DEMO_EMAIL,
+  plan: "annual",
+  created_at: "2026-06-24T00:00:00.000Z",
+}
+
 // Look up a member by email and return their public-safe profile (no amount).
 async function findMember(email: string) {
   const supabase = getSupabase()
@@ -52,11 +64,14 @@ async function findMember(email: string) {
     .limit(1)
     .maybeSingle()
   if (error) throw error
-  return data
+  if (data) return data
+  if (email.trim().toLowerCase() === DEMO_EMAIL) return DEMO_MEMBER
+  return null
 }
 
 // Member number = join order across all memberships.
 async function memberNumber(email: string): Promise<number | null> {
+  if (email.trim().toLowerCase() === DEMO_EMAIL) return 1 // demo displays as a founding member
   const supabase = getSupabase()
   const { data } = await supabase
     .from("fw_memberships")
