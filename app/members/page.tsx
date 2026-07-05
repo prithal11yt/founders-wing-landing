@@ -68,7 +68,41 @@ type DashboardData = {
   }
 }
 
+type HelpAsk = {
+  id: string
+  type: 'weekly' | 'ongoing'
+  owner_name: string
+  owner_no: number
+  text: string
+  created_at: string
+  isMine: boolean
+  iOffered: boolean
+  helpers: string[]
+}
+
 const planLabel = (p: string) => (p === 'annual' ? 'Annual · 12 months' : p === 'starter' ? 'Starter · 6 months' : p)
+
+// "2h ago" style timestamps for feed-like surfaces
+function timeAgo(iso: string): string {
+  const s = (Date.now() - new Date(iso).getTime()) / 1000
+  if (s < 60) return 'just now'
+  if (s < 3600) return `${Math.floor(s / 60)}m ago`
+  if (s < 86400) return `${Math.floor(s / 3600)}h ago`
+  if (s < 7 * 86400) return `${Math.floor(s / 86400)}d ago`
+  return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
+}
+
+function Skeleton({ className }: { className?: string }) {
+  return <div className={`animate-pulse rounded-2xl bg-white/[0.04] ${className || ''}`} />
+}
+
+function CardsSkeleton() {
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      {[0, 1, 2, 3].map((i) => <Skeleton key={i} className="h-28" />)}
+    </div>
+  )
+}
 
 const STATUS_META: Record<string, { label: string; color: string; bg: string }> = {
   in_progress: { label: 'In progress', color: '#facc15', bg: 'rgba(250,204,21,0.12)' },
@@ -187,7 +221,8 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
   const [mine, setMine] = useState<Goal[]>([])
   const [feed, setFeed] = useState<Goal[]>([])
   const [loadingGoals, setLoadingGoals] = useState(true)
-  const [tab, setTab] = useState<'mine' | 'community' | 'members' | 'leaderboard'>('mine')
+  const [view, setView] = useState<'dashboard' | 'feed' | 'help' | 'members' | 'community'>('dashboard')
+  const [helpAsks, setHelpAsks] = useState<HelpAsk[] | null>(null)
   const [directory, setDirectory] = useState<DirectoryMember[] | null>(null)
   const [attendance, setAttendance] = useState<{
     latestCall: { id: string; title: string; call_date: string } | null
@@ -250,7 +285,26 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
     } catch { /* ignore */ }
   }, [])
 
-  useEffect(() => { loadProfile(); loadGoals(); loadAttendance(); loadWings(); loadDirectory(); loadDashboard() }, [loadProfile, loadGoals, loadAttendance, loadWings, loadDirectory, loadDashboard])
+  const loadHelpBoard = useCallback(async () => {
+    try {
+      const r = await fetch('/api/members/helpboard')
+      if (r.ok) { const d = await r.json(); setHelpAsks(d.asks || []) }
+    } catch { /* ignore */ }
+  }, [])
+
+  useEffect(() => { loadProfile(); loadGoals(); loadAttendance(); loadWings(); loadDirectory(); loadDashboard(); loadHelpBoard() }, [loadProfile, loadGoals, loadAttendance, loadWings, loadDirectory, loadDashboard, loadHelpBoard])
+
+  async function offerHelp(askId: string) {
+    // optimistic: mark offered immediately
+    setHelpAsks((asks) => (asks || []).map((a) => (a.id === askId ? { ...a, iOffered: true, helpers: [...a.helpers, 'You'] } : a)))
+    const r = await fetch('/api/members/helpboard', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ask_id: askId }),
+    })
+    if (!r.ok) loadHelpBoard() // roll back to server truth
+    else loadHelpBoard()
+  }
 
   async function markAttendance() {
     if (!attendance?.latestCall) return
@@ -275,112 +329,267 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
     else loadGoals()
   }
 
+  const latestGoal = mine[0] || null
+  const checkedInThisWeek = !!latestGoal && Date.now() - new Date(latestGoal.created_at).getTime() < 7 * 86400000
+  const openAsksCount = (helpAsks || []).filter((a) => !a.isMine).length
+
+  const NAV = [
+    { key: 'dashboard', icon: '📊', label: 'Dashboard' },
+    { key: 'feed', icon: '📰', label: 'Feed' },
+    { key: 'help', icon: '🙋', label: 'Help Board' },
+    { key: 'members', icon: '👥', label: 'Members' },
+    { key: 'community', icon: '🌐', label: 'Community' },
+  ] as const
+
   return (
-    <div className="min-h-screen bg-[#06090f] text-slate-100" style={{ fontFamily: 'Inter, sans-serif' }}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 md:py-10">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white text-base font-bold"
+    <div className="min-h-screen bg-[#06090f] text-slate-100 lg:flex" style={{ fontFamily: 'Inter, sans-serif' }}>
+      {/* ── Desktop sidebar ── */}
+      <aside className="hidden lg:flex flex-col w-60 shrink-0 h-screen sticky top-0 border-r border-white/[0.06] bg-[#080c14] px-4 py-6">
+        <div className="flex items-center gap-2.5 px-2 mb-8">
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center text-white text-sm font-bold"
+            style={{ background: 'linear-gradient(135deg,#0891b2,#06b6d4)', fontFamily: 'Space Grotesk, sans-serif' }}>
+            FW
+          </div>
+          <span className="font-bold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Founders Wing</span>
+        </div>
+        <nav className="flex-1 space-y-1">
+          {NAV.map((n) => (
+            <button key={n.key} onClick={() => setView(n.key)}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[15px] font-medium transition-colors text-left"
+              style={{
+                color: view === n.key ? '#06b6d4' : '#94a3b8',
+                background: view === n.key ? 'rgba(6,182,212,0.10)' : 'transparent',
+              }}>
+              <span>{n.icon}</span> {n.label}
+              {n.key === 'help' && openAsksCount > 0 && (
+                <span className="ml-auto text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400">{openAsksCount}</span>
+              )}
+            </button>
+          ))}
+        </nav>
+        <div className="border-t border-white/[0.06] pt-4 px-2">
+          <p className="text-sm font-semibold text-slate-200 truncate">{firstName(member.full_name)}</p>
+          <p className="text-[11px] text-slate-500 mb-2">{isFounding ? 'Founding Member' : 'Member'}{member.member_no ? ` #${member.member_no}` : ''}</p>
+          <button onClick={onLogout} className="text-xs text-slate-500 hover:text-red-400 transition-colors">Sign out</button>
+        </div>
+      </aside>
+
+      {/* ── Main column ── */}
+      <div className="flex-1 min-w-0">
+        {/* Mobile header */}
+        <header className="lg:hidden flex items-center justify-between px-4 py-4 border-b border-white/[0.06] bg-[#080c14] sticky top-0 z-40">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold"
               style={{ background: 'linear-gradient(135deg,#0891b2,#06b6d4)', fontFamily: 'Space Grotesk, sans-serif' }}>
               FW
             </div>
-            <span className="font-bold text-lg" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Founders Wing</span>
+            <span className="font-bold text-[15px]" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Founders Wing</span>
           </div>
-          <button onClick={onLogout} className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
-            Sign out
-          </button>
-        </div>
+          <button onClick={onLogout} className="text-xs text-slate-500">Sign out</button>
+        </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 lg:gap-8 items-start">
-          {/* ── Left column: identity + plan + project profile ── */}
-          <div className="space-y-6">
-            <div className="rounded-3xl border border-white/[0.06] bg-gradient-to-br from-cyan-500/[0.07] to-transparent p-7">
-              <p className="text-cyan-400 text-sm font-semibold uppercase tracking-wider mb-2">
-                {isFounding ? 'Founding Member' : 'Member'}
-              </p>
-              <h1 className="text-3xl font-bold mb-1.5" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-                {firstName(member.full_name)}
-              </h1>
-              {member.member_no && (
-                <p className="text-slate-400 text-base">
-                  {isFounding
-                    ? <>Founding Member <span className="text-cyan-400 font-semibold">#{member.member_no}</span></>
-                    : <>Member <span className="text-cyan-400 font-semibold">#{member.member_no}</span></>}
-                </p>
-              )}
-              <div className="grid grid-cols-2 gap-3 mt-6">
-                <div>
-                  <p className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Plan</p>
-                  <p className="text-base font-semibold">{planLabel(member.plan)}</p>
-                </div>
-                <div>
-                  <p className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Since</p>
-                  <p className="text-base font-semibold">{joined}</p>
-                </div>
-              </div>
-            </div>
+        <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 md:py-8 pb-28 lg:pb-10">
 
-            {wings && <WingsCard wings={wings} onGiven={() => { loadWings() }} />}
-
-            {attendance && <AttendanceCard data={attendance} onMark={markAttendance} />}
-
-            {!loadingProfile && <ProfileCard profile={profile} onSaved={(p) => { setProfile(p); loadDirectory() }} />}
-          </div>
-
-          {/* ── Right column: weekly check-in + goals ── */}
-          <div>
-            <GoalForm onSubmitted={loadGoals} hasProfile={!!profile} />
-
-            <div className="flex items-center gap-1 mb-5 mt-8 border-b border-white/[0.06] overflow-x-auto no-scrollbar">
-              {([['mine', '📊 My Dashboard'], ['community', "What Everyone's Building"], ['members', '👥 Members'], ['leaderboard', '🌐 Community']] as const).map(([k, label]) => (
-                <button key={k} onClick={() => setTab(k)}
-                  className="px-4 py-3 text-[15px] font-medium transition-colors relative whitespace-nowrap"
-                  style={{ color: tab === k ? '#06b6d4' : '#64748b' }}>
-                  {label}
-                  {tab === k && <span className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-cyan-400 rounded-full" />}
-                </button>
-              ))}
-            </div>
-
-            {tab === 'members' ? (
-              directory ? <MemberDirectory members={directory} /> : <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>
-            ) : tab === 'leaderboard' ? (
-              <div className="space-y-6">
-                {dashboard && <CommunityDashboard data={dashboard.community} />}
-                {wings ? <Leaderboard rows={wings.leaderboard} /> : <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>}
-              </div>
-            ) : tab === 'mine' ? (
-              <div className="space-y-6">
-                {dashboard && <PersonalStats data={dashboard.personal} />}
-                {loadingGoals ? (
-                  <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>
-                ) : mine.length === 0 ? (
-                  <p className="text-slate-500 text-sm py-8 text-center">
-                    You haven&apos;t checked in this week yet. Add your goal above to get started.
-                  </p>
-                ) : (
+          {view === 'dashboard' && (
+            <div className="space-y-6">
+              {/* Welcome hero */}
+              <div className="rounded-3xl border border-white/[0.06] bg-gradient-to-br from-cyan-500/[0.07] to-transparent p-6 md:p-7">
+                <div className="flex flex-wrap items-end justify-between gap-3">
                   <div>
-                    <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-3">My check-ins</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {mine.map((g) => <MyGoalCard key={g.id} goal={g} onStatus={setGoalStatus} />)}
-                    </div>
+                    <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-1.5">
+                      {isFounding ? 'Founding Member' : 'Member'}{member.member_no ? ` · #${member.member_no}` : ''}
+                    </p>
+                    <h1 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                      Welcome back, {firstName(member.full_name)}
+                    </h1>
                   </div>
-                )}
+                  <p className="text-[13px] text-slate-500">{planLabel(member.plan)} · since {joined}</p>
+                </div>
               </div>
-            ) : loadingGoals ? (
-              <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>
-            ) : feed.length === 0 ? (
-              <p className="text-slate-500 text-sm py-8 text-center">No check-ins shared yet. Be the first!</p>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {feed.map((g) => (
-                  <FeedGoalCard key={g.id} goal={g} isMe={g.member_email.toLowerCase() === member.email.toLowerCase()} />
-                ))}
+
+              {/* This week — status-aware action */}
+              {!checkedInThisWeek ? (
+                <GoalForm onSubmitted={loadGoals} hasProfile={!!profile} />
+              ) : latestGoal && latestGoal.status === 'in_progress' ? (
+                <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6">
+                  <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2">This week&apos;s goal · checked in ✅</p>
+                  <p className="text-[15px] text-slate-200 leading-relaxed mb-3">{latestGoal.goal}</p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-[13px] text-slate-500">Done with it? Mark it:</span>
+                    {(['achieved', 'missed'] as const).map((s) => (
+                      <button key={s} onClick={() => setGoalStatus(latestGoal.id, s)}
+                        className="text-[13px] px-3 py-1.5 rounded-md border border-white/[0.08] text-slate-400 hover:text-slate-200 transition-colors">
+                        {STATUS_META[s].label.replace(' ✅', '')}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.05] p-5 text-[15px] text-emerald-300">
+                  This week&apos;s goal is wrapped up. New check-in opens with the new week 💪
+                </div>
+              )}
+
+              {dashboard ? <PersonalStats data={dashboard.personal} /> : <CardsSkeleton />}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+                {wings ? <WingsCard wings={wings} onGiven={() => { loadWings() }} /> : <Skeleton className="h-64" />}
+                {attendance ? <AttendanceCard data={attendance} onMark={markAttendance} /> : <Skeleton className="h-64" />}
               </div>
-            )}
+
+              {!loadingProfile ? (
+                <ProfileCard profile={profile} onSaved={(p) => { setProfile(p); loadDirectory(); loadHelpBoard() }} />
+              ) : <Skeleton className="h-40" />}
+
+              {mine.length > 0 && (
+                <div>
+                  <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-3">My check-ins</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {mine.map((g) => <MyGoalCard key={g.id} goal={g} onStatus={setGoalStatus} />)}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {view === 'feed' && (
+            <div className="space-y-6">
+              <GoalForm onSubmitted={loadGoals} hasProfile={!!profile} />
+              {loadingGoals ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">{[0, 1, 2, 3].map((i) => <Skeleton key={i} className="h-44" />)}</div>
+              ) : feed.length === 0 ? (
+                <p className="text-slate-500 text-sm py-8 text-center">No check-ins shared yet. Be the first!</p>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {feed.map((g) => (
+                    <FeedGoalCard key={g.id} goal={g} isMe={g.member_email.toLowerCase() === member.email.toLowerCase()} />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {view === 'help' && (
+            helpAsks ? <HelpBoard asks={helpAsks} onOffer={offerHelp} /> :
+            <div className="space-y-3">{[0, 1, 2].map((i) => <Skeleton key={i} className="h-32" />)}</div>
+          )}
+
+          {view === 'members' && (
+            directory ? <MemberDirectory members={directory} /> :
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">{[0, 1, 2, 3].map((i) => <Skeleton key={i} className="h-40" />)}</div>
+          )}
+
+          {view === 'community' && (
+            <div className="space-y-6">
+              {dashboard ? <CommunityDashboard data={dashboard.community} /> : <CardsSkeleton />}
+              {wings ? <Leaderboard rows={wings.leaderboard} /> : <Skeleton className="h-72" />}
+            </div>
+          )}
+        </main>
+
+        {/* ── Mobile bottom nav ── */}
+        <nav className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-[#080c14]/95 backdrop-blur border-t border-white/[0.06] flex justify-around px-2 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+          {NAV.map((n) => (
+            <button key={n.key} onClick={() => { setView(n.key); window.scrollTo({ top: 0 }) }}
+              className="relative flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg"
+              style={{ color: view === n.key ? '#06b6d4' : '#64748b' }}>
+              <span className="text-lg leading-none">{n.icon}</span>
+              <span className="text-[10px] font-medium">{n.label}</span>
+              {n.key === 'help' && openAsksCount > 0 && (
+                <span className="absolute -top-0.5 right-1 w-4 h-4 rounded-full bg-amber-500 text-[9px] font-bold text-black flex items-center justify-center">{openAsksCount}</span>
+              )}
+            </button>
+          ))}
+        </nav>
+      </div>
+    </div>
+  )
+}
+
+function HelpBoard({ asks, onOffer }: { asks: HelpAsk[]; onOffer: (id: string) => void }) {
+  const weekly = asks.filter((a) => a.type === 'weekly')
+  const ongoing = asks.filter((a) => a.type === 'ongoing')
+
+  if (asks.length === 0) {
+    return (
+      <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-10 text-center">
+        <p className="text-3xl mb-3">🙋</p>
+        <p className="text-slate-300 font-medium mb-1">No open asks yet</p>
+        <p className="text-sm text-slate-500 max-w-sm mx-auto">
+          Asks come from weekly check-ins and profiles. Add &quot;what I need help with&quot; to your profile and it shows up here.
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-8">
+      <div className="rounded-2xl border border-cyan-500/20 bg-cyan-500/[0.05] px-5 py-4">
+        <p className="text-sm text-cyan-200 leading-relaxed">
+          See something you can help with? Hit <strong>🙋 I can help</strong> — then ping them on WhatsApp to actually connect. That&apos;s the whole point of this community.
+        </p>
+      </div>
+
+      {([['This week\'s asks', weekly], ['Ongoing asks', ongoing]] as const).map(([title, list]) =>
+        list.length > 0 && (
+          <div key={title}>
+            <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-3">{title}</p>
+            <div className="space-y-3">
+              {list.map((a) => <HelpAskCard key={a.id} ask={a} onOffer={onOffer} />)}
+            </div>
+          </div>
+        )
+      )}
+    </div>
+  )
+}
+
+function HelpAskCard({ ask, onOffer }: { ask: HelpAsk; onOffer: (id: string) => void }) {
+  return (
+    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5"
+      style={ask.isMine ? { borderColor: 'rgba(6,182,212,0.25)', background: 'rgba(6,182,212,0.04)' } : undefined}>
+      <div className="flex items-center justify-between gap-2 mb-3">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0"
+            style={{ background: 'linear-gradient(135deg,#0891b2,#06b6d4)' }}>
+            {ask.owner_name[0]?.toUpperCase()}
+          </div>
+          <div className="min-w-0">
+            <p className="text-[15px] font-semibold text-slate-200 truncate">
+              {ask.owner_name}{ask.isMine && <span className="text-cyan-400 text-[13px] font-normal"> (you)</span>}
+            </p>
+            <p className="text-[11px] text-slate-600">{timeAgo(ask.created_at)}</p>
           </div>
         </div>
+        <span className="shrink-0 text-[11px] font-semibold px-2.5 py-1 rounded-md"
+          style={ask.type === 'weekly'
+            ? { color: '#facc15', background: 'rgba(250,204,21,0.10)' }
+            : { color: '#a78bfa', background: 'rgba(167,139,250,0.10)' }}>
+          {ask.type === 'weekly' ? 'This week' : 'Ongoing'}
+        </span>
+      </div>
+
+      <p className="text-[15px] text-slate-200 leading-relaxed mb-4">{ask.text}</p>
+
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <p className="text-[13px] text-slate-500">
+          {ask.helpers.length === 0
+            ? 'No one has raised a hand yet'
+            : <>🙋 <span className="text-slate-300 font-medium">{ask.helpers.join(', ')}</span> can help</>}
+        </p>
+        {ask.isMine ? (
+          ask.helpers.length > 0
+            ? <span className="text-[13px] text-cyan-300">Ping them on WhatsApp 💬</span>
+            : <span className="text-[13px] text-slate-600">Your ask</span>
+        ) : ask.iOffered ? (
+          <span className="text-[13px] text-emerald-400 font-medium">✅ You offered to help — ping them on WhatsApp</span>
+        ) : (
+          <button onClick={() => onOffer(ask.id)}
+            className="text-sm font-semibold px-4 py-2 rounded-xl text-white active:scale-[0.98] transition-transform"
+            style={{ background: 'linear-gradient(135deg,#0891b2,#06b6d4)' }}>
+            🙋 I can help
+          </button>
+        )}
       </div>
     </div>
   )
@@ -1061,7 +1270,7 @@ function MyGoalCard({ goal, onStatus }: { goal: Goal; onStatus: (id: string, sta
 }
 
 function FeedGoalCard({ goal, isMe }: { goal: Goal; isMe: boolean }) {
-  const date = new Date(goal.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
+  const date = timeAgo(goal.created_at)
   return (
     <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 space-y-4">
       <div className="flex items-center justify-between gap-2">
@@ -1075,7 +1284,7 @@ function FeedGoalCard({ goal, isMe }: { goal: Goal; isMe: boolean }) {
           </span>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <span className="hidden sm:inline text-[13px] text-slate-600">{date}</span>
+          <span className="text-[13px] text-slate-600">{date}</span>
           <StatusPill status={goal.status} />
         </div>
       </div>

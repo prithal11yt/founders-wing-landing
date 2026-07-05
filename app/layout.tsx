@@ -1,5 +1,5 @@
 import React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Inter, JetBrains_Mono, Space_Grotesk } from 'next/font/google'
 import Script from "next/script"
 import { FoundingPriceBanner } from "@/components/founding-price-banner"
@@ -21,6 +21,10 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 const BASE_URL = 'https://www.founderswing.com'
+
+export const viewport: Viewport = {
+  themeColor: "#06090f",
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
