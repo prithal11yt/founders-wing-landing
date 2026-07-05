@@ -59,6 +59,15 @@ type WingsData = {
   giveTargets: { email: string; name: string }[]
 }
 
+type GoalStats = { total: number; achieved: number; in_progress: number; missed: number }
+type DashboardData = {
+  personal: { wings_month: number; wings_lifetime: number; goals: GoalStats; attended: number; total_calls: number }
+  community: {
+    total_members: number; participated_this_week: number; profiles_shared: number
+    goals: GoalStats; wings_given_month: number; total_calls: number
+  }
+}
+
 const planLabel = (p: string) => (p === 'annual' ? 'Annual · 12 months' : p === 'starter' ? 'Starter · 6 months' : p)
 
 const STATUS_META: Record<string, { label: string; color: string; bg: string }> = {
@@ -189,6 +198,7 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
     totalCalls: number
   } | null>(null)
   const [wings, setWings] = useState<WingsData | null>(null)
+  const [dashboard, setDashboard] = useState<DashboardData | null>(null)
 
   const loadProfile = useCallback(async () => {
     try {
@@ -233,7 +243,14 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
     } catch { /* ignore */ }
   }, [])
 
-  useEffect(() => { loadProfile(); loadGoals(); loadAttendance(); loadWings(); loadDirectory() }, [loadProfile, loadGoals, loadAttendance, loadWings, loadDirectory])
+  const loadDashboard = useCallback(async () => {
+    try {
+      const r = await fetch('/api/members/dashboard')
+      if (r.ok) setDashboard(await r.json())
+    } catch { /* ignore */ }
+  }, [])
+
+  useEffect(() => { loadProfile(); loadGoals(); loadAttendance(); loadWings(); loadDirectory(); loadDashboard() }, [loadProfile, loadGoals, loadAttendance, loadWings, loadDirectory, loadDashboard])
 
   async function markAttendance() {
     if (!attendance?.latestCall) return
@@ -316,7 +333,7 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
             <GoalForm onSubmitted={loadGoals} hasProfile={!!profile} />
 
             <div className="flex items-center gap-1 mb-5 mt-8 border-b border-white/[0.06] overflow-x-auto no-scrollbar">
-              {([['mine', 'My Check-ins'], ['community', "What Everyone's Building"], ['members', '👥 Members'], ['leaderboard', '🏆 Leaderboard']] as const).map(([k, label]) => (
+              {([['mine', '📊 My Dashboard'], ['community', "What Everyone's Building"], ['members', '👥 Members'], ['leaderboard', '🌐 Community']] as const).map(([k, label]) => (
                 <button key={k} onClick={() => setTab(k)}
                   className="px-4 py-3 text-[15px] font-medium transition-colors relative whitespace-nowrap"
                   style={{ color: tab === k ? '#06b6d4' : '#64748b' }}>
@@ -329,19 +346,30 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
             {tab === 'members' ? (
               directory ? <MemberDirectory members={directory} /> : <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>
             ) : tab === 'leaderboard' ? (
-              wings ? <Leaderboard rows={wings.leaderboard} /> : <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>
+              <div className="space-y-6">
+                {dashboard && <CommunityDashboard data={dashboard.community} />}
+                {wings ? <Leaderboard rows={wings.leaderboard} /> : <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>}
+              </div>
+            ) : tab === 'mine' ? (
+              <div className="space-y-6">
+                {dashboard && <PersonalStats data={dashboard.personal} />}
+                {loadingGoals ? (
+                  <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>
+                ) : mine.length === 0 ? (
+                  <p className="text-slate-500 text-sm py-8 text-center">
+                    You haven&apos;t checked in this week yet. Add your goal above to get started.
+                  </p>
+                ) : (
+                  <div>
+                    <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-3">My check-ins</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {mine.map((g) => <MyGoalCard key={g.id} goal={g} onStatus={setGoalStatus} />)}
+                    </div>
+                  </div>
+                )}
+              </div>
             ) : loadingGoals ? (
               <p className="text-slate-500 text-sm py-8 text-center">Loading…</p>
-            ) : tab === 'mine' ? (
-              mine.length === 0 ? (
-                <p className="text-slate-500 text-sm py-8 text-center">
-                  You haven&apos;t checked in this week yet. Add your goal above to get started.
-                </p>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {mine.map((g) => <MyGoalCard key={g.id} goal={g} onStatus={setGoalStatus} />)}
-                </div>
-              )
             ) : feed.length === 0 ? (
               <p className="text-slate-500 text-sm py-8 text-center">No check-ins shared yet. Be the first!</p>
             ) : (
@@ -504,6 +532,91 @@ function MemberDirectory({ members }: { members: DirectoryMember[] }) {
           </div>
         ))}
       </div>
+    </div>
+  )
+}
+
+function StatCard({ label, value, sub, accent }: { label: string; value: React.ReactNode; sub?: string; accent?: string }) {
+  return (
+    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5">
+      <p className="text-3xl font-bold leading-none" style={{ fontFamily: 'Space Grotesk, sans-serif', color: accent || '#f1f5f9' }}>{value}</p>
+      <p className="text-[11px] text-slate-500 uppercase tracking-wide font-semibold mt-2">{label}</p>
+      {sub && <p className="text-[12px] text-slate-500 mt-0.5">{sub}</p>}
+    </div>
+  )
+}
+
+function GoalStatusBar({ stats }: { stats: GoalStats }) {
+  const total = stats.total || 1
+  const seg = [
+    { label: 'Achieved', n: stats.achieved, color: '#10b981' },
+    { label: 'In progress', n: stats.in_progress, color: '#facc15' },
+    { label: 'Missed', n: stats.missed, color: '#ef4444' },
+  ]
+  return (
+    <div>
+      <div className="flex h-3.5 rounded-full overflow-hidden bg-white/[0.04]">
+        {seg.map((s) => s.n > 0 && <div key={s.label} style={{ width: `${(s.n / total) * 100}%`, background: s.color }} />)}
+      </div>
+      <div className="flex flex-wrap gap-x-5 gap-y-1.5 mt-3">
+        {seg.map((s) => (
+          <div key={s.label} className="flex items-center gap-1.5 text-[13px] text-slate-400">
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: s.color }} /> {s.label}
+            <span className="text-slate-500 font-semibold">{s.n}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function PersonalStats({ data }: { data: DashboardData['personal'] }) {
+  const g = data.goals
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <StatCard label="Wings this month" value={data.wings_month} accent="#f59e0b" sub={`${data.wings_lifetime} lifetime`} />
+        <StatCard label="Goals set" value={g.total} />
+        <StatCard label="Goals achieved" value={g.achieved} accent="#10b981" />
+        <StatCard label="Calls attended" value={`${data.attended}/${data.total_calls}`} accent="#06b6d4" />
+      </div>
+      {g.total > 0 && (
+        <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6">
+          <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-3">Your goal progress</p>
+          <GoalStatusBar stats={g} />
+        </div>
+      )}
+    </div>
+  )
+}
+
+function CommunityDashboard({ data }: { data: DashboardData['community'] }) {
+  const pct = data.total_members ? Math.round((data.participated_this_week / data.total_members) * 100) : 0
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <StatCard label="Members" value={data.total_members} />
+        <StatCard label="Active this week" value={data.participated_this_week} accent="#06b6d4" sub={`${pct}% of members`} />
+        <StatCard label="Profiles shared" value={data.profiles_shared} />
+        <StatCard label="Wings given · month" value={data.wings_given_month} accent="#f59e0b" />
+      </div>
+
+      <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6">
+        <div className="flex items-center justify-between mb-2.5">
+          <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Participation this week</p>
+          <p className="text-[13px] text-slate-500">{data.participated_this_week} of {data.total_members}</p>
+        </div>
+        <div className="h-3.5 rounded-full bg-white/[0.04] overflow-hidden">
+          <div className="h-full rounded-full" style={{ width: `${pct}%`, background: 'linear-gradient(90deg,#0891b2,#06b6d4)' }} />
+        </div>
+      </div>
+
+      {data.goals.total > 0 && (
+        <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6">
+          <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-3">Community goals</p>
+          <GoalStatusBar stats={data.goals} />
+        </div>
+      )}
     </div>
   )
 }
