@@ -329,10 +329,21 @@ export default function LeadsPage() {
         .l-check { width: 16px; height: 16px; accent-color: #06b6d4; cursor: pointer; }
         .l-call-select { background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 4px 6px; font-size: 11px; font-family: inherit; cursor: pointer; outline: none; min-width: 130px; }
         .l-call-select:hover { border-color: rgba(255,255,255,0.2); }
+        .l-mobilefilters { display: none; }
+        .l-mobilenav { display: none; }
         @media (max-width: 768px) {
           .l-sidebar { display: none; }
           .l-stats { grid-template-columns: repeat(3, 1fr); }
           .l-panel { width: 100vw; }
+          .l-content { padding-bottom: 84px; }
+          .l-mobilefilters { display: flex; gap: 8px; overflow-x: auto; padding: 10px 16px 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-shrink: 0; }
+          .l-mobilefilters::-webkit-scrollbar { display: none; }
+          .l-chip { flex-shrink: 0; padding: 7px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; background: #111827; border: 1px solid rgba(255,255,255,0.08); color: #94a3b8; cursor: pointer; font-family: inherit; }
+          .l-chip.active { background: rgba(6,182,212,0.15); border-color: rgba(6,182,212,0.4); color: #06b6d4; }
+          .l-mobilenav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 150; display: flex; justify-content: space-around; background: rgba(8,12,20,0.97); border-top: 1px solid rgba(255,255,255,0.08); padding: 8px 4px calc(8px + env(safe-area-inset-bottom)); backdrop-filter: blur(8px); }
+          .l-mobilenav a, .l-mobilenav button { display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; color: #94a3b8; font-size: 10px; font-weight: 600; text-decoration: none; font-family: inherit; cursor: pointer; padding: 2px 10px; }
+          .l-mobilenav .nav-active { color: #06b6d4; }
+          .l-mobilenav .icon { font-size: 18px; line-height: 1; }
         }
       `}</style>
 
@@ -376,6 +387,16 @@ export default function LeadsPage() {
           </div>
         </aside>
 
+        {/* Mobile bottom nav (replaces the hidden sidebar on phones) */}
+        <nav className="l-mobilenav">
+          <button className="nav-active" onClick={() => window.scrollTo({ top: 0 })}>
+            <span className="icon">📋</span> Leads
+          </button>
+          <a href="/admin/members"><span className="icon">💰</span> Members</a>
+          <a href="/admin/community"><span className="icon">🎯</span> Community</a>
+          <button onClick={logout}><span className="icon">🚪</span> Sign out</button>
+        </nav>
+
         {/* Main */}
         <div className="l-main">
           <div className="l-topbar">
@@ -389,6 +410,23 @@ export default function LeadsPage() {
               <button className="l-btn" onClick={fetchData}>Refresh</button>
               <button className="l-btn l-btn-primary" onClick={exportCSV}>Export CSV</button>
             </div>
+          </div>
+
+          {/* Mobile pipeline filters (sidebar is hidden on phones) */}
+          <div className="l-mobilefilters">
+            {([
+              { key: 'all', label: 'All', count: stats.total },
+              { key: 'new', label: 'New', count: stats.new },
+              { key: 'reviewed', label: 'Reviewed', count: stats.reviewed },
+              { key: 'shortlisted', label: 'Shortlisted', count: stats.shortlisted },
+              { key: 'rejected', label: 'Rejected', count: stats.rejected },
+              { key: 'starred', label: 'Starred', count: stats.starred },
+            ] as { key: ViewFilter; label: string; count: number }[]).map(item => (
+              <button key={item.key} className={`l-chip ${currentView === item.key ? 'active' : ''}`}
+                onClick={() => { setCurrentView(item.key); setSelected(new Set()) }}>
+                {item.label} · {item.count}
+              </button>
+            ))}
           </div>
 
           {/* Stats */}

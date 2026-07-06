@@ -207,9 +207,20 @@ export default function MembersPage() {
         .m-empty { text-align: center; padding: 80px 20px; color: #475569; }
         .m-spinner { width: 28px; height: 28px; border: 3px solid rgba(6,182,212,0.12); border-top-color: #06b6d4; border-radius: 50%; animation: m-spin 0.7s linear infinite; margin: 0 auto 14px; }
         @keyframes m-spin { to { transform: rotate(360deg); } }
+        .m-mobilefilters { display: none; }
+        .m-mobilenav { display: none; }
         @media (max-width: 768px) {
           .m-sidebar { display: none; }
           .m-stats { grid-template-columns: repeat(2, 1fr); }
+          .m-content { padding-bottom: 84px; }
+          .m-mobilefilters { display: flex; gap: 8px; overflow-x: auto; padding: 10px 16px 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-shrink: 0; }
+          .m-mobilefilters::-webkit-scrollbar { display: none; }
+          .m-chip { flex-shrink: 0; padding: 7px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; background: #111827; border: 1px solid rgba(255,255,255,0.08); color: #94a3b8; cursor: pointer; font-family: inherit; }
+          .m-chip.active { background: rgba(6,182,212,0.15); border-color: rgba(6,182,212,0.4); color: #06b6d4; }
+          .m-mobilenav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 150; display: flex; justify-content: space-around; background: rgba(8,12,20,0.97); border-top: 1px solid rgba(255,255,255,0.08); padding: 8px 4px calc(8px + env(safe-area-inset-bottom)); backdrop-filter: blur(8px); }
+          .m-mobilenav a, .m-mobilenav button { display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; color: #94a3b8; font-size: 10px; font-weight: 600; text-decoration: none; font-family: inherit; cursor: pointer; padding: 2px 10px; }
+          .m-mobilenav .nav-active { color: #06b6d4; }
+          .m-mobilenav .icon { font-size: 18px; line-height: 1; }
         }
       `}</style>
 
@@ -241,6 +252,16 @@ export default function MembersPage() {
           </div>
         </aside>
 
+        {/* Mobile bottom nav (replaces the hidden sidebar on phones) */}
+        <nav className="m-mobilenav">
+          <a href="/admin"><span className="icon">📋</span> Leads</a>
+          <button className="nav-active" onClick={() => window.scrollTo({ top: 0 })}>
+            <span className="icon">💰</span> Members
+          </button>
+          <a href="/admin/community"><span className="icon">🎯</span> Community</a>
+          <button onClick={logout}><span className="icon">🚪</span> Sign out</button>
+        </nav>
+
         <div className="m-main">
           <div className="m-topbar">
             <h2>{viewTitles[view]}</h2>
@@ -253,6 +274,19 @@ export default function MembersPage() {
               <button className="m-btn" onClick={fetchData}>Refresh</button>
               <button className="m-btn m-btn-primary" onClick={exportCSV}>Export CSV</button>
             </div>
+          </div>
+
+          {/* Mobile plan filters (sidebar is hidden on phones) */}
+          <div className="m-mobilefilters">
+            {([
+              { key: 'all', label: 'All', count: stats.total },
+              { key: 'starter', label: 'Starter', count: stats.starter },
+              { key: 'annual', label: 'Annual', count: stats.annual },
+            ] as { key: PlanFilter; label: string; count: number }[]).map(item => (
+              <button key={item.key} className={`m-chip ${view === item.key ? 'active' : ''}`} onClick={() => setView(item.key)}>
+                {item.label} · {item.count}
+              </button>
+            ))}
           </div>
 
           <div className="m-stats">
