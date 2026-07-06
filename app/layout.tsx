@@ -38,7 +38,9 @@ export const metadata: Metadata = {
   creator: "Prithal Bhardwaj",
   icons: {
     icon: "/favicon.png",
-    apple: "/favicon.png",
+    // Solid-background icon: iOS fills transparency with white, which made
+    // the white wing mark invisible on home screens.
+    apple: "/icons/icon-180.png",
   },
   openGraph: {
     type: "website",
