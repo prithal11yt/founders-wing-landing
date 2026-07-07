@@ -67,6 +67,16 @@ export default function MembersPage() {
     setUserEmail('')
   }
 
+  async function resetPassword(email: string, name: string) {
+    if (!confirm(`Reset ${name}'s portal password? Their next login will ask them to create a new one.`)) return
+    const r = await fetch('/api/admin/member-auth', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    })
+    alert(r.ok ? `Done — ${name} can set a new password on their next login.` : 'Could not reset. Try again.')
+  }
+
   const fetchData = useCallback(async () => {
     try {
       const r = await fetch('/api/members/data')
@@ -313,6 +323,7 @@ export default function MembersPage() {
                     <th>Plan</th>
                     <th>Amount</th>
                     <th>Joined</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -327,6 +338,12 @@ export default function MembersPage() {
                         <td><span className={`m-pill m-pill-${m.plan}`}>{m.plan}</span></td>
                         <td className="m-amount">{rupees(m.amount_paise)}</td>
                         <td style={{ color: '#475569', fontSize: 12 }}>{date}</td>
+                        <td>
+                          <button className="m-btn" title="Clear their password — next login asks them to set a new one"
+                            onClick={() => resetPassword(m.email, m.full_name)}>
+                            🔑 Reset
+                          </button>
+                        </td>
                       </tr>
                     )
                   })}

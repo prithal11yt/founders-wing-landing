@@ -124,6 +124,9 @@ export default function MembersPortal() {
   const [checking, setChecking] = useState(true)
   const [member, setMember] = useState<Member | null>(null)
   const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPw, setConfirmPw] = useState('')
+  const [step, setStep] = useState<'email' | 'setup' | 'password'>('email')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -134,19 +137,25 @@ export default function MembersPortal() {
       .finally(() => setChecking(false))
   }, [])
 
-  async function handleLogin(e: React.FormEvent) {
+  async function post(body: object) {
+    const r = await fetch('/api/members/session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    return { ok: r.ok, data: await r.json() }
+  }
+
+  // Step 1: probe the email → find out whether to set or enter a password
+  async function handleEmail(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
     try {
-      const r = await fetch('/api/members/session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-      const d = await r.json()
-      if (r.ok && d.success) setMember(d.member)
-      else setError(d.error || 'Something went wrong')
+      const { ok, data } = await post({ email })
+      if (data.needsSetup) setStep('setup')
+      else if (data.needsPassword) setStep('password')
+      else if (!ok) setError(data.error || 'Something went wrong')
     } catch {
       setError('Connection failed. Try again.')
     } finally {
@@ -154,10 +163,40 @@ export default function MembersPortal() {
     }
   }
 
+  // Step 2: create password (first login) or enter it (returning)
+  async function handlePassword(e: React.FormEvent) {
+    e.preventDefault()
+    setError('')
+    if (step === 'setup') {
+      if (password.length < 6) { setError('Use at least 6 characters'); return }
+      if (password !== confirmPw) { setError("Passwords don't match"); return }
+    }
+    setLoading(true)
+    try {
+      const { ok, data } = await post(step === 'setup' ? { email, password, mode: 'setup' } : { email, password })
+      if (ok && data.success) setMember(data.member)
+      else setError(data.error || 'Something went wrong')
+    } catch {
+      setError('Connection failed. Try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  function backToEmail() {
+    setStep('email')
+    setPassword('')
+    setConfirmPw('')
+    setError('')
+  }
+
   async function logout() {
     await fetch('/api/members/session', { method: 'DELETE' })
     setMember(null)
     setEmail('')
+    setPassword('')
+    setConfirmPw('')
+    setStep('email')
   }
 
   if (checking) {
@@ -170,40 +209,58 @@ export default function MembersPortal() {
 
   // ── Login screen ──
   if (!member) {
+    const inputCls = "w-full px-4 py-3.5 bg-[#06090f] border border-white/[0.06] rounded-xl text-slate-100 text-[15px] outline-none focus:border-cyan-500/40 mb-4"
     return (
       <div className="min-h-screen bg-[#06090f] flex items-center justify-center px-4"
         style={{ background: 'radial-gradient(ellipse at center, #0c1a2a 0%, #06090f 70%)' }}>
-        <form onSubmit={handleLogin}
+        <form onSubmit={step === 'email' ? handleEmail : handlePassword}
           className="w-full max-w-md bg-[#111827] border border-white/[0.06] rounded-3xl p-8 md:p-10 text-center shadow-2xl">
           <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center text-white text-2xl font-bold"
             style={{ background: 'linear-gradient(135deg,#0891b2,#06b6d4)', fontFamily: 'Space Grotesk, sans-serif' }}>
             FW
           </div>
           <h1 className="text-xl font-bold text-slate-100 mb-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-            Founders Wing Members
+            {step === 'setup' ? 'Create your password' : 'Founders Wing Members'}
           </h1>
           <p className="text-[13px] text-slate-500 mb-8">
-            Enter the email you joined with to access your member area.
+            {step === 'email' && 'Enter the email you joined with to access your member area.'}
+            {step === 'setup' && 'First time here — set a password for your account. You\'ll use it every time you log in.'}
+            {step === 'password' && <>Welcome back — enter the password for <span className="text-slate-300">{email}</span></>}
           </p>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@email.com"
-            required
-            className="w-full px-4 py-3.5 bg-[#06090f] border border-white/[0.06] rounded-xl text-slate-100 text-[15px] outline-none focus:border-cyan-500/40 mb-4"
-          />
-          <button
-            type="submit"
-            disabled={loading}
+
+          {step === 'email' && (
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@email.com" required autoFocus className={inputCls} />
+          )}
+          {step === 'setup' && (
+            <>
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+                placeholder="New password (min 6 characters)" required autoFocus className={inputCls} />
+              <input type="password" value={confirmPw} onChange={(e) => setConfirmPw(e.target.value)}
+                placeholder="Confirm password" required className={inputCls} />
+            </>
+          )}
+          {step === 'password' && (
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+              placeholder="Your password" required autoFocus className={inputCls} />
+          )}
+
+          <button type="submit" disabled={loading}
             className="w-full py-3.5 rounded-xl text-white text-sm font-semibold disabled:opacity-70"
             style={{ background: 'linear-gradient(135deg,#0891b2,#06b6d4)' }}>
-            {loading ? 'Checking…' : 'Enter'}
+            {loading ? 'Checking…' : step === 'email' ? 'Continue' : step === 'setup' ? 'Set password & enter' : 'Enter'}
           </button>
           {error && <p className="text-red-400 text-xs mt-3">{error}</p>}
-          <p className="text-[11px] text-slate-600 mt-6">
-            No password needed. We match your email against paid members.
-          </p>
+
+          {step !== 'email' ? (
+            <button type="button" onClick={backToEmail} className="text-[12px] text-slate-500 hover:text-slate-300 mt-6">
+              ← Use a different email
+            </button>
+          ) : (
+            <p className="text-[11px] text-slate-600 mt-6">
+              Members only. Forgot your password? Message Prithal on WhatsApp to reset it.
+            </p>
+          )}
         </form>
       </div>
     )

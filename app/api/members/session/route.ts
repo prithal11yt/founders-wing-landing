@@ -82,10 +82,30 @@ async function memberNumber(email: string): Promise<number | null> {
   return idx === -1 ? null : idx + 1
 }
 
-// POST { email } → verify membership, set cookie
+// ── Password hashing (Node built-in scrypt, no dependencies) ──
+const SCRYPT_KEYLEN = 64
+
+function hashPassword(password: string): string {
+  const salt = crypto.randomBytes(16).toString("base64url")
+  const hash = crypto.scryptSync(password, salt, SCRYPT_KEYLEN).toString("base64url")
+  return `${salt}.${hash}`
+}
+
+function verifyPassword(password: string, stored: string): boolean {
+  const [salt, hash] = stored.split(".")
+  if (!salt || !hash) return false
+  const candidate = crypto.scryptSync(password, salt, SCRYPT_KEYLEN)
+  const expected = Buffer.from(hash, "base64url")
+  return candidate.length === expected.length && crypto.timingSafeEqual(candidate, expected)
+}
+
+// POST — three-phase login:
+//   { email }                       → probe: needsSetup | needsPassword
+//   { email, password, mode:"setup" } → first-time password creation, then login
+//   { email, password }             → verify password, then login
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json()
+    const { email, password, mode } = await request.json()
     if (!email || typeof email !== "string") {
       return NextResponse.json({ error: "Email required" }, { status: 400 })
     }
@@ -97,6 +117,40 @@ export async function POST(request: NextRequest) {
         { error: "We couldn't find that email. Use the email you joined Founders Wing with." },
         { status: 404 }
       )
+    }
+
+    const lower = member.email.toLowerCase()
+    const supabase = getSupabase()
+    const { data: auth } = await supabase
+      .from("fw_member_auth")
+      .select("password_hash")
+      .eq("email", lower)
+      .maybeSingle()
+
+    // Phase 1: email-only probe — tell the client which screen to show.
+    if (!password || typeof password !== "string") {
+      return NextResponse.json(auth ? { needsPassword: true } : { needsSetup: true })
+    }
+
+    if (!auth) {
+      // Phase 2: first-time setup (only possible while no password exists).
+      if (mode !== "setup") return NextResponse.json({ needsSetup: true })
+      if (password.length < 6) {
+        return NextResponse.json({ error: "Password must be at least 6 characters" }, { status: 400 })
+      }
+      const { error } = await supabase
+        .from("fw_member_auth")
+        .insert({ email: lower, password_hash: hashPassword(password) })
+      if (error) throw error
+    } else {
+      // Phase 3: normal login.
+      if (!verifyPassword(password, auth.password_hash)) {
+        await new Promise((r) => setTimeout(r, 400 + Math.random() * 400))
+        return NextResponse.json(
+          { error: "Wrong password. Forgot it? Message Prithal on WhatsApp to reset." },
+          { status: 401 }
+        )
+      }
     }
 
     const num = await memberNumber(member.email)
