@@ -3,7 +3,16 @@
 import { useEffect, useState, useCallback } from 'react'
 
 type Event = { type: string; icon: string; text: string; detail?: string | null; ts: string }
-type Summary = { total_members: number; activated: number; active_this_week: number; goals_this_week: number; wings_this_month: number }
+type Summary = { total_members: number; activated: number; active_this_week: number; goals_this_week: number; wings_this_month: number; need_nudge: number }
+type Engage = { name: string; member_no: number; whatsapp: string | null; logged_in: boolean; last_active: string | null; goal_this_week: boolean; status: 'not_activated' | 'quiet' | 'active' }
+
+// Build a wa.me link — assume +91 (India) when the number has no country code.
+function waLink(num?: string | null): string | null {
+  if (!num) return null
+  let d = num.replace(/\D/g, '')
+  if (d.length === 10) d = '91' + d
+  return d ? `https://wa.me/${d}` : null
+}
 
 function timeAgo(iso: string): string {
   const s = (Date.now() - new Date(iso).getTime()) / 1000
@@ -18,8 +27,10 @@ export default function AdminActivity() {
   const [authed, setAuthed] = useState<boolean | null>(null)
   const [summary, setSummary] = useState<Summary | null>(null)
   const [events, setEvents] = useState<Event[]>([])
+  const [engagement, setEngagement] = useState<Engage[]>([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState<string>('all')
+  const [view, setView] = useState<'feed' | 'nudge'>('feed')
 
   useEffect(() => {
     fetch('/api/leads/verify').then((r) => r.json()).then((d) => setAuthed(!!d.authenticated)).catch(() => setAuthed(false))
@@ -28,7 +39,7 @@ export default function AdminActivity() {
   const load = useCallback(async () => {
     try {
       const r = await fetch('/api/admin/activity')
-      if (r.ok) { const d = await r.json(); setSummary(d.summary); setEvents(d.events || []) }
+      if (r.ok) { const d = await r.json(); setSummary(d.summary); setEvents(d.events || []); setEngagement(d.engagement || []) }
     } finally { setLoading(false) }
   }, [])
 
@@ -74,6 +85,18 @@ export default function AdminActivity() {
     .a-detail { font-size:13px; color:#64748b; margin-top:2px; line-height:1.5; word-break:break-word; }
     .a-time { font-size:11px; color:#475569; white-space:nowrap; flex-shrink:0; }
     .a-empty { text-align:center; padding:70px 20px; color:#475569; }
+    .a-toggle { display:inline-flex; background:#111827; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:3px; margin-bottom:18px; }
+    .a-toggle button { background:none; border:none; color:#94a3b8; font-family:inherit; font-size:13px; font-weight:600; padding:8px 16px; border-radius:9px; cursor:pointer; }
+    .a-toggle button.on { background:rgba(6,182,212,0.15); color:#06b6d4; }
+    .a-nudge-badge { margin-left:6px; font-size:11px; background:#f59e0b; color:#000; font-weight:700; padding:1px 7px; border-radius:999px; }
+    .e-row { display:flex; align-items:center; gap:12px; padding:14px 4px; border-bottom:1px solid rgba(255,255,255,0.05); }
+    .e-av { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; font-size:14px; flex-shrink:0; background:linear-gradient(135deg,#0891b2,#06b6d4); }
+    .e-body { flex:1; min-width:0; }
+    .e-name { font-size:14px; font-weight:600; color:#e2e8f0; }
+    .e-sub { font-size:12px; color:#64748b; margin-top:1px; }
+    .e-tag { font-size:10px; font-weight:700; padding:3px 8px; border-radius:6px; text-transform:uppercase; letter-spacing:0.03em; flex-shrink:0; }
+    .e-wa { flex-shrink:0; background:#25d366; color:#04310f; font-weight:700; font-size:12px; padding:8px 12px; border-radius:9px; text-decoration:none; white-space:nowrap; }
+    .e-wa:hover { filter:brightness(1.08); }
     .a-nav { position:fixed; bottom:0; left:0; right:0; z-index:150; display:flex; justify-content:space-around; background:rgba(8,12,20,0.97); border-top:1px solid rgba(255,255,255,0.08); padding:8px 4px calc(8px + env(safe-area-inset-bottom)); backdrop-filter:blur(8px); }
     .a-nav a,.a-nav button { display:flex; flex-direction:column; align-items:center; gap:3px; background:none; border:none; color:#94a3b8; font-size:10px; font-weight:600; text-decoration:none; font-family:inherit; cursor:pointer; padding:2px 8px; }
     .a-nav .on { color:#06b6d4; }
@@ -101,29 +124,42 @@ export default function AdminActivity() {
         </div>
       )}
 
-      <div className="a-filters">
-        {FILTERS.map((f) => (
-          <button key={f.key} className={`a-chip ${filter === f.key ? 'on' : ''}`} onClick={() => setFilter(f.key)}>{f.label}</button>
-        ))}
+      <div className="a-toggle">
+        <button className={view === 'feed' ? 'on' : ''} onClick={() => setView('feed')}>📡 Activity feed</button>
+        <button className={view === 'nudge' ? 'on' : ''} onClick={() => setView('nudge')}>
+          🔔 Who to nudge
+          {summary && summary.need_nudge > 0 && <span className="a-nudge-badge">{summary.need_nudge}</span>}
+        </button>
       </div>
 
-      {loading ? (
-        <p className="a-empty">Loading activity…</p>
-      ) : shown.length === 0 ? (
-        <p className="a-empty">No activity yet in this category. As members use the dashboard, it shows up here live.</p>
-      ) : (
-        <div className="a-feed">
-          {shown.map((e, i) => (
-            <div key={i} className="a-row">
-              <div className="a-icon">{e.icon}</div>
-              <div className="a-body">
-                <div className="a-text">{e.text}</div>
-                {e.detail && <div className="a-detail">{e.detail}</div>}
-              </div>
-              <div className="a-time">{timeAgo(e.ts)}</div>
+      {view === 'feed' ? (
+        <>
+          <div className="a-filters">
+            {FILTERS.map((f) => (
+              <button key={f.key} className={`a-chip ${filter === f.key ? 'on' : ''}`} onClick={() => setFilter(f.key)}>{f.label}</button>
+            ))}
+          </div>
+          {loading ? (
+            <p className="a-empty">Loading activity…</p>
+          ) : shown.length === 0 ? (
+            <p className="a-empty">No activity yet in this category. As members use the dashboard, it shows up here live.</p>
+          ) : (
+            <div className="a-feed">
+              {shown.map((e, i) => (
+                <div key={i} className="a-row">
+                  <div className="a-icon">{e.icon}</div>
+                  <div className="a-body">
+                    <div className="a-text">{e.text}</div>
+                    {e.detail && <div className="a-detail">{e.detail}</div>}
+                  </div>
+                  <div className="a-time">{timeAgo(e.ts)}</div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          )}
+        </>
+      ) : (
+        <NudgeList rows={engagement} loading={loading} />
       )}
 
       <nav className="a-nav">
@@ -134,6 +170,61 @@ export default function AdminActivity() {
         <button onClick={logout}><span className="ic">🚪</span> Sign out</button>
       </nav>
     </Shell>
+  )
+}
+
+const STATUS_META: Record<string, { label: string; color: string; bg: string }> = {
+  not_activated: { label: 'Never logged in', color: '#ef4444', bg: 'rgba(239,68,68,0.12)' },
+  quiet: { label: 'Gone quiet', color: '#f59e0b', bg: 'rgba(245,158,11,0.12)' },
+  active: { label: 'Active', color: '#10b981', bg: 'rgba(16,185,129,0.12)' },
+}
+
+function NudgeList({ rows, loading }: { rows: Engage[]; loading: boolean }) {
+  if (loading) return <p className="a-empty">Loading…</p>
+  const needNudge = rows.filter((r) => r.status !== 'active')
+  const active = rows.filter((r) => r.status === 'active')
+
+  const sub = (r: Engage) => {
+    if (!r.logged_in) return 'Hasn’t logged in or set a password yet'
+    if (r.status === 'quiet') return r.last_active ? `Last active ${timeAgo(r.last_active)}` : 'No activity yet'
+    return r.goal_this_week ? 'Set a goal this week ✓' : `Active${r.last_active ? ' · ' + timeAgo(r.last_active) : ''}`
+  }
+
+  const Row = (r: Engage) => {
+    const m = STATUS_META[r.status]
+    const wa = waLink(r.whatsapp)
+    return (
+      <div className="e-row" key={r.member_no}>
+        <div className="e-av">{(r.name || '?')[0]?.toUpperCase()}</div>
+        <div className="e-body">
+          <div className="e-name">{r.name} <span style={{ color: '#475569', fontWeight: 400, fontSize: 12 }}>#{r.member_no}</span></div>
+          <div className="e-sub">{sub(r)}</div>
+        </div>
+        <span className="e-tag" style={{ color: m.color, background: m.bg }}>{m.label}</span>
+        {wa && <a className="e-wa" href={wa} target="_blank" rel="noopener noreferrer">💬 Nudge</a>}
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <p style={{ fontSize: 13, color: '#94a3b8', lineHeight: 1.6, marginBottom: 16 }}>
+        Members who need a personal nudge are at the top. Tap <strong style={{ color: '#25d366' }}>Nudge</strong> to message them on WhatsApp.
+      </p>
+      {needNudge.length === 0 ? (
+        <p className="a-empty">🎉 Everyone’s active — no one needs a nudge right now.</p>
+      ) : (
+        <div>{needNudge.map(Row)}</div>
+      )}
+      {active.length > 0 && (
+        <>
+          <p style={{ fontSize: 11, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.04em', fontWeight: 600, margin: '24px 0 8px' }}>
+            Active members ({active.length})
+          </p>
+          <div>{active.map(Row)}</div>
+        </>
+      )}
+    </div>
   )
 }
 

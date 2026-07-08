@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
   try {
     const supabase = getSupabase()
     const [membersRes, wingsRes, goalsRes, attendanceRes, callsRes, offersRes, authRes] = await Promise.all([
-      supabase.from("fw_memberships").select("full_name, email, plan, created_at").order("created_at", { ascending: true }),
+      supabase.from("fw_memberships").select("full_name, email, whatsapp, plan, created_at").order("created_at", { ascending: true }),
       supabase.from("fw_wings_ledger").select("from_email, to_email, amount, reason, type, created_at"),
       supabase.from("fw_weekly_goals").select("member_email, member_name, goal, status, created_at, updated_at"),
       supabase.from("fw_attendance").select("member_email, member_name, call_id, created_at"),
@@ -102,6 +102,50 @@ export async function GET(request: NextRequest) {
       .filter((w) => w.type === "peer" && w.created_at >= monthStart)
       .reduce((s, w) => s + w.amount, 0)
 
+    // ── Per-member engagement (the "who to nudge" list) ──
+    const twoWeeksAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString()
+    const authEmails = new Set((authRes.data || []).map((a) => a.email.toLowerCase()))
+    const lastActive = new Map<string, string>()
+    const bump = (email?: string | null, ts?: string | null) => {
+      const l = email?.toLowerCase()
+      if (!l || !ts) return
+      if (!lastActive.has(l) || lastActive.get(l)! < ts) lastActive.set(l, ts)
+    }
+    for (const g of goalsRes.data || []) bump(g.member_email, g.updated_at || g.created_at)
+    for (const a of attendanceRes.data || []) bump(a.member_email, a.created_at)
+    for (const w of wingsRes.data || []) if (w.from_email) bump(w.from_email, w.created_at)
+    for (const o of offersRes.data || []) bump(o.helper_email, o.created_at)
+    const goalThisWeek = new Set(
+      (goalsRes.data || []).filter((g) => g.created_at >= weekAgo).map((g) => g.member_email?.toLowerCase())
+    )
+
+    const engagement = members.map((m, i) => {
+      const lower = m.email.toLowerCase()
+      const logged_in = authEmails.has(lower)
+      const la = lastActive.get(lower) || null
+      let status: "not_activated" | "quiet" | "active" = "active"
+      if (!logged_in) status = "not_activated"
+      else if (!la || la < twoWeeksAgo) status = "quiet"
+      return {
+        name: m.full_name,
+        member_no: i + 1,
+        whatsapp: m.whatsapp || null,
+        logged_in,
+        last_active: la,
+        goal_this_week: goalThisWeek.has(lower),
+        status,
+      }
+    })
+    // Surface the ones needing attention first: not_activated → quiet → active,
+    // and within each, the most stale first (oldest / never-active at the top).
+    const rank: Record<string, number> = { not_activated: 0, quiet: 1, active: 2 }
+    engagement.sort((a, b) => {
+      if (rank[a.status] !== rank[b.status]) return rank[a.status] - rank[b.status]
+      const la = a.last_active || ""
+      const lb = b.last_active || ""
+      return la < lb ? -1 : la > lb ? 1 : 0
+    })
+
     return NextResponse.json({
       summary: {
         total_members: members.length,
@@ -109,8 +153,10 @@ export async function GET(request: NextRequest) {
         active_this_week: recentActors.size,
         goals_this_week: goalsThisWeek,
         wings_this_month: wingsThisMonth,
+        need_nudge: engagement.filter((e) => e.status !== "active").length,
       },
       events: events.slice(0, 200),
+      engagement,
     })
   } catch (err) {
     console.error("[admin/activity] GET error:", err)
