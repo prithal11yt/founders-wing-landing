@@ -269,6 +269,7 @@ export default function MembersPage() {
             <span className="icon">💰</span> Members
           </button>
           <a href="/admin/community"><span className="icon">🎯</span> Community</a>
+          <a href="/admin/activity"><span className="icon">📡</span> Activity</a>
           <button onClick={logout}><span className="icon">🚪</span> Sign out</button>
         </nav>
 
