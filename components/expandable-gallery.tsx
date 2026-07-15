@@ -20,7 +20,7 @@ const items = [
     category: "Deep Dives",
     description: "Intimate, problem-solving sessions in curated cafes. One topic, 8 founders, zero fluff. Bring your hardest AI challenge.",
     icon: Coffee,
-    iconColor: "text-blue-400",
+    iconColor: "text-blue-600",
   },
   {
     id: 3,
@@ -28,7 +28,7 @@ const items = [
     category: "Networking",
     description: "High-end culinary experiences with curated seating. Great food, better company, and the kind of conversation you can't find on Slack.",
     icon: Utensils,
-    iconColor: "text-purple-400",
+    iconColor: "text-purple-600",
   },
   {
     id: 4,

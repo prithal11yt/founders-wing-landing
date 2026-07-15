@@ -45,10 +45,10 @@ export default function LandingPage() {
       <InteractiveBackground />
 
       {/* ═══════════════ Navigation ═══════════════ */}
-      <header className="fixed top-3 md:top-4 left-1/2 -translate-x-1/2 w-[92%] md:w-[95%] max-w-5xl z-50 neu-convex rounded-full px-2 py-1">
+      <header className="fixed top-[52px] md:top-[60px] left-1/2 -translate-x-1/2 w-[92%] md:w-[95%] max-w-5xl z-50 neu-convex rounded-full px-2 py-1">
         <div className="container mx-auto px-3 md:px-4 h-12 md:h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Image src="/logo-icon.png" alt="Founders Wing" width={28} height={28} className="object-contain" />
+            <Image src="/logo-icon-dark.png" alt="Founders Wing" width={28} height={28} className="object-contain" />
             <span className="font-semibold tracking-tight">Founders Wing</span>
           </div>
           <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
@@ -89,7 +89,7 @@ export default function LandingPage() {
 
       {/* Mobile menu — rendered outside header pill to prevent clipping */}
       <div
-        className={`fixed top-[64px] md:top-[76px] left-1/2 -translate-x-1/2 w-[92%] md:w-[95%] max-w-5xl z-50 md:hidden overflow-hidden transition-all duration-300 ease-out rounded-2xl ${
+        className={`fixed top-[104px] md:top-[120px] left-1/2 -translate-x-1/2 w-[92%] md:w-[95%] max-w-5xl z-50 md:hidden overflow-hidden transition-all duration-300 ease-out rounded-2xl ${
           mobileMenuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
         }`}
       >
@@ -120,7 +120,7 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* ═══════════════ Hero Section ═══════════════ */}
-        <section className="relative pt-28 pb-16 md:pt-48 md:pb-32 overflow-hidden">
+        <section className="relative pt-[152px] pb-16 md:pt-[236px] md:pb-32 overflow-hidden">
           {/* Subtle radial gradient overlay */}
           <div className="absolute inset-0 pointer-events-none" style={{
             background: 'radial-gradient(ellipse 80% 60% at 50% 30%, rgba(2,132,199,0.06) 0%, transparent 70%)',
@@ -209,16 +209,16 @@ export default function LandingPage() {
                     {/* Channel stat pills */}
                     <div className="flex items-center gap-2">
                       <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border bg-red-500/10 border-red-500/20 text-xs font-medium">
-                        <Youtube className="w-3 h-3 text-red-400" />
-                        <span className="font-bold text-red-400">36K+</span>
+                        <Youtube className="w-3 h-3 text-red-600" />
+                        <span className="font-bold text-red-600">36K+</span>
                         <span className="text-muted-foreground">Subscribers</span>
                       </div>
                       <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border bg-amber-500/10 border-amber-500/20 text-xs font-medium">
                         <span className="relative flex h-1.5 w-1.5">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-400" />
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75" />
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500" />
                         </span>
-                        <span className="font-bold text-amber-400">{spotsCount}</span>
+                        <span className="font-bold text-amber-600">{spotsCount}</span>
                         <span className="text-muted-foreground">Founding Members</span>
                       </div>
                     </div>
@@ -319,7 +319,7 @@ export default function LandingPage() {
               <div className="max-w-3xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-10 space-y-3">
-                  <span className="text-xs font-semibold tracking-widest text-violet-400 uppercase">For Members</span>
+                  <span className="text-xs font-semibold tracking-widest text-violet-600 uppercase">For Members</span>
                   <h2 className="text-2xl md:text-4xl font-bold tracking-tight">What we&apos;re building next</h2>
                   <p className="text-muted-foreground text-base leading-relaxed max-w-xl mx-auto">
                     Every subscription goes toward making this community bigger and better. You&apos;re not just joining — you&apos;re helping build what it becomes.
@@ -330,28 +330,28 @@ export default function LandingPage() {
                 <div className="grid sm:grid-cols-2 gap-4 mb-8">
                   {[
                     {
-                      icon: <MapPin className="w-5 h-5 text-violet-400" />,
+                      icon: <MapPin className="w-5 h-5 text-violet-600" />,
                       label: "Offline Meetups",
                       desc: "City-based founder meetups in Delhi, Mumbai, Bangalore — meet your cohort IRL.",
                       when: "Late 2026",
                       color: "border-violet-500/20 bg-violet-500/5",
                     },
                     {
-                      icon: <Users className="w-5 h-5 text-cyan-400" />,
+                      icon: <Users className="w-5 h-5 text-cyan-600" />,
                       label: "Founder Sports Days",
                       desc: "Cricket, football, bowling — build friendships and find co-founders away from screens.",
                       when: "2026",
                       color: "border-cyan-500/20 bg-cyan-500/5",
                     },
                     {
-                      icon: <Trophy className="w-5 h-5 text-amber-400" />,
+                      icon: <Trophy className="w-5 h-5 text-amber-600" />,
                       label: "Sprint Demo Days",
                       desc: "In-person events where members pitch what they built during the ₹10K sprint.",
                       when: "2026",
                       color: "border-amber-500/20 bg-amber-500/5",
                     },
                     {
-                      icon: <Zap className="w-5 h-5 text-emerald-400" />,
+                      icon: <Zap className="w-5 h-5 text-emerald-600" />,
                       label: "Founding Member Perks",
                       desc: "Members who join now get priority access to all offline events — for life.",
                       when: "Always",
@@ -409,8 +409,8 @@ export default function LandingPage() {
             <div className="max-w-3xl mx-auto">
               <ScrollReveal variant="fade-up" duration={800}>
                 <div className="text-center mb-12 space-y-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold mb-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 text-xs font-semibold mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
                     Founding Member Applications Open
                   </div>
                   <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Become a Founding Member</h2>
@@ -422,7 +422,7 @@ export default function LandingPage() {
                     <div className="flex-1 max-w-[200px] h-2 rounded-full bg-white/5 overflow-hidden">
                       <div className="h-full rounded-full bg-gradient-to-r from-amber-500 to-amber-400" style={{ width: `${(spotsCount / 50) * 100}%` }} />
                     </div>
-                    <span className="text-sm font-semibold text-amber-400">{spotsCount} / 50</span>
+                    <span className="text-sm font-semibold text-amber-600">{spotsCount} / 50</span>
                     <span className="text-xs text-muted-foreground">spots filled</span>
                   </div>
                 </div>
@@ -472,7 +472,7 @@ export default function LandingPage() {
             {/* Logo + tagline */}
             <div className="flex flex-col items-center md:items-start gap-2">
               <div className="flex items-center gap-2">
-                <Image src="/logo-icon.png" alt="Founders Wing" width={22} height={22} className="object-contain" />
+                <Image src="/logo-icon-dark.png" alt="Founders Wing" width={22} height={22} className="object-contain" />
                 <span className="font-semibold tracking-tight">Founders Wing</span>
               </div>
               <p className="text-sm text-muted-foreground">Where aspiring founders stop overthinking and start building.</p>
@@ -480,6 +480,9 @@ export default function LandingPage() {
 
             {/* Links */}
             <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-sm text-muted-foreground">
+              <Link href="/blog" className="hover:text-foreground transition-colors">
+                Blog
+              </Link>
               <Link href="https://www.linkedin.com/in/prithal-bhardwaj-058a56187/" target="_blank" className="hover:text-foreground transition-colors">
                 LinkedIn
               </Link>

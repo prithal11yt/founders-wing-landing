@@ -54,7 +54,7 @@ export function WaitlistForm({ spotsCount = 25 }: { spotsCount?: number }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6 text-left">
       {error && (
-        <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg text-sm">{error}</div>
+        <div className="bg-red-500/10 border border-red-500/20 text-red-600 px-4 py-3 rounded-lg text-sm">{error}</div>
       )}
 
       {/* Name + Email */}

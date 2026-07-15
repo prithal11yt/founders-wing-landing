@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Users, Zap, Target, TrendingUp } from 'lucide-react'
 import { seoPages, getPageBySlug } from '@/lib/seo-pages'
+import { SITE_URL } from '@/lib/site'
 import generatedContent from '@/lib/generated-content.json'
 import { FAQSection } from '@/components/faq-section'
 import { CTAStrip } from '@/components/cta-strip'
@@ -24,7 +25,7 @@ export async function generateMetadata({
   const page = getPageBySlug(category, slug)
   if (!page) return {}
 
-  const url = `https://founderwing.com/${category}/${slug}`
+  const url = `${SITE_URL}/${category}/${slug}`
   return {
     title: page.title,
     description: page.description,
@@ -89,13 +90,13 @@ export default async function SeoPage({
     '@type': 'WebPage',
     name: page.title,
     description: page.description,
-    url: `https://founderwing.com/${category}/${slug}`,
+    url: `${SITE_URL}/${category}/${slug}`,
     breadcrumb: {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://founderwing.com' },
-        { '@type': 'ListItem', position: 2, name: category.charAt(0).toUpperCase() + category.slice(1), item: `https://founderwing.com/${category}` },
-        { '@type': 'ListItem', position: 3, name: page.h1, item: `https://founderwing.com/${category}/${slug}` },
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}` },
+        { '@type': 'ListItem', position: 2, name: category.charAt(0).toUpperCase() + category.slice(1), item: `${SITE_URL}/${category}` },
+        { '@type': 'ListItem', position: 3, name: page.h1, item: `${SITE_URL}/${category}/${slug}` },
       ],
     },
     ...(content?.faqs && {
@@ -119,7 +120,7 @@ export default async function SeoPage({
 
       <div className="min-h-screen bg-background text-foreground">
         {/* Nav */}
-        <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-4xl">
+        <nav className="fixed top-[56px] md:top-[60px] left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-4xl">
           <div className="neu-flat rounded-full px-5 py-3 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <img src="/logo.png" alt="Founders Wing" className="h-6 w-auto" />
@@ -135,7 +136,7 @@ export default async function SeoPage({
         </nav>
 
         {/* Hero */}
-        <section className="pt-36 pb-16 px-4">
+        <section className="pt-[188px] pb-16 px-4">
           <div className="container mx-auto max-w-3xl">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-xs text-muted-foreground mb-8">

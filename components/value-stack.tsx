@@ -54,7 +54,7 @@ export function ValueStack() {
           "text-center mb-12 md:mb-16 transition-all duration-700",
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
-          <p className="text-sm font-medium tracking-widest uppercase text-emerald-400 mb-4">Everything included</p>
+          <p className="text-sm font-medium tracking-widest uppercase text-emerald-600 mb-4">Everything included</p>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
             One membership.<br className="md:hidden" /> Everything you need.
           </h2>
@@ -80,7 +80,7 @@ export function ValueStack() {
               >
                 <div className="flex items-center gap-3">
                   <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
-                    <Check className="w-3 h-3 text-emerald-400" />
+                    <Check className="w-3 h-3 text-emerald-600" />
                   </div>
                   <span className="text-sm md:text-base text-foreground">{item.label}</span>
                 </div>
@@ -107,8 +107,8 @@ export function ValueStack() {
           {/* 6-month plan */}
           <div className="neu-flat rounded-3xl p-6 md:p-8 relative group hover:border-cyan-500/20 transition-all duration-300">
             <div className="flex items-center gap-2 mb-4">
-              <Zap className="w-5 h-5 text-cyan-400" />
-              <span className="text-sm font-medium text-cyan-400 uppercase tracking-wider">Starter</span>
+              <Zap className="w-5 h-5 text-cyan-600" />
+              <span className="text-sm font-medium text-cyan-600 uppercase tracking-wider">Starter</span>
             </div>
             <div className="mb-1">
               <span className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">₹2,999</span>
@@ -118,7 +118,7 @@ export function ValueStack() {
             <ul className="space-y-2.5 mb-8">
               {['Full community access', 'Weekly live sessions', 'All playbooks & templates', '30-day challenge', 'Sprint leaderboard access'].map(f => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-foreground/80">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                   {f}
                 </li>
               ))}
@@ -144,8 +144,8 @@ export function ValueStack() {
             </div>
 
             <div className="flex items-center gap-2 mb-4 mt-2">
-              <Crown className="w-5 h-5 text-amber-400" />
-              <span className="text-sm font-medium text-amber-400 uppercase tracking-wider">Committed</span>
+              <Crown className="w-5 h-5 text-amber-600" />
+              <span className="text-sm font-medium text-amber-600 uppercase tracking-wider">Committed</span>
             </div>
             <div className="mb-1">
               <span className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">₹4,999</span>
@@ -155,7 +155,7 @@ export function ValueStack() {
             <ul className="space-y-2.5 mb-8">
               {['Everything in Starter', '6 extra months of access', 'Priority Hot Seat spots', 'Founding member badge', 'Sprint leaderboard access'].map(f => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-foreground/80">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                   {f}
                 </li>
               ))}
@@ -189,14 +189,14 @@ export function ValueStack() {
           ? "opacity-100 translate-y-0 pointer-events-auto"
           : "opacity-0 translate-y-8 pointer-events-none"
       )}>
-        <div className="relative rounded-2xl border border-amber-500/30 bg-[#0f1623]/95 backdrop-blur-xl shadow-[0_8px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(245,158,11,0.15)] px-5 py-4 flex items-start gap-4">
+        <div className="relative rounded-2xl border border-amber-400/40 bg-white/95 backdrop-blur-xl shadow-[0_8px_40px_rgba(15,23,42,0.15),0_0_0_1px_rgba(245,158,11,0.12)] px-5 py-4 flex items-start gap-4">
           {/* Glow accent */}
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-500/10 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-400/10 via-transparent to-transparent pointer-events-none" />
 
           <div className="text-2xl shrink-0 mt-0.5">💡</div>
 
           <div className="flex-1 relative z-10">
-            <p className="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-1">Think about it this way</p>
+            <p className="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-1">Think about it this way</p>
             <p className="text-sm text-foreground leading-relaxed">
               <span className="font-bold">₹500/month</span>
               <span className="text-muted-foreground"> — less than one Swiggy order.</span>
@@ -208,7 +208,7 @@ export function ValueStack() {
 
           <button
             onClick={() => { setShowToast(false); setToastDismissed(true) }}
-            className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-white/10 transition-all relative z-10 mt-0.5"
+            className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-slate-900/5 transition-all relative z-10 mt-0.5"
             aria-label="Dismiss"
           >
             <X className="w-3.5 h-3.5" />

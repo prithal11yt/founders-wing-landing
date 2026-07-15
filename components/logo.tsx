@@ -5,7 +5,7 @@ import Image from 'next/image'
 export function WingMeshLogo({ size = 28, className = '' }: { size?: number; className?: string }) {
   return (
     <Image
-      src="/logo-icon.png"
+      src="/logo-icon-dark.png"
       alt="Founders Wing"
       width={size}
       height={size}

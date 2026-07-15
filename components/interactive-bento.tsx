@@ -64,9 +64,9 @@ export function InteractiveBento() {
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-5">
               <div className="w-12 h-12 rounded-2xl neu-convex flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Video className="w-6 h-6 text-cyan-400" />
+                <Video className="w-6 h-6 text-cyan-600" />
               </div>
-              <span className="text-xs font-medium px-3 py-1 rounded-full border bg-cyan-500/10 border-cyan-500/20 text-cyan-400">
+              <span className="text-xs font-medium px-3 py-1 rounded-full border bg-cyan-500/10 border-cyan-500/20 text-cyan-600">
                 26 sessions/year
               </span>
             </div>
@@ -86,7 +86,7 @@ export function InteractiveBento() {
                 <span className="text-[10px] text-muted-foreground/60 ml-1">Founders Wing — Weekly Call</span>
                 <div className="ml-auto flex items-center gap-1">
                   <div className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
-                  <span className="text-[9px] text-red-400 font-medium">LIVE</span>
+                  <span className="text-[9px] text-red-600 font-medium">LIVE</span>
                 </div>
               </div>
               <div className="grid grid-cols-4 gap-1.5">
@@ -102,17 +102,17 @@ export function InteractiveBento() {
                 ].map((p) => (
                   <div key={p.initials} className={cn(
                     "rounded-lg aspect-video flex flex-col items-center justify-center gap-0.5",
-                    p.speaking ? "bg-cyan-500/15 ring-1 ring-cyan-400/40" : "bg-white/[0.03]"
+                    p.speaking ? "bg-cyan-500/15 ring-1 ring-cyan-500/50" : "bg-slate-900/[0.05] border border-slate-900/[0.06]"
                   )}>
                     <div className={cn(
                       "w-6 h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center text-[8px] md:text-[9px] font-bold",
-                      p.speaking ? "bg-cyan-500/30 text-cyan-300" : "bg-white/10 text-foreground/40"
+                      p.speaking ? "bg-cyan-500/30 text-cyan-700" : "bg-slate-900/10 text-slate-600"
                     )}>
                       {p.initials}
                     </div>
                     <span className={cn(
                       "text-[8px] leading-none",
-                      p.speaking ? "text-cyan-400" : "text-foreground/30"
+                      p.speaking ? "text-cyan-700" : "text-slate-500"
                     )}>{p.label}</span>
                   </div>
                 ))}
@@ -122,7 +122,7 @@ export function InteractiveBento() {
             <div className="space-y-2">
               {["Ask anything — no question too basic", "AI tool demos & walkthroughs", "Recordings available if you miss one"].map((item) => (
                 <div key={item} className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                  <Check className="w-3.5 h-3.5 text-cyan-600 shrink-0" />
                   <span className="text-xs text-foreground/70">{item}</span>
                 </div>
               ))}
@@ -139,20 +139,20 @@ export function InteractiveBento() {
           style={{ transitionDelay: isVisible ? '150ms' : '0ms' }}
         >
           <div className="grid grid-cols-[140px_1fr] sm:grid-cols-[180px_1fr] h-full">
-            <div className="relative bg-gradient-to-br from-amber-950/60 via-slate-900 to-slate-950 flex items-center justify-center p-5 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-t from-amber-500/5 to-transparent pointer-events-none" />
+            <div className="relative bg-gradient-to-br from-amber-100/70 via-slate-100 to-slate-200 flex items-center justify-center p-5 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-t from-amber-500/10 to-transparent pointer-events-none" />
               <Image
                 src="/ebook-cover.png"
                 alt="50 Business Ideas Ebook"
                 width={160}
                 height={240}
                 className="rounded-lg group-hover:scale-105 group-hover:rotate-0 transition-all duration-500 -rotate-2 relative z-10"
-                style={{ width: 'auto', height: 'auto', maxHeight: '210px', filter: 'brightness(0.88) saturate(1.1)', boxShadow: '0 20px 60px rgba(0,0,0,0.7), 0 0 30px rgba(245,158,11,0.12)' }}
+                style={{ width: 'auto', height: 'auto', maxHeight: '210px', boxShadow: '0 16px 40px rgba(15,23,42,0.25)' }}
               />
             </div>
             <div className="p-5 md:p-6 flex flex-col justify-center">
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs font-medium px-3 py-1 rounded-full border bg-amber-500/10 border-amber-500/20 text-amber-400">
+                <span className="text-xs font-medium px-3 py-1 rounded-full border bg-amber-500/10 border-amber-500/20 text-amber-600">
                   FREE with membership
                 </span>
               </div>
@@ -163,7 +163,7 @@ export function InteractiveBento() {
               <div className="space-y-1.5">
                 {["Done-for-you revenue projections", "Time-saving templates", "Step-by-step roadmaps"].map((item) => (
                   <div key={item} className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-amber-600 shrink-0" />
                     <span className="text-xs text-foreground/70">{item}</span>
                   </div>
                 ))}
@@ -227,15 +227,15 @@ export function InteractiveBento() {
           </div>
 
           {/* Right: WhatsApp group mockup */}
-          <div className="bg-white/[0.02] border-t md:border-t-0 md:border-l border-white/5 p-5 md:p-6 flex flex-col justify-center">
+          <div className="bg-[#f3efe7] border-t md:border-t-0 md:border-l border-black/5 p-5 md:p-6 flex flex-col justify-center">
             {/* Group header */}
-            <div className="flex items-center gap-3 pb-3 mb-3 border-b border-white/5">
-              <div className="w-9 h-9 rounded-full bg-[#25D366]/20 flex items-center justify-center shrink-0">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <div className="flex items-center gap-3 pb-3 mb-3 border-b border-black/10">
+              <div className="w-9 h-9 rounded-full bg-[#128C7E]/15 flex items-center justify-center shrink-0">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="#128C7E"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
               </div>
               <div>
-                <p className="text-xs font-semibold text-foreground">Founders Wing 🚀</p>
-                <p className="text-[10px] text-[#25D366]">Members only · Private group</p>
+                <p className="text-xs font-semibold text-slate-900">Founders Wing 🚀</p>
+                <p className="text-[10px] font-medium text-[#0f766e]">Members only · Private group</p>
               </div>
             </div>
             {/* Messages */}
@@ -247,14 +247,14 @@ export function InteractiveBento() {
               ].map((m) => (
                 <div key={m.time} className={cn("flex gap-2", m.self ? "flex-row-reverse" : "")}>
                   {!m.self && (
-                    <div className="w-5 h-5 rounded-full bg-[#25D366]/20 flex items-center justify-center text-[7px] font-bold text-[#25D366] shrink-0 mt-0.5">
+                    <div className="w-5 h-5 rounded-full bg-[#128C7E] flex items-center justify-center text-[7px] font-bold text-white shrink-0 mt-0.5">
                       {m.name[0]}
                     </div>
                   )}
-                  <div className={cn("rounded-xl px-3 py-1.5 max-w-[85%]", m.self ? "bg-[#25D366]/20" : "bg-white/[0.05]")}>
-                    {!m.self && <p className="text-[9px] font-semibold text-[#25D366] mb-0.5">{m.name}</p>}
-                    <p className="text-[11px] text-foreground/80 leading-relaxed">{m.msg}</p>
-                    <p className="text-[8px] text-muted-foreground/40 mt-0.5 text-right">{m.time} ✓✓</p>
+                  <div className={cn("rounded-xl px-3 py-1.5 max-w-[85%] shadow-sm", m.self ? "bg-[#d9fdd3]" : "bg-white")}>
+                    {!m.self && <p className="text-[9px] font-semibold text-[#0f766e] mb-0.5">{m.name}</p>}
+                    <p className="text-[11px] text-slate-800 leading-relaxed">{m.msg}</p>
+                    <p className="text-[8px] text-slate-400 mt-0.5 text-right">{m.time} <span className="text-[#53bdeb]">✓✓</span></p>
                   </div>
                 </div>
               ))}
@@ -274,7 +274,7 @@ export function InteractiveBento() {
               <div className="w-12 h-12 rounded-2xl neu-convex flex items-center justify-center">
                 <Brain className="w-6 h-6 text-accent-cyan" />
               </div>
-              <span className="text-xs font-medium px-3 py-1 rounded-full border bg-cyan-500/10 border-cyan-500/20 text-cyan-400">
+              <span className="text-xs font-medium px-3 py-1 rounded-full border bg-cyan-500/10 border-cyan-500/20 text-cyan-600">
                 Every week
               </span>
             </div>
@@ -297,10 +297,10 @@ export function InteractiveBento() {
             <p className="text-[10px] text-muted-foreground/50 uppercase tracking-widest mb-3 font-medium">Latest drops</p>
             <div className="space-y-2.5">
               {[
-                { tool: "Claude Mythos", desc: "Most capable AI model yet", time: "2h ago", color: "bg-orange-500/15 text-orange-400", dot: "bg-orange-400" },
-                { tool: "OpenClaw", desc: "Open-source AI agent framework", time: "1d ago", color: "bg-emerald-500/15 text-emerald-400", dot: "bg-emerald-400" },
-                { tool: "Lovable v2", desc: "Ship full-stack apps with AI", time: "3d ago", color: "bg-violet-500/15 text-violet-400", dot: "bg-violet-400" },
-                { tool: "Runway Gen-4", desc: "AI video generation upgrade", time: "5d ago", color: "bg-blue-500/15 text-blue-400", dot: "bg-blue-400" },
+                { tool: "Claude Mythos", desc: "Most capable AI model yet", time: "2h ago", color: "bg-orange-500/15 text-orange-600", dot: "bg-orange-400" },
+                { tool: "OpenClaw", desc: "Open-source AI agent framework", time: "1d ago", color: "bg-emerald-500/15 text-emerald-600", dot: "bg-emerald-400" },
+                { tool: "Lovable v2", desc: "Ship full-stack apps with AI", time: "3d ago", color: "bg-violet-500/15 text-violet-600", dot: "bg-violet-400" },
+                { tool: "Runway Gen-4", desc: "AI video generation upgrade", time: "5d ago", color: "bg-blue-500/15 text-blue-600", dot: "bg-blue-400" },
               ].map((item, i) => (
                 <div
                   key={item.tool}
@@ -336,9 +336,9 @@ export function InteractiveBento() {
         )}>
           <div className="flex items-center justify-between mb-5">
             <div className="w-12 h-12 rounded-2xl neu-convex flex items-center justify-center">
-              <Wrench className="w-6 h-6 text-violet-400" />
+              <Wrench className="w-6 h-6 text-violet-600" />
             </div>
-            <span className="text-xs font-medium px-3 py-1 rounded-full border bg-violet-500/10 border-violet-500/20 text-violet-400">
+            <span className="text-xs font-medium px-3 py-1 rounded-full border bg-violet-500/10 border-violet-500/20 text-violet-600">
               Ready to use
             </span>
           </div>
@@ -388,9 +388,9 @@ export function InteractiveBento() {
         )}>
           <div className="flex items-center justify-between mb-5">
             <div className="w-12 h-12 rounded-2xl neu-convex flex items-center justify-center">
-              <Network className="w-6 h-6 text-rose-400" />
+              <Network className="w-6 h-6 text-rose-600" />
             </div>
-            <span className="text-xs font-medium px-3 py-1 rounded-full border bg-rose-500/10 border-rose-500/20 text-rose-400">
+            <span className="text-xs font-medium px-3 py-1 rounded-full border bg-rose-500/10 border-rose-500/20 text-rose-600">
               Matched pairs
             </span>
           </div>
@@ -402,7 +402,7 @@ export function InteractiveBento() {
           {/* Chat mockup */}
           <div className="rounded-xl neu-pressed p-3">
             <div className="flex items-center gap-2 mb-3 pb-2 border-b border-white/5">
-              <div className="w-5 h-5 rounded-full bg-rose-500/20 flex items-center justify-center text-[8px] font-bold text-rose-400">AK</div>
+              <div className="w-5 h-5 rounded-full bg-rose-500/20 flex items-center justify-center text-[8px] font-bold text-rose-600">AK</div>
               <span className="text-[10px] text-foreground/60 font-medium">Arjun (your buddy)</span>
               <div className="ml-auto w-1.5 h-1.5 rounded-full bg-emerald-400" />
             </div>
@@ -416,7 +416,7 @@ export function InteractiveBento() {
                 <div key={msg.time} className={cn("flex gap-2", msg.from === "you" ? "flex-row-reverse" : "")}>
                   <div className={cn(
                     "w-5 h-5 rounded-full flex items-center justify-center text-[7px] font-bold shrink-0 mt-0.5",
-                    msg.from === "you" ? "bg-cyan-500/20 text-cyan-400" : "bg-rose-500/20 text-rose-400"
+                    msg.from === "you" ? "bg-cyan-500/20 text-cyan-600" : "bg-rose-500/20 text-rose-600"
                   )}>
                     {msg.name === "You" ? "U" : msg.name}
                   </div>
@@ -444,9 +444,9 @@ export function InteractiveBento() {
         )}>
           <div className="flex items-center justify-between mb-5">
             <div className="w-12 h-12 rounded-2xl neu-convex flex items-center justify-center">
-              <Users className="w-6 h-6 text-emerald-400" />
+              <Users className="w-6 h-6 text-emerald-600" />
             </div>
-            <span className="text-xs font-medium px-3 py-1 rounded-full border bg-emerald-500/10 border-emerald-500/20 text-emerald-400">
+            <span className="text-xs font-medium px-3 py-1 rounded-full border bg-emerald-500/10 border-emerald-500/20 text-emerald-600">
               During live calls
             </span>
           </div>
@@ -458,23 +458,23 @@ export function InteractiveBento() {
           {/* Hot seat spotlight mockup */}
           <div className="rounded-xl neu-pressed p-4">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[10px] text-amber-400 font-medium uppercase tracking-wider">Hot Seat — Live Now</span>
+              <span className="text-[10px] text-amber-600 font-medium uppercase tracking-wider">Hot Seat — Live Now</span>
               <div className="flex items-center gap-1">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
-                <span className="text-[9px] text-red-400 font-medium">LIVE</span>
+                <span className="text-[9px] text-red-600 font-medium">LIVE</span>
               </div>
             </div>
 
             {/* Spotlight person */}
             <div className="flex items-center gap-3 rounded-xl bg-amber-500/10 border border-amber-500/15 p-3 mb-3">
-              <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-sm font-bold text-amber-400 ring-2 ring-amber-400/30">
+              <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-sm font-bold text-amber-600 ring-2 ring-amber-400/30">
                 SM
               </div>
               <div className="flex-1">
                 <p className="text-xs font-semibold text-foreground">Sneha M.</p>
                 <p className="text-[10px] text-muted-foreground">&quot;How do I price my AI automation service?&quot;</p>
               </div>
-              <Zap className="w-4 h-4 text-amber-400 shrink-0" />
+              <Zap className="w-4 h-4 text-amber-600 shrink-0" />
             </div>
 
             {/* Audience watching */}
@@ -498,9 +498,9 @@ export function InteractiveBento() {
         )}>
           <div className="flex items-center justify-between mb-5">
             <div className="w-12 h-12 rounded-2xl neu-convex flex items-center justify-center">
-              <Target className="w-6 h-6 text-amber-400" />
+              <Target className="w-6 h-6 text-amber-600" />
             </div>
-            <span className="text-xs font-medium px-3 py-1 rounded-full border bg-amber-500/10 border-amber-500/20 text-amber-400">
+            <span className="text-xs font-medium px-3 py-1 rounded-full border bg-amber-500/10 border-amber-500/20 text-amber-600">
               Monthly cohorts
             </span>
           </div>
@@ -512,7 +512,7 @@ export function InteractiveBento() {
           {/* Sprint progress mockup */}
           <div className="rounded-xl neu-pressed p-3">
             <div className="flex items-center gap-2 mb-3 pb-2 border-b border-white/5">
-              <Target className="w-3.5 h-3.5 text-amber-400" />
+              <Target className="w-3.5 h-3.5 text-amber-600" />
               <span className="text-[10px] text-foreground/60 font-medium">Sprint #4 — Day 18 of 30</span>
             </div>
             {/* Progress bar */}
@@ -522,7 +522,7 @@ export function InteractiveBento() {
               </div>
               <div className="flex justify-between mt-1">
                 <span className="text-[9px] text-muted-foreground/50">Day 1</span>
-                <span className="text-[9px] text-amber-400 font-medium">60% complete</span>
+                <span className="text-[9px] text-amber-600 font-medium">60% complete</span>
                 <span className="text-[9px] text-muted-foreground/50">Day 30</span>
               </div>
             </div>

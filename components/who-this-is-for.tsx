@@ -16,14 +16,14 @@ const forYou = [
     icon: Users,
     title: 'Want to make your first rupee online',
     desc: "You're tired of consuming content and ready to build something real — even if you don't know exactly what yet.",
-    color: 'text-blue-400',
+    color: 'text-blue-600',
     bg: 'bg-blue-400/10 border-blue-400/20',
   },
   {
     icon: Share2,
     title: 'Ready to use AI as your unfair advantage',
     desc: "You know AI can help you move 10x faster. You just need the right tools, playbooks, and people around you.",
-    color: 'text-emerald-400',
+    color: 'text-emerald-600',
     bg: 'bg-emerald-400/10 border-emerald-400/20',
   },
 ]
@@ -102,7 +102,7 @@ export function WhoThisIsFor() {
                 <item.icon className={cn("w-5 h-5", item.color)} />
               </div>
               <div className="flex items-center gap-2 mb-2">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                 <h3 className="text-sm font-semibold text-foreground">{item.title}</h3>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
@@ -122,7 +122,7 @@ export function WhoThisIsFor() {
           <div className="grid sm:grid-cols-3 gap-3 md:gap-4">
             {notForYou.map((item) => (
               <div key={item.title} className="flex items-start gap-3 opacity-60">
-                <X className="w-4 h-4 text-red-400/70 shrink-0 mt-0.5" />
+                <X className="w-4 h-4 text-red-600/70 shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-medium text-foreground/80">{item.title}</p>
                   <p className="text-xs text-muted-foreground mt-0.5">{item.desc}</p>

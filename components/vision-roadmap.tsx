@@ -9,25 +9,25 @@ const pillars = [
     title: "AI Strategy Sessions",
     description: "Weekly deep dives on real AI implementation — not theory, not hype. Learn what's actually working from founders who are deploying AI today.",
     icon: Brain,
-    iconColor: "text-cyan-400",
+    iconColor: "text-cyan-600",
   },
   {
     title: "Founder AI Network",
     description: "Connect with founders actively deploying AI in their businesses. Share strategies, compare tools, and solve problems together in real time.",
     icon: Network,
-    iconColor: "text-blue-400",
+    iconColor: "text-blue-600",
   },
   {
     title: "Tool & Prompt Library",
     description: "Curated, member-only collection of proven AI tools, workflows, and prompts. Skip the trial-and-error — use what's already been tested.",
     icon: Wrench,
-    iconColor: "text-purple-400",
+    iconColor: "text-purple-600",
   },
   {
     title: "Early Access & Intel",
     description: "Get ahead with early signals on new AI models, tools, and strategies before they go mainstream. Be the first to know, the first to move.",
     icon: Zap,
-    iconColor: "text-cyan-300",
+    iconColor: "text-cyan-600",
   },
 ]
 

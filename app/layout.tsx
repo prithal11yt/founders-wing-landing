@@ -1,7 +1,8 @@
 import React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Inter, JetBrains_Mono, Space_Grotesk } from 'next/font/google'
 import Script from "next/script"
+import { FoundingPriceBanner } from "@/components/founding-price-banner"
 import "./globals.css"
 
 const inter = Inter({
@@ -19,7 +20,11 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
 })
 
-const BASE_URL = 'https://founderwing.com'
+const BASE_URL = 'https://www.founderswing.com'
+
+export const viewport: Viewport = {
+  themeColor: "#06090f",
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -33,7 +38,9 @@ export const metadata: Metadata = {
   creator: "Prithal Bhardwaj",
   icons: {
     icon: "/favicon.png",
-    apple: "/favicon.png",
+    // Solid-background icon: iOS fills transparency with white, which made
+    // the white wing mark invisible on home screens.
+    apple: "/icons/icon-180.png",
   },
   openGraph: {
     type: "website",
@@ -87,6 +94,7 @@ export default function RootLayout({
         </Script>
       </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} antialiased min-h-screen`}>
+        <FoundingPriceBanner />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

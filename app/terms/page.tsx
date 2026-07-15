@@ -12,7 +12,7 @@ export default function TermsOfService() {
       {/* Minimal nav */}
       <header className="border-b border-foreground/5 py-4 px-6">
         <Link href="/" className="inline-flex items-center gap-2">
-          <Image src="/logo-icon.png" alt="Founders Wing" width={24} height={24} className="object-contain" />
+          <Image src="/logo-icon-dark.png" alt="Founders Wing" width={24} height={24} className="object-contain" />
           <span className="font-semibold tracking-tight">Founders Wing</span>
         </Link>
       </header>

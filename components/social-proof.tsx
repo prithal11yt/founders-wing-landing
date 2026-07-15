@@ -19,7 +19,7 @@ const stats = [
     suffix: '+',
     label: 'Videos on business & AI',
     desc: 'From first business ideas to AI tools — real, actionable content for people who are just getting started.',
-    color: 'text-violet-400',
+    color: 'text-violet-600',
     bg: 'bg-violet-500/10 border-violet-500/20',
   },
   {
@@ -28,7 +28,7 @@ const stats = [
     suffix: '+ years',
     label: 'Building businesses',
     desc: 'From SEO agency to content brand — real operational experience, not theory.',
-    color: 'text-amber-400',
+    color: 'text-amber-600',
     bg: 'bg-amber-500/10 border-amber-500/20',
   },
   {
@@ -37,7 +37,7 @@ const stats = [
     suffix: 'K+ subscribers',
     label: 'YouTube channel',
     desc: "The Solo Entrepreneur — real, actionable content on business and AI that built this community.",
-    color: 'text-emerald-400',
+    color: 'text-emerald-600',
     bg: 'bg-emerald-500/10 border-emerald-500/20',
   },
 ]

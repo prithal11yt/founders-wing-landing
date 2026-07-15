@@ -10,25 +10,25 @@ const steps = [
     icon: Lightbulb,
     label: 'Pick Your Challenge',
     desc: 'Choose from 50+ AI-friendly ideas or bring your own. Set your 30-day revenue target.',
-    color: 'text-amber-400',
+    color: 'text-amber-600',
   },
   {
     icon: Wrench,
     label: 'Build Together',
     desc: 'Build alongside other founders in the sprint. Share progress, get feedback, move fast.',
-    color: 'text-cyan-400',
+    color: 'text-cyan-600',
   },
   {
     icon: Rocket,
     label: 'Launch & Sell',
     desc: 'Get it in front of real people. The community helps with positioning, pricing, and outreach.',
-    color: 'text-violet-400',
+    color: 'text-violet-600',
   },
   {
     icon: TrendingUp,
     label: 'Hit the Leaderboard',
     desc: 'Track your revenue. Climb the leaderboard. Celebrate wins with your cohort.',
-    color: 'text-emerald-400',
+    color: 'text-emerald-600',
   },
 ]
 
@@ -75,7 +75,7 @@ export function ChallengeSpotlight() {
           "text-center mb-12 md:mb-16 transition-all duration-700",
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
-          <p className="text-sm font-medium tracking-widest uppercase text-emerald-400 mb-4">Flagship Program</p>
+          <p className="text-sm font-medium tracking-widest uppercase text-emerald-600 mb-4">Flagship Program</p>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
             The ₹10K Sprint Challenge
           </h2>
@@ -127,7 +127,7 @@ export function ChallengeSpotlight() {
           {/* What's inside */}
           <div className="neu-flat rounded-3xl p-6 md:p-8">
             <div className="flex items-center gap-2 mb-5">
-              <Users className="w-5 h-5 text-cyan-400" />
+              <Users className="w-5 h-5 text-cyan-600" />
               <h3 className="text-lg md:text-xl font-bold text-foreground">How the sprint works</h3>
             </div>
             <ul className="space-y-3 mb-6">
@@ -141,7 +141,7 @@ export function ChallengeSpotlight() {
                   style={{ transitionDelay: isVisible ? `${700 + i * 80}ms` : '0ms' }}
                 >
                   <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
-                    <Check className="w-3 h-3 text-emerald-400" />
+                    <Check className="w-3 h-3 text-emerald-600" />
                   </div>
                   <span className="text-sm md:text-base text-foreground/80">{item}</span>
                 </li>
@@ -161,7 +161,7 @@ export function ChallengeSpotlight() {
           {/* Leaderboard preview */}
           <div className="neu-flat rounded-3xl p-6 md:p-8 flex flex-col">
             <div className="flex items-center gap-2 mb-5">
-              <Trophy className="w-5 h-5 text-amber-400" />
+              <Trophy className="w-5 h-5 text-amber-600" />
               <h3 className="text-base font-bold text-foreground">Sprint Leaderboard</h3>
             </div>
 
@@ -178,23 +178,23 @@ export function ChallengeSpotlight() {
                 >
                   <div className={cn(
                     "w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-sm font-bold",
-                    entry.rank === 1 ? "bg-amber-500/20 text-amber-400" :
+                    entry.rank === 1 ? "bg-amber-500/20 text-amber-600" :
                     entry.rank === 2 ? "bg-slate-500/20 text-slate-400" :
-                    "bg-orange-900/20 text-orange-400"
+                    "bg-orange-900/20 text-orange-600"
                   )}>
                     {entry.rank === 1 ? <Medal className="w-4 h-4" /> : `#${entry.rank}`}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className={cn(
                       "text-sm font-medium truncate",
-                      entry.highlight ? "text-emerald-400" : "text-foreground/70"
+                      entry.highlight ? "text-emerald-600" : "text-foreground/70"
                     )}>
                       {entry.name}
                     </p>
                   </div>
                   <span className={cn(
                     "text-sm font-bold tabular-nums shrink-0",
-                    entry.highlight ? "text-emerald-400" : "text-foreground/60"
+                    entry.highlight ? "text-emerald-600" : "text-foreground/60"
                   )}>
                     {entry.amount}
                   </span>
@@ -207,9 +207,9 @@ export function ChallengeSpotlight() {
               <p className="text-xs text-muted-foreground mb-3">Earn badges as you build</p>
               <div className="flex gap-2">
                 {[
-                  { icon: Flame, label: '7-day streak', color: 'text-orange-400 bg-orange-500/10' },
-                  { icon: Rocket, label: 'First sale', color: 'text-violet-400 bg-violet-500/10' },
-                  { icon: Trophy, label: '₹10K club', color: 'text-amber-400 bg-amber-500/10' },
+                  { icon: Flame, label: '7-day streak', color: 'text-orange-600 bg-orange-500/10' },
+                  { icon: Rocket, label: 'First sale', color: 'text-violet-600 bg-violet-500/10' },
+                  { icon: Trophy, label: '₹10K club', color: 'text-amber-600 bg-amber-500/10' },
                 ].map((badge) => (
                   <div
                     key={badge.label}

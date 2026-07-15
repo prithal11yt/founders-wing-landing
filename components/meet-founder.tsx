@@ -6,9 +6,9 @@ import Image from 'next/image'
 import { ScrollReveal } from '@/components/scroll-reveal'
 
 const stats = [
-  { icon: Play, label: 'YouTube', value: '36K+', color: 'text-red-400', bg: 'bg-red-500/10 border-red-500/20' },
-  { icon: Users, label: 'Community', value: '5K+', color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20' },
-  { icon: Globe, label: 'Experience', value: '7+ yrs', color: 'text-cyan-400', bg: 'bg-cyan-500/10 border-cyan-500/20' },
+  { icon: Play, label: 'YouTube', value: '36K+', color: 'text-red-600', bg: 'bg-red-500/10 border-red-500/20' },
+  { icon: Users, label: 'Community', value: '5K+', color: 'text-emerald-600', bg: 'bg-emerald-500/10 border-emerald-500/20' },
+  { icon: Globe, label: 'Experience', value: '7+ yrs', color: 'text-cyan-600', bg: 'bg-cyan-500/10 border-cyan-500/20' },
 ]
 
 export function MeetFounder() {
@@ -23,7 +23,7 @@ export function MeetFounder() {
             <div className="grid md:grid-cols-[320px_1fr] lg:grid-cols-[380px_1fr]">
 
               {/* Photo */}
-              <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden min-h-[280px] md:min-h-[420px]">
+              <div className="relative bg-gradient-to-br from-slate-200 to-slate-300 overflow-hidden min-h-[280px] md:min-h-[420px]">
                 <Image
                   src="/prithal.jpg"
                   alt="Prithal Bhardwaj"
@@ -31,10 +31,6 @@ export function MeetFounder() {
                   className="object-cover object-top"
                   sizes="(max-width: 768px) 100vw, 380px"
                 />
-                {/* Gradient overlay bottom for text legibility on mobile */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent md:hidden" />
-                {/* Gradient overlay right for desktop blend */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-background/30 pointer-events-none hidden md:block" />
               </div>
 
               {/* Content */}
@@ -83,25 +79,25 @@ export function MeetFounder() {
                   <Link
                     href="https://youtube.com/@thesoloentrepreneur07"
                     target="_blank"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full neu-pressed text-xs font-medium text-muted-foreground hover:text-red-400 hover:border-red-500/20 transition-all"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full neu-pressed text-xs font-medium text-muted-foreground hover:text-red-600 hover:border-red-500/20 transition-all"
                   >
-                    <Youtube className="w-3.5 h-3.5 text-red-400" />
+                    <Youtube className="w-3.5 h-3.5 text-red-600" />
                     YouTube
                   </Link>
                   <Link
                     href="https://x.com/Prithal7"
                     target="_blank"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full neu-pressed text-xs font-medium text-muted-foreground hover:text-sky-400 transition-all"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full neu-pressed text-xs font-medium text-muted-foreground hover:text-sky-600 transition-all"
                   >
-                    <Twitter className="w-3.5 h-3.5 text-sky-400" />
+                    <Twitter className="w-3.5 h-3.5 text-sky-600" />
                     Twitter
                   </Link>
                   <Link
                     href="https://thesoloentrepreneur.in"
                     target="_blank"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full neu-pressed text-xs font-medium text-muted-foreground hover:text-emerald-400 transition-all"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full neu-pressed text-xs font-medium text-muted-foreground hover:text-emerald-600 transition-all"
                   >
-                    <Globe className="w-3.5 h-3.5 text-emerald-400" />
+                    <Globe className="w-3.5 h-3.5 text-emerald-600" />
                     Website
                   </Link>
                 </div>

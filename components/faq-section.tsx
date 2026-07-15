@@ -55,7 +55,7 @@ export function FAQSection({ faqs: customFaqs }: { faqs?: FaqItem[] } = {}) {
       <div className="container mx-auto px-4 relative z-10 max-w-3xl">
         <ScrollReveal variant="fade-up" duration={800}>
           <div className="text-center mb-16 space-y-4">
-            <p className="text-sm font-medium tracking-widest uppercase text-violet-400">Common questions</p>
+            <p className="text-sm font-medium tracking-widest uppercase text-violet-600">Common questions</p>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
               Frequently asked questions
             </h2>
@@ -71,7 +71,7 @@ export function FAQSection({ faqs: customFaqs }: { faqs?: FaqItem[] } = {}) {
                 className="neu-flat rounded-2xl overflow-hidden transition-colors data-[state=open]:border-violet-500/20"
               >
                 <Accordion.Trigger className="w-full flex items-center justify-between px-6 py-5 text-left group cursor-pointer">
-                  <span className="text-base font-medium text-foreground pr-4 group-hover:text-violet-300 transition-colors">
+                  <span className="text-base font-medium text-foreground pr-4 group-hover:text-violet-600 transition-colors">
                     {faq.q}
                   </span>
                   <ChevronDown className="w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-180" />

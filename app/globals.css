@@ -21,37 +21,37 @@
 }
 
 :root {
-  /* Premium Dark Tech Theme */
-  --bg-color: #030712;
+  /* Premium Light Tech Theme */
+  --bg-color: #f5f7fb;
   --background: var(--bg-color);
-  --foreground: #ffffff;
-  --card: #0f172a;
-  --card-foreground: #ffffff;
-  --popover: #0f172a;
-  --popover-foreground: #ffffff;
-  --primary: #ffffff;
-  --primary-foreground: #020617;
-  --secondary: #1e293b;
-  --secondary-foreground: #ffffff;
-  --muted: #1e293b;
-  --muted-foreground: #a6b8d4;
-  --accent: #1e293b;
-  --accent-foreground: #38bdf8;
-  --accent-cyan: #0ea5e9;
-  --accent-warm: #f59e0b;
-  --accent-violet: #8b5cf6;
-  --destructive: #ef4444;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0f172a;
+  --primary-foreground: #ffffff;
+  --secondary: #e2e8f0;
+  --secondary-foreground: #0f172a;
+  --muted: #e2e8f0;
+  --muted-foreground: #475569;
+  --accent: #e0f2fe;
+  --accent-foreground: #0284c7;
+  --accent-cyan: #0284c7;
+  --accent-warm: #d97706;
+  --accent-violet: #7c3aed;
+  --destructive: #dc2626;
   --destructive-foreground: #ffffff;
-  --border: #334155;
-  --input: #1e293b;
-  --ring: #0ea5e9;
+  --border: #cbd5e1;
+  --input: #e2e8f0;
+  --ring: #0284c7;
 
   --radius: 1rem;
 }
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
@@ -61,7 +61,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23030712'/%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23f5f7fb'/%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
 /* Display font for headlines */
@@ -88,8 +88,8 @@ section {
 }
 
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 15px rgba(14, 165, 233, 0.4), inset 0 0 10px rgba(14, 165, 233, 0.2); }
-  50% { box-shadow: 0 0 30px rgba(14, 165, 233, 0.6), inset 0 0 20px rgba(14, 165, 233, 0.4); }
+  0%, 100% { box-shadow: 0 0 15px rgba(2, 132, 199, 0.25), inset 0 0 10px rgba(2, 132, 199, 0.1); }
+  50% { box-shadow: 0 0 30px rgba(2, 132, 199, 0.4), inset 0 0 20px rgba(2, 132, 199, 0.2); }
 }
 
 @keyframes shimmer-logo {
@@ -130,60 +130,59 @@ section {
   }
 
   .text-gradient {
-    background: linear-gradient(to bottom right, #ffffff, #a6b8d4);
+    background: linear-gradient(to bottom right, #0f172a, #475569);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .text-gradient-cyan {
-    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    background: linear-gradient(135deg, #0284c7, #0369a1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(14, 165, 233, 0.3);
   }
 
   .text-gradient-violet {
-    background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .text-gradient-warm {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    background: linear-gradient(135deg, #d97706, #b45309);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
-  /* ════ GLASSMORPHISM / DARK UI UTILITIES ════ */
+  /* ════ GLASSMORPHISM / LIGHT UI UTILITIES ════ */
 
   .neu-flat {
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 4px 20px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 4px 20px rgba(15, 23, 42, 0.08);
   }
 
   .neu-pressed {
-    background: rgba(2, 6, 23, 0.7);
+    background: rgba(226, 232, 240, 0.7);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: inset 0 4px 15px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: inset 0 4px 15px rgba(15, 23, 42, 0.1), 0 1px 0 rgba(255, 255, 255, 0.9);
   }
 
   .neu-convex {
-    background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.5));
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(241, 245, 249, 0.6));
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.12), inset 0 0 10px rgba(255, 255, 255, 0.03), 0 8px 30px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: inset 0 2px 2px rgba(255, 255, 255, 1), inset 0 0 10px rgba(255, 255, 255, 0.5), 0 8px 30px rgba(15, 23, 42, 0.1);
   }
 
   .neu-concave {
-    background: linear-gradient(145deg, rgba(3, 7, 18, 0.9), rgba(15, 23, 42, 0.7));
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.9), 0 1px 1px rgba(255, 255, 255, 0.05);
+    background: linear-gradient(145deg, rgba(226, 232, 240, 0.9), rgba(248, 250, 252, 0.7));
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: inset 0 4px 20px rgba(15, 23, 42, 0.12), 0 1px 1px rgba(255, 255, 255, 0.9);
   }
 
   .neu-interactive {
@@ -192,13 +191,13 @@ section {
 
   .neu-interactive:hover {
     transform: translateY(-4px);
-    background: rgba(30, 41, 59, 0.8);
-    border: 1px solid rgba(56, 189, 248, 0.5);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(2, 132, 199, 0.5);
   }
 
   .neu-interactive:active {
     transform: translateY(2px);
-    border: 1px solid rgba(56, 189, 248, 0.3);
+    border: 1px solid rgba(2, 132, 199, 0.3);
   }
 
   .animate-float {
@@ -294,6 +293,15 @@ section {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(2, 132, 199, 0.4);
+}
+
+/* Hide scrollbar (e.g. horizontally-scrollable tab strips) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* ═══════════════ Mobile Performance Optimizations ═══════════════ */
