@@ -1,127 +1,93 @@
-import Link from 'next/link'
-import type { Metadata } from 'next'
-import { ArrowRight, Clock, Calendar } from 'lucide-react'
-import { getAllPosts, getCategoryLabel } from '@/lib/blog'
-import Image from 'next/image'
+import type { Metadata } from "next"
+import Image from "next/image"
+import Link from "next/link"
+import { ArrowRight, Clock } from "lucide-react"
+import { getAllPosts, getCategoryLabel } from "@/lib/blog"
+import { SITE_NAME, SITE_URL } from "@/lib/site"
 
 export const metadata: Metadata = {
-  title: 'Blog — Guides for Aspiring Founders in India',
-  description: 'Practical guides, AI tool breakdowns, and honest stories for aspiring founders in India. Learn how to stop overthinking and start building.',
-  alternates: { canonical: 'https://founderwing.com/blog' },
-  openGraph: {
-    title: 'Blog — Founders Wing',
-    description: 'Practical guides, AI tool breakdowns, and honest stories for aspiring founders in India.',
-    url: 'https://founderwing.com/blog',
-    type: 'website',
+  title: `Founders Wing Blog | Guides for Aspiring Founders in India`,
+  description: "Practical guides on AI-first building, founder accountability, online business ideas, and earning your first money online in India.",
+  alternates: {
+    canonical: `${SITE_URL}/blog`,
   },
-}
-
-const CATEGORY_COLORS: Record<string, string> = {
-  guide: 'text-sky-400 bg-sky-500/10 border-sky-500/20',
-  community: 'text-violet-400 bg-violet-500/10 border-violet-500/20',
-  tools: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
-  challenge: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
-  story: 'text-rose-400 bg-rose-500/10 border-rose-500/20',
+  openGraph: {
+    title: `Founders Wing Blog | Guides for Aspiring Founders in India`,
+    description: "Action-first guides for aspiring founders who want to stop overthinking and start building with AI.",
+    url: `${SITE_URL}/blog`,
+    siteName: SITE_NAME,
+    type: "website",
+  },
 }
 
 export default function BlogPage() {
   const posts = getAllPosts()
-  const featured = posts.find((p) => p.featured)
-  const rest = posts.filter((p) => !p.featured || p.slug !== featured?.slug)
+  const featured = posts.filter((post) => post.featured)
+  const regular = posts.filter((post) => !post.featured)
 
   return (
-    <div className="min-h-screen" style={{ background: 'hsl(222 47% 5%)' }}>
-      {/* Nav */}
-      <nav className="border-b border-white/5 py-4">
-        <div className="container mx-auto px-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo-icon-dark.png" alt="Founders Wing" width={24} height={24} className="object-contain" />
-            <span className="font-semibold tracking-tight text-foreground">Founders Wing</span>
+    <main className="min-h-screen bg-background text-foreground">
+      <section className="relative overflow-hidden px-4 pb-14 pt-28 md:pb-20 md:pt-36">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(14,165,233,0.14),transparent_55%)]" />
+        <div className="container relative z-10 mx-auto max-w-5xl">
+          <Link href="/" className="mb-8 inline-flex text-sm text-muted-foreground hover:text-foreground">
+            Founders Wing
           </Link>
-          <Link
-            href="/secure-spot"
-            className="text-sm font-semibold text-sky-400 hover:text-sky-300 transition-colors"
-          >
-            Get Membership →
-          </Link>
-        </div>
-      </nav>
-
-      <div className="container mx-auto px-4 py-16 max-w-5xl">
-        {/* Header */}
-        <div className="mb-12">
-          <p className="text-xs font-medium tracking-widest uppercase text-sky-400 mb-3">The Blog</p>
-          <h1 className="text-4xl font-bold tracking-tight text-foreground mb-4">
-            Guides for aspiring founders in India
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl">
-            No fluff. No motivational posters. Just practical guides, honest breakdowns, and real stories from founders who are building something.
-          </p>
-        </div>
-
-        {/* Featured post */}
-        {featured && (
-          <Link href={`/blog/${featured.slug}`} className="group block mb-12">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 hover:border-sky-500/30 hover:bg-sky-500/5 transition-all">
-              <div className="flex items-center gap-3 mb-4">
-                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${CATEGORY_COLORS[featured.category]}`}>
-                  {getCategoryLabel(featured.category)}
-                </span>
-                <span className="text-xs text-muted-foreground">Featured</span>
-              </div>
-              <h2 className="text-2xl font-bold text-foreground mb-3 group-hover:text-sky-300 transition-colors">
-                {featured.title}
-              </h2>
-              <p className="text-muted-foreground mb-5 max-w-2xl">{featured.description}</p>
-              <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                <span className="flex items-center gap-1.5">
-                  <Calendar className="h-3.5 w-3.5" />
-                  {new Date(featured.date).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <Clock className="h-3.5 w-3.5" />
-                  {featured.readTime} min read
-                </span>
-                <span className="flex items-center gap-1.5 text-sky-400 font-medium">
-                  Read article <ArrowRight className="h-3.5 w-3.5" />
-                </span>
-              </div>
-            </div>
-          </Link>
-        )}
-
-        {/* Post grid */}
-        <div className="grid gap-6 md:grid-cols-2">
-          {rest.map((post) => (
-            <Link key={post.slug} href={`/blog/${post.slug}`} className="group block">
-              <div className="h-full rounded-xl border border-white/10 bg-white/[0.02] p-6 hover:border-sky-500/20 hover:bg-sky-500/[0.03] transition-all">
-                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${CATEGORY_COLORS[post.category]}`}>
-                  {getCategoryLabel(post.category)}
-                </span>
-                <h2 className="mt-4 mb-2 text-lg font-bold text-foreground leading-snug group-hover:text-sky-300 transition-colors">
-                  {post.title}
-                </h2>
-                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{post.description}</p>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-3 w-3" />
-                    {post.readTime} min
-                  </span>
-                  <span>
-                    {new Date(post.date).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
-                  </span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {posts.length === 0 && (
-          <div className="text-center py-20 text-muted-foreground">
-            <p>No posts yet. Check back soon.</p>
+          <div className="max-w-3xl">
+            <p className="mb-4 text-sm font-medium uppercase tracking-widest text-cyan-300">Founder guides</p>
+            <h1 className="text-4xl font-bold tracking-tight md:text-6xl">Build with AI. Ship faster. Stop circling the idea.</h1>
+            <p className="mt-6 text-lg leading-8 text-muted-foreground">
+              Practical essays for aspiring Indian founders who want relevant traffic, first income, accountability, and a clearer path from idea to launch.
+            </p>
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      </section>
+
+      <section className="px-4 pb-20">
+        <div className="container mx-auto max-w-5xl">
+          {featured.length > 0 && (
+            <div className="mb-12 grid gap-5 md:grid-cols-3">
+              {featured.map((post) => (
+                <Link key={post.slug} href={`/blog/${post.slug}`} className="group overflow-hidden rounded-3xl neu-flat transition-all hover:border-cyan-400/30">
+                  {post.heroImage && (
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <Image src={post.heroImage} alt={post.imageAlt || post.title} fill className="object-cover opacity-85 transition-transform duration-500 group-hover:scale-105" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <span className="mb-5 inline-flex rounded-full border border-cyan-500/20 bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-300">
+                      {getCategoryLabel(post.category)}
+                    </span>
+                    <h2 className="text-xl font-bold tracking-tight transition-colors group-hover:text-cyan-200">{post.title}</h2>
+                    <p className="mt-3 text-sm leading-6 text-muted-foreground">{post.description}</p>
+                    <div className="mt-6 flex items-center justify-between text-xs text-muted-foreground">
+                      <span>{new Date(post.date).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</span>
+                      <span className="inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" />{post.readTime} min</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          <div className="space-y-4">
+            {regular.map((post) => (
+              <Link key={post.slug} href={`/blog/${post.slug}`} className="group flex flex-col gap-4 rounded-2xl neu-flat p-5 transition-all hover:border-cyan-400/30 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <div className="mb-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                    <span className="text-cyan-300">{getCategoryLabel(post.category)}</span>
+                    <span>{post.readTime} min read</span>
+                  </div>
+                  <h2 className="text-lg font-semibold tracking-tight group-hover:text-cyan-200">{post.title}</h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">{post.description}</p>
+                </div>
+                <ArrowRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-cyan-300" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
   )
 }

@@ -239,7 +239,7 @@ export default function LandingPage() {
                     <div className="w-px h-3 md:h-4 bg-white/10"></div>
 
                     <div className="flex items-center gap-1 md:gap-2">
-                      <span className="text-base md:text-xl font-extrabold text-foreground tracking-tighter">From &#8377;2,999</span>
+                      <span className="text-base md:text-xl font-extrabold text-foreground tracking-tighter">From &#8377;5,999</span>
                     </div>
                   </div>
                 </div>

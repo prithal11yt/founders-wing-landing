@@ -26,6 +26,17 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    // Deduplicate by email — if already exists, return success silently
+    const { data: existing } = await supabase
+      .from("waitlist_applications")
+      .select("id")
+      .eq("email", body.email)
+      .maybeSingle()
+
+    if (existing) {
+      return NextResponse.json({ success: true, message: "Already registered" }, { status: 200 })
+    }
+
     // Insert form data into waitlist_applications table
     const { data, error } = await supabase
       .from("waitlist_applications")
@@ -33,6 +44,7 @@ export async function POST(request: NextRequest) {
         {
           full_name: body.fullName,
           email: body.email,
+          whatsapp: body.whatsapp ?? null,
           what_building: body.idea,
           join_reason: body.goal,
           heard_from: body.heardFrom,

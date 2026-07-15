@@ -173,7 +173,7 @@ export default async function SeoPage({
                 >
                   Get Membership <ArrowRight className="w-4 h-4" />
                 </Link>
-                <span className="text-sm text-muted-foreground">From ₹2,999 · No lurkers · Action-first</span>
+                <span className="text-sm text-muted-foreground">From ₹5,999 · No lurkers · Action-first</span>
               </div>
             </ScrollReveal>
           </div>
@@ -209,8 +209,8 @@ export default async function SeoPage({
             <ScrollReveal variant="fade-up" delay={400} duration={600}>
               <div className="mt-8 text-center p-6 neu-flat rounded-2xl">
                 <p className="text-muted-foreground text-sm mb-1">Membership starts at</p>
-                <p className="text-3xl font-bold text-foreground">₹2,999 <span className="text-sm font-normal text-muted-foreground">for 6 months</span></p>
-                <p className="text-xs text-muted-foreground mt-1">That's just ₹500/month · No monthly option · Committed members only</p>
+                <p className="text-3xl font-bold text-foreground">₹5,999 <span className="text-sm font-normal text-muted-foreground">for 6 months</span></p>
+                <p className="text-xs text-muted-foreground mt-1">That's just ₹1,000/month · No monthly option · Committed members only</p>
               </div>
             </ScrollReveal>
           </div>

@@ -7,10 +7,12 @@ import { CheckCircle2, Clock, ArrowRight, ShieldCheck, Users, Zap } from "lucide
 import { WingMeshLogo } from "@/components/logo"
 import Link from "next/link"
 
-// 👇 PASTE YOUR RAZORPAY PAYMENT LINKS HERE
-const PAYMENT_LINKS = {
-  starter: "https://rzp.io/rzp/starter-6months",  // ₹2,999 / 6 months
-  annual:  "https://rzp.io/rzp/annual-12months",  // ₹4,999 / year
+// Checkout is hosted on thesoloentrepreneur.in (verified Razorpay account)
+const CHECKOUT_BASE_URL = "https://www.thesoloentrepreneur.in/fw-membership"
+
+function getCheckoutUrl(plan: "starter" | "annual", info: { name: string; email: string; whatsapp: string }) {
+  const query = new URLSearchParams({ plan, ...info })
+  return `${CHECKOUT_BASE_URL}?${query.toString()}`
 }
 
 const HOLD_HOURS = 24
@@ -60,7 +62,10 @@ function CountdownTimer() {
 function SecureSpotContent() {
   const params = useSearchParams()
   const name = params.get("name") || ""
+  const email = params.get("email") || ""
+  const whatsapp = params.get("whatsapp") || ""
   const firstName = name.split(" ")[0]
+  const checkoutInfo = { name, email, whatsapp }
 
   return (
     <div className="min-h-screen bg-[#030712] text-white flex flex-col">
@@ -112,7 +117,7 @@ function SecureSpotContent() {
 
               {/* Starter */}
               <a
-                href={PAYMENT_LINKS.starter}
+                href={getCheckoutUrl("starter", checkoutInfo)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.02] hover:border-cyan-500/40 hover:bg-cyan-500/5 p-4 transition-all duration-200"
@@ -122,17 +127,17 @@ function SecureSpotContent() {
                     <span className="font-semibold text-sm">Starter</span>
                     <span className="text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-muted-foreground">6 months</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Full access · ₹500/mo</p>
+                  <p className="text-xs text-muted-foreground">Full access · ₹1,000/mo</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-lg font-bold">₹2,999</span>
+                  <span className="text-lg font-bold">₹5,999</span>
                   <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all" />
                 </div>
               </a>
 
               {/* Annual - recommended */}
               <a
-                href={PAYMENT_LINKS.annual}
+                href={getCheckoutUrl("annual", checkoutInfo)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center justify-between rounded-2xl border border-cyan-500/30 bg-cyan-500/5 hover:border-cyan-500/60 hover:bg-cyan-500/10 p-4 transition-all duration-200 relative overflow-hidden"
@@ -145,10 +150,10 @@ function SecureSpotContent() {
                     <span className="font-semibold text-sm">Annual</span>
                     <span className="text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-muted-foreground">12 months</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Everything + priority hot seat · ₹417/mo</p>
+                  <p className="text-xs text-muted-foreground">Everything + priority hot seat · ₹833/mo</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-lg font-bold text-cyan-400">₹4,999</span>
+                  <span className="text-lg font-bold text-cyan-400">₹9,999</span>
                   <ArrowRight className="w-4 h-4 text-cyan-400 group-hover:translate-x-0.5 transition-all" />
                 </div>
               </a>
