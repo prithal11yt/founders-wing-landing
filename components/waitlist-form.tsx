@@ -70,7 +70,7 @@ export function WaitlistForm({
   if (submitted) {
     return (
       <div className="flex flex-col items-center gap-4 py-10 text-center">
-        <CheckCircle2 className="h-12 w-12 text-sky-400" />
+        <CheckCircle2 className="h-12 w-12 text-sky-600" />
         <h3 className="text-xl font-bold text-foreground">You're on the list!</h3>
         <p className="text-muted-foreground max-w-sm">
           We'll personally reach out to you the moment Founders Wing opens its doors. Keep building 🚀

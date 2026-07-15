@@ -12,9 +12,9 @@ export function Callout({
   children: React.ReactNode
 }) {
   const styles = {
-    tip: "border-sky-500/30 bg-sky-500/5 text-sky-300",
-    warning: "border-amber-500/30 bg-amber-500/5 text-amber-300",
-    insight: "border-violet-500/30 bg-violet-500/5 text-violet-300",
+    tip: "border-sky-500/30 bg-sky-500/5 text-sky-700",
+    warning: "border-amber-500/30 bg-amber-500/5 text-amber-700",
+    insight: "border-violet-500/30 bg-violet-500/5 text-violet-700",
   }
   const labels = { tip: "💡 Tip", warning: "⚠️ Note", insight: "🔍 Insight" }
 
@@ -63,7 +63,7 @@ export function JoinCTA({ variant = "membership" }: { variant?: string }) {
       <p className="mb-4 text-sm text-muted-foreground">{sub}</p>
       <Link
         href="/secure-spot"
-        className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-6 py-2.5 text-sm font-semibold text-white hover:bg-sky-400 transition-colors"
+        className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-6 py-2.5 text-sm font-semibold text-white hover:bg-sky-600 transition-colors"
       >
         Get Membership <ArrowRight className="h-4 w-4" />
       </Link>
@@ -102,26 +102,26 @@ export const mdxComponents = {
   ),
   a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
-      className="text-sky-400 underline underline-offset-4 hover:text-sky-300 transition-colors"
+      className="text-sky-600 underline underline-offset-4 hover:text-sky-700 transition-colors"
       target={props.href?.startsWith("/") ? undefined : "_blank"}
       rel={props.href?.startsWith("/") ? undefined : "noopener noreferrer"}
       {...props}
     />
   ),
-  hr: () => <hr className="my-10 border-white/10" />,
+  hr: () => <hr className="my-10 border-black/10" />,
   table: (props: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="my-6 overflow-x-auto rounded-xl border border-white/10">
+    <div className="my-6 overflow-x-auto rounded-xl border border-black/10">
       <table className="w-full text-sm" {...props} />
     </div>
   ),
   thead: (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
-    <thead className="bg-white/5 text-xs uppercase tracking-wider text-muted-foreground" {...props} />
+    <thead className="bg-black/5 text-xs uppercase tracking-wider text-muted-foreground" {...props} />
   ),
   tbody: (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
     <tbody className="divide-y divide-white/5" {...props} />
   ),
   tr: (props: React.HTMLAttributes<HTMLTableRowElement>) => (
-    <tr className="hover:bg-white/[0.02] transition-colors" {...props} />
+    <tr className="hover:bg-black/[0.02] transition-colors" {...props} />
   ),
   th: (props: React.ThHTMLAttributes<HTMLTableCellElement>) => (
     <th className="px-4 py-3 text-left font-semibold text-foreground" {...props} />
@@ -130,10 +130,10 @@ export const mdxComponents = {
     <td className="px-4 py-3 text-foreground/80 align-top" {...props} />
   ),
   code: (props: React.HTMLAttributes<HTMLElement>) => (
-    <code className="rounded bg-white/10 px-1.5 py-0.5 text-sm font-mono text-sky-300" {...props} />
+    <code className="rounded bg-black/[0.06] px-1.5 py-0.5 text-sm font-mono text-sky-700" {...props} />
   ),
   pre: (props: React.HTMLAttributes<HTMLPreElement>) => (
-    <pre className="my-6 overflow-x-auto rounded-xl bg-white/5 border border-white/10 p-5 text-sm font-mono text-foreground/80 leading-relaxed" {...props} />
+    <pre className="my-6 overflow-x-auto rounded-xl bg-black/5 border border-black/10 p-5 text-sm font-mono text-foreground/80 leading-relaxed" {...props} />
   ),
   img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
     // eslint-disable-next-line @next/next/no-img-element

@@ -34,7 +34,7 @@ export default function BlogPage() {
             Founders Wing
           </Link>
           <div className="max-w-3xl">
-            <p className="mb-4 text-sm font-medium uppercase tracking-widest text-cyan-300">Founder guides</p>
+            <p className="mb-4 text-sm font-medium uppercase tracking-widest text-cyan-700">Founder guides</p>
             <h1 className="text-4xl font-bold tracking-tight md:text-6xl">Build with AI. Ship faster. Stop circling the idea.</h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
               Practical essays for aspiring Indian founders who want relevant traffic, first income, accountability, and a clearer path from idea to launch.
@@ -56,7 +56,7 @@ export default function BlogPage() {
                     </div>
                   )}
                   <div className="p-6">
-                    <span className="mb-5 inline-flex rounded-full border border-cyan-500/20 bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-300">
+                    <span className="mb-5 inline-flex rounded-full border border-cyan-500/20 bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-700">
                       {getCategoryLabel(post.category)}
                     </span>
                     <h2 className="text-xl font-bold tracking-tight transition-colors group-hover:text-cyan-200">{post.title}</h2>
@@ -76,13 +76,13 @@ export default function BlogPage() {
               <Link key={post.slug} href={`/blog/${post.slug}`} className="group flex flex-col gap-4 rounded-2xl neu-flat p-5 transition-all hover:border-cyan-400/30 md:flex-row md:items-center md:justify-between">
                 <div>
                   <div className="mb-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                    <span className="text-cyan-300">{getCategoryLabel(post.category)}</span>
+                    <span className="text-cyan-700">{getCategoryLabel(post.category)}</span>
                     <span>{post.readTime} min read</span>
                   </div>
                   <h2 className="text-lg font-semibold tracking-tight group-hover:text-cyan-200">{post.title}</h2>
                   <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">{post.description}</p>
                 </div>
-                <ArrowRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-cyan-300" />
+                <ArrowRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-cyan-700" />
               </Link>
             ))}
           </div>

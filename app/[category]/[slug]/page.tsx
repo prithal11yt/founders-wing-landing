@@ -128,7 +128,7 @@ export default async function SeoPage({
             </Link>
             <Link
               href="/secure-spot"
-              className="text-xs font-semibold px-4 py-2 rounded-full bg-sky-500 text-white hover:bg-sky-400 transition-colors"
+              className="text-xs font-semibold px-4 py-2 rounded-full bg-sky-500 text-white hover:bg-sky-600 transition-colors"
             >
               Join Now
             </Link>
@@ -169,7 +169,7 @@ export default async function SeoPage({
               <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <Link
                   href="/secure-spot"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-sky-500 text-white font-semibold text-sm hover:bg-sky-400 transition-colors shadow-[0_0_30px_rgba(14,165,233,0.3)]"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-sky-500 text-white font-semibold text-sm hover:bg-sky-600 transition-colors shadow-[0_0_30px_rgba(14,165,233,0.3)]"
                 >
                   Get Membership <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -184,7 +184,7 @@ export default async function SeoPage({
           <div className="container mx-auto max-w-4xl">
             <ScrollReveal variant="fade-up" duration={700}>
               <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
-                What you get inside <span className="text-sky-400">Founders Wing</span>
+                What you get inside <span className="text-sky-600">Founders Wing</span>
               </h2>
             </ScrollReveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -193,7 +193,7 @@ export default async function SeoPage({
                   <div className="neu-flat rounded-2xl p-6 h-full">
                     <div className="flex items-start gap-4">
                       <div className="p-2.5 rounded-xl bg-sky-500/10 shrink-0">
-                        <benefit.icon className="w-5 h-5 text-sky-400" />
+                        <benefit.icon className="w-5 h-5 text-sky-600" />
                       </div>
                       <div>
                         <h3 className="font-semibold text-foreground mb-1">{benefit.title}</h3>
@@ -245,10 +245,10 @@ export default async function SeoPage({
                         href={`/${related.category}/${related.slug}`}
                         className="neu-flat rounded-xl p-4 flex items-center justify-between gap-3 hover:border-sky-500/30 transition-colors group"
                       >
-                        <span className="text-sm font-medium text-foreground group-hover:text-sky-400 transition-colors">
+                        <span className="text-sm font-medium text-foreground group-hover:text-sky-600 transition-colors">
                           {related.h1}
                         </span>
-                        <ArrowRight className="w-4 h-4 text-muted-foreground shrink-0 group-hover:text-sky-400 transition-colors" />
+                        <ArrowRight className="w-4 h-4 text-muted-foreground shrink-0 group-hover:text-sky-600 transition-colors" />
                       </Link>
                     </ScrollReveal>
                   )
@@ -259,7 +259,7 @@ export default async function SeoPage({
         )}
 
         {/* Footer */}
-        <footer className="border-t border-white/5 py-8 px-4">
+        <footer className="border-t border-black/5 py-8 px-4">
           <div className="container mx-auto max-w-4xl flex flex-col sm:flex-row items-center justify-between gap-4">
             <Link href="/" className="flex items-center gap-2">
               <img src="/logo.png" alt="Founders Wing" className="h-5 w-auto" />

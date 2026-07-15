@@ -1,4 +1,9 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
+
+// Admin app stays dark — override the light site-wide theme color
+export const viewport: Viewport = {
+  themeColor: "#06090f",
+}
 
 export const metadata: Metadata = {
   title: "Founders Wing — Admin",

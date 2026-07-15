@@ -91,12 +91,12 @@ export default async function BlogPostPage({ params }: PageProps) {
               <span>/</span>
               <span className="truncate max-w-[200px] text-foreground/60">{post.title}</span>
             </nav>
-            <span className="mb-5 inline-flex rounded-full border border-cyan-500/20 bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-300">
+            <span className="mb-5 inline-flex rounded-full border border-cyan-500/20 bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-700">
               {getCategoryLabel(post.category)}
             </span>
             <h1 className="mt-4 text-4xl font-bold tracking-tight md:text-5xl leading-tight">{post.title}</h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">{post.description}</p>
-            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-muted-foreground border-t border-white/5 pt-5">
+            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-muted-foreground border-t border-black/5 pt-5">
               <span>{published}</span>
               <span className="inline-flex items-center gap-1.5">
                 <Clock className="h-4 w-4" />
@@ -106,7 +106,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             </div>
 
             {post.heroImage && (
-              <figure className="mt-10 overflow-hidden rounded-3xl border border-white/10 p-1">
+              <figure className="mt-10 overflow-hidden rounded-3xl border border-black/10 p-1">
                 <div className="relative aspect-[16/9] overflow-hidden rounded-[1.35rem]">
                   <Image
                     src={post.heroImage}
@@ -131,20 +131,20 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* Content */}
         <div className="px-4 pb-16">
           <div className="container mx-auto max-w-3xl">
-            <article className="prose prose-invert max-w-none">
+            <article className="prose prose-slate max-w-none">
               <MDXRemote source={post.content} components={mdxComponents} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
             </article>
 
             {/* End CTA */}
             <div className="mt-14 rounded-3xl border border-cyan-500/20 bg-cyan-500/[0.06] p-6 md:p-8">
-              <p className="text-sm font-medium uppercase tracking-widest text-cyan-300">Ready to build?</p>
+              <p className="text-sm font-medium uppercase tracking-widest text-cyan-700">Ready to build?</p>
               <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
                 Join Founders Wing and turn this into action.
               </h2>
               <p className="mt-3 text-muted-foreground">
                 Get weekly sessions, AI workflows, accountability, and the First ₹10K sprint with other aspiring founders.
               </p>
-              <Button asChild className="mt-6 rounded-full bg-sky-500 hover:bg-sky-400 text-white">
+              <Button asChild className="mt-6 rounded-full bg-sky-500 hover:bg-sky-600 text-white">
                 <Link href="/secure-spot">
                   Become a Founding Member
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -157,7 +157,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
       {/* Related Posts */}
       {related.length > 0 && (
-        <section className="border-t border-white/5 px-4 py-14">
+        <section className="border-t border-black/5 px-4 py-14">
           <div className="container mx-auto max-w-5xl">
             <h2 className="mb-6 text-2xl font-bold tracking-tight">Keep Reading</h2>
             <div className="grid gap-4 md:grid-cols-3">
@@ -165,9 +165,9 @@ export default async function BlogPostPage({ params }: PageProps) {
                 <Link
                   key={item.slug}
                   href={`/blog/${item.slug}`}
-                  className="group rounded-2xl border border-white/10 bg-white/[0.02] p-5 hover:border-sky-500/20 transition-all"
+                  className="group rounded-2xl border border-black/10 bg-black/[0.02] p-5 hover:border-sky-500/20 transition-all"
                 >
-                  <p className="mb-2 text-xs text-cyan-300">{getCategoryLabel(item.category)}</p>
+                  <p className="mb-2 text-xs text-cyan-700">{getCategoryLabel(item.category)}</p>
                   <h3 className="font-semibold leading-snug group-hover:text-cyan-200 transition-colors">{item.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-muted-foreground line-clamp-2">{item.description}</p>
                 </Link>

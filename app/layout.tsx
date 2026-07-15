@@ -23,7 +23,7 @@ const spaceGrotesk = Space_Grotesk({
 const BASE_URL = 'https://www.founderswing.com'
 
 export const viewport: Viewport = {
-  themeColor: "#06090f",
+  themeColor: "#f5f7fb",
 }
 
 export const metadata: Metadata = {

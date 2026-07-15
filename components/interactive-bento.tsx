@@ -3,7 +3,6 @@
 import { Globe, MessageSquare, Video, BookOpen, Brain, Network, Wrench, Target, Users, Check, ArrowRight, FileText, Zap } from "lucide-react"
 import { useEffect, useRef, useState, useCallback } from "react"
 import { cn } from "@/lib/utils"
-import Image from "next/image"
 
 function CursorGlow({ x, y, active, color = "rgba(2,132,199,0.15)" }: { x: number; y: number; active: boolean; color?: string }) {
   return (
@@ -139,16 +138,39 @@ export function InteractiveBento() {
           style={{ transitionDelay: isVisible ? '150ms' : '0ms' }}
         >
           <div className="grid grid-cols-[140px_1fr] sm:grid-cols-[180px_1fr] h-full">
-            <div className="relative bg-gradient-to-br from-amber-100/70 via-slate-100 to-slate-200 flex items-center justify-center p-5 overflow-hidden">
+            <div className="relative bg-gradient-to-br from-amber-100/70 via-slate-100 to-slate-200 flex items-center justify-center p-4 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-t from-amber-500/10 to-transparent pointer-events-none" />
-              <Image
-                src="/ebook-cover.png"
-                alt="50 Business Ideas Ebook"
-                width={160}
-                height={240}
-                className="rounded-lg group-hover:scale-105 group-hover:rotate-0 transition-all duration-500 -rotate-2 relative z-10"
-                style={{ width: 'auto', height: 'auto', maxHeight: '210px', boxShadow: '0 16px 40px rgba(15,23,42,0.25)' }}
-              />
+              {/* Mini "inside the book" mockup */}
+              <div className="relative z-10 w-full max-w-[150px] rounded-xl bg-white border border-black/5 p-3 -rotate-2 group-hover:rotate-0 transition-all duration-500 shadow-[0_12px_30px_rgba(15,23,42,0.15)]">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-[8px] font-bold tracking-widest uppercase text-amber-700">Inside the book</p>
+                  <BookOpen className="w-3 h-3 text-amber-600" />
+                </div>
+                <div className="space-y-1.5">
+                  {[
+                    { n: "07", t: "AI Resume Studio", r: "₹40K/mo" },
+                    { n: "23", t: "Notion Template Shop", r: "₹25K/mo" },
+                    { n: "41", t: "Local SEO Agency", r: "₹80K/mo" },
+                  ].map((idea) => (
+                    <div key={idea.n} className="rounded-lg bg-slate-50 border border-black/5 px-2 py-1.5">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[7px] font-bold text-amber-700 bg-amber-500/15 rounded px-1 py-0.5 shrink-0">#{idea.n}</span>
+                        <span className="text-[8px] font-semibold text-slate-800 truncate">{idea.t}</span>
+                      </div>
+                      <div className="flex items-center justify-between mt-1">
+                        <div className="h-1 flex-1 rounded-full bg-slate-200 mr-2 overflow-hidden">
+                          <div className="h-full rounded-full bg-amber-500/70" style={{ width: `${55 + parseInt(idea.n)}%` }} />
+                        </div>
+                        <span className="text-[7px] font-bold text-emerald-700 shrink-0">{idea.r}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-2 pt-1.5 border-t border-black/5 flex items-center justify-between">
+                  <span className="text-[8px] text-slate-500">…47 more ideas</span>
+                  <span className="text-[8px] font-bold text-amber-700">+ roadmaps</span>
+                </div>
+              </div>
             </div>
             <div className="p-5 md:p-6 flex flex-col justify-center">
               <div className="flex items-center gap-2 mb-3">

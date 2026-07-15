@@ -17,7 +17,7 @@ export default function TermsOfService() {
         </Link>
       </header>
 
-      <main className="flex-1 container mx-auto px-4 py-12 max-w-3xl prose prose-invert prose-sm md:prose-base">
+      <main className="flex-1 container mx-auto px-4 py-12 max-w-3xl prose prose-slate prose-sm md:prose-base">
         <h1 className="text-3xl md:text-4xl font-bold mb-2">Terms of Service</h1>
         <p className="text-muted-foreground text-sm mb-8">Last updated: April 17, 2026</p>
 
