@@ -268,7 +268,7 @@ export default function LandingPage() {
               <div className="neu-flat p-2 rounded-[2rem]">
                 <div className="relative w-full rounded-[1.5rem] overflow-hidden" style={{ aspectRatio: '16/9' }}>
                   <iframe
-                    src="https://www.youtube.com/embed/xegX8Ul_hGk"
+                    src="https://www.youtube.com/embed/nIzxuXWG0Pc"
                     title="What Is Founders Wing?"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
