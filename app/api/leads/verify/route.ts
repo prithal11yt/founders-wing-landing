@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import crypto from "crypto"
+import type { LeadsRole } from "../auth/route"
 
 function getSecret(): string {
   const secret = process.env.LEADS_AUTH_SECRET
@@ -7,7 +8,9 @@ function getSecret(): string {
   return secret
 }
 
-export function verifyToken(token: string): { email: string } | null {
+export type LeadsSession = { email: string; role: LeadsRole }
+
+export function verifyToken(token: string): LeadsSession | null {
   try {
     const [data, signature] = token.split(".")
     if (!data || !signature) return null
@@ -15,19 +18,30 @@ export function verifyToken(token: string): { email: string } | null {
     const secret = getSecret()
     const expectedSig = crypto.createHmac("sha256", secret).update(data).digest("base64url")
 
-    // Constant-time comparison for signature
-    if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSig))) {
-      return null
-    }
+    const sigBuf = Buffer.from(signature)
+    const expBuf = Buffer.from(expectedSig)
+    if (sigBuf.length !== expBuf.length) return null
+    if (!crypto.timingSafeEqual(sigBuf, expBuf)) return null
 
     const payload = JSON.parse(Buffer.from(data, "base64url").toString())
 
     if (payload.exp < Date.now()) return null
 
-    return { email: payload.email }
+    // Tokens issued before roles existed belong to the founder, so default to
+    // admin rather than locking the existing session out.
+    const role: LeadsRole = payload.role === "team" ? "team" : "admin"
+
+    return { email: payload.email, role }
   } catch {
     return null
   }
+}
+
+/** Reads and validates the session off the request cookie. */
+export function getSession(request: NextRequest): LeadsSession | null {
+  const token = request.cookies.get("fw_leads_token")?.value
+  if (!token) return null
+  return verifyToken(token)
 }
 
 export async function GET(request: NextRequest) {
@@ -45,5 +59,5 @@ export async function GET(request: NextRequest) {
     return response
   }
 
-  return NextResponse.json({ authenticated: true, email: result.email })
+  return NextResponse.json({ authenticated: true, email: result.email, role: result.role })
 }

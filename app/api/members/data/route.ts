@@ -12,9 +12,10 @@ function getSupabase() {
 }
 
 export async function GET(request: NextRequest) {
-  // Reuse the same admin auth as the leads dashboard
+  // Reuse the same admin auth as the leads dashboard. Team-role tokens are
+  // valid sessions but must not reach member records.
   const token = request.cookies.get("fw_leads_token")?.value
-  if (!token || !verifyToken(token)) {
+  if (!token || verifyToken(token)?.role !== "admin") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 

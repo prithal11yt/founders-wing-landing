@@ -11,7 +11,9 @@ function getSupabase() {
 
 function isAdmin(request: NextRequest): boolean {
   const token = request.cookies.get("fw_leads_token")?.value
-  return !!token && !!verifyToken(token)
+  if (!token) return false
+  // Team-role tokens are valid but must not reach admin data.
+  return verifyToken(token)?.role === "admin"
 }
 
 // GET → all calls, newest first, each with an attendance count

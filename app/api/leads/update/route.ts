@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
-import { verifyToken } from "../verify/route"
+import { getSession } from "../verify/route"
 
 function getSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -11,10 +11,15 @@ function getSupabase() {
   })
 }
 
+const ADMIN_FIELDS = ["status", "starred", "notes", "call_status"]
+// A team member's job is to call leads and record what happened, so they get
+// the call outcome and notes — but not the pipeline status or starring, which
+// stay the founder's editorial judgement.
+const TEAM_FIELDS = ["notes", "call_status"]
+
 export async function PATCH(request: NextRequest) {
-  // Verify authentication
-  const token = request.cookies.get("fw_leads_token")?.value
-  if (!token || !verifyToken(token)) {
+  const session = getSession(request)
+  if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
@@ -25,16 +30,47 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: "Missing id or field" }, { status: 400 })
     }
 
-    // Only allow updating specific safe fields
-    const allowedFields = ["status", "starred", "notes", "call_status"]
+    const allowedFields = session.role === "team" ? TEAM_FIELDS : ADMIN_FIELDS
     if (!allowedFields.includes(field)) {
       return NextResponse.json({ error: "Field not allowed" }, { status: 403 })
     }
 
     const supabase = getSupabase()
+
+    if (session.role === "team") {
+      // Re-check ownership server-side. Without this a team member could patch
+      // any id they guessed, including the founder's private leads, even though
+      // those rows are never sent to their dashboard.
+      const { data: existing, error: readError } = await supabase
+        .from("waitlist_applications")
+        .select("worked_by")
+        .eq("id", id)
+        .maybeSingle()
+
+      if (readError) {
+        console.error("[leads/update] Ownership check failed:", readError)
+        return NextResponse.json({ error: "Database error" }, { status: 500 })
+      }
+      if (!existing) {
+        return NextResponse.json({ error: "Not found" }, { status: 404 })
+      }
+      if (existing.worked_by && existing.worked_by !== "team") {
+        return NextResponse.json({ error: "Not allowed for this lead" }, { status: 403 })
+      }
+    }
+
+    const patch: Record<string, unknown> = { [field]: value }
+
+    // Claim the lead for the team the moment they act on it, so it stays in
+    // their list afterwards instead of disappearing once it's no longer
+    // "not called".
+    if (session.role === "team") {
+      patch.worked_by = "team"
+    }
+
     const { error } = await supabase
       .from("waitlist_applications")
-      .update({ [field]: value })
+      .update(patch)
       .eq("id", id)
 
     if (error) {

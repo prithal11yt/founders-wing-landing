@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
-import { verifyToken } from "../verify/route"
+import { getSession } from "../verify/route"
 
 function getSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -12,9 +12,14 @@ function getSupabase() {
 }
 
 export async function DELETE(request: NextRequest) {
-  const token = request.cookies.get("fw_leads_token")?.value
-  if (!token || !verifyToken(token)) {
+  // Deleting leads is destructive and irreversible, so it stays with the
+  // founder — a team member marking a bad lead "not interested" is enough.
+  const session = getSession(request)
+  if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+  if (session.role !== "admin") {
+    return NextResponse.json({ error: "Not allowed" }, { status: 403 })
   }
 
   try {

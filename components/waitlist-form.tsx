@@ -81,6 +81,17 @@ export function WaitlistForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 text-left">
+      {/* Honeypot — hidden from real users, so anything that fills it in is a
+          bot. The API silently discards those submissions. */}
+      <input
+        type="text"
+        name="company"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        onChange={handleChange}
+        style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+      />
       {error && (
         <div className="bg-red-500/10 border border-red-500/20 text-red-600 px-4 py-3 rounded-lg text-sm">{error}</div>
       )}
