@@ -11,11 +11,18 @@ function getSupabase() {
   })
 }
 
-const ADMIN_FIELDS = ["status", "starred", "notes", "call_status"]
+const ADMIN_FIELDS = ["status", "starred", "notes", "call_status", "follow_up_at"]
 // A team member's job is to call leads and record what happened, so they get
-// the call outcome and notes — but not the pipeline status or starring, which
-// stay the founder's editorial judgement.
-const TEAM_FIELDS = ["notes", "call_status"]
+// the call outcome, notes and follow-up date — but not the pipeline status or
+// starring, which stay the founder's editorial judgement.
+const TEAM_FIELDS = ["notes", "call_status", "follow_up_at"]
+
+// The call-tracking columns are added by a separate migration; until that runs
+// we still want saves to work rather than the dashboard appearing broken.
+// PostgREST reports a missing column as PGRST204 ("not found in schema cache")
+// rather than passing through Postgres's own 42703, so both are treated the same.
+const MISSING_COLUMN_CODES = new Set(["PGRST204", "42703"])
+const isMissingColumn = (code?: string) => !!code && MISSING_COLUMN_CODES.has(code)
 
 export async function PATCH(request: NextRequest) {
   const session = getSession(request)
@@ -37,29 +44,34 @@ export async function PATCH(request: NextRequest) {
 
     const supabase = getSupabase()
 
+    // Ownership is read on its own, selecting only columns that are guaranteed
+    // to exist. Bundling the optional tracking columns into this query would
+    // make it fail wholesale on a database that hasn't been migrated yet, and a
+    // failed read must never be mistaken for "no owner".
+    const { data: existing, error: readError } = await supabase
+      .from("waitlist_applications")
+      .select("worked_by")
+      .eq("id", id)
+      .maybeSingle()
+
+    if (readError) {
+      console.error("[leads/update] Read failed:", readError)
+      return NextResponse.json({ error: "Database error" }, { status: 500 })
+    }
+    if (!existing) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 })
+    }
+
     if (session.role === "team") {
       // Re-check ownership server-side. Without this a team member could patch
       // any id they guessed, including the founder's private leads, even though
       // those rows are never sent to their dashboard.
-      const { data: existing, error: readError } = await supabase
-        .from("waitlist_applications")
-        .select("worked_by")
-        .eq("id", id)
-        .maybeSingle()
-
-      if (readError) {
-        console.error("[leads/update] Ownership check failed:", readError)
-        return NextResponse.json({ error: "Database error" }, { status: 500 })
-      }
-      if (!existing) {
-        return NextResponse.json({ error: "Not found" }, { status: 404 })
-      }
       if (existing.worked_by && existing.worked_by !== "team") {
         return NextResponse.json({ error: "Not allowed for this lead" }, { status: 403 })
       }
     }
 
-    const patch: Record<string, unknown> = { [field]: value }
+    const patch: Record<string, unknown> = { [field]: value === "" ? null : value }
 
     // Claim the lead for the team the moment they act on it, so it stays in
     // their list afterwards instead of disappearing once it's no longer
@@ -68,10 +80,41 @@ export async function PATCH(request: NextRequest) {
       patch.worked_by = "team"
     }
 
-    const { error } = await supabase
+    // Recording a call outcome is the signal that a call actually happened, so
+    // stamp the time here rather than trusting a value from the browser. Moving
+    // a lead back to "not called" is a correction, not a call, so it doesn't
+    // count.
+    let trackingPatch: Record<string, unknown> = {}
+    if (field === "call_status" && value && value !== "not_called") {
+      // Read the current count separately so a not-yet-migrated database
+      // degrades to "no increment" instead of failing the whole request.
+      const { data: counts } = await supabase
+        .from("waitlist_applications")
+        .select("call_attempts")
+        .eq("id", id)
+        .maybeSingle()
+
+      trackingPatch = {
+        last_called_at: new Date().toISOString(),
+        call_attempts: ((counts?.call_attempts as number | undefined) ?? 0) + 1,
+      }
+    }
+
+    let { error } = await supabase
       .from("waitlist_applications")
-      .update(patch)
+      .update({ ...patch, ...trackingPatch })
       .eq("id", id)
+
+    // If the tracking columns aren't in the database yet, save the core change
+    // anyway. The dashboard stays usable and starts recording call times as
+    // soon as the migration is applied.
+    if (isMissingColumn(error?.code)) {
+      const retry = await supabase
+        .from("waitlist_applications")
+        .update(patch)
+        .eq("id", id)
+      error = retry.error
+    }
 
     if (error) {
       console.error("[leads/update] Supabase error:", error)
