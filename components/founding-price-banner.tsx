@@ -4,49 +4,62 @@ import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 
-const DEADLINE = new Date("2026-07-02T15:00:00Z").getTime() // July 2, 2026, 8:30 PM IST
+// Scarcity that's actually true: the discount is held for the next
+// OFFER_SPOTS members after OFFER_BASELINE, and the number shown counts down
+// against the real membership count. When the spots run out the banner
+// removes itself, so it can never promise an offer that's gone.
+const OFFER_BASELINE = 39   // members on the day the FESTIVAL offer opened
+const OFFER_SPOTS = 10
+const COUPON_CODE = "FESTIVAL"
+const CHECKOUT_URL = `https://www.thesoloentrepreneur.in/fw-membership?coupon=${COUPON_CODE}`
 
 export function FoundingPriceBanner() {
   const pathname = usePathname()
-  const [timeLeft, setTimeLeft] = useState<{ h: number; m: number; s: number } | null>(null)
-  const [expired, setExpired] = useState(false)
+  const [remaining, setRemaining] = useState<number | null>(null)
 
   useEffect(() => {
-    const tick = () => {
-      const diff = DEADLINE - Date.now()
-      if (diff <= 0) {
-        setExpired(true)
-        return
+    let cancelled = false
+
+    const load = async () => {
+      try {
+        const res = await fetch("/api/public/member-count")
+        const data = await res.json()
+        if (cancelled || typeof data.count !== "number") return
+        const left = OFFER_SPOTS - (data.count - OFFER_BASELINE)
+        setRemaining(Math.max(0, Math.min(OFFER_SPOTS, left)))
+      } catch {
+        // Leave the banner hidden rather than guess a number.
       }
-      setTimeLeft({
-        h: Math.floor(diff / 3600000),
-        m: Math.floor((diff % 3600000) / 60000),
-        s: Math.floor((diff % 60000) / 1000),
-      })
     }
-    tick()
-    const id = setInterval(tick, 1000)
-    return () => clearInterval(id)
+
+    load()
+    // Refresh periodically so a visitor who leaves the tab open sees the count
+    // move as people actually join.
+    const id = setInterval(load, 120000)
+    return () => { cancelled = true; clearInterval(id) }
   }, [])
 
-  if (pathname?.startsWith("/leads") || pathname?.startsWith("/admin") || pathname?.startsWith("/members")) return null
-  if (expired || !timeLeft) return null
+  // Internal tools shouldn't carry marketing chrome.
+  if (pathname?.startsWith("/leads") || pathname?.startsWith("/admin") ||
+      pathname?.startsWith("/members") || pathname?.startsWith("/team")) return null
 
-  const pad = (n: number) => String(n).padStart(2, "0")
+  if (remaining === null || remaining <= 0) return null
 
   return (
     <Link
-      href="/#apply"
-      className="fixed top-0 left-0 right-0 z-[70] h-10 md:h-11 flex flex-wrap items-center justify-center gap-2 sm:gap-3 bg-black border-b border-white/10 px-4 text-center hover:bg-neutral-900 transition-colors"
+      href={CHECKOUT_URL}
+      className="fixed top-0 left-0 right-0 z-[70] h-10 md:h-11 flex flex-wrap items-center justify-center gap-x-2 gap-y-0 sm:gap-x-3 bg-black border-b border-white/10 px-4 text-center hover:bg-neutral-900 transition-colors"
     >
       <span className="text-xs sm:text-sm font-medium text-gray-100">
-        Founding member price closes today at 8:30 PM
+        <span className="font-bold text-amber-400">20% off</span> with code{" "}
+        <span className="font-mono font-bold tracking-wide text-amber-400">{COUPON_CODE}</span>
       </span>
-      <span className="font-mono font-bold text-xs sm:text-sm text-amber-400 tabular-nums">
-        {pad(timeLeft.h)}:{pad(timeLeft.m)}:{pad(timeLeft.s)}
+      <span className="hidden xs:inline text-white/25">·</span>
+      <span className="text-xs sm:text-sm font-semibold text-white tabular-nums">
+        {remaining === 1 ? "1 spot left" : `${remaining} spots left`}
       </span>
       <span className="hidden sm:inline text-xs text-white underline underline-offset-2">
-        Join now
+        Claim yours
       </span>
     </Link>
   )
