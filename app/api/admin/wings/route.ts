@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
 import { verifyToken } from "../../leads/verify/route"
+import { escapeLike } from "@/lib/like"
 
 function getSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -62,7 +63,7 @@ export async function POST(request: NextRequest) {
     const { data: recipient } = await supabase
       .from("fw_memberships")
       .select("email")
-      .ilike("email", to_email)
+      .ilike("email", escapeLike(String(to_email).trim()))
       .limit(1)
       .maybeSingle()
     if (!recipient) return NextResponse.json({ error: "Member not found" }, { status: 404 })

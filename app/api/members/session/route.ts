@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
 import crypto from "crypto"
+import { escapeLike } from "@/lib/like"
+
+// Loose sanity check on the email shape before it ever reaches the database.
+// This blocks "%"-style patterns and injection characters, while still allowing
+// legitimate address characters like "_" and "+". The real wildcard safety net
+// is escapeLike() on the lookup below — this is just defence in depth.
+const EMAIL_RE = /^[^\s@%<>"'`;]+@[^\s@%<>"'`;]+\.[a-zA-Z]{2,}$/
 
 function getSecret(): string {
   const secret = process.env.LEADS_AUTH_SECRET
@@ -59,7 +66,7 @@ async function findMember(email: string) {
   const { data, error } = await supabase
     .from("fw_memberships")
     .select("id, full_name, email, plan, created_at")
-    .ilike("email", email.trim())
+    .ilike("email", escapeLike(email.trim()))
     .order("created_at", { ascending: true })
     .limit(1)
     .maybeSingle()
@@ -99,15 +106,37 @@ function verifyPassword(password: string, stored: string): boolean {
   return candidate.length === expected.length && crypto.timingSafeEqual(candidate, expected)
 }
 
+// Per-IP throttle so member passwords can't be brute-forced from one script.
+const RATE_LIMIT_WINDOW_MS = 60_000
+const RATE_LIMIT_MAX = 10
+const recentAttempts = new Map<string, number[]>()
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const hits = (recentAttempts.get(ip) ?? []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS)
+  hits.push(now)
+  recentAttempts.set(ip, hits)
+  if (recentAttempts.size > 5000) recentAttempts.clear()
+  return hits.length > RATE_LIMIT_MAX
+}
+
 // POST — three-phase login:
 //   { email }                       → probe: needsSetup | needsPassword
 //   { email, password, mode:"setup" } → first-time password creation, then login
 //   { email, password }             → verify password, then login
 export async function POST(request: NextRequest) {
   try {
+    const ip =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      request.headers.get("x-real-ip") ||
+      "unknown"
+    if (isRateLimited(ip)) {
+      return NextResponse.json({ error: "Too many attempts. Please try again shortly." }, { status: 429 })
+    }
+
     const { email, password, mode } = await request.json()
-    if (!email || typeof email !== "string") {
-      return NextResponse.json({ error: "Email required" }, { status: 400 })
+    if (!email || typeof email !== "string" || !EMAIL_RE.test(email.trim())) {
+      return NextResponse.json({ error: "Enter a valid email address" }, { status: 400 })
     }
 
     const member = await findMember(email)

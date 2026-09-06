@@ -27,8 +27,11 @@ export function verifyToken(token: string): LeadsSession | null {
 
     if (payload.exp < Date.now()) return null
 
-    // Tokens issued before roles existed belong to the founder, so default to
-    // admin rather than locking the existing session out.
+    // Only accept tokens explicitly minted for this surface. Member tokens
+    // (typ:"member") and any legacy token without a type share the same signing
+    // secret, so this is what stops one from being replayed as an admin session.
+    if (payload.typ !== "leads") return null
+
     const role: LeadsRole = payload.role === "team" ? "team" : "admin"
 
     return { email: payload.email, role }

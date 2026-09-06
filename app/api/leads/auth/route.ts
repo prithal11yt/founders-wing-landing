@@ -32,6 +32,22 @@ function safeEqual(a: string, b: string): boolean {
   return crypto.timingSafeEqual(ha, hb)
 }
 
+// Small in-memory throttle so the login isn't cheap to brute-force. Serverless
+// instances are short-lived, so this won't stop a determined distributed
+// attacker, but it stops a single script hammering one password list.
+const RATE_LIMIT_WINDOW_MS = 60_000
+const RATE_LIMIT_MAX = 8
+const recentAttempts = new Map<string, number[]>()
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const hits = (recentAttempts.get(ip) ?? []).filter(t => now - t < RATE_LIMIT_WINDOW_MS)
+  hits.push(now)
+  recentAttempts.set(ip, hits)
+  if (recentAttempts.size > 5000) recentAttempts.clear()
+  return hits.length > RATE_LIMIT_MAX
+}
+
 function resolveRole(email: string, password: string): { email: string; role: LeadsRole } | null {
   const adminPassword = process.env.LEADS_PASSWORD
   const teamEmail = process.env.TEAM_EMAIL
@@ -50,6 +66,15 @@ function resolveRole(email: string, password: string): { email: string; role: Le
 
 export async function POST(request: NextRequest) {
   try {
+    const ip =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      request.headers.get("x-real-ip") ||
+      "unknown"
+
+    if (isRateLimited(ip)) {
+      return NextResponse.json({ error: "Too many attempts. Please try again shortly." }, { status: 429 })
+    }
+
     const { email, password } = await request.json()
 
     if (!email || !password || typeof email !== "string" || typeof password !== "string") {
@@ -65,6 +90,10 @@ export async function POST(request: NextRequest) {
     }
 
     const token = signToken({
+      // typ pins this token to the leads/admin surface. Member tokens are
+      // signed with the same secret, so without a type tag the verifier could
+      // be tricked into accepting a member's token as an admin session.
+      typ: "leads",
       email: account.email,
       role: account.role,
       iat: Date.now(),

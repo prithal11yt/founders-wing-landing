@@ -24,9 +24,9 @@ export async function GET(request: NextRequest) {
       NEXT_PUBLIC_SUPABASE_URL: present(process.env.NEXT_PUBLIC_SUPABASE_URL),
       SUPABASE_SERVICE_ROLE_KEY: present(process.env.SUPABASE_SERVICE_ROLE_KEY),
     },
-    // Helps catch a trailing space or newline pasted into the Vercel field,
-    // which silently breaks an exact password match.
-    teamEmailValue: process.env.TEAM_EMAIL ?? null,
-    teamPasswordLength: process.env.TEAM_PASSWORD?.length ?? 0,
+    // A trailing space/newline pasted into the Vercel field silently breaks an
+    // exact match. Report *whether* one is present without echoing the value.
+    teamEmailHasWhitespace: /^\s|\s$/.test(process.env.TEAM_EMAIL ?? ""),
+    teamPasswordHasWhitespace: /^\s|\s$/.test(process.env.TEAM_PASSWORD ?? ""),
   })
 }
