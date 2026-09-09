@@ -25,6 +25,10 @@ const OUTCOMES: { value: string; label: string; color: string }[] = [
 const REACHED = new Set(["callback", "not_interested", "less_convinced", "interested", "very_convinced", "converted"])
 const INTERESTED = new Set(["interested", "very_convinced"])
 
+// The day per-call logging went live (lead_call_events created). Trend charts
+// only have data from here forward — surfaced so the UI can say so.
+const LOGGING_SINCE = "2026-09-09"
+
 type LeadRow = { call_status: string | null; worked_by: string | null; call_attempts: number | null }
 type EventRow = { actor: string; call_status: string; created_at: string }
 
@@ -173,6 +177,7 @@ export async function GET(request: NextRequest) {
     const payload: Record<string, unknown> = {
       generatedAt: new Date().toISOString(),
       role: session.role,
+      loggingSince: LOGGING_SINCE,
       eventsLogged: isAdmin ? allEvents.length : teamEvents.length,
       team: { ...snapshotFor(team), trends: trendsFor(teamEvents) },
     }

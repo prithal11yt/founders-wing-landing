@@ -10,7 +10,14 @@ type Funnel = { stage: string; count: number }[]
 type Outcome = { value: string; label: string; color: string; count: number }
 type TrendPoint = { label: string; calls: number; conversions: number }
 type Scope = { kpis: Kpis; funnel: Funnel; outcomes: Outcome[]; trends: { daily: TrendPoint[]; weekly: TrendPoint[]; monthly: TrendPoint[] } }
-type Data = { generatedAt: string; eventsLogged: number; team: Scope; all: Scope }
+type Data = { generatedAt: string; eventsLogged: number; loggingSince?: string; team: Scope; all: Scope }
+
+function prettyDate(iso?: string) {
+  if (!iso) return ''
+  const d = new Date(iso + 'T00:00:00')
+  if (isNaN(d.getTime())) return ''
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+}
 
 const C = {
   bg: '#f5f7fb', card: '#ffffff', ink: '#0f172a', mute: '#64748b', faint: '#94a3b8',
@@ -131,7 +138,7 @@ export default function PerformancePage() {
             <div style={{ display: 'flex', gap: 18, marginTop: 12, fontSize: 12, color: C.mute }}>
               <Legend color={C.accentSoft} label="Calls" border={C.accent} />
               <Legend color={C.accent} label="Conversions" />
-              <span style={{ marginLeft: 'auto', color: C.faint }}>Trends build up from the day this shipped</span>
+              <span style={{ marginLeft: 'auto', color: C.faint }}>Logging since {prettyDate(data?.loggingSince) || 'launch'}</span>
             </div>
           </Card>
         </>
