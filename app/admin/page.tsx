@@ -412,6 +412,7 @@ export default function LeadsPage() {
             </div>
             <div className="l-actions">
               <div className="l-live"><div className="l-live-dot" />Live</div>
+              <a className="l-btn" href="/admin/performance">📊 Performance</a>
               <button className="l-btn" onClick={fetchData}>Refresh</button>
               <button className="l-btn l-btn-primary" onClick={exportCSV}>Export CSV</button>
             </div>

@@ -140,6 +140,18 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: "Database error" }, { status: 500 })
     }
 
+    // Append an immutable call event so the performance dashboard can show
+    // accurate daily/weekly/monthly activity. Best-effort — a failure here must
+    // never fail the save the user just made.
+    if (field === "call_status" && value && value !== "not_called") {
+      const { error: logErr } = await supabase.from("lead_call_events").insert({
+        lead_id: id,
+        actor: session.role === "team" ? "team" : "admin",
+        call_status: value,
+      })
+      if (logErr) console.error("[leads/update] call-event log failed:", logErr.message)
+    }
+
     if (followUpUnsaved) {
       return NextResponse.json(
         { error: "Couldn't save the follow-up date — the database needs a quick one-time update. Ask Prithal." },
