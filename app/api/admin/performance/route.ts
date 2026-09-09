@@ -141,9 +141,13 @@ function trendsFor(events: EventRow[]) {
 
 export async function GET(request: NextRequest) {
   const token = request.cookies.get("fw_leads_token")?.value
-  if (!token || verifyToken(token)?.role !== "admin") {
+  const session = token ? verifyToken(token) : null
+  if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
+  // Admin (Prithal) sees both scopes; a team member only ever receives their
+  // own numbers — the "everyone" aggregate is never sent to a team token.
+  const isAdmin = session.role === "admin"
 
   try {
     const supabase = getSupabase()
@@ -166,12 +170,14 @@ export async function GET(request: NextRequest) {
     const allEvents = (events || []) as EventRow[]
     const teamEvents = allEvents.filter((e) => e.actor === "team")
 
-    return NextResponse.json({
+    const payload: Record<string, unknown> = {
       generatedAt: new Date().toISOString(),
-      eventsLogged: allEvents.length,
+      role: session.role,
+      eventsLogged: isAdmin ? allEvents.length : teamEvents.length,
       team: { ...snapshotFor(team), trends: trendsFor(teamEvents) },
-      all: { ...snapshotFor(all), trends: trendsFor(allEvents) },
-    })
+    }
+    if (isAdmin) payload.all = { ...snapshotFor(all), trends: trendsFor(allEvents) }
+    return NextResponse.json(payload)
   } catch (err) {
     console.error("[admin/performance] error:", err)
     return NextResponse.json({ error: "Server error" }, { status: 500 })

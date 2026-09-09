@@ -27,13 +27,14 @@ export default function PerformancePage() {
 
   const [data, setData] = useState<Data | null>(null)
   const [loading, setLoading] = useState(true)
+  const [role, setRole] = useState<'admin' | 'team'>('team')
   const [scope, setScope] = useState<'team' | 'all'>('team')
   const [tf, setTf] = useState<'daily' | 'weekly' | 'monthly'>('daily')
 
   useEffect(() => {
     fetch('/api/leads/verify')
       .then(r => r.json())
-      .then(d => { if (d.authenticated && d.role === 'admin') setAuthed(true) })
+      .then(d => { if (d.authenticated) { setAuthed(true); setRole(d.role === 'admin' ? 'admin' : 'team') } })
       .catch(() => {})
       .finally(() => setChecking(false))
   }, [])
@@ -68,7 +69,7 @@ export default function PerformancePage() {
     <Shell center>
       <form onSubmit={doLogin} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: 28, width: 340, boxShadow: '0 10px 40px rgba(15,23,42,0.06)' }}>
         <h1 style={{ fontSize: 18, fontWeight: 700, color: C.ink, margin: '0 0 4px' }}>Performance</h1>
-        <p style={{ fontSize: 13, color: C.mute, margin: '0 0 20px' }}>Admin access only</p>
+        <p style={{ fontSize: 13, color: C.mute, margin: '0 0 20px' }}>Sign in to continue</p>
         <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required style={inp} />
         <input type="password" value={pw} onChange={e => setPw(e.target.value)} placeholder="Password" required style={{ ...inp, letterSpacing: 2 }} />
         <button type="submit" disabled={loggingIn} style={{ width: '100%', padding: 13, background: C.accent, border: 'none', borderRadius: 10, color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer', opacity: loggingIn ? 0.7 : 1 }}>
@@ -88,12 +89,12 @@ export default function PerformancePage() {
         <div>
           <h1 style={{ fontSize: 22, fontWeight: 800, color: C.ink, margin: 0, letterSpacing: -0.3 }}>Sales Performance</h1>
           <p style={{ fontSize: 13, color: C.mute, margin: '4px 0 0' }}>
-            {scope === 'team' ? 'Shreyas' : 'Everyone'} · leads &amp; conversions
+            {role === 'admin' ? (scope === 'team' ? 'Shreyas' : 'Everyone') : 'Your'} leads &amp; conversions
             {data && <> · <span style={{ color: C.faint }}>{data.eventsLogged} calls logged</span></>}
           </p>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          <Toggle options={[['team', 'Shreyas'], ['all', 'Everyone']]} value={scope} onChange={v => setScope(v as 'team' | 'all')} />
+          {role === 'admin' && <Toggle options={[['team', 'Shreyas'], ['all', 'Everyone']]} value={scope} onChange={v => setScope(v as 'team' | 'all')} />}
           <button onClick={load} style={ghostBtn} title="Refresh">↻</button>
         </div>
       </div>

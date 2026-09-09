@@ -240,7 +240,10 @@ export default function TeamPage() {
                 <div className="hd-sub">{userEmail}</div>
               </div>
             </div>
-            <button className="btn-ghost" onClick={logout}>Sign out</button>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <a className="btn-ghost" href="/admin/performance" style={{ textDecoration: 'none' }}>📊 My Performance</a>
+              <button className="btn-ghost" onClick={logout}>Sign out</button>
+            </div>
           </div>
         </header>
 
