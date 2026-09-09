@@ -24,6 +24,13 @@ const TEAM_FIELDS = ["notes", "call_status", "follow_up_at"]
 const MISSING_COLUMN_CODES = new Set(["PGRST204", "42703"])
 const isMissingColumn = (code?: string) => !!code && MISSING_COLUMN_CODES.has(code)
 
+// Columns added by the separate call-tracking migration. Until that migration
+// runs they may not exist, so any write touching them can fail with a missing-
+// column error — including a direct edit of follow_up_at itself. On that error
+// we retry with these stripped out, so the dashboard degrades gracefully rather
+// than hard-erroring.
+const OPTIONAL_COLUMNS = new Set(["last_called_at", "call_attempts", "follow_up_at"])
+
 export async function PATCH(request: NextRequest) {
   const session = getSession(request)
   if (!session) {
@@ -105,20 +112,39 @@ export async function PATCH(request: NextRequest) {
       .update({ ...patch, ...trackingPatch })
       .eq("id", id)
 
-    // If the tracking columns aren't in the database yet, save the core change
-    // anyway. The dashboard stays usable and starts recording call times as
-    // soon as the migration is applied.
+    // If a migration column isn't in the database yet, save whatever core
+    // fields we can rather than failing the whole request. We strip the
+    // optional columns from the *merged* update — this also covers the case
+    // where the edited field itself is a not-yet-migrated column (e.g. a team
+    // member setting follow_up_at before the migration has run).
+    let followUpUnsaved = false
     if (isMissingColumn(error?.code)) {
-      const retry = await supabase
-        .from("waitlist_applications")
-        .update(patch)
-        .eq("id", id)
-      error = retry.error
+      const safePatch = Object.fromEntries(
+        Object.entries({ ...patch, ...trackingPatch }).filter(([k]) => !OPTIONAL_COLUMNS.has(k)),
+      )
+      if (Object.keys(safePatch).length > 0) {
+        const retry = await supabase
+          .from("waitlist_applications")
+          .update(safePatch)
+          .eq("id", id)
+        error = retry.error
+      } else {
+        error = null
+      }
+      // Be honest if the value the user actually entered couldn't be stored.
+      if (!error && OPTIONAL_COLUMNS.has(field)) followUpUnsaved = true
     }
 
     if (error) {
       console.error("[leads/update] Supabase error:", error)
       return NextResponse.json({ error: "Database error" }, { status: 500 })
+    }
+
+    if (followUpUnsaved) {
+      return NextResponse.json(
+        { error: "Couldn't save the follow-up date — the database needs a quick one-time update. Ask Prithal." },
+        { status: 503 },
+      )
     }
 
     return NextResponse.json({ success: true })
