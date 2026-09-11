@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { escapeLike } from "@/lib/like"
 import { createClient } from "@supabase/supabase-js"
 import { verifyMemberToken } from "../session/route"
 
@@ -9,10 +10,10 @@ function getSupabase() {
   return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } })
 }
 
-function authEmail(request: NextRequest): string | null {
+async function authEmail(request: NextRequest): Promise<string | null> {
   const token = request.cookies.get("fw_member_token")?.value
   if (!token) return null
-  return verifyMemberToken(token)?.email ?? null
+  return (await verifyMemberToken(token))?.email ?? null
 }
 
 const firstName = (n?: string | null) => (n || "A member").split(" ")[0]
@@ -33,7 +34,7 @@ async function loadMembers(supabase: ReturnType<typeof getSupabase>) {
 // who has raised their hand. Emails never leave the server — asks are keyed by
 // member number, helpers are shown by first name.
 export async function GET(request: NextRequest) {
-  const email = authEmail(request)
+  const email = await authEmail(request)
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   const me = email.toLowerCase()
 
@@ -103,7 +104,7 @@ export async function GET(request: NextRequest) {
 
 // POST { ask_id } → raise your hand for an ask
 export async function POST(request: NextRequest) {
-  const email = authEmail(request)
+  const email = await authEmail(request)
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   const me = email.toLowerCase()
 
@@ -127,7 +128,7 @@ export async function POST(request: NextRequest) {
     const { data: helper } = await supabase
       .from("fw_memberships")
       .select("full_name")
-      .ilike("email", email)
+      .ilike("email", escapeLike(email))
       .limit(1)
       .maybeSingle()
     const helperName = helper?.full_name || "Prithal Bhardwaj"

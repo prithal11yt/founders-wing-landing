@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
 import crypto from "crypto"
 import { escapeLike } from "@/lib/like"
+import { hashPassword, verifyPassword, verifyInvitation, credentialVersion } from "@/lib/member-credentials"
 
 // Loose sanity check on the email shape before it ever reaches the database.
 // This blocks "%"-style patterns and injection characters, while still allowing
@@ -24,24 +25,30 @@ function getSupabase() {
 
 // Signed member token — payload marked with typ:"member" so it can never be
 // mistaken for an admin (fw_leads_token) session.
-function signMemberToken(email: string): string {
+function signMemberToken(email: string, passwordHash: string): string {
   const secret = getSecret()
-  const payload = { email, typ: "member", exp: Date.now() + 30 * 24 * 60 * 60 * 1000 }
+  const payload = { email, typ: "member", ver: credentialVersion(passwordHash), exp: Date.now() + 30 * 24 * 60 * 60 * 1000 }
   const data = Buffer.from(JSON.stringify(payload)).toString("base64url")
   const signature = crypto.createHmac("sha256", secret).update(data).digest("base64url")
   return `${data}.${signature}`
 }
 
-export function verifyMemberToken(token: string): { email: string } | null {
+export async function verifyMemberToken(token: string): Promise<{ email: string } | null> {
   try {
-    const [data, signature] = token.split(".")
-    if (!data || !signature) return null
+    const [data, signature, extra] = token.split(".")
+    if (!data || !signature || extra) return null
     const secret = getSecret()
     const expectedSig = crypto.createHmac("sha256", secret).update(data).digest("base64url")
     if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSig))) return null
     const payload = JSON.parse(Buffer.from(data, "base64url").toString())
     if (payload.typ !== "member") return null
-    if (payload.exp < Date.now()) return null
+    if (typeof payload.exp !== "number" || !Number.isFinite(payload.exp) || payload.exp <= Date.now()) return null
+    if (typeof payload.email !== "string" || !EMAIL_RE.test(payload.email) || typeof payload.ver !== "string") return null
+    const { data: auth, error } = await getSupabase().from("fw_member_auth")
+      .select("password_hash").eq("email", payload.email.toLowerCase()).maybeSingle()
+    if (error || !auth || auth.password_hash.startsWith("invite:")) return null
+    if (payload.ver !== credentialVersion(auth.password_hash)) return null
+    if (!await findMember(payload.email)) return null
     return { email: payload.email }
   } catch {
     return null
@@ -89,23 +96,6 @@ async function memberNumber(email: string): Promise<number | null> {
   return idx === -1 ? null : idx + 1
 }
 
-// ── Password hashing (Node built-in scrypt, no dependencies) ──
-const SCRYPT_KEYLEN = 64
-
-function hashPassword(password: string): string {
-  const salt = crypto.randomBytes(16).toString("base64url")
-  const hash = crypto.scryptSync(password, salt, SCRYPT_KEYLEN).toString("base64url")
-  return `${salt}.${hash}`
-}
-
-function verifyPassword(password: string, stored: string): boolean {
-  const [salt, hash] = stored.split(".")
-  if (!salt || !hash) return false
-  const candidate = crypto.scryptSync(password, salt, SCRYPT_KEYLEN)
-  const expected = Buffer.from(hash, "base64url")
-  return candidate.length === expected.length && crypto.timingSafeEqual(candidate, expected)
-}
-
 // Per-IP throttle so member passwords can't be brute-forced from one script.
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 10
@@ -120,10 +110,7 @@ function isRateLimited(ip: string): boolean {
   return hits.length > RATE_LIMIT_MAX
 }
 
-// POST — three-phase login:
-//   { email }                       → probe: needsSetup | needsPassword
-//   { email, password, mode:"setup" } → first-time password creation, then login
-//   { email, password }             → verify password, then login
+// POST — uniform email prompt, password login, or single-use invitation redemption.
 export async function POST(request: NextRequest) {
   try {
     const ip =
@@ -134,56 +121,50 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Too many attempts. Please try again shortly." }, { status: 429 })
     }
 
-    const { email, password, mode } = await request.json()
-    if (!email || typeof email !== "string" || !EMAIL_RE.test(email.trim())) {
+    const { email, password, mode, setupToken } = await request.json()
+    if (!email || typeof email !== "string" || email.length > 200 || !EMAIL_RE.test(email.trim())) {
       return NextResponse.json({ error: "Enter a valid email address" }, { status: 400 })
     }
 
-    const member = await findMember(email)
-    if (!member) {
-      await new Promise((r) => setTimeout(r, 400 + Math.random() * 400))
+    // The email screen must not reveal membership or password setup state.
+    if (password === undefined) return NextResponse.json({ needsPassword: true })
+    if (typeof password !== "string" || password.length === 0 || password.length > 128) {
+      return NextResponse.json({ error: "Enter a password of up to 128 characters" }, { status: 400 })
+    }
+    const invalid = async () => {
+      await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 500))
       return NextResponse.json(
-        { error: "We couldn't find that email. Use the email you joined Founders Wing with." },
-        { status: 404 }
+        { error: "Unable to sign in. Check your details, or ask Prithal for a new setup link." }, { status: 401 }
       )
     }
-
+    const member = await findMember(email)
+    if (!member) return invalid()
     const lower = member.email.toLowerCase()
     const supabase = getSupabase()
-    const { data: auth } = await supabase
-      .from("fw_member_auth")
-      .select("password_hash")
-      .eq("email", lower)
-      .maybeSingle()
-
-    // Phase 1: email-only probe — tell the client which screen to show.
-    if (!password || typeof password !== "string") {
-      return NextResponse.json(auth ? { needsPassword: true } : { needsSetup: true })
-    }
-
-    if (!auth) {
-      // Phase 2: first-time setup (only possible while no password exists).
-      if (mode !== "setup") return NextResponse.json({ needsSetup: true })
-      if (password.length < 6) {
-        return NextResponse.json({ error: "Password must be at least 6 characters" }, { status: 400 })
+    const { data: auth, error: authError } = await supabase.from("fw_member_auth")
+      .select("password_hash").eq("email", lower).maybeSingle()
+    if (authError) throw authError
+    if (!auth) return invalid()
+    let passwordHash = auth.password_hash as string
+    if (mode === "setup") {
+      if (!await verifyInvitation(setupToken, passwordHash)) return invalid()
+      if (password.length < 12) {
+        return NextResponse.json({ error: "Use at least 12 characters" }, { status: 400 })
       }
-      const { error } = await supabase
-        .from("fw_member_auth")
-        .insert({ email: lower, password_hash: hashPassword(password) })
+      const replacement = await hashPassword(password)
+      // Compare-and-swap makes the invitation single-use, including parallel requests.
+      const { data: changed, error } = await supabase.from("fw_member_auth")
+        .update({ password_hash: replacement, updated_at: new Date().toISOString() })
+        .eq("email", lower).eq("password_hash", passwordHash).select("email").maybeSingle()
       if (error) throw error
-    } else {
-      // Phase 3: normal login.
-      if (!verifyPassword(password, auth.password_hash)) {
-        await new Promise((r) => setTimeout(r, 400 + Math.random() * 400))
-        return NextResponse.json(
-          { error: "Wrong password. Forgot it? Message Prithal on WhatsApp to reset." },
-          { status: 401 }
-        )
-      }
+      if (!changed) return invalid()
+      passwordHash = replacement
+    } else if (passwordHash.startsWith("invite:") || !await verifyPassword(password, passwordHash)) {
+      return invalid()
     }
 
     const num = await memberNumber(member.email)
-    const token = signMemberToken(member.email)
+    const token = signMemberToken(member.email, passwordHash)
     const response = NextResponse.json({
       success: true,
       member: { ...member, member_no: num },
@@ -207,7 +188,7 @@ export async function GET(request: NextRequest) {
   const token = request.cookies.get("fw_member_token")?.value
   if (!token) return NextResponse.json({ authenticated: false }, { status: 401 })
 
-  const result = verifyMemberToken(token)
+  const result = await verifyMemberToken(token)
   if (!result) {
     const response = NextResponse.json({ authenticated: false }, { status: 401 })
     response.cookies.delete("fw_member_token")

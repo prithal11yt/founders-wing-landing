@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { escapeLike } from "@/lib/like"
 import { createClient } from "@supabase/supabase-js"
 import { verifyMemberToken } from "../session/route"
 
@@ -12,10 +13,10 @@ function getSupabase() {
 const VALID_STATUS = ["in_progress", "achieved", "missed"]
 
 // Resolve the authenticated member's email from the session cookie.
-function authEmail(request: NextRequest): string | null {
+async function authEmail(request: NextRequest): Promise<string | null> {
   const token = request.cookies.get("fw_member_token")?.value
   if (!token) return null
-  return verifyMemberToken(token)?.email ?? null
+  return (await verifyMemberToken(token))?.email ?? null
 }
 
 // Attach each goal's member profile (what they're building / who for / problem)
@@ -35,7 +36,7 @@ async function withProfiles(supabase: ReturnType<typeof getSupabase>, goals: Rec
 
 // GET → { mine: [...], feed: [latest goal per member] }, each with its member's profile attached
 export async function GET(request: NextRequest) {
-  const email = authEmail(request)
+  const email = await authEmail(request)
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   try {
@@ -59,9 +60,18 @@ export async function GET(request: NextRequest) {
       feed.push(g)
     }
 
+    const publicGoals = (items: Record<string, unknown>[]) => items.map((g) => {
+      const p = g.profile as Record<string, unknown> | null
+      return {
+        id: g.id, member_name: g.member_name, goal: g.goal,
+        community_ask: g.community_ask, status: g.status, created_at: g.created_at,
+        isMe: String(g.member_email).toLowerCase() === email.toLowerCase(),
+        profile: p ? { what_building: p.what_building, who_its_for: p.who_its_for, problem: p.problem } : null,
+      }
+    })
     return NextResponse.json({
-      mine: await withProfiles(supabase, mine),
-      feed: await withProfiles(supabase, feed),
+      mine: publicGoals(await withProfiles(supabase, mine)),
+      feed: publicGoals(await withProfiles(supabase, feed)),
     })
   } catch (err) {
     console.error("[members/goals] GET error:", err)
@@ -71,7 +81,7 @@ export async function GET(request: NextRequest) {
 
 // POST → submit this week's check-in (just the goal + community ask)
 export async function POST(request: NextRequest) {
-  const email = authEmail(request)
+  const email = await authEmail(request)
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   try {
@@ -87,7 +97,7 @@ export async function POST(request: NextRequest) {
     const { data: member } = await supabase
       .from("fw_memberships")
       .select("full_name")
-      .ilike("email", email)
+      .ilike("email", escapeLike(email))
       .limit(1)
       .maybeSingle()
 
@@ -112,7 +122,7 @@ export async function POST(request: NextRequest) {
 
 // PATCH → update the status of one of your own goals
 export async function PATCH(request: NextRequest) {
-  const email = authEmail(request)
+  const email = await authEmail(request)
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   try {
@@ -127,7 +137,7 @@ export async function PATCH(request: NextRequest) {
       .from("fw_weekly_goals")
       .update({ status, updated_at: new Date().toISOString() })
       .eq("id", id)
-      .ilike("member_email", email)
+      .ilike("member_email", escapeLike(email))
       .select()
     if (error) throw error
     if (!data || data.length === 0) {

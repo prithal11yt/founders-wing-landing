@@ -10,10 +10,10 @@ function getSupabase() {
   return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } })
 }
 
-function authEmail(request: NextRequest): string | null {
+async function authEmail(request: NextRequest): Promise<string | null> {
   const token = request.cookies.get("fw_member_token")?.value
   if (!token) return null
-  return verifyMemberToken(token)?.email ?? null
+  return (await verifyMemberToken(token))?.email ?? null
 }
 
 export const MONTHLY_ALLOWANCE = 100
@@ -29,7 +29,7 @@ type Ledger = { from_email: string | null; to_email: string; amount: number; typ
 
 // GET → the caller's balances + the community leaderboard (monthly + lifetime)
 export async function GET(request: NextRequest) {
-  const email = authEmail(request)
+  const email = await authEmail(request)
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   const lower = email.toLowerCase()
 
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
 
     const [{ data: ledger }, { data: members }] = await Promise.all([
       supabase.from("fw_wings_ledger").select("from_email, to_email, amount, type, created_at"),
-      supabase.from("fw_memberships").select("full_name, email, created_at").order("created_at", { ascending: true }),
+      supabase.from("fw_memberships").select("id, full_name, email, created_at").order("created_at", { ascending: true }),
     ])
 
     const entries = (ledger || []) as Ledger[]
@@ -60,7 +60,6 @@ export async function GET(request: NextRequest) {
       .reduce((s, e) => s + e.amount, 0)
 
     const membersList = members || []
-    const nameByEmail = new Map(membersList.map((m) => [m.email.toLowerCase(), m.full_name]))
     const memberNoByEmail = new Map(membersList.map((m, i) => [m.email.toLowerCase(), i + 1]))
 
     // Leaderboard: one row per member, ranked by monthly wings received.
@@ -80,7 +79,7 @@ export async function GET(request: NextRequest) {
     // People the caller can give to (everyone but themselves)
     const giveTargets = membersList
       .filter((m) => m.email.toLowerCase() !== lower)
-      .map((m) => ({ email: m.email, name: m.full_name }))
+      .map((m) => ({ id: m.id, name: m.full_name }))
 
     return NextResponse.json({
       me: {
@@ -92,7 +91,6 @@ export async function GET(request: NextRequest) {
       },
       leaderboard,
       giveTargets,
-      nameByEmail: Object.fromEntries(nameByEmail),
     })
   } catch (err) {
     console.error("[members/wings] GET error:", err)
@@ -100,22 +98,18 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST { to_email, amount, reason } → give Wings to another member
+// POST { to_member_id, amount, reason } → give Wings to another member
 export async function POST(request: NextRequest) {
-  const email = authEmail(request)
+  const email = await authEmail(request)
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   const lower = email.toLowerCase()
 
   try {
-    const { to_email, amount, reason } = await request.json()
+    const { to_member_id, amount, reason } = await request.json()
     const amt = Math.floor(Number(amount))
-    if (!to_email || !amt || amt <= 0) {
+    if (typeof to_member_id !== "string" || !to_member_id || !Number.isSafeInteger(amt) || amt <= 0) {
       return NextResponse.json({ error: "Pick a member and a valid amount" }, { status: 400 })
     }
-    if (to_email.toLowerCase() === lower) {
-      return NextResponse.json({ error: "You can't give Wings to yourself" }, { status: 400 })
-    }
-
     const supabase = getSupabase()
     const monthStart = monthStartISO()
 
@@ -123,16 +117,20 @@ export async function POST(request: NextRequest) {
     const { data: recipient } = await supabase
       .from("fw_memberships")
       .select("email")
-      .ilike("email", escapeLike(String(to_email).trim()))
+      .eq("id", to_member_id)
       .limit(1)
       .maybeSingle()
     if (!recipient) return NextResponse.json({ error: "That member wasn't found" }, { status: 404 })
+
+    if (recipient.email.toLowerCase() === lower) {
+      return NextResponse.json({ error: "You can't give Wings to yourself" }, { status: 400 })
+    }
 
     // Check remaining allowance this month
     const { data: given } = await supabase
       .from("fw_wings_ledger")
       .select("amount")
-      .ilike("from_email", email)
+      .ilike("from_email", escapeLike(email))
       .eq("type", "peer")
       .gte("created_at", monthStart)
     const givenThisMonth = (given || []).reduce((s, g) => s + g.amount, 0)
@@ -158,7 +156,7 @@ export async function POST(request: NextRequest) {
       const { data: existingBonus } = await supabase
         .from("fw_wings_ledger")
         .select("id")
-        .ilike("to_email", email)
+        .ilike("to_email", escapeLike(email))
         .eq("type", "bonus")
         .gte("created_at", monthStart)
         .limit(1)

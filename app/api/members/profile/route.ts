@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { escapeLike } from "@/lib/like"
 import { createClient } from "@supabase/supabase-js"
 import { verifyMemberToken } from "../session/route"
 
@@ -9,15 +10,15 @@ function getSupabase() {
   return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } })
 }
 
-function authEmail(request: NextRequest): string | null {
+async function authEmail(request: NextRequest): Promise<string | null> {
   const token = request.cookies.get("fw_member_token")?.value
   if (!token) return null
-  return verifyMemberToken(token)?.email ?? null
+  return (await verifyMemberToken(token))?.email ?? null
 }
 
 // GET → the caller's own profile (null if not set yet)
 export async function GET(request: NextRequest) {
-  const email = authEmail(request)
+  const email = await authEmail(request)
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   try {
@@ -25,7 +26,7 @@ export async function GET(request: NextRequest) {
     const { data, error } = await supabase
       .from("fw_member_profiles")
       .select("*")
-      .ilike("member_email", email)
+      .ilike("member_email", escapeLike(email))
       .maybeSingle()
     if (error) throw error
     return NextResponse.json({ profile: data })
@@ -37,7 +38,7 @@ export async function GET(request: NextRequest) {
 
 // PUT → create or update the caller's own profile
 export async function PUT(request: NextRequest) {
-  const email = authEmail(request)
+  const email = await authEmail(request)
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   try {
@@ -62,7 +63,7 @@ export async function PUT(request: NextRequest) {
     const { data: member } = await supabase
       .from("fw_memberships")
       .select("full_name")
-      .ilike("email", email)
+      .ilike("email", escapeLike(email))
       .limit(1)
       .maybeSingle()
 
