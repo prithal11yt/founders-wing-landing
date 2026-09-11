@@ -44,7 +44,7 @@ const OPEN_TO_OPTIONS = ['Advising', 'Partnerships', 'Collaborations', 'Hiring',
 
 type Goal = {
   id: string
-  member_email: string
+  isMe: boolean
   member_name: string | null
   goal: string
   community_ask: string | null
@@ -56,7 +56,7 @@ type Goal = {
 type WingsData = {
   me: { monthly: number; lifetime: number; givenThisMonth: number; remainingToGive: number; allowance: number }
   leaderboard: { name: string; member_no: number | null; isMe: boolean; monthly: number; lifetime: number }[]
-  giveTargets: { email: string; name: string }[]
+  giveTargets: { id: string; name: string }[]
 }
 
 type GoalStats = { total: number; achieved: number; in_progress: number; missed: number }
@@ -126,11 +126,21 @@ export default function MembersPortal() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPw, setConfirmPw] = useState('')
+  const [setupToken, setSetupToken] = useState('')
   const [step, setStep] = useState<'email' | 'setup' | 'password'>('email')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    const invitation = new URLSearchParams(window.location.hash.slice(1))
+    if (invitation.has('setup')) {
+      setEmail(invitation.get('email') || '')
+      setSetupToken(invitation.get('setup') || '')
+      setStep('setup')
+      window.history.replaceState(null, '', window.location.pathname)
+      setChecking(false)
+      return
+    }
     fetch('/api/members/session')
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => { if (d?.authenticated) setMember(d.member) })
@@ -168,12 +178,12 @@ export default function MembersPortal() {
     e.preventDefault()
     setError('')
     if (step === 'setup') {
-      if (password.length < 6) { setError('Use at least 6 characters'); return }
+      if (password.length < 12) { setError('Use at least 12 characters'); return }
       if (password !== confirmPw) { setError("Passwords don't match"); return }
     }
     setLoading(true)
     try {
-      const { ok, data } = await post(step === 'setup' ? { email, password, mode: 'setup' } : { email, password })
+      const { ok, data } = await post(step === 'setup' ? { email, password, mode: 'setup', setupToken } : { email, password })
       if (ok && data.success) setMember(data.member)
       else setError(data.error || 'Something went wrong')
     } catch {
@@ -185,6 +195,7 @@ export default function MembersPortal() {
 
   function backToEmail() {
     setStep('email')
+    setSetupToken('')
     setPassword('')
     setConfirmPw('')
     setError('')
@@ -235,7 +246,7 @@ export default function MembersPortal() {
           {step === 'setup' && (
             <>
               <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
-                placeholder="New password (min 6 characters)" required autoFocus className={inputCls} />
+                placeholder="New password (min 12 characters)" required autoFocus className={inputCls} />
               <input type="password" value={confirmPw} onChange={(e) => setConfirmPw(e.target.value)}
                 placeholder="Confirm password" required className={inputCls} />
             </>
@@ -258,7 +269,7 @@ export default function MembersPortal() {
             </button>
           ) : (
             <p className="text-[11px] text-slate-600 mt-6">
-              Members only. Forgot your password? Message Prithal on WhatsApp to reset it.
+              First login or forgot your password? Ask Prithal on WhatsApp for a private setup link.
             </p>
           )}
         </form>
@@ -519,7 +530,7 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {feed.map((g) => (
-                    <FeedGoalCard key={g.id} goal={g} isMe={g.member_email.toLowerCase() === member.email.toLowerCase()} />
+                    <FeedGoalCard key={g.id} goal={g} isMe={g.isMe} />
                   ))}
                 </div>
               )}
@@ -669,7 +680,7 @@ function WingsCard({ wings, onGiven }: { wings: WingsData; onGiven: () => void }
       const r = await fetch('/api/members/wings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ to_email: to, amount: Number(amount), reason: note }),
+        body: JSON.stringify({ to_member_id: to, amount: Number(amount), reason: note }),
       })
       const d = await r.json()
       if (r.ok && d.success) {
@@ -721,7 +732,7 @@ function WingsCard({ wings, onGiven }: { wings: WingsData; onGiven: () => void }
           <select value={to} onChange={(e) => setTo(e.target.value)} required
             className="w-full px-3 py-2 bg-[#06090f] border border-white/[0.06] rounded-lg text-slate-100 text-sm outline-none focus:border-amber-500/40">
             <option value="">Choose a member…</option>
-            {giveTargets.map((t) => <option key={t.email} value={t.email}>{t.name}</option>)}
+            {giveTargets.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
           </select>
           <input type="number" min={1} max={me.remainingToGive} value={amount} onChange={(e) => setAmount(e.target.value)} required
             placeholder={`Amount (max ${me.remainingToGive})`}

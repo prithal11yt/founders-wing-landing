@@ -45,8 +45,9 @@ export default function AdminActivity() {
 
   useEffect(() => { if (authed) load() }, [authed, load])
 
-  function logout() {
-    document.cookie = 'fw_leads_token=; path=/; max-age=0'
+  async function logout() {
+    const response = await fetch('/api/leads/auth', { method: 'DELETE' })
+    if (!response.ok) return
     window.location.href = '/admin'
   }
 

@@ -12,8 +12,8 @@ export type LeadsSession = { email: string; role: LeadsRole }
 
 export function verifyToken(token: string): LeadsSession | null {
   try {
-    const [data, signature] = token.split(".")
-    if (!data || !signature) return null
+    const [data, signature, extra] = token.split(".")
+    if (!data || !signature || extra) return null
 
     const secret = getSecret()
     const expectedSig = crypto.createHmac("sha256", secret).update(data).digest("base64url")
@@ -25,14 +25,16 @@ export function verifyToken(token: string): LeadsSession | null {
 
     const payload = JSON.parse(Buffer.from(data, "base64url").toString())
 
-    if (payload.exp < Date.now()) return null
+    if (typeof payload.exp !== "number" || !Number.isFinite(payload.exp) || payload.exp <= Date.now()) return null
+    if (typeof payload.email !== "string" || !payload.email) return null
 
     // Only accept tokens explicitly minted for this surface. Member tokens
     // (typ:"member") and any legacy token without a type share the same signing
     // secret, so this is what stops one from being replayed as an admin session.
     if (payload.typ !== "leads") return null
 
-    const role: LeadsRole = payload.role === "team" ? "team" : "admin"
+    if (payload.role !== "admin" && payload.role !== "team") return null
+    const role: LeadsRole = payload.role
 
     return { email: payload.email, role }
   } catch {

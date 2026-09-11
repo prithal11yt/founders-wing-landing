@@ -61,20 +61,24 @@ export default function MembersPage() {
     }
   }
 
-  function logout() {
-    document.cookie = 'fw_leads_token=; path=/; max-age=0'
+  async function logout() {
+    const response = await fetch('/api/leads/auth', { method: 'DELETE' })
+    if (!response.ok) return
     setAuthenticated(false)
     setUserEmail('')
   }
 
   async function resetPassword(email: string, name: string) {
-    if (!confirm(`Reset ${name}'s portal password? Their next login will ask them to create a new one.`)) return
+    if (!confirm(`Create a setup link for ${name}? This signs them out and replaces their current password. Verify their identity before sharing the link.`)) return
     const r = await fetch('/api/admin/member-auth', {
-      method: 'DELETE',
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),
     })
-    alert(r.ok ? `Done — ${name} can set a new password on their next login.` : 'Could not reset. Try again.')
+    const data = await r.json()
+    if (!r.ok) { alert(data.error || 'Could not create a setup link. Try again.'); return }
+    const fragment = new URLSearchParams({ email, setup: data.setupToken })
+    window.prompt(`Copy this private link for ${name}. It expires in one hour and works once. Share only after verifying their identity.`, `${window.location.origin}/members#${fragment}`)
   }
 
   const fetchData = useCallback(async () => {
@@ -340,9 +344,9 @@ export default function MembersPage() {
                         <td className="m-amount">{rupees(m.amount_paise)}</td>
                         <td style={{ color: '#475569', fontSize: 12 }}>{date}</td>
                         <td>
-                          <button className="m-btn" title="Clear their password — next login asks them to set a new one"
+                          <button className="m-btn" title="Create a private setup link and sign out existing sessions"
                             onClick={() => resetPassword(m.email, m.full_name)}>
-                            🔑 Reset
+                            🔑 Setup / reset
                           </button>
                         </td>
                       </tr>

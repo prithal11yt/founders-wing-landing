@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { escapeLike } from "@/lib/like"
 import { createClient } from "@supabase/supabase-js"
 import { verifyMemberToken } from "../session/route"
 
@@ -9,15 +10,15 @@ function getSupabase() {
   return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } })
 }
 
-function authEmail(request: NextRequest): string | null {
+async function authEmail(request: NextRequest): Promise<string | null> {
   const token = request.cookies.get("fw_member_token")?.value
   if (!token) return null
-  return verifyMemberToken(token)?.email ?? null
+  return (await verifyMemberToken(token))?.email ?? null
 }
 
 // GET → latest call + whether I attended it + my total attendance count
 export async function GET(request: NextRequest) {
-  const email = authEmail(request)
+  const email = await authEmail(request)
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   try {
@@ -33,7 +34,7 @@ export async function GET(request: NextRequest) {
     const { data: myAttendance } = await supabase
       .from("fw_attendance")
       .select("call_id")
-      .ilike("member_email", email)
+      .ilike("member_email", escapeLike(email))
 
     const attendedCallIds = new Set((myAttendance || []).map((a) => a.call_id))
     const { count: totalCalls } = await supabase.from("fw_calls").select("*", { count: "exact", head: true })
@@ -59,7 +60,7 @@ export async function GET(request: NextRequest) {
 
 // POST { call_id } → self-mark attendance for a call
 export async function POST(request: NextRequest) {
-  const email = authEmail(request)
+  const email = await authEmail(request)
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   try {
@@ -80,7 +81,7 @@ export async function POST(request: NextRequest) {
     const { data: member } = await supabase
       .from("fw_memberships")
       .select("full_name")
-      .ilike("email", email)
+      .ilike("email", escapeLike(email))
       .limit(1)
       .maybeSingle()
 

@@ -120,3 +120,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Server error" }, { status: 500 })
   }
 }
+
+export async function DELETE() {
+  const response = NextResponse.json({ success: true })
+  response.cookies.set("fw_leads_token", "", {
+    httpOnly: true, secure: true, sameSite: "strict", maxAge: 0, path: "/",
+  })
+  return response
+}

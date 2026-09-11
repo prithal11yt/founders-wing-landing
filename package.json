@@ -7,7 +7,8 @@
     "dev": "next dev --port 3001",
     "lint": "eslint .",
     "start": "next start",
-    "generate-seo": "node scripts/generate-seo-content.mjs"
+    "generate-seo": "node scripts/generate-seo-content.mjs",
+    "test:security": "node tests/security.cjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.97.0",
