@@ -6,7 +6,7 @@ import { ScrollReveal } from '@/components/scroll-reveal'
 
 type Testimonial = {
   name: string
-  /** e.g. "Founder" — leave empty until we know what they're building. */
+  /** e.g. "Founder" or "Accountant, 20+ years' experience". Leave empty if unknown. */
   role?: string
   company?: string
   companyUrl?: string
@@ -16,6 +16,8 @@ type Testimonial = {
   duration: string
   /** A line lifted verbatim from the video. Leave empty rather than paraphrase. */
   quote?: string
+  /** Shown unquoted when there's no verbatim quote — our description, not their words. */
+  context?: string
 }
 
 const TESTIMONIALS: Testimonial[] = [
@@ -38,6 +40,17 @@ const TESTIMONIALS: Testimonial[] = [
     poster: '/testimonials/aniruddha.jpg',
     duration: '1:14',
     quote: 'We just share the ideas what we are building… helping each other. The impact is enormous for me.',
+  },
+  {
+    name: 'Sanjay Sharma',
+    role: "Accountant, 20+ years' experience",
+    since: 'July 2026',
+    video: '/testimonials/sanjay.mp4',
+    poster: '/testimonials/sanjay.jpg',
+    duration: '1:24',
+    // Audio too noisy to transcribe reliably — no quote until we have his exact words.
+    quote: '',
+    context: 'New to AI — learning to make money with it.',
   },
 ]
 
@@ -65,10 +78,15 @@ export function MemberTestimonials() {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-6 max-w-2xl mx-auto">
-          {TESTIMONIALS.map((t, i) => (
-            <ScrollReveal key={t.name} variant="fade-up" delay={150 + i * 120} duration={800}>
-              <figure className="neu-flat p-1.5 sm:p-2 rounded-[1.5rem] sm:rounded-[1.75rem] h-full flex flex-col">
+        {/* Phones: swipeable row with the next card peeking in. sm+: a 3-column grid.
+            The whole row reveals together so an off-screen card never stays hidden. */}
+        <ScrollReveal variant="fade-up" delay={150} duration={800} className="max-w-4xl mx-auto">
+          <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-px-4 -mx-4 px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:px-0 sm:pb-0 sm:grid sm:grid-cols-3 sm:gap-6 sm:overflow-visible">
+            {TESTIMONIALS.map((t, i) => (
+              <figure
+                key={t.name}
+                className="neu-flat p-1.5 sm:p-2 rounded-[1.5rem] sm:rounded-[1.75rem] flex flex-col shrink-0 w-[72%] snap-start sm:w-auto"
+              >
                 <div
                   className="relative rounded-[1.1rem] sm:rounded-[1.3rem] overflow-hidden bg-slate-900"
                   style={{ aspectRatio: '9 / 16' }}
@@ -92,7 +110,7 @@ export function MemberTestimonials() {
                       aria-label={`Play ${t.name}'s testimonial`}
                       className="group absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/45 via-transparent to-transparent"
                     >
-                      <span className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white/95 shadow-xl transition-transform duration-300 group-hover:scale-110">
+                      <span className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/95 shadow-xl transition-transform duration-300 group-hover:scale-110">
                         <Play className="w-5 h-5 sm:w-6 sm:h-6 text-slate-900 ml-0.5" fill="currentColor" />
                       </span>
                       <span className="absolute bottom-2.5 right-2.5 sm:bottom-3 sm:right-3 rounded-full bg-black/60 px-2 py-0.5 text-[10px] sm:text-xs font-medium text-white tabular-nums">
@@ -103,30 +121,37 @@ export function MemberTestimonials() {
                 </div>
 
                 <figcaption className="px-1.5 sm:px-2 pt-3 pb-1.5 flex-1 flex flex-col">
-                  {t.quote && (
+                  {t.quote ? (
                     <blockquote className="text-xs sm:text-sm text-foreground/90 leading-relaxed mb-3">
                       &ldquo;{t.quote}&rdquo;
                     </blockquote>
-                  )}
+                  ) : t.context ? (
+                    <p className="text-xs sm:text-sm text-muted-foreground italic leading-relaxed mb-3">{t.context}</p>
+                  ) : null}
                   <div className="mt-auto">
                     <p className="text-sm sm:text-base font-semibold text-foreground">{t.name}</p>
-                    {t.role && t.company && (
+                    {t.role && (
                       <p className="text-xs sm:text-sm text-muted-foreground">
-                        {t.role},{' '}
-                        {t.companyUrl ? (
-                          <a href={t.companyUrl} target="_blank" rel="noopener noreferrer" className="text-sky-600 hover:underline">
-                            {t.company}
-                          </a>
-                        ) : t.company}
+                        {t.role}
+                        {t.company && (
+                          <>
+                            ,{' '}
+                            {t.companyUrl ? (
+                              <a href={t.companyUrl} target="_blank" rel="noopener noreferrer" className="text-sky-600 hover:underline">
+                                {t.company}
+                              </a>
+                            ) : t.company}
+                          </>
+                        )}
                       </p>
                     )}
                     <p className="text-[11px] sm:text-xs text-muted-foreground/80 mt-0.5">Member since {t.since}</p>
                   </div>
                 </figcaption>
               </figure>
-            </ScrollReveal>
-          ))}
-        </div>
+            ))}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )
