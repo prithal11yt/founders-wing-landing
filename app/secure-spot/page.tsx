@@ -3,7 +3,8 @@
 import { useEffect, useState, useRef } from "react"
 import { useSearchParams } from "next/navigation"
 import { Suspense } from "react"
-import { CheckCircle2, Clock, ArrowRight, ShieldCheck, Users, Zap } from "lucide-react"
+import { CheckCircle2, Clock, ArrowRight, ShieldCheck, Users, Zap, Phone } from "lucide-react"
+import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/contact"
 import { WingMeshLogo } from "@/components/logo"
 import Link from "next/link"
 
@@ -194,8 +195,18 @@ function SecureSpotContent() {
             </ul>
           </div>
 
+          <div className="flex justify-center">
+            <a
+              href={PHONE_TEL}
+              className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-cyan-400/30 px-4 py-2 text-sm font-medium text-cyan-400 hover:bg-cyan-400/10 transition-colors"
+            >
+              <Phone className="w-4 h-4 shrink-0" />
+              Questions? Call <span className="tabular-nums">{PHONE_DISPLAY}</span>
+            </a>
+          </div>
+
           <p className="text-center text-xs text-muted-foreground">
-            Questions? Reach out on{" "}
+            Or reach out on{" "}
             <a href="https://twitter.com/NotesByPrithal" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">
               Twitter
             </a>{" "}

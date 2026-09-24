@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from "react"
-import { ArrowRight, Sparkles, Menu, X, MapPin, Users, Zap, Trophy, Youtube } from "lucide-react"
+import { ArrowRight, Sparkles, Menu, X, MapPin, Users, Zap, Trophy, Youtube, Phone } from "lucide-react"
+import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/contact"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { InteractiveBackground } from "@/components/interactive-background"
@@ -65,35 +66,58 @@ export default function LandingPage() {
               FAQ
             </Link>
           </nav>
-          <Button
-            asChild
-            variant="outline"
-            className="hidden md:inline-flex border-foreground/10 hover:bg-foreground hover:text-background transition-all bg-transparent"
-          >
-            <a href="#apply" onClick={(e) => {
-              e.preventDefault()
-              document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })
-            }}>Join Now</a>
-          </Button>
+          <div className="hidden md:flex items-center gap-1">
+            <a
+              href={PHONE_TEL}
+              aria-label={`Call us at ${PHONE_DISPLAY}`}
+              className="inline-flex items-center gap-2 rounded-full px-3 lg:px-4 py-2 text-sm font-medium text-foreground hover:bg-foreground/5 transition-colors"
+            >
+              <Phone className="w-4 h-4 text-sky-600" />
+              <span className="hidden lg:inline tabular-nums">{PHONE_DISPLAY}</span>
+              <span className="lg:hidden">Call</span>
+            </a>
+            <Button
+              asChild
+              variant="outline"
+              className="border-foreground/10 hover:bg-foreground hover:text-background transition-all bg-transparent"
+            >
+              <a href="#apply" onClick={(e) => {
+                e.preventDefault()
+                document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })
+              }}>Join Now</a>
+            </Button>
+          </div>
 
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Mobile: one-tap call + hamburger */}
+          <div className="md:hidden flex items-center">
+            <a
+              href={PHONE_TEL}
+              aria-label={`Call us at ${PHONE_DISPLAY}`}
+              className="p-2 rounded-full text-sky-600 hover:bg-foreground/5 transition-colors"
+            >
+              <Phone className="w-5 h-5" />
+            </a>
+            <button
+              className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
       </header>
 
       {/* Mobile menu — rendered outside header pill to prevent clipping */}
       <div
         className={`fixed top-[104px] md:top-[120px] left-1/2 -translate-x-1/2 w-[92%] md:w-[95%] max-w-5xl z-50 md:hidden overflow-hidden transition-all duration-300 ease-out rounded-2xl ${
-          mobileMenuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
+          mobileMenuOpen ? "max-h-[28rem] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
         }`}
       >
-        <nav className="neu-flat flex flex-col px-6 py-4 gap-1 rounded-2xl">
+        {/* Solid bg: neu-flat's backdrop blur doesn't render inside this
+            fixed + transformed + opacity-transitioned parent, so at 70% alpha
+            the hero text showed straight through the menu on phones. */}
+        <nav className="neu-flat flex flex-col px-6 py-4 gap-1 rounded-2xl" style={{ background: "#ffffff" }}>
           {[
             { label: "What You Get", id: "community" },
             { label: "Pricing", id: "pricing" },
@@ -108,8 +132,15 @@ export default function LandingPage() {
               {item.label}
             </button>
           ))}
+          <a
+            href={PHONE_TEL}
+            className="mt-3 w-full inline-flex items-center justify-center gap-2 rounded-full h-12 text-base font-medium border border-foreground/10 text-foreground hover:bg-foreground/5 transition-colors"
+          >
+            <Phone className="w-4 h-4 text-sky-600" />
+            Call <span className="tabular-nums">{PHONE_DISPLAY}</span>
+          </a>
           <Button
-            className="mt-3 w-full rounded-full neu-button-primary h-12 text-base font-medium transition-colors"
+            className="mt-2 w-full rounded-full neu-button-primary h-12 text-base font-medium transition-colors"
             onClick={() => scrollTo("apply")}
           >
             Join Now
@@ -433,6 +464,14 @@ export default function LandingPage() {
                   <WaitlistForm spotsCount={spotsCount} />
                 </GlowingCard>
               </ScrollReveal>
+
+              <p className="mt-6 text-center text-sm text-muted-foreground">
+                Have a question before joining?{" "}
+                <a href={PHONE_TEL} className="inline-flex items-center gap-1.5 font-semibold text-sky-600 hover:underline">
+                  <Phone className="w-3.5 h-3.5" />
+                  Call <span className="tabular-nums">{PHONE_DISPLAY}</span>
+                </a>
+              </p>
             </div>
           </div>
         </section>
@@ -492,6 +531,10 @@ export default function LandingPage() {
               <Link href="mailto:prithalbhardwaj@gmail.com" className="hover:text-foreground transition-colors">
                 Contact
               </Link>
+              <a href={PHONE_TEL} className="inline-flex items-center gap-1.5 hover:text-foreground transition-colors">
+                <Phone className="w-3.5 h-3.5" />
+                <span className="tabular-nums">{PHONE_DISPLAY}</span>
+              </a>
             </div>
           </div>
 
