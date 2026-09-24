@@ -142,7 +142,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 Join Founders Wing and turn this into action.
               </h2>
               <p className="mt-3 text-muted-foreground">
-                Get weekly sessions, AI workflows, accountability, and the First ₹10K sprint with other aspiring founders.
+                Get weekly sessions, AI workflows, and accountability with other aspiring founders.
               </p>
               <Button asChild className="mt-6 rounded-full bg-sky-500 hover:bg-sky-600 text-white">
                 <Link href="/secure-spot">

@@ -6,6 +6,19 @@ const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
+  async redirects() {
+    // Founders Wing doesn't run sprints/challenges; those SEO pages were
+    // removed. Send each old URL to its closest real page (topical redirects
+    // keep search value — a blanket redirect to "/" reads as a soft 404).
+    return [
+      { source: '/challenge/first-10k-challenge-india', destination: '/guide/first-10k-online-india', permanent: true },
+      { source: '/challenge/online-income-challenge-india', destination: '/guide/how-to-make-first-money-online-india', permanent: true },
+      { source: '/challenge/ai-business-challenge-india', destination: '/guide/how-to-use-ai-to-start-a-business', permanent: true },
+      { source: '/challenge/30-day-business-challenge-india', destination: '/guide/how-to-start-online-business-india', permanent: true },
+      { source: '/challenge/founder-accountability-challenge', destination: '/community/accountability-community-for-founders', permanent: true },
+      { source: '/challenge/:path*', destination: '/', permanent: true },
+    ]
+  },
   async headers() {
     // Conservative, app-wide security headers. We intentionally do NOT set a
     // full script/style CSP here (the app uses inline styles + third-party

@@ -36,7 +36,7 @@ export default function TermsOfService() {
             <h2 className="text-xl font-semibold text-foreground mb-2">2. About Founders Wing</h2>
             <p>
               Founders Wing is a paid membership community for aspiring founders, operated by Prithal Bhardwaj.
-              It includes access to live sessions, resources, sprint challenges, and a private WhatsApp community.
+              It includes access to live sessions, resources, and a private founder community.
             </p>
           </div>
 
@@ -87,7 +87,7 @@ export default function TermsOfService() {
             <h2 className="text-xl font-semibold text-foreground mb-2">7. Disclaimer</h2>
             <p>
               Founders Wing provides education, community, and accountability — not financial, legal, or investment advice.
-              Any results mentioned (e.g. earnings from sprint challenges) are examples and not guarantees. Your results will
+              Any results mentioned (e.g. member earnings) are examples and not guarantees. Your results will
               depend on your effort, skills, and market conditions.
             </p>
           </div>

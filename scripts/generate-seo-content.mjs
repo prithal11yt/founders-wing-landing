@@ -50,12 +50,6 @@ const SEO_PAGES = [
   { category: 'tools', slug: 'ai-tools-for-content-creators-india', h1: 'AI Tools Every Indian Content Creator Should Be Using', keywords: ['ai tools content creators india', 'ai for youtube india', 'content creation ai tools india'], toneHint: 'creator-focused, platform-specific (YouTube/Instagram), India-market-aware' },
   { category: 'tools', slug: 'best-ai-tools-for-entrepreneurs-2025', h1: 'The Ultimate AI Tools List for Entrepreneurs in 2025', keywords: ['best ai tools entrepreneurs 2025', 'ai tools business 2025', 'top ai tools 2025'], toneHint: 'authoritative, comprehensive, regularly-updated feel, use-case organized' },
   { category: 'tools', slug: 'ai-automation-for-small-business-india', h1: 'How Indian Small Businesses Are Using AI Automation to Work Less', keywords: ['ai automation small business india', 'business automation ai india', 'automate business india'], toneHint: 'time-saving, ROI-focused, practical with specific tool names' },
-  // CHALLENGE
-  { category: 'challenge', slug: '30-day-business-challenge-india', h1: 'Take the 30-Day Business Challenge and Earn Your First Income Online', keywords: ['30 day business challenge india', 'business challenge india', '30 day startup challenge india'], toneHint: 'energetic, gamified, cohort-driven, milestone-focused' },
-  { category: 'challenge', slug: 'first-10k-challenge-india', h1: 'The First ₹10K Challenge: Earn ₹10,000 Online in 30 Days', keywords: ['first 10k challenge india', 'earn 10000 in 30 days india', 'make 10k rupees online challenge'], toneHint: 'urgent, specific, gamified, challenge-mindset' },
-  { category: 'challenge', slug: 'ai-business-challenge-india', h1: 'The AI Business Challenge: Build Something Real with AI in 30 Days', keywords: ['ai business challenge india', 'build business with ai challenge', 'ai startup challenge india'], toneHint: 'tech-forward, challenge-oriented, achievable ambition' },
-  { category: 'challenge', slug: 'online-income-challenge-india', h1: 'The Online Income Challenge: Your First Rupees from the Internet', keywords: ['online income challenge india', 'make money online challenge india', 'earn online challenge india'], toneHint: 'motivating, realistic, anti-passive-income-hype, India-specific' },
-  { category: 'challenge', slug: 'founder-accountability-challenge', h1: 'The Founder Accountability Challenge: Finally Follow Through on Your Goals', keywords: ['founder accountability challenge', 'entrepreneur accountability challenge india', 'accountability challenge founders'], toneHint: 'habit-forming, introspective, long-term focus, community emphasis' },
 ]
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
@@ -65,8 +59,9 @@ async function generatePageContent(page) {
   const prompt = `You are writing SEO content for "Founders Wing" — India's AI-first founder community run by Prithal Bhardwaj.
 
 Community facts:
-- Paid membership: ₹2,999 for 6 months or ₹4,999 for 12 months
-- Includes: weekly live sessions with Prithal, private WhatsApp community, AI tool breakdowns, accountability buddy system, copy-paste playbooks/templates, the ₹10K Sprint Challenge (30-day cohort challenge to earn first ₹10,000)
+- Paid membership: ₹5,999 for 6 months or ₹9,999 for 12 months
+- Includes: weekly live sessions with Prithal (26 per 6 months), Hot Seat coaching on live calls, private founder community, AI Tool of the Week, accountability buddy matching, AI business playbooks & copy-paste templates, 50 Business Ideas ebook
+- Founders Wing does NOT run sprints, challenges, cohorts or leaderboards — never mention or imply them
 - Target audience: aspiring founders in India with ideas but stuck overthinking, want to make first money online, use AI as unfair advantage
 - Anti-hype: community of doers, not lurkers; no courses, just real builders
 

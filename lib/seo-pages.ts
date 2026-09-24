@@ -1,5 +1,5 @@
 export interface SeoPageConfig {
-  category: 'community' | 'guide' | 'tools' | 'challenge'
+  category: 'community' | 'guide' | 'tools'
   slug: string
   title: string
   h1: string
@@ -36,7 +36,7 @@ export const seoPages: SeoPageConfig[] = [
     slug: 'ai-founder-community',
     title: 'AI Founder Community India — Build Faster with AI',
     h1: 'The AI Founder Community Built for Action-Takers',
-    description: 'Founders Wing is India\'s leading AI founder community. Get weekly AI tool breakdowns, playbooks, and a cohort of founders using AI to launch real businesses.',
+    description: 'Founders Wing is India\'s leading AI founder community. Get weekly AI tool breakdowns, playbooks, and a community of founders using AI to launch real businesses.',
     keywords: ['ai founder community', 'ai startup community india', 'ai entrepreneur community'],
     toneHint: 'tech-savvy, exciting, forward-looking, practical',
     relatedSlugs: ['ai-startup-community-india', 'ai-tools-for-founders-india', 'founder-community-india'],
@@ -56,20 +56,20 @@ export const seoPages: SeoPageConfig[] = [
     slug: 'online-business-community-india',
     title: 'Online Business Community India — Stop Lurking, Start Building',
     h1: 'Join India\'s Best Online Business Community',
-    description: 'Founders Wing is the online business community in India where members build real income streams. Weekly AI tool drops, sprints, and accountability — from ₹5,999.',
+    description: 'Founders Wing is the online business community in India where members build real income streams. Weekly live sessions, AI tool breakdowns, and accountability — from ₹5,999.',
     keywords: ['online business community india', 'online business community', 'make money online india community'],
     toneHint: 'practical, income-focused, action-oriented, India-specific',
-    relatedSlugs: ['founder-community-india', 'first-10k-challenge-india', 'how-to-make-first-money-online-india'],
+    relatedSlugs: ['founder-community-india', 'first-10k-online-india', 'how-to-make-first-money-online-india'],
   },
   {
     category: 'community',
     slug: 'accountability-community-for-founders',
     title: 'Accountability Community for Founders India',
     h1: 'An Accountability Community That Actually Holds You to Your Goals',
-    description: 'Stop setting goals alone. Founders Wing pairs you with an accountability buddy and a sprint cohort so you finally follow through on your business ideas.',
+    description: 'Stop setting goals alone. Founders Wing pairs you with an accountability buddy and weekly live sessions so you finally follow through on your business ideas.',
     keywords: ['accountability community founders', 'accountability partner founder india', 'founder accountability'],
     toneHint: 'empathetic, problem-aware, solution-focused',
-    relatedSlugs: ['founder-community-india', 'founder-accountability-challenge', 'how-to-build-accountability-as-a-founder'],
+    relatedSlugs: ['founder-community-india', 'paid-founder-community-india', 'how-to-build-accountability-as-a-founder'],
   },
   {
     category: 'community',
@@ -106,7 +106,7 @@ export const seoPages: SeoPageConfig[] = [
     slug: 'ai-startup-community-india',
     title: 'AI Startup Community India — Build with AI Tools',
     h1: 'India\'s AI Startup Community: Learn, Build, and Launch Together',
-    description: 'Founders Wing is where India\'s next AI startups are being born. Weekly AI tool drops, sprint challenges, and a community of founders building with AI daily.',
+    description: 'Founders Wing is where India\'s next AI startups are being born. Weekly AI tool breakdowns, live sessions, and a community of founders building with AI daily.',
     keywords: ['ai startup community india', 'ai startup india', 'artificial intelligence entrepreneur community india'],
     toneHint: 'tech-forward, ambitious, India-proud',
     relatedSlugs: ['ai-founder-community', 'ai-tools-for-founders-india', 'best-ai-tools-for-entrepreneurs-2025'],
@@ -161,7 +161,7 @@ export const seoPages: SeoPageConfig[] = [
     description: 'Earning your first ₹10,000 online in India is more achievable than you think. This guide covers 5 proven paths with real timelines, tools, and examples.',
     keywords: ['first 10k online india', 'earn first 10000 online india', 'make 10k online india'],
     toneHint: 'specific, milestone-focused, achievable, India rupee amounts',
-    relatedSlugs: ['first-10k-challenge-india', 'how-to-make-first-money-online-india', 'online-business-ideas-india-2025'],
+    relatedSlugs: ['how-to-get-first-client-india', 'how-to-make-first-money-online-india', 'online-business-ideas-india-2025'],
   },
   {
     category: 'guide',
@@ -198,10 +198,10 @@ export const seoPages: SeoPageConfig[] = [
     slug: 'how-to-build-accountability-as-a-founder',
     title: 'How to Build Accountability as a Founder (Without a Co-Founder)',
     h1: 'How to Stay Accountable as a Solo Founder',
-    description: 'Most founders fail alone. Learn how to build the accountability systems — buddy matching, sprint challenges, and community — that keep you moving toward your goals.',
+    description: 'Most founders fail alone. Learn how to build the accountability systems — buddy matching, weekly check-ins, and community — that keep you moving toward your goals.',
     keywords: ['founder accountability', 'accountability for solo founders', 'how to stay accountable entrepreneur'],
     toneHint: 'psychological, practical, system-focused, solo founder empathy',
-    relatedSlugs: ['accountability-community-for-founders', 'founder-accountability-challenge', 'founder-community-india'],
+    relatedSlugs: ['accountability-community-for-founders', 'how-to-stop-overthinking-and-start-building', 'founder-community-india'],
   },
   {
     category: 'guide',
@@ -266,57 +266,6 @@ export const seoPages: SeoPageConfig[] = [
     relatedSlugs: ['ai-tools-for-founders-india', 'ai-tools-for-online-business-india', 'how-to-use-ai-to-start-a-business'],
   },
 
-  // ── CHALLENGE ──────────────────────────────────────────────────────────────
-  {
-    category: 'challenge',
-    slug: '30-day-business-challenge-india',
-    title: '30-Day Business Challenge India — Build & Earn in One Month',
-    h1: 'Take the 30-Day Business Challenge and Earn Your First Income Online',
-    description: 'Join India\'s most intense 30-day business challenge. Pick an idea, build with a cohort, and race to your first ₹10,000 — with daily prompts, accountability, and live leaderboards.',
-    keywords: ['30 day business challenge india', 'business challenge india', '30 day startup challenge india'],
-    toneHint: 'energetic, gamified, cohort-driven, milestone-focused',
-    relatedSlugs: ['first-10k-challenge-india', 'ai-business-challenge-india', 'founder-accountability-challenge'],
-  },
-  {
-    category: 'challenge',
-    slug: 'first-10k-challenge-india',
-    title: 'First ₹10K Challenge India — Earn ₹10,000 in 30 Days',
-    h1: 'The First ₹10K Challenge: Earn ₹10,000 Online in 30 Days',
-    description: 'Founders Wing\'s flagship challenge: 30 days, one cohort of founders, one goal — earn your first ₹10,000 online. Daily prompts, live leaderboard, accountability partner included.',
-    keywords: ['first 10k challenge india', 'earn 10000 in 30 days india', 'make 10k rupees online challenge'],
-    toneHint: 'urgent, specific, gamified, challenge-mindset',
-    relatedSlugs: ['30-day-business-challenge-india', 'online-income-challenge-india', 'first-10k-online-india'],
-  },
-  {
-    category: 'challenge',
-    slug: 'ai-business-challenge-india',
-    title: 'AI Business Challenge India — Build a Business with AI in 30 Days',
-    h1: 'The AI Business Challenge: Build Something Real with AI in 30 Days',
-    description: 'Can you build a profitable AI-powered business in 30 days? Founders Wing\'s AI business challenge gives you the cohort, tools, and framework to find out.',
-    keywords: ['ai business challenge india', 'build business with ai challenge', 'ai startup challenge india'],
-    toneHint: 'tech-forward, challenge-oriented, achievable ambition',
-    relatedSlugs: ['30-day-business-challenge-india', 'first-10k-challenge-india', 'ai-tools-for-founders-india'],
-  },
-  {
-    category: 'challenge',
-    slug: 'online-income-challenge-india',
-    title: 'Online Income Challenge India — Make Money Online in 30 Days',
-    h1: 'The Online Income Challenge: Your First Rupees from the Internet',
-    description: 'Stop dreaming about passive income. This 30-day online income challenge for Indian entrepreneurs gives you a tested system, accountability, and daily action steps.',
-    keywords: ['online income challenge india', 'make money online challenge india', 'earn online challenge india'],
-    toneHint: 'motivating, realistic, anti-passive-income-hype, India-specific',
-    relatedSlugs: ['first-10k-challenge-india', 'how-to-make-first-money-online-india', '30-day-business-challenge-india'],
-  },
-  {
-    category: 'challenge',
-    slug: 'founder-accountability-challenge',
-    title: 'Founder Accountability Challenge — Build Momentum That Lasts',
-    h1: 'The Founder Accountability Challenge: Finally Follow Through on Your Goals',
-    description: 'Accountability is the missing ingredient most founders ignore. This challenge pairs you with a buddy, sets weekly goals, and builds the habit of showing up consistently.',
-    keywords: ['founder accountability challenge', 'entrepreneur accountability challenge india', 'accountability challenge founders'],
-    toneHint: 'habit-forming, introspective, long-term focus, community emphasis',
-    relatedSlugs: ['accountability-community-for-founders', 'how-to-build-accountability-as-a-founder', 'founder-community-india'],
-  },
 ]
 
 export function getPageBySlug(category: string, slug: string): SeoPageConfig | undefined {

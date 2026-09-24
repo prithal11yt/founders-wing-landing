@@ -13,7 +13,7 @@ export type BlogPostMeta = {
   tags: string[]
   readTime: number
   featured: boolean
-  cta: "membership" | "10k-sprint" | "accountability" | "ai-tools"
+  cta: "membership" | "first-10k" | "accountability" | "ai-tools"
   heroImage?: string
   imageAlt?: string
   imageCaption?: string

@@ -57,8 +57,8 @@ const benefits = [
   },
   {
     icon: Target,
-    title: '₹10K Sprint Challenge',
-    description: '30-day cohort sprint with a live leaderboard to earn your first ₹10,000 online.',
+    title: 'AI Playbooks & Templates',
+    description: 'Step-by-step business playbooks and copy-paste kits so you never start from a blank page.',
   },
   {
     icon: TrendingUp,

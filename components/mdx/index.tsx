@@ -33,9 +33,9 @@ export function JoinCTA({ variant = "membership" }: { variant?: string }) {
       headline: "Stop reading about it. Start building.",
       sub: "Join Founders Wing — India's action-first founder community. From ₹5,999.",
     },
-    "10k-sprint": {
+    "first-10k": {
       headline: "Want to earn your first ₹10,000 online?",
-      sub: "The ₹10K Sprint Challenge runs every month inside Founders Wing. Join now.",
+      sub: "Get weekly live sessions, playbooks and an accountability buddy inside Founders Wing.",
     },
     accountability: {
       headline: "Looking for accountability that actually works?",

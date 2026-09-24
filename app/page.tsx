@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from "react"
-import { ArrowRight, Sparkles, Menu, X, MapPin, Users, Zap, Trophy, Youtube, Phone } from "lucide-react"
+import { ArrowRight, Sparkles, Menu, X, MapPin, Users, Zap, Youtube, Phone } from "lucide-react"
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/contact"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -377,7 +377,7 @@ export default function LandingPage() {
                     {
                       icon: <MapPin className="w-5 h-5 text-violet-600" />,
                       label: "Offline Meetups",
-                      desc: "City-based founder meetups in Delhi, Mumbai, Bangalore — meet your cohort IRL.",
+                      desc: "City-based founder meetups in Delhi, Mumbai, Bangalore — meet fellow members IRL.",
                       when: "Late 2026",
                       color: "border-violet-500/20 bg-violet-500/5",
                     },
@@ -387,13 +387,6 @@ export default function LandingPage() {
                       desc: "Cricket, football, bowling — build friendships and find co-founders away from screens.",
                       when: "2026",
                       color: "border-cyan-500/20 bg-cyan-500/5",
-                    },
-                    {
-                      icon: <Trophy className="w-5 h-5 text-amber-600" />,
-                      label: "Sprint Demo Days",
-                      desc: "In-person events where members pitch what they built during the ₹10K sprint.",
-                      when: "2026",
-                      color: "border-amber-500/20 bg-amber-500/5",
                     },
                     {
                       icon: <Zap className="w-5 h-5 text-emerald-600" />,
@@ -440,7 +433,7 @@ export default function LandingPage() {
 
         {/* CTA after Who This Is For */}
         <div className="py-4">
-          <CTAStrip text="Spots are limited per cohort. Don't miss the next sprint." buttonText="Get Membership" />
+          <CTAStrip text="Founding member spots are limited. Join while they're open." buttonText="Get Membership" />
         </div>
 
         {/* ═══════════════ FAQ ═══════════════ */}
@@ -500,7 +493,7 @@ export default function LandingPage() {
               { href: '/community/founder-community-india', label: 'Founder Community India' },
               { href: '/guide/how-to-make-first-money-online-india', label: 'Make First Money Online' },
               { href: '/tools/ai-tools-for-founders-india', label: 'AI Tools for Founders' },
-              { href: '/challenge/first-10k-challenge-india', label: '₹10K Challenge India' },
+              { href: '/guide/how-to-get-first-client-india', label: 'Get Your First Client' },
               { href: '/community/ai-founder-community', label: 'AI Founder Community' },
               { href: '/guide/how-to-start-online-business-india', label: 'Start Online Business India' },
               { href: '/guide/online-business-ideas-india-2025', label: 'Online Business Ideas 2025' },

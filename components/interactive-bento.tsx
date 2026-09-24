@@ -1,6 +1,6 @@
 "use client"
 
-import { Globe, MessageSquare, Video, BookOpen, Brain, Network, Wrench, Target, Users, Check, ArrowRight, FileText, Zap } from "lucide-react"
+import { Globe, MessageSquare, Video, BookOpen, Brain, Network, Wrench, Users, Check, ArrowRight, FileText, Zap } from "lucide-react"
 import { useEffect, useRef, useState, useCallback } from "react"
 import { cn } from "@/lib/utils"
 
@@ -264,7 +264,7 @@ export function InteractiveBento() {
             <div className="space-y-2.5">
               {[
                 { name: "Rahul M.", msg: "Just closed my first ₹8K client using the outreach swipe 🙌", time: "9:14 AM", self: false },
-                { name: "Sneha K.", msg: "Sprint Day 18 — ₹5,200 earned so far. Actually might hit ₹10K 😅", time: "10:02 AM", self: false },
+                { name: "Sneha K.", msg: "Posted my landing page in the feedback thread — would love your thoughts 🙏", time: "10:02 AM", self: false },
                 { name: "You", msg: "Just joined — super stoked to be here!", time: "10:30 AM", self: true },
               ].map((m) => (
                 <div key={m.time} className={cn("flex gap-2", m.self ? "flex-row-reverse" : "")}>
@@ -456,14 +456,13 @@ export function InteractiveBento() {
         </div>
       </div>
 
-      {/* ─── Row 3: Hot Seat Coaching | ₹10K Sprint Access ─── */}
-      <div className="grid md:grid-cols-2 gap-4 md:gap-5">
-
-        {/* Hot Seat Coaching with spotlight mockup */}
-        <div className={cn(
-          "rounded-3xl neu-flat p-6 md:p-8 transition-all duration-700 delay-600",
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
-        )}>
+      {/* ─── Row 3: Hot Seat Coaching — full width, text left / live mockup right ─── */}
+      <div className={cn(
+        "rounded-3xl neu-flat p-6 md:p-8 transition-all duration-700 delay-600",
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
+      )}>
+        <div className="grid md:grid-cols-[1fr_360px] gap-6 md:gap-10 md:items-center">
+        <div>
           <div className="flex items-center justify-between mb-5">
             <div className="w-12 h-12 rounded-2xl neu-convex flex items-center justify-center">
               <Users className="w-6 h-6 text-emerald-600" />
@@ -473,9 +472,10 @@ export function InteractiveBento() {
             </span>
           </div>
           <h3 className="text-lg md:text-xl font-bold text-foreground mb-2">Hot Seat Coaching</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+          <p className="text-sm text-muted-foreground leading-relaxed">
             Get picked during live calls for focused problem solving. Prithal and the community help you break through your specific blockers — live.
           </p>
+        </div>
 
           {/* Hot seat spotlight mockup */}
           <div className="rounded-xl neu-pressed p-4">
@@ -513,56 +513,6 @@ export function InteractiveBento() {
           </div>
         </div>
 
-        {/* ₹10K Sprint Access */}
-        <div className={cn(
-          "rounded-3xl neu-flat p-6 md:p-8 transition-all duration-700 delay-600",
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
-        )}>
-          <div className="flex items-center justify-between mb-5">
-            <div className="w-12 h-12 rounded-2xl neu-convex flex items-center justify-center">
-              <Target className="w-6 h-6 text-amber-600" />
-            </div>
-            <span className="text-xs font-medium px-3 py-1 rounded-full border bg-amber-500/10 border-amber-500/20 text-amber-600">
-              Monthly cohorts
-            </span>
-          </div>
-          <h3 className="text-lg md:text-xl font-bold text-foreground mb-2">₹10K Sprint Access</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-            Every member gets access to our flagship 30-day sprint challenge — pick an idea, build with your cohort, and race to earn your first ₹10K.
-          </p>
-
-          {/* Sprint progress mockup */}
-          <div className="rounded-xl neu-pressed p-3">
-            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-white/5">
-              <Target className="w-3.5 h-3.5 text-amber-600" />
-              <span className="text-[10px] text-foreground/60 font-medium">Sprint #4 — Day 18 of 30</span>
-            </div>
-            {/* Progress bar */}
-            <div className="mb-3">
-              <div className="h-2 rounded-full bg-white/5 overflow-hidden">
-                <div className="h-full rounded-full bg-gradient-to-r from-amber-500 to-emerald-500 w-[60%] transition-all" />
-              </div>
-              <div className="flex justify-between mt-1">
-                <span className="text-[9px] text-muted-foreground/50">Day 1</span>
-                <span className="text-[9px] text-amber-600 font-medium">60% complete</span>
-                <span className="text-[9px] text-muted-foreground/50">Day 30</span>
-              </div>
-            </div>
-            {/* Mini stats */}
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                { label: "Your revenue", value: "₹4,200" },
-                { label: "Cohort avg", value: "₹3,800" },
-                { label: "Top earner", value: "₹12,400" },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center rounded-lg bg-white/[0.02] py-2">
-                  <p className="text-xs font-bold text-foreground/80">{stat.value}</p>
-                  <p className="text-[8px] text-muted-foreground/50">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   )

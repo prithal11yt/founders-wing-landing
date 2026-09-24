@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button'
 const valueItems = [
   { label: 'Weekly live sessions with Prithal (26 sessions)', value: '₹12,999' },
   { label: '50 Business Ideas Ebook (normally ₹299)', value: '₹299' },
-  { label: '"First ₹10K" 30-Day Challenge', value: '₹2,999' },
   { label: 'AI Business Playbooks & Templates', value: '₹4,999' },
   { label: 'Copy-Paste Business Kits', value: '₹2,999' },
   { label: 'Accountability Buddy Matching', value: '₹1,999' },
@@ -95,7 +94,7 @@ export function ValueStack() {
             isVisible ? "opacity-100" : "opacity-0"
           )} style={{ transitionDelay: isVisible ? '1000ms' : '0ms' }}>
             <span className="text-sm md:text-base font-medium text-muted-foreground">Total Value</span>
-            <span className="text-lg md:text-xl font-bold text-muted-foreground line-through">₹30,292</span>
+            <span className="text-lg md:text-xl font-bold text-muted-foreground line-through">₹27,293</span>
           </div>
         </div>
 
@@ -116,7 +115,7 @@ export function ValueStack() {
             <p className="text-muted-foreground text-sm mb-6">for 6 months · just ₹1,000/mo</p>
 
             <ul className="space-y-2.5 mb-8">
-              {['Full community access', 'Weekly live sessions', 'All playbooks & templates', '30-day challenge', 'Sprint leaderboard access'].map(f => (
+              {['Full community access', 'Weekly live sessions', 'All playbooks & templates', 'Accountability buddy matching', '50 Business Ideas ebook'].map(f => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-foreground/80">
                   <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                   {f}
@@ -153,7 +152,7 @@ export function ValueStack() {
             <p className="text-muted-foreground text-sm mb-6">for 12 months · just ₹833/mo</p>
 
             <ul className="space-y-2.5 mb-8">
-              {['Everything in Starter', '6 extra months of access', 'Priority Hot Seat spots', 'Founding member badge', 'Sprint leaderboard access'].map(f => (
+              {['Everything in Starter', '6 extra months of access', 'Priority Hot Seat spots', 'Founding member badge'].map(f => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-foreground/80">
                   <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                   {f}
@@ -202,7 +201,7 @@ export function ValueStack() {
               <span className="text-muted-foreground"> — about ₹33 a day.</span>
             </p>
             <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-              One offline workshop = ₹3,000–5,000 for a single day. Here you get <span className="text-foreground font-medium">26 live sessions + community + sprint access</span> for 6 months.
+              One offline workshop = ₹3,000–5,000 for a single day. Here you get <span className="text-foreground font-medium">26 live sessions + community + playbooks</span> for 6 months.
             </p>
           </div>
 

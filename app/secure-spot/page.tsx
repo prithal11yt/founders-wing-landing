@@ -99,7 +99,7 @@ function SecureSpotContent() {
                 {firstName ? `${firstName}, founding spot #26 is yours` : "Your founding spot is reserved"}
               </h1>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                We&apos;re onboarding our first 50 founding members. Pay now to secure your spot — founding members get priority access to all offline events and sprint demo days, forever.
+                We&apos;re onboarding our first 50 founding members. Pay now to secure your spot — founding members get priority access to all offline events, forever.
               </p>
             </div>
 
@@ -109,7 +109,7 @@ function SecureSpotContent() {
                 <p className="text-xs text-amber-400/70 font-medium uppercase tracking-wider mb-1">Spot reserved for</p>
                 <CountdownTimer />
               </div>
-              <p className="text-xs text-muted-foreground text-right max-w-[120px]">Cohort fills up fast — secure your place now</p>
+              <p className="text-xs text-muted-foreground text-right max-w-[120px]">Founding spots are limited — secure your place now</p>
             </div>
 
             {/* Plan options */}
@@ -181,7 +181,6 @@ function SecureSpotContent() {
             <ul className="space-y-2">
               {[
                 "Weekly live sessions with Prithal",
-                "₹10K Sprint Challenge access + leaderboard",
                 "Accountability buddy matching",
                 "50 Business Ideas ebook (free)",
                 "Templates, playbooks & AI tool guides",

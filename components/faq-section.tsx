@@ -6,10 +6,6 @@ import { ScrollReveal } from '@/components/scroll-reveal'
 
 const faqs = [
   {
-    q: "What is the 'First ₹10K in 30 Days' challenge?",
-    a: "It's our flagship 30-day sprint where a cohort of founders each pick an AI-friendly idea, build together, and race to earn their first ₹10,000. You get daily action prompts, a live leaderboard to track everyone's progress, an accountability buddy, weekly group calls with Prithal, and a private sprint channel. New cohorts start every month.",
-  },
-  {
     q: "I haven't started anything yet — is this for me?",
     a: "Yes, 100%. Most of our members are in the same boat — full of ideas but stuck overthinking. This community is specifically designed to help you go from 'I want to start' to actually launching. You don't need experience, just the willingness to take action.",
   },
@@ -27,7 +23,7 @@ const faqs = [
   },
   {
     q: 'How is this different from your free WhatsApp group?',
-    a: "The free WhatsApp group is great for general discussion, but it's 5,000+ people. Founders Wing is smaller, focused, and action-oriented. You get structured sprints, accountability partners, leaderboard competitions, and members who are committed (because they paid to be here).",
+    a: "The free WhatsApp group is great for general discussion, but it's 5,000+ people. Founders Wing is smaller, focused, and action-oriented. You get weekly live sessions, accountability partners, Hot Seat coaching, and members who are committed (because they paid to be here).",
   },
   {
     q: 'What is the time commitment?',
