@@ -20,7 +20,6 @@ import Image from "next/image"
 import { MeetFounder } from "@/components/meet-founder"
 import { CTAStrip } from "@/components/cta-strip"
 import { ValueStack } from "@/components/value-stack"
-import { ChallengeSpotlight } from "@/components/challenge-spotlight"
 import { MemberTestimonials } from "@/components/member-testimonials"
 
 function useRandomSpots() {
@@ -305,9 +304,6 @@ export default function LandingPage() {
             <InteractiveBento />
           </div>
         </section>
-
-        {/* ═══════════════ Challenge Spotlight ═══════════════ */}
-        <ChallengeSpotlight />
 
         {/* ═══════════════ Meet the Founder ═══════════════ */}
         <MeetFounder />
