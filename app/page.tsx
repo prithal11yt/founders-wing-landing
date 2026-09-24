@@ -281,8 +281,8 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ═══════════════ Meet the Founder ═══════════════ */}
-        <MeetFounder />
+        {/* ═══════════════ Member Testimonials — social proof early ═══════════════ */}
+        <MemberTestimonials />
 
         {/* ═══════════════ What You Get (Merged Vision + Community) ═══════════════ */}
         <section id="community" className="py-16 md:py-24 relative overflow-hidden">
@@ -309,8 +309,8 @@ export default function LandingPage() {
         {/* ═══════════════ Challenge Spotlight ═══════════════ */}
         <ChallengeSpotlight />
 
-        {/* ═══════════════ Member Testimonials — proof right before the price ═══════════════ */}
-        <MemberTestimonials />
+        {/* ═══════════════ Meet the Founder ═══════════════ */}
+        <MeetFounder />
 
         {/* ═══════════════ Value Stack & Pricing ═══════════════ */}
         <ValueStack />
