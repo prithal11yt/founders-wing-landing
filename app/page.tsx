@@ -191,19 +191,33 @@ export default function LandingPage() {
               {/* CTA */}
               <ScrollReveal variant="fade-up" delay={1000} duration={800}>
                 <div className="flex flex-col items-center justify-center gap-3 md:gap-5">
-                  <MagneticButton strength={0.25}>
+                  {/* Stacked full-width on phones (bigger tap targets), side by side from sm up */}
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-xs sm:max-w-none">
+                    <MagneticButton strength={0.25} className="w-full sm:w-auto">
+                      <Button
+                        size="lg"
+                        className="w-full sm:w-auto rounded-full px-8 h-13 text-base font-semibold neu-button-primary shadow-[0_0_30px_rgba(2,132,199,0.4),0_0_60px_rgba(2,132,199,0.15)]"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })
+                        }}
+                      >
+                        Get Membership
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </MagneticButton>
                     <Button
+                      asChild
                       size="lg"
-                      className="rounded-full px-8 h-13 text-base font-semibold neu-button-primary shadow-[0_0_30px_rgba(2,132,199,0.4),0_0_60px_rgba(2,132,199,0.15)]"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })
-                      }}
+                      variant="outline"
+                      className="w-full sm:w-auto rounded-full px-7 h-13 text-base font-semibold border-foreground/10 bg-white/80 text-foreground hover:bg-white hover:text-foreground"
                     >
-                      Get Membership
-                      <ArrowRight className="ml-2 h-4 w-4" />
+                      <a href={PHONE_TEL} title={`Call ${PHONE_DISPLAY}`} aria-label={`Enquire now — call ${PHONE_DISPLAY}`}>
+                        <Phone className="mr-2 h-4 w-4 text-sky-600" />
+                        Enquire Now
+                      </a>
                     </Button>
-                  </MagneticButton>
+                  </div>
                   <p className="text-sm text-muted-foreground">No fluff, no courses — just founders helping founders</p>
                 </div>
               </ScrollReveal>
