@@ -21,6 +21,7 @@ import { MeetFounder } from "@/components/meet-founder"
 import { CTAStrip } from "@/components/cta-strip"
 import { ValueStack } from "@/components/value-stack"
 import { ChallengeSpotlight } from "@/components/challenge-spotlight"
+import { MemberTestimonials } from "@/components/member-testimonials"
 
 function useRandomSpots() {
   const [spots, setSpots] = useState(32)
@@ -307,6 +308,9 @@ export default function LandingPage() {
 
         {/* ═══════════════ Challenge Spotlight ═══════════════ */}
         <ChallengeSpotlight />
+
+        {/* ═══════════════ Member Testimonials — proof right before the price ═══════════════ */}
+        <MemberTestimonials />
 
         {/* ═══════════════ Value Stack & Pricing ═══════════════ */}
         <ValueStack />
