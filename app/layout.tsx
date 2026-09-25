@@ -2,6 +2,7 @@ import React from "react"
 import type { Metadata, Viewport } from "next"
 import { Inter, JetBrains_Mono, Space_Grotesk } from 'next/font/google'
 import Script from "next/script"
+import { WhatsAppButton } from "@/components/whatsapp-button"
 import { FoundingPriceBanner } from "@/components/founding-price-banner"
 import "./globals.css"
 
@@ -72,6 +73,8 @@ export const metadata: Metadata = {
   },
 }
 
+const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -92,9 +95,25 @@ export default function RootLayout({
             gtag('config', 'G-X1QTL8HQ6M');
           `}
         </Script>
+        {/* Meta (Facebook/Instagram) pixel for retargeting reel viewers who visit.
+            Only renders once NEXT_PUBLIC_META_PIXEL_ID is set in Vercel. */}
+        {META_PIXEL_ID && (
+          <Script id="meta-pixel" strategy="afterInteractive">
+            {`
+              !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+              n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '${META_PIXEL_ID}');
+              fbq('track', 'PageView');
+            `}
+          </Script>
+        )}
       </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} antialiased min-h-screen`}>
         <FoundingPriceBanner />
+        <WhatsAppButton />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

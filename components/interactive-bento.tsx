@@ -263,8 +263,9 @@ export function InteractiveBento() {
             {/* Messages */}
             <div className="space-y-2.5">
               {[
-                { name: "Rahul M.", msg: "Just closed my first ₹8K client using the outreach swipe 🙌", time: "9:14 AM", self: false },
-                { name: "Sneha K.", msg: "Posted my landing page in the feedback thread — would love your thoughts 🙏", time: "10:02 AM", self: false },
+                // Real members, their own words (see member-testimonials.tsx).
+                { name: "Harjot S.", msg: "I consider joining Founders Wing the best decision of my life 🙌", time: "9:14 AM", self: false },
+                { name: "Aniruddha D.", msg: "We just share the ideas what we are building… helping each other. The impact is enormous for me.", time: "10:02 AM", self: false },
                 { name: "You", msg: "Just joined — super stoked to be here!", time: "10:30 AM", self: true },
               ].map((m) => (
                 <div key={m.time} className={cn("flex gap-2", m.self ? "flex-row-reverse" : "")}>

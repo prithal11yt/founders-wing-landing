@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { ArrowRight, Sparkles, Menu, X, MapPin, Users, Zap, Youtube, Phone } from "lucide-react"
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/contact"
+import { PHONE_DISPLAY, PHONE_TEL, WHATSAPP_URL } from "@/lib/contact"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { InteractiveBackground } from "@/components/interactive-background"
@@ -477,6 +477,10 @@ export default function LandingPage() {
                 <a href={PHONE_TEL} className="inline-flex items-center gap-1.5 font-semibold text-sky-600 hover:underline">
                   <Phone className="w-3.5 h-3.5" />
                   Call <span className="tabular-nums">{PHONE_DISPLAY}</span>
+                </a>
+                {" "}or{" "}
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#128C7E] hover:underline">
+                  WhatsApp us
                 </a>
               </p>
             </div>

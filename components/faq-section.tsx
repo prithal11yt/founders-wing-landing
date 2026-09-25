@@ -15,11 +15,15 @@ const faqs = [
   },
   {
     q: 'What do I actually get inside?',
-    a: "Weekly AI tool breakdowns with real use cases, accountability groups (4-5 founders at your stage), step-by-step launch playbooks, monthly live Q&As with Prithal, and a private community of action-takers. Think of it as your founder support system.",
+    a: "Weekly live sessions with Prithal (26 every 6 months) with Hot Seat coaching on the calls, an accountability buddy at your stage, AI business playbooks and copy-paste templates, the AI Tool of the Week, and a private WhatsApp group of action-takers. Think of it as your founder support system.",
   },
   {
     q: 'What platform does the community run on?',
-    a: 'We run on a private platform with channels for business ideas, AI tools, progress updates, and weekly sessions. You get instant access once your application is approved.',
+    a: 'A private WhatsApp group for paying members (ideas, AI tools, wins, progress updates) plus the weekly live sessions on video call. You get access as soon as your payment goes through.',
+  },
+  {
+    q: 'What if someone steals my idea?',
+    a: "Fair worry, a lot of people ask this. Honestly, ideas are the cheap part. The same idea in 10 people's hands turns into 10 completely different things. What decides who wins is who builds it and keeps showing up. Inside the community everyone is busy building their own thing, nobody has the time to drop their work and chase yours. And you share only what you're comfortable with. The real risk is the opposite: sitting alone with an idea, no feedback, no push, and it never gets built.",
   },
   {
     q: 'How is this different from your free WhatsApp group?',
@@ -35,7 +39,7 @@ const faqs = [
   },
   {
     q: 'What happens after I apply?',
-    a: "We review applications within 3-5 days. We're looking for people who are genuinely serious about starting — not lurkers. If approved, you'll get an email with payment link and onboarding details.",
+    a: "Fill in the 2 minute form, complete the payment, and you're in. You get the WhatsApp group link and onboarding details straight away, and the next live session is never more than a week out.",
   },
 ]
 
