@@ -22,19 +22,19 @@
 
 :root {
   /* Premium Light Tech Theme */
-  --bg-color: #f5f7fb;
+  --bg-color: #ffffff;
   --background: var(--bg-color);
-  --foreground: #0f172a;
+  --foreground: #0a0a0a;
   --card: #ffffff;
   --card-foreground: #0f172a;
   --popover: #ffffff;
   --popover-foreground: #0f172a;
   --primary: #0f172a;
   --primary-foreground: #ffffff;
-  --secondary: #e2e8f0;
+  --secondary: #f5f5f5;
   --secondary-foreground: #0f172a;
-  --muted: #e2e8f0;
-  --muted-foreground: #475569;
+  --muted: #f5f5f5;
+  --muted-foreground: #525252;
   --accent: #e0f2fe;
   --accent-foreground: #0284c7;
   --accent-cyan: #0284c7;
@@ -42,8 +42,8 @@
   --accent-violet: #7c3aed;
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
-  --border: #cbd5e1;
-  --input: #e2e8f0;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
   --ring: #0284c7;
 
   --radius: 1rem;
@@ -61,13 +61,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23f5f7fb'/%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
-/* Display font for headlines */
-h1, h2 {
-  font-family: var(--font-display), var(--font-sans);
-}
+/* One typeface (Inter) everywhere; Space Grotesk is reserved for the wordmark. */
 
 section {
   position: relative;

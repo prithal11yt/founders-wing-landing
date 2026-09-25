@@ -24,16 +24,16 @@ const spaceGrotesk = Space_Grotesk({
 const BASE_URL = 'https://www.founderswing.com'
 
 export const viewport: Viewport = {
-  themeColor: "#f5f7fb",
+  themeColor: "#ffffff",
 }
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Founders Wing | AI-First Founder Community",
+    default: "Founders Wing | Build it with AI. Get paying customers.",
     template: "%s | Founders Wing",
   },
-  description: "Join aspiring founders who are done watching tutorials and finally shipping something real — with AI as the unfair advantage. India's action-first founder community.",
+  description: "India’s community for people building SaaS, AI automations and AI businesses. Build here, get feedback, and use the network to reach paying customers faster. From ₹833/month.",
   keywords: ["founder community india", "ai tools for founders", "entrepreneur community india", "startup community india", "online business india"],
   authors: [{ name: "Prithal Bhardwaj", url: "https://thesoloentrepreneur.in" }],
   creator: "Prithal Bhardwaj",
@@ -48,16 +48,16 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: BASE_URL,
     siteName: "Founders Wing",
-    title: "Founders Wing | AI-First Founder Community",
-    description: "Join aspiring founders who are done watching tutorials and finally shipping something real — with AI as the unfair advantage.",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Founders Wing — Stop overthinking. Start building with AI." }],
+    title: "Founders Wing | Build it with AI. Get paying customers.",
+    description: "India’s community for people building SaaS, AI automations and AI businesses. Build here, get feedback, and reach paying customers faster.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Founders Wing — Build it with AI. Get paying customers." }],
   },
   twitter: {
     card: "summary_large_image",
     site: "@Prithal7",
     creator: "@Prithal7",
-    title: "Founders Wing | AI-First Founder Community",
-    description: "Join aspiring founders who are done watching tutorials and finally shipping something real — with AI as the unfair advantage.",
+    title: "Founders Wing | Build it with AI. Get paying customers.",
+    description: "India’s community for people building SaaS, AI automations and AI businesses. Build here, get feedback, and reach paying customers faster.",
     images: ["/opengraph-image"],
   },
   robots: {
@@ -124,11 +124,12 @@ export default function RootLayout({
                 name: "Founders Wing",
                 url: BASE_URL,
                 logo: `${BASE_URL}/logo.png`,
-                description: "India's AI-first founder community for aspiring entrepreneurs ready to stop overthinking and start building.",
+                description: "India’s community for people building SaaS, AI automations and AI businesses, who want to launch and get paying customers.",
                 founder: { "@type": "Person", name: "Prithal Bhardwaj" },
                 sameAs: [
                   "https://www.youtube.com/@PrithalBhardwaj",
                   "https://twitter.com/Prithal7",
+                  "https://www.linkedin.com/in/prithal-bhardwaj-058a56187/",
                   "https://thesoloentrepreneur.in",
                 ],
               },

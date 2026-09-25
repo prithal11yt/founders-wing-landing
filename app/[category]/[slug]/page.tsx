@@ -1,26 +1,26 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, Users, Zap, Target, TrendingUp } from 'lucide-react'
+import { ArrowRight, MessageSquare, Radio, Users, Wrench } from 'lucide-react'
 import { seoPages, getPageBySlug } from '@/lib/seo-pages'
 import { SITE_URL } from '@/lib/site'
 import generatedContent from '@/lib/generated-content.json'
 import { FAQSection } from '@/components/faq-section'
 import { CTAStrip } from '@/components/cta-strip'
 import { ScrollReveal } from '@/components/scroll-reveal'
+import { SiteNav } from '@/components/site/nav'
+import { SiteFooter } from '@/components/site/footer'
+import { PrimaryCTA } from '@/components/site/ui'
+import { ACCENT } from '@/components/site/brand'
 
 export async function generateStaticParams() {
-  return seoPages.map((page) => ({
+  return seoPages.map(page => ({
     category: page.category,
     slug: page.slug,
   }))
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ category: string; slug: string }>
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ category: string; slug: string }> }): Promise<Metadata> {
   const { category, slug } = await params
   const page = getPageBySlug(category, slug)
   if (!page) return {}
@@ -46,32 +46,28 @@ export async function generateMetadata({
 
 const benefits = [
   {
+    icon: Radio,
+    title: 'Weekly live sessions with Prithal',
+    description: '26 sessions every 6 months, plus a library of recordings. Bring what you’re building, leave with next steps.',
+  },
+  {
+    icon: MessageSquare,
+    title: 'Real-time feedback',
+    description: 'Post your landing page, pitch or pricing and get honest feedback from founders the same day.',
+  },
+  {
     icon: Users,
-    title: 'Accountability Buddy',
-    description: 'Paired with a founder at your stage. Weekly check-ins. Real commitment.',
+    title: 'A network that gets you clients',
+    description: 'Members bring their own networks. Ask for an intro and someone usually knows the exact person you need.',
   },
   {
-    icon: Zap,
-    title: 'Weekly AI Tool Drops',
-    description: 'One new AI tool every week with a real workflow — not just a demo.',
-  },
-  {
-    icon: Target,
-    title: 'AI Playbooks & Templates',
-    description: 'Step-by-step business playbooks and copy-paste kits so you never start from a blank page.',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Live Sessions with Prithal',
-    description: '26 sessions per year. Small group. Ask anything. Real guidance.',
+    icon: Wrench,
+    title: 'Workshops and a new AI tool every week',
+    description: 'AI automations, SaaS building, local AI models. Hands-on, with the tools the pros actually use.',
   },
 ]
 
-export default async function SeoPage({
-  params,
-}: {
-  params: Promise<{ category: string; slug: string }>
-}) {
+export default async function SeoPage({ params }: { params: Promise<{ category: string; slug: string }> }) {
   const { category, slug } = await params
   const page = getPageBySlug(category, slug)
   if (!page) notFound()
@@ -79,9 +75,8 @@ export default async function SeoPage({
   const contentKey = `${category}/${slug}` as keyof typeof generatedContent
   const content = generatedContent[contentKey]
 
-  // Related pages
   const relatedPages = page.relatedSlugs
-    .map((s) => seoPages.find((p) => p.slug === s))
+    .map(s => seoPages.find(p => p.slug === s))
     .filter(Boolean)
     .slice(0, 4)
 
@@ -102,7 +97,7 @@ export default async function SeoPage({
     ...(content?.faqs && {
       mainEntity: {
         '@type': 'FAQPage',
-        mainEntity: content.faqs.map((faq) => ({
+        mainEntity: content.faqs.map(faq => ({
           '@type': 'Question',
           name: faq.q,
           acceptedAnswer: { '@type': 'Answer', text: faq.a },
@@ -113,165 +108,113 @@ export default async function SeoPage({
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <div className="min-h-screen bg-background text-foreground">
-        {/* Nav */}
-        <nav className="fixed top-[56px] md:top-[60px] left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-4xl">
-          <div className="neu-flat rounded-full px-5 py-3 flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2">
-              <img src="/logo.png" alt="Founders Wing" className="h-6 w-auto" />
-              <span className="font-semibold text-sm">Founders Wing</span>
-            </Link>
-            <Link
-              href="/secure-spot"
-              className="text-xs font-semibold px-4 py-2 rounded-full bg-sky-500 text-white hover:bg-sky-600 transition-colors"
-            >
-              Join Now
-            </Link>
-          </div>
-        </nav>
+      <div className="min-h-screen bg-white text-neutral-950">
+        <SiteNav />
 
-        {/* Hero */}
-        <section className="pt-[188px] pb-16 px-4">
-          <div className="container mx-auto max-w-3xl">
-            {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 text-xs text-muted-foreground mb-8">
-              <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-              <span>/</span>
-              <span className="capitalize">{category}</span>
-              <span>/</span>
-              <span className="text-foreground truncate max-w-[200px]">{page.h1}</span>
-            </nav>
+        <main>
+          {/* Hero */}
+          <section className="pt-36 md:pt-44 pb-14 md:pb-20">
+            <div className="mx-auto max-w-3xl px-5">
+              <nav className="mb-8 flex items-center gap-2 text-sm text-neutral-500">
+                <Link href="/" className="hover:text-neutral-900 transition-colors">Home</Link>
+                <span>/</span>
+                <span className="capitalize">{category}</span>
+                <span>/</span>
+                <span className="truncate max-w-[200px] text-neutral-400">{page.h1}</span>
+              </nav>
 
-            <ScrollReveal variant="fade-up" duration={700}>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-6">
-                {page.h1}
-              </h1>
-            </ScrollReveal>
-
-            <ScrollReveal variant="fade-up" delay={100} duration={700}>
-              {content?.intro ? (
-                <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
-                  {content.intro.split('\n\n').map((para, i) => (
-                    <p key={i}>{para}</p>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-muted-foreground text-lg">{page.description}</p>
-              )}
-            </ScrollReveal>
-
-            <ScrollReveal variant="fade-up" delay={200} duration={700}>
-              <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <Link
-                  href="/secure-spot"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-sky-500 text-white font-semibold text-sm hover:bg-sky-600 transition-colors shadow-[0_0_30px_rgba(14,165,233,0.3)]"
-                >
-                  Get Membership <ArrowRight className="w-4 h-4" />
-                </Link>
-                <span className="text-sm text-muted-foreground">From ₹5,999 · No lurkers · Action-first</span>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-
-        {/* Benefits Grid */}
-        <section className="py-16 px-4">
-          <div className="container mx-auto max-w-4xl">
-            <ScrollReveal variant="fade-up" duration={700}>
-              <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
-                What you get inside <span className="text-sky-600">Founders Wing</span>
-              </h2>
-            </ScrollReveal>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {benefits.map((benefit, i) => (
-                <ScrollReveal key={i} variant="fade-up" delay={i * 80} duration={600}>
-                  <div className="neu-flat rounded-2xl p-6 h-full">
-                    <div className="flex items-start gap-4">
-                      <div className="p-2.5 rounded-xl bg-sky-500/10 shrink-0">
-                        <benefit.icon className="w-5 h-5 text-sky-600" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-1">{benefit.title}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{benefit.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-
-            {/* Pricing hint */}
-            <ScrollReveal variant="fade-up" delay={400} duration={600}>
-              <div className="mt-8 text-center p-6 neu-flat rounded-2xl">
-                <p className="text-muted-foreground text-sm mb-1">Membership starts at</p>
-                <p className="text-3xl font-bold text-foreground">₹5,999 <span className="text-sm font-normal text-muted-foreground">for 6 months</span></p>
-                <p className="text-xs text-muted-foreground mt-1">That's just ₹1,000/month · No monthly option · Committed members only</p>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        {content?.faqs && content.faqs.length > 0 && (
-          <FAQSection faqs={content.faqs} />
-        )}
-
-        {/* CTA */}
-        <section className="py-8 px-4">
-          <CTAStrip
-            text="Ready to stop overthinking and start building?"
-            buttonText="Get Membership"
-            href="/secure-spot"
-          />
-        </section>
-
-        {/* Related pages */}
-        {relatedPages.length > 0 && (
-          <section className="py-16 px-4">
-            <div className="container mx-auto max-w-4xl">
               <ScrollReveal variant="fade-up" duration={700}>
-                <h2 className="text-xl font-semibold mb-8 text-center">Also explore</h2>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-[-0.045em] leading-[1.05] mb-6">{page.h1}</h1>
               </ScrollReveal>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {relatedPages.map((related, i) => (
-                  related && (
-                    <ScrollReveal key={i} variant="fade-up" delay={i * 60} duration={600}>
-                      <Link
-                        href={`/${related.category}/${related.slug}`}
-                        className="neu-flat rounded-xl p-4 flex items-center justify-between gap-3 hover:border-sky-500/30 transition-colors group"
-                      >
-                        <span className="text-sm font-medium text-foreground group-hover:text-sky-600 transition-colors">
-                          {related.h1}
-                        </span>
-                        <ArrowRight className="w-4 h-4 text-muted-foreground shrink-0 group-hover:text-sky-600 transition-colors" />
-                      </Link>
-                    </ScrollReveal>
-                  )
-                ))}
-              </div>
+
+              <ScrollReveal variant="fade-up" delay={100} duration={700}>
+                {content?.intro ? (
+                  <div className="space-y-4 text-lg leading-relaxed text-neutral-600">
+                    {content.intro.split('\n\n').map((para, i) => (
+                      <p key={i}>{para}</p>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-lg text-neutral-600">{page.description}</p>
+                )}
+              </ScrollReveal>
+
+              <ScrollReveal variant="fade-up" delay={200} duration={700}>
+                <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  <PrimaryCTA />
+                  <span className="text-sm text-neutral-500">From ₹833/month · Build it, launch it, get customers</span>
+                </div>
+              </ScrollReveal>
             </div>
           </section>
-        )}
 
-        {/* Footer */}
-        <footer className="border-t border-black/5 py-8 px-4">
-          <div className="container mx-auto max-w-4xl flex flex-col sm:flex-row items-center justify-between gap-4">
-            <Link href="/" className="flex items-center gap-2">
-              <img src="/logo.png" alt="Founders Wing" className="h-5 w-auto" />
-              <span className="text-sm font-semibold">Founders Wing</span>
-            </Link>
-            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-              <Link href="/privacy-policy" className="hover:text-foreground transition-colors">Privacy</Link>
-              <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
+          {/* What you get */}
+          <section className="py-16 md:py-20 bg-neutral-50">
+            <div className="mx-auto max-w-5xl px-5">
+              <ScrollReveal variant="fade-up" duration={700}>
+                <h2 className="text-3xl md:text-5xl font-medium tracking-[-0.045em] text-center mb-12">What you get inside Founders Wing</h2>
+              </ScrollReveal>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {benefits.map((benefit, i) => (
+                  <ScrollReveal key={benefit.title} variant="fade-up" delay={i * 80} duration={600}>
+                    <div className="rounded-[22px] bg-white border border-neutral-200 p-6 h-full">
+                      <div className="flex items-start gap-4">
+                        <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center shrink-0">
+                          <benefit.icon className="w-4.5 h-4.5" style={{ color: ACCENT }} />
+                        </div>
+                        <div>
+                          <h3 className="font-medium text-[17px] tracking-[-0.01em] mb-1">{benefit.title}</h3>
+                          <p className="text-sm text-neutral-600 leading-relaxed">{benefit.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                ))}
+              </div>
+
+              <ScrollReveal variant="fade-up" delay={400} duration={600}>
+                <div className="mt-6 rounded-[22px] bg-neutral-950 text-white p-7 text-center">
+                  <p className="text-sm text-neutral-400 mb-1">Membership starts at</p>
+                  <p className="text-4xl font-medium tracking-[-0.03em]">₹5,999 <span className="text-base font-normal text-neutral-400">for 6 months</span></p>
+                  <p className="text-sm text-neutral-400 mt-2">That’s ₹1,000/month · 12 months for ₹9,999 · No monthly plan, committed members only</p>
+                </div>
+              </ScrollReveal>
             </div>
-          </div>
-        </footer>
+          </section>
+
+          {content?.faqs && content.faqs.length > 0 && <FAQSection faqs={content.faqs} />}
+
+          <section className="py-12 md:py-16">
+            <CTAStrip text="Ready to build it, launch it and get customers?" buttonText="Get Membership" />
+          </section>
+
+          {relatedPages.length > 0 && (
+            <section className="pb-16 md:pb-24">
+              <div className="mx-auto max-w-5xl px-5">
+                <ScrollReveal variant="fade-up" duration={700}>
+                  <h2 className="text-xl font-medium mb-6 text-center">Also explore</h2>
+                </ScrollReveal>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {relatedPages.map(
+                    (related, i) =>
+                      related && (
+                        <ScrollReveal key={related.slug} variant="fade-up" delay={i * 60} duration={600}>
+                          <Link href={`/${related.category}/${related.slug}`} className="group rounded-[18px] border border-neutral-200 p-4 flex items-center justify-between gap-3 hover:border-neutral-400 transition-colors">
+                            <span className="text-sm font-medium group-hover:text-sky-700 transition-colors">{related.h1}</span>
+                            <ArrowRight className="w-4 h-4 text-neutral-400 shrink-0 group-hover:text-neutral-900 transition-colors" />
+                          </Link>
+                        </ScrollReveal>
+                      ),
+                  )}
+                </div>
+              </div>
+            </section>
+          )}
+        </main>
+
+        <SiteFooter />
       </div>
     </>
   )

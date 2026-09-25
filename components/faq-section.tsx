@@ -1,45 +1,40 @@
 'use client'
 
 import * as Accordion from '@radix-ui/react-accordion'
-import { ChevronDown } from 'lucide-react'
-import { ScrollReveal } from '@/components/scroll-reveal'
+import { Plus } from 'lucide-react'
 
 const faqs = [
+  {
+    q: 'What kind of projects is this for?',
+    a: 'Anything you are building with AI: SaaS products, AI automations for clients, apps, AI agencies, content businesses. The goal is the same for everyone. Get it built, get it launched, and get people paying for it.',
+  },
   {
     q: "I haven't started anything yet — is this for me?",
     a: "Yes, 100%. Most of our members are in the same boat — full of ideas but stuck overthinking. This community is specifically designed to help you go from 'I want to start' to actually launching. You don't need experience, just the willingness to take action.",
   },
   {
     q: 'How much does it cost?',
-    a: "We offer two plans: ₹5,999 for 6 months (just ₹1,000/month) or ₹9,999 for a full year (just ₹833/month). No monthly option — we want committed members who are serious about building, not people who sign up and forget.",
+    a: 'We offer two plans: ₹5,999 for 6 months (just ₹1,000/month) or ₹9,999 for a full year (just ₹833/month). No monthly option — we want committed members who are serious about building, not people who sign up and forget.',
   },
   {
     q: 'What do I actually get inside?',
-    a: "Weekly live sessions with Prithal (26 every 6 months) with Hot Seat coaching on the calls, an accountability buddy at your stage, AI business playbooks and copy-paste templates, the AI Tool of the Week, and a private WhatsApp group of action-takers. Think of it as your founder support system.",
-  },
-  {
-    q: 'What platform does the community run on?',
-    a: 'A private WhatsApp group for paying members (ideas, AI tools, wins, progress updates) plus the weekly live sessions on video call. You get access as soon as your payment goes through.',
-  },
-  {
-    q: 'What if someone steals my idea?',
-    a: "Fair worry, a lot of people ask this. Honestly, ideas are the cheap part. The same idea in 10 people's hands turns into 10 completely different things. What decides who wins is who builds it and keeps showing up. Inside the community everyone is busy building their own thing, nobody has the time to drop their work and chase yours. And you share only what you're comfortable with. The real risk is the opposite: sitting alone with an idea, no feedback, no push, and it never gets built.",
+    a: 'Weekly live sessions with Prithal (26 every 6 months), a library of recorded sessions, workshops on AI automations, SaaS building and local AI models, real-time feedback on what you’re building, a founder network that helps you get clients, a new AI tool every week, playbooks and templates, and a private WhatsApp group of action-takers.',
   },
   {
     q: 'How is this different from your free WhatsApp group?',
-    a: "The free WhatsApp group is great for general discussion, but it's 5,000+ people. Founders Wing is smaller, focused, and action-oriented. You get weekly live sessions, accountability partners, Hot Seat coaching, and members who are committed (because they paid to be here).",
+    a: "The free WhatsApp group is great for general discussion, but it's 5,000+ people. Founders Wing is smaller, focused, and action-oriented. You get weekly live sessions, feedback on your work, introductions to customers, and members who are committed (because they paid to be here).",
   },
   {
     q: 'What is the time commitment?',
-    a: "There's no mandatory hours. Most members spend 2-3 hours per week — joining the weekly session, checking in with their accountability group, and sharing progress. The key is consistency, not hours.",
+    a: "There's no mandatory hours. Most members spend 2-3 hours per week — joining the weekly session, sharing progress, and asking for feedback. The key is consistency, not hours.",
   },
   {
     q: 'Can I cancel?',
-    a: "Your access continues for the full duration of your plan (6 or 12 months). After that, you can choose not to renew. There are no refunds — we want members who are committed to showing up and doing the work.",
+    a: 'Your access continues for the full duration of your plan (6 or 12 months). After that, you can choose not to renew. There are no refunds — we want members who are committed to showing up and doing the work.',
   },
   {
     q: 'What happens after I apply?',
-    a: "Fill in the 2 minute form, complete the payment, and you're in. You get the WhatsApp group link and onboarding details straight away, and the next live session is never more than a week out.",
+    a: 'Fill in the 2 minute form, complete the payment, and you’re in. You get the WhatsApp group link and onboarding details straight away, and the next live session is never more than a week out.',
   },
 ]
 
@@ -51,40 +46,22 @@ interface FaqItem {
 export function FAQSection({ faqs: customFaqs }: { faqs?: FaqItem[] } = {}) {
   const items = customFaqs ?? faqs
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden">
-      <div className="container mx-auto px-4 relative z-10 max-w-3xl">
-        <ScrollReveal variant="fade-up" duration={800}>
-          <div className="text-center mb-16 space-y-4">
-            <p className="text-sm font-medium tracking-widest uppercase text-violet-600">Common questions</p>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-              Frequently asked questions
-            </h2>
-          </div>
-        </ScrollReveal>
-
-        <ScrollReveal variant="fade-up" delay={200} duration={800}>
-          <Accordion.Root type="single" collapsible className="space-y-3">
-            {items.map((faq, i) => (
-              <Accordion.Item
-                key={i}
-                value={`faq-${i}`}
-                className="neu-flat rounded-2xl overflow-hidden transition-colors data-[state=open]:border-violet-500/20"
-              >
-                <Accordion.Trigger className="w-full flex items-center justify-between px-6 py-5 text-left group cursor-pointer">
-                  <span className="text-base font-medium text-foreground pr-4 group-hover:text-violet-600 transition-colors">
-                    {faq.q}
-                  </span>
-                  <ChevronDown className="w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-180" />
-                </Accordion.Trigger>
-                <Accordion.Content className="overflow-hidden data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
-                  <div className="px-6 pb-5 text-muted-foreground leading-relaxed text-sm">
-                    {faq.a}
-                  </div>
-                </Accordion.Content>
-              </Accordion.Item>
-            ))}
-          </Accordion.Root>
-        </ScrollReveal>
+    <section className="py-20 md:py-28 bg-neutral-50">
+      <div className="mx-auto max-w-3xl px-5">
+        <h2 className="text-center text-4xl md:text-6xl font-medium tracking-[-0.045em]">FAQs</h2>
+        <Accordion.Root type="single" collapsible className="mt-12 border-t border-neutral-200">
+          {items.map((faq, i) => (
+            <Accordion.Item key={i} value={`faq-${i}`} className="border-b border-neutral-200">
+              <Accordion.Trigger className="group w-full flex items-center justify-between gap-6 py-5 text-left text-base md:text-lg font-medium cursor-pointer">
+                {faq.q}
+                <Plus className="w-5 h-5 shrink-0 text-neutral-400 transition-transform group-data-[state=open]:rotate-45" />
+              </Accordion.Trigger>
+              <Accordion.Content className="overflow-hidden">
+                <p className="pb-5 text-neutral-600 leading-relaxed">{faq.a}</p>
+              </Accordion.Content>
+            </Accordion.Item>
+          ))}
+        </Accordion.Root>
       </div>
     </section>
   )

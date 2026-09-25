@@ -1,221 +1,147 @@
 'use client'
 
-import { useEffect, useState, useRef } from "react"
-import { useSearchParams } from "next/navigation"
-import { Suspense } from "react"
-import { CheckCircle2, Clock, ArrowRight, ShieldCheck, Users, Zap, Phone } from "lucide-react"
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/contact"
-import { WingMeshLogo } from "@/components/logo"
-import Link from "next/link"
+import { Suspense, useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { ArrowRight, Check, CheckCircle2, Phone, ShieldCheck, Zap } from 'lucide-react'
+import { PHONE_DISPLAY, PHONE_TEL, WHATSAPP_URL } from '@/lib/contact'
+import { COUPON_CODE, offerSpotsLeft } from '@/lib/offer'
+import { ACCENT } from '@/components/site/brand'
+import { INCLUDED, PLANS, type PlanKey } from '@/components/site/ui'
+import { MembershipCard } from '@/components/site/membership-card'
+import { SiteNav } from '@/components/site/nav'
+import { SiteFooter } from '@/components/site/footer'
 
 // Checkout is hosted on thesoloentrepreneur.in (verified Razorpay account)
-const CHECKOUT_BASE_URL = "https://www.thesoloentrepreneur.in/fw-membership"
+const CHECKOUT_BASE_URL = 'https://www.thesoloentrepreneur.in/fw-membership'
 
-function getCheckoutUrl(plan: "starter" | "annual", info: { name: string; email: string; whatsapp: string }) {
+function checkoutUrl(plan: PlanKey, info: { name: string; email: string; whatsapp: string }, coupon: boolean) {
   const query = new URLSearchParams({ plan, ...info })
+  if (coupon) query.set('coupon', COUPON_CODE)
   return `${CHECKOUT_BASE_URL}?${query.toString()}`
-}
-
-const HOLD_HOURS = 24
-
-function CountdownTimer() {
-  const [timeLeft, setTimeLeft] = useState({ hours: HOLD_HOURS, minutes: 0, seconds: 0 })
-  const endTimeRef = useRef<number | null>(null)
-
-  useEffect(() => {
-    // Persist end time in sessionStorage so it survives refreshes
-    const stored = sessionStorage.getItem("fw_spot_hold_end")
-    if (stored) {
-      endTimeRef.current = parseInt(stored)
-    } else {
-      const end = Date.now() + HOLD_HOURS * 60 * 60 * 1000
-      endTimeRef.current = end
-      sessionStorage.setItem("fw_spot_hold_end", String(end))
-    }
-
-    const tick = () => {
-      const diff = (endTimeRef.current ?? 0) - Date.now()
-      if (diff <= 0) {
-        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 })
-        return
-      }
-      const h = Math.floor(diff / 3600000)
-      const m = Math.floor((diff % 3600000) / 60000)
-      const s = Math.floor((diff % 60000) / 1000)
-      setTimeLeft({ hours: h, minutes: m, seconds: s })
-    }
-
-    tick()
-    const id = setInterval(tick, 1000)
-    return () => clearInterval(id)
-  }, [])
-
-  const pad = (n: number) => String(n).padStart(2, "0")
-
-  return (
-    <div className="flex items-center gap-2 text-amber-400 font-mono text-lg font-bold">
-      <Clock className="w-5 h-5 shrink-0" />
-      <span>{pad(timeLeft.hours)}:{pad(timeLeft.minutes)}:{pad(timeLeft.seconds)}</span>
-    </div>
-  )
 }
 
 function SecureSpotContent() {
   const params = useSearchParams()
-  const name = params.get("name") || ""
-  const email = params.get("email") || ""
-  const whatsapp = params.get("whatsapp") || ""
-  const firstName = name.split(" ")[0]
-  const checkoutInfo = { name, email, whatsapp }
+  const name = params.get('name') || ''
+  const email = params.get('email') || ''
+  const whatsapp = params.get('whatsapp') || ''
+  const firstName = name.split(' ')[0]
+  const info = { name, email, whatsapp }
+
+  const [plan, setPlan] = useState<PlanKey>('annual')
+  const [count, setCount] = useState<number | null>(null)
+  useEffect(() => {
+    fetch('/api/public/member-count').then(r => r.json()).then(d => setCount(typeof d.count === 'number' ? d.count : null)).catch(() => {})
+  }, [])
+  const nextMemberNo = count !== null ? count + 1 : null
+  const couponOn = count !== null && offerSpotsLeft(count) > 0
 
   return (
-    <div className="min-h-screen bg-[#030712] text-white flex flex-col">
-      {/* Minimal nav */}
-      <header className="border-b border-white/5 px-6 py-4">
-        <Link href="/" className="flex items-center gap-2 w-fit">
-          <WingMeshLogo size={28} />
-          <span className="font-semibold text-sm">Founders Wing</span>
-        </Link>
-      </header>
-
-      <main className="flex-1 flex items-start justify-center px-4 py-12 md:py-20">
-        <div className="w-full max-w-lg space-y-6">
-
-          {/* Success indicator */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-green-500/15 border border-green-500/25 flex items-center justify-center">
-              <CheckCircle2 className="w-5 h-5 text-green-400" />
+    <div className="min-h-screen bg-white text-neutral-950 flex flex-col">
+      <SiteNav />
+      <main className="flex-1 pt-36 md:pt-44 pb-20 md:pb-28">
+        <div className="mx-auto max-w-6xl px-5 grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+          {/* The card, with their name on it */}
+          <div className="lg:sticky lg:top-32 order-2 lg:order-1">
+            <div className="relative rounded-[28px] aspect-[5/4] flex items-center justify-center p-8 md:p-14" style={{ background: 'radial-gradient(70% 60% at 50% 45%, #e6f3fb 0%, #f4f4f5 72%)' }}>
+              {nextMemberNo && (
+                <div className="absolute top-4 right-4 md:top-5 md:right-5 rounded-full bg-neutral-900 text-white text-xs font-medium px-3.5 py-2">
+                  You’d be member #{nextMemberNo}
+                </div>
+              )}
+              <MembershipCard plan={plan} memberNo={nextMemberNo} name={name} className="max-w-[400px]" />
             </div>
-            <div>
-              <p className="text-sm font-medium text-amber-400">Founding member spot reserved</p>
-              <p className="text-xs text-muted-foreground">Complete payment to lock it in</p>
+            <div className="mt-6 rounded-[22px] bg-neutral-50 p-6">
+              <p className="text-xs uppercase tracking-[0.18em] text-neutral-500 font-semibold">What you unlock</p>
+              <ul className="mt-4 space-y-2.5">
+                {INCLUDED.map(i => (
+                  <li key={i} className="flex items-start gap-3 text-[15px]">
+                    <Check className="w-4 h-4 mt-1 shrink-0" style={{ color: ACCENT }} strokeWidth={2.5} />
+                    <span>{i}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
-          {/* Main card */}
-          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-8 space-y-6">
-            <div className="space-y-2">
-              <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
-                {firstName ? `${firstName}, founding spot #26 is yours` : "Your founding spot is reserved"}
-              </h1>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                We&apos;re onboarding our first 50 founding members. Pay now to secure your spot — founding members get priority access to all offline events, forever.
+          {/* Pick a plan, pay */}
+          <div className="order-1 lg:order-2">
+            <p className="inline-flex items-center gap-2 text-sm font-medium text-emerald-700">
+              <CheckCircle2 className="w-4 h-4" /> Application received
+            </p>
+            <h1 className="mt-3 text-4xl md:text-6xl font-medium tracking-[-0.045em] leading-[1.02]">
+              {firstName ? `${firstName}, you’re one step from in.` : 'You’re one step from in.'}
+            </h1>
+            <p className="mt-5 text-neutral-600 leading-relaxed">
+              Pick a plan and pay securely. You get the WhatsApp group link and onboarding details straight away, and the next live session is never more than a week out.
+            </p>
+
+            <div className="mt-8 space-y-3">
+              {(Object.keys(PLANS) as PlanKey[]).map(k => {
+                const p = PLANS[k]
+                const selected = plan === k
+                return (
+                  <a
+                    key={k}
+                    href={checkoutUrl(k, info, couponOn)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onMouseEnter={() => setPlan(k)}
+                    onFocus={() => setPlan(k)}
+                    className={`group flex items-center justify-between gap-4 rounded-[22px] border p-5 transition-all ${selected ? 'border-neutral-900 bg-white shadow-[0_20px_50px_-30px_rgba(0,0,0,0.35)]' : 'border-neutral-200 bg-white hover:border-neutral-400'}`}
+                  >
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg font-medium">{p.label}</span>
+                        {k === 'annual' && <span className="rounded-full px-2 py-0.5 text-[11px] font-semibold text-white" style={{ background: ACCENT }}>Best value</span>}
+                      </div>
+                      <p className="text-sm text-neutral-500 mt-0.5">{p.monthly}/month · {p.billed.toLowerCase()}</p>
+                    </div>
+                    <div className="flex items-center gap-3 shrink-0">
+                      <span className="text-2xl font-medium tracking-[-0.03em]">{p.price}</span>
+                      <span className="w-9 h-9 rounded-full flex items-center justify-center text-white transition-transform group-hover:translate-x-0.5" style={{ background: ACCENT }}>
+                        <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </div>
+                  </a>
+                )
+              })}
+            </div>
+
+            {couponOn && (
+              <p className="mt-4 text-sm text-neutral-500">
+                Code <span className="font-mono font-semibold text-neutral-900">{COUPON_CODE}</span> is applied at checkout for 20% off.
               </p>
+            )}
+
+            <div className="mt-6 flex items-center gap-2 text-xs text-neutral-500">
+              <span>Pay with</span>
+              {['UPI', 'Cards', 'Netbanking', 'EMI'].map(m => <span key={m} className="rounded-md border border-neutral-200 px-2 py-1 font-medium text-neutral-700">{m}</span>)}
             </div>
 
-            {/* Countdown */}
-            <div className="rounded-2xl bg-amber-500/5 border border-amber-500/20 px-5 py-4 flex items-center justify-between">
-              <div>
-                <p className="text-xs text-amber-400/70 font-medium uppercase tracking-wider mb-1">Spot reserved for</p>
-                <CountdownTimer />
+            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-neutral-500">
+              <span className="inline-flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" /> Secure Razorpay checkout</span>
+              <span className="inline-flex items-center gap-1.5"><Zap className="w-3.5 h-3.5" /> Instant access</span>
+            </div>
+
+            <div className="mt-10 rounded-[22px] border border-neutral-200 p-5">
+              <p className="text-[15px] font-medium">Questions before you pay?</p>
+              <div className="mt-3 flex flex-wrap gap-2.5">
+                <a href={PHONE_TEL} className="inline-flex items-center gap-2 rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium hover:bg-neutral-50">
+                  <Phone className="w-4 h-4" style={{ color: ACCENT }} /> Call {PHONE_DISPLAY}
+                </a>
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium hover:bg-neutral-50">
+                  WhatsApp us
+                </a>
+                <a href="mailto:prithalbhardwaj@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium hover:bg-neutral-50">
+                  Email
+                </a>
               </div>
-              <p className="text-xs text-muted-foreground text-right max-w-[120px]">Founding spots are limited — secure your place now</p>
-            </div>
-
-            {/* Plan options */}
-            <div className="space-y-3">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Choose your plan</p>
-
-              {/* Starter */}
-              <a
-                href={getCheckoutUrl("starter", checkoutInfo)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.02] hover:border-cyan-500/40 hover:bg-cyan-500/5 p-4 transition-all duration-200"
-              >
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-sm">Starter</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-muted-foreground">6 months</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">Full access · ₹1,000/mo</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-lg font-bold">₹5,999</span>
-                  <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all" />
-                </div>
-              </a>
-
-              {/* Annual - recommended */}
-              <a
-                href={getCheckoutUrl("annual", checkoutInfo)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-between rounded-2xl border border-cyan-500/30 bg-cyan-500/5 hover:border-cyan-500/60 hover:bg-cyan-500/10 p-4 transition-all duration-200 relative overflow-hidden"
-              >
-                <div className="absolute top-2 right-2">
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">BEST VALUE</span>
-                </div>
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-sm">Annual</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-muted-foreground">12 months</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">Everything + priority hot seat · ₹833/mo</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-lg font-bold text-cyan-400">₹9,999</span>
-                  <ArrowRight className="w-4 h-4 text-cyan-400 group-hover:translate-x-0.5 transition-all" />
-                </div>
-              </a>
-            </div>
-
-            {/* Trust signals */}
-            <div className="grid grid-cols-3 gap-3 pt-2">
-              {[
-                { icon: <ShieldCheck className="w-4 h-4" />, label: "Razorpay secured" },
-                { icon: <Users className="w-4 h-4" />, label: "UPI · Cards · EMI" },
-                { icon: <Zap className="w-4 h-4" />, label: "Instant access" },
-              ].map((item) => (
-                <div key={item.label} className="flex flex-col items-center gap-1.5 rounded-xl border border-white/5 bg-white/[0.02] py-3 px-2">
-                  <span className="text-muted-foreground">{item.icon}</span>
-                  <span className="text-[10px] text-muted-foreground text-center leading-tight">{item.label}</span>
-                </div>
-              ))}
             </div>
           </div>
-
-          {/* What you get reminder */}
-          <div className="rounded-2xl border border-white/5 bg-white/[0.02] px-5 py-4 space-y-3">
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">What you unlock</p>
-            <ul className="space-y-2">
-              {[
-                "Weekly live sessions with Prithal",
-                "Accountability buddy matching",
-                "50 Business Ideas ebook (free)",
-                "Templates, playbooks & AI tool guides",
-                "Private founder community + hot seat coaching",
-              ].map((item) => (
-                <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-green-400 shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="flex justify-center">
-            <a
-              href={PHONE_TEL}
-              className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-cyan-400/30 px-4 py-2 text-sm font-medium text-cyan-400 hover:bg-cyan-400/10 transition-colors"
-            >
-              <Phone className="w-4 h-4 shrink-0" />
-              Questions? Call <span className="tabular-nums">{PHONE_DISPLAY}</span>
-            </a>
-          </div>
-
-          <p className="text-center text-xs text-muted-foreground">
-            Or reach out on{" "}
-            <a href="https://twitter.com/NotesByPrithal" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">
-              Twitter
-            </a>{" "}
-            or{" "}
-            <a href="mailto:prithalbhardwaj@gmail.com" className="text-cyan-400 hover:underline">
-              email
-            </a>
-          </p>
         </div>
       </main>
+      <SiteFooter />
     </div>
   )
 }

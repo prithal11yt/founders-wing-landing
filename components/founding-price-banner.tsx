@@ -8,9 +8,7 @@ import Link from "next/link"
 // OFFER_SPOTS members after OFFER_BASELINE, and the number shown counts down
 // against the real membership count. When the spots run out the banner
 // removes itself, so it can never promise an offer that's gone.
-const OFFER_BASELINE = 39   // members on the day the FESTIVAL offer opened
-const OFFER_SPOTS = 10
-const COUPON_CODE = "FESTIVAL"
+import { COUPON_CODE, offerSpotsLeft } from "@/lib/offer"
 const CHECKOUT_URL = `https://www.thesoloentrepreneur.in/fw-membership?coupon=${COUPON_CODE}`
 
 export function FoundingPriceBanner() {
@@ -25,8 +23,7 @@ export function FoundingPriceBanner() {
         const res = await fetch("/api/public/member-count")
         const data = await res.json()
         if (cancelled || typeof data.count !== "number") return
-        const left = OFFER_SPOTS - (data.count - OFFER_BASELINE)
-        setRemaining(Math.max(0, Math.min(OFFER_SPOTS, left)))
+        setRemaining(offerSpotsLeft(data.count))
       } catch {
         // Leave the banner hidden rather than guess a number.
       }
