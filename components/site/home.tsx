@@ -19,7 +19,8 @@ const STORIES = [
   // focus = where the face sits in each vertical video, so the 4:5 crop keeps it in frame
   { name: 'Harjot Singh', role: 'Founder, DoLoyal', video: '/testimonials/harjot.mp4', poster: '/testimonials/harjot.jpg', focus: 'center 28%', quote: 'I consider joining Founders Wing the best decision of my life.' },
   { name: 'Aniruddha Das', role: 'Member since June 2026', video: '/testimonials/aniruddha.mp4', poster: '/testimonials/aniruddha.jpg', focus: 'center 28%', quote: 'We just share the ideas what we are building… helping each other. The impact is enormous for me.' },
-  { name: 'Sanjay Sharma', role: "Accountant, 20+ years' experience", video: '/testimonials/sanjay.mp4', poster: '/testimonials/sanjay.jpg', focus: 'center 55%', context: 'New to AI — learning to make money with it.' },
+  // Sanjay speaks in Hindi, so the card carries a summary line instead of a quote.
+  { name: 'Sanjay Sharma', role: 'Accountant since 1989', video: '/testimonials/sanjay.mp4', poster: '/testimonials/sanjay.jpg', focus: 'center 60%', context: 'Knew nothing about AI a few months ago. Now building his own AI product for accounting.' },
 ]
 
 const FAQS = [
@@ -492,7 +493,7 @@ function BuildersScene() {
   const people = [
     { name: 'Harjot', what: 'DoLoyal · loyalty SaaS', src: '/testimonials/harjot.jpg', pos: 'center 28%' },
     { name: 'Aniruddha', what: 'Building with AI', src: '/testimonials/aniruddha.jpg', pos: 'center 28%' },
-    { name: 'Sanjay', what: 'AI for accounting', src: '/testimonials/sanjay.jpg', pos: 'center 55%' },
+    { name: 'Sanjay', what: 'AI product for accounting', src: '/testimonials/sanjay.jpg', pos: 'center 60%' },
   ]
   const kinds = ['SaaS apps', 'AI automations', 'Mobile apps', 'AI agencies', 'Local AI', 'Content businesses', 'Freelance with AI']
   return (
