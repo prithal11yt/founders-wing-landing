@@ -203,6 +203,9 @@ function FounderStory() {
             </a>
           ))}
         </div>
+        <a href="/founder" className="mt-8 inline-flex items-center gap-1.5 text-[15px] font-medium text-white hover:underline underline-offset-4">
+          Read Prithal’s full story <span aria-hidden="true">→</span>
+        </a>
       </div>
 
       {/* Founder portrait, desktop only */}

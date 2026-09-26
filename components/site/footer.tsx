@@ -18,6 +18,7 @@ const SITE = [
   { href: '/', label: 'Home' },
   { href: '/#benefits', label: 'What’s included' },
   { href: '/#stories', label: 'Member stories' },
+  { href: '/founder', label: 'About Prithal' },
   { href: '/build', label: 'Building with Prithal' },
   { href: '/blog', label: 'Blog' },
   { href: '/#faq', label: 'FAQs' },
