@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     description: 'Builder, creator, and the founder of Founders Wing. The Solo Entrepreneur on YouTube.',
     url: `${SITE_URL}/founder`,
     type: 'profile',
-    images: [{ url: `${SITE_URL}/prithal-studio.jpg`, width: 1000, height: 1000, alt: 'Prithal Bhardwaj' }],
+    images: [{ url: `${SITE_URL}/prithal-portrait.jpg`, width: 1000, height: 1000, alt: 'Prithal Bhardwaj' }],
   },
 }
 
@@ -79,7 +79,7 @@ export default async function FounderPage() {
     '@type': 'Person',
     name: 'Prithal Bhardwaj',
     url: `${SITE_URL}/founder`,
-    image: `${SITE_URL}/prithal-studio.jpg`,
+    image: `${SITE_URL}/prithal-portrait.jpg`,
     jobTitle: 'Founder',
     worksFor: { '@type': 'Organization', name: 'Founders Wing', url: SITE_URL },
     sameAs: SOCIALS.map(s => s.href),
@@ -113,7 +113,7 @@ export default async function FounderPage() {
             </div>
             <figure className="justify-self-center lg:justify-self-end w-full max-w-[440px]">
               <div className="relative aspect-[4/5] rounded-[28px] overflow-hidden bg-neutral-100">
-                <Image src="/prithal-studio.jpg" alt="Prithal Bhardwaj" fill priority sizes="(max-width: 1024px) 90vw, 440px" className="object-cover" />
+                <Image src="/prithal-portrait.jpg" alt="Prithal Bhardwaj" fill priority sizes="(max-width: 1024px) 90vw, 440px" className="object-cover" />
               </div>
             </figure>
           </div>
