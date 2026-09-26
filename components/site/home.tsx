@@ -182,7 +182,7 @@ function FounderStory() {
         </p>
         {/* On desktop the portrait on the right carries the name; phones keep this row. */}
         <div className="mt-12 flex items-center gap-4 lg:hidden">
-          <Image src="/prithal-studio.jpg" alt="Prithal Bhardwaj" width={56} height={56} className="w-14 h-14 rounded-full object-cover" />
+          <Image src="/prithal-portrait.jpg" alt="Prithal Bhardwaj" width={56} height={56} className="w-14 h-14 rounded-full object-cover" />
           <div>
             <p className="font-medium">Prithal Bhardwaj</p>
             <p className="text-sm text-neutral-400">Founder · 5+ years building businesses · The Solo Entrepreneur on YouTube</p>
@@ -211,7 +211,7 @@ function FounderStory() {
       {/* Founder portrait, desktop only */}
       <figure className="hidden lg:block justify-self-end w-full max-w-[400px]">
         <div className="relative aspect-[4/5] rounded-[28px] overflow-hidden bg-neutral-900">
-          <Image src="/prithal-studio.jpg" alt="Prithal Bhardwaj, founder of Founders Wing" fill sizes="400px" className="object-cover" priority={false} />
+          <Image src="/prithal-portrait.jpg" alt="Prithal Bhardwaj, founder of Founders Wing" fill sizes="400px" className="object-cover" priority={false} />
         </div>
         <figcaption className="mt-4">
           <p className="font-medium">Prithal Bhardwaj</p>
