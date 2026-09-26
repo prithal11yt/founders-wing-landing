@@ -167,7 +167,8 @@ function FounderStory() {
   ]
   return (
     <section id="founder" className="bg-neutral-950 text-white py-24 md:py-36">
-      <div className="mx-auto max-w-4xl px-5">
+      <div className="mx-auto max-w-6xl px-5 grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-end">
+      <div>
         <div className="space-y-1 md:space-y-2">
           {lines.map(l => <RevealLine key={l} text={l} className="text-4xl md:text-6xl font-medium tracking-[-0.04em] leading-[1.08]" />)}
         </div>
@@ -179,7 +180,8 @@ function FounderStory() {
         <p className="mt-8 max-w-2xl text-lg md:text-xl text-neutral-400 leading-relaxed">
           A paid room of people building SaaS, AI automations and AI businesses. You build, and the room helps you launch it, improve it and get in front of the people who&apos;ll pay for it. Faster than doing it alone.
         </p>
-        <div className="mt-12 flex items-center gap-4">
+        {/* On desktop the portrait on the right carries the name; phones keep this row. */}
+        <div className="mt-12 flex items-center gap-4 lg:hidden">
           <Image src="/prithal.jpg" alt="Prithal Bhardwaj" width={56} height={56} className="w-14 h-14 rounded-full object-cover" />
           <div>
             <p className="font-medium">Prithal Bhardwaj</p>
@@ -201,6 +203,18 @@ function FounderStory() {
             </a>
           ))}
         </div>
+      </div>
+
+      {/* Founder portrait, desktop only */}
+      <figure className="hidden lg:block justify-self-end w-full max-w-[400px]">
+        <div className="relative aspect-[4/5] rounded-[28px] overflow-hidden bg-neutral-900">
+          <Image src="/prithal.jpg" alt="Prithal Bhardwaj, founder of Founders Wing" fill sizes="400px" className="object-cover" priority={false} />
+        </div>
+        <figcaption className="mt-4">
+          <p className="font-medium">Prithal Bhardwaj</p>
+          <p className="text-sm text-neutral-400">Founder · 5+ years building businesses · The Solo Entrepreneur on YouTube</p>
+        </figcaption>
+      </figure>
       </div>
     </section>
   )
