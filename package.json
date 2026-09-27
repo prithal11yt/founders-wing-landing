@@ -45,6 +45,7 @@
     "react-dom": "19.2.0",
     "react-hook-form": "^7.60.0",
     "react-parallax-tilt": "^1.7.320",
+    "recharts": "^3.10.1",
     "remark-gfm": "^4.0.1",
     "sonner": "^1.7.4",
     "tailwind-merge": "^2.5.5",

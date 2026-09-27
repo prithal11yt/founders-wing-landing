@@ -38,7 +38,8 @@ export function FoundingPriceBanner() {
 
   // Internal tools shouldn't carry marketing chrome.
   if (pathname?.startsWith("/leads") || pathname?.startsWith("/admin") ||
-      pathname?.startsWith("/members") || pathname?.startsWith("/team")) return null
+      pathname?.startsWith("/members") || pathname?.startsWith("/team") ||
+      pathname?.startsWith("/analytics")) return null
 
   if (remaining === null || remaining <= 0) return null
 

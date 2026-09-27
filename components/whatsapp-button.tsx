@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation"
 import { WHATSAPP_URL } from "@/lib/contact"
 
 // Internal tools and the local design preview don't need a sales chat button.
-const HIDDEN_ON = ["/admin", "/leads", "/team", "/members"]
+const HIDDEN_ON = ["/admin", "/leads", "/team", "/members", "/analytics"]
 
 export function WhatsAppButton() {
   const pathname = usePathname()
