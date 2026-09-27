@@ -18,6 +18,8 @@ export async function GET() {
   } catch (e) {
     const msg = e instanceof Error ? e.message : ''
     const reason = /401|403|PERMISSION_DENIED/.test(msg) ? 'google rejected the key' : /token exchange|private_key|client_email/.test(msg) ? 'key is malformed' : 'request failed'
-    return NextResponse.json({ ga: `error: ${reason}`, ai }, { status: 500 })
+    // Error text never contains the key itself; trim it and drop anything that looks like one.
+    const detail = msg.replace(/-----BEGIN[\s\S]*?-----END PRIVATE KEY-----/g, '[key]').slice(0, 240)
+    return NextResponse.json({ ga: `error: ${reason}`, detail, ai }, { status: 500 })
   }
 }
