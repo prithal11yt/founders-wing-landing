@@ -90,7 +90,7 @@ function toBody(r: ReportRequest) {
 type ApiReport = {
   dimensionHeaders?: { name: string }[]
   metricHeaders?: { name: string }[]
-  rows?: { dimensionValues: { value: string }[]; metricValues: { value: string }[] }[]
+  rows?: { dimensionValues?: { value: string }[]; metricValues?: { value: string }[] }[]
 }
 
 function parse(rep: ApiReport): Row[] {
@@ -99,12 +99,12 @@ function parse(rep: ApiReport): Row[] {
   return (rep.rows ?? []).map(row => {
     const dims: Record<string, string> = {}
     let range = 0
-    row.dimensionValues.forEach((v, i) => {
+    ;(row.dimensionValues ?? []).forEach((v, i) => {
       if (dh[i] === 'dateRange') range = Number(v.value.replace('date_range_', '')) || 0
       else dims[dh[i]] = v.value
     })
     const mets: Record<string, number> = {}
-    row.metricValues.forEach((v, i) => {
+    ;(row.metricValues ?? []).forEach((v, i) => {
       mets[mh[i]] = Number(v.value)
     })
     return { dims, mets, range }
