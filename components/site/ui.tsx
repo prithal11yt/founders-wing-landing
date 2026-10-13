@@ -6,11 +6,7 @@ import { ACCENT } from './brand'
 
 export const JOIN = '/#apply'
 
-export const PLANS = {
-  starter: { label: '6 months', price: '₹5,999', monthly: '₹1,000', billed: 'Billed ₹5,999 for 6 months' },
-  annual: { label: '12 months', price: '₹9,999', monthly: '₹833', billed: 'Billed ₹9,999 for 12 months' },
-} as const
-export type PlanKey = keyof typeof PLANS
+export { PLANS, type PlanKey } from '@/lib/pricing'
 
 export const INCLUDED = [
   'Weekly live sessions with Prithal (26 every 6 months)',

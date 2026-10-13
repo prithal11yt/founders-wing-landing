@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og'
+import { ANNUAL_MONTHLY } from '@/lib/pricing'
 
 export const runtime = 'edge'
 export const alt = 'Founders Wing — Build it with AI. Get paying customers.'
@@ -42,7 +43,7 @@ export default async function Image() {
           <div style={{ fontSize: 84, fontWeight: 700, lineHeight: 1.02, letterSpacing: -3 }}>Build it with AI.</div>
           <div style={{ fontSize: 84, fontWeight: 700, lineHeight: 1.02, letterSpacing: -3, color: '#7c8698' }}>Get paying customers.</div>
           <div style={{ marginTop: 28, fontSize: 28, color: 'rgba(255,255,255,0.65)', maxWidth: 900, lineHeight: 1.4 }}>
-            India’s community for people building SaaS, AI automations and AI businesses. From ₹833/month.
+            India’s community for people building SaaS, AI automations and AI businesses. From {ANNUAL_MONTHLY}/month.
           </div>
         </div>
       </div>

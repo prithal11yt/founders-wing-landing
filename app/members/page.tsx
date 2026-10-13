@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
+import { COHORT_1_SIZE } from '@/lib/cohort'
 
 type Member = {
   id: string
@@ -282,7 +283,7 @@ export default function MembersPortal() {
 
 function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () => void }) {
   const joined = new Date(member.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
-  const isFounding = !!member.member_no && member.member_no <= 19
+  const isFounding = !!member.member_no && member.member_no <= COHORT_1_SIZE
 
   const [profile, setProfile] = useState<Profile>(null)
   const [loadingProfile, setLoadingProfile] = useState(true)

@@ -2,6 +2,8 @@
 
 import * as Accordion from '@radix-ui/react-accordion'
 import { Plus } from 'lucide-react'
+import { COHORT_1_SIZE, EARLY_SPOTS } from '@/lib/cohort'
+import { PRICE_SENTENCE } from '@/lib/pricing'
 
 const faqs = [
   {
@@ -13,8 +15,12 @@ const faqs = [
     a: "Yes, 100%. Most of our members are in the same boat — full of ideas but stuck overthinking. This community is specifically designed to help you go from 'I want to start' to actually launching. You don't need experience, just the willingness to take action.",
   },
   {
+    q: 'What are Cohort 1 and Cohort 2?',
+    a: `Cohort 1 was the founding ${COHORT_1_SIZE} members, who joined at the founding price. It closed in October 2026. Cohort 2 is open now. The first ${EARLY_SPOTS} members of Cohort 2 also join the Cohort 1 group, so you learn alongside the founding members from day one; once Cohort 2 has ${EARLY_SPOTS} members it gets its own group. Live sessions and the main community are the same for everyone.`,
+  },
+  {
     q: 'How much does it cost?',
-    a: 'We offer two plans: ₹5,999 for 6 months (just ₹1,000/month) or ₹9,999 for a full year (just ₹833/month). No monthly option — we want committed members who are serious about building, not people who sign up and forget.',
+    a: `We offer two plans: ${PRICE_SENTENCE}. No monthly option — we want committed members who are serious about building, not people who sign up and forget.`,
   },
   {
     q: 'What do I actually get inside?',

@@ -12,6 +12,7 @@ import { SiteNav } from '@/components/site/nav'
 import { SiteFooter } from '@/components/site/footer'
 import { PrimaryCTA } from '@/components/site/ui'
 import { ACCENT } from '@/components/site/brand'
+import { ANNUAL_MONTHLY, ANNUAL_PRICE, STARTER_MONTHLY, STARTER_PRICE } from '@/lib/pricing'
 
 export async function generateStaticParams() {
   return seoPages.map(page => ({
@@ -144,7 +145,7 @@ export default async function SeoPage({ params }: { params: Promise<{ category: 
               <ScrollReveal variant="fade-up" delay={200} duration={700}>
                 <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   <PrimaryCTA />
-                  <span className="text-sm text-neutral-500">From ₹833/month · Build it, launch it, get customers</span>
+                  <span className="text-sm text-neutral-500">From {ANNUAL_MONTHLY}/month · Build it, launch it, get customers</span>
                 </div>
               </ScrollReveal>
             </div>
@@ -177,8 +178,8 @@ export default async function SeoPage({ params }: { params: Promise<{ category: 
               <ScrollReveal variant="fade-up" delay={400} duration={600}>
                 <div className="mt-6 rounded-[22px] bg-neutral-950 text-white p-7 text-center">
                   <p className="text-sm text-neutral-400 mb-1">Membership starts at</p>
-                  <p className="text-4xl font-medium tracking-[-0.03em]">₹5,999 <span className="text-base font-normal text-neutral-400">for 6 months</span></p>
-                  <p className="text-sm text-neutral-400 mt-2">That’s ₹1,000/month · 12 months for ₹9,999 · No monthly plan, committed members only</p>
+                  <p className="text-4xl font-medium tracking-[-0.03em]">{STARTER_PRICE} <span className="text-base font-normal text-neutral-400">for 6 months</span></p>
+                  <p className="text-sm text-neutral-400 mt-2">That’s {STARTER_MONTHLY}/month · 12 months for {ANNUAL_PRICE} · No monthly plan, committed members only</p>
                 </div>
               </ScrollReveal>
             </div>

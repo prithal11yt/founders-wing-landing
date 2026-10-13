@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ArrowRight, Check, CheckCircle2, Phone, ShieldCheck, Zap } from 'lucide-react'
 import { PHONE_DISPLAY, PHONE_TEL, WHATSAPP_URL } from '@/lib/contact'
-import { COUPON_CODE, offerSpotsLeft } from '@/lib/offer'
+import { COHORT_1_SIZE, EARLY_SPOTS, cohortOf, earlySpotsLeft } from '@/lib/cohort'
 import { ACCENT } from '@/components/site/brand'
 import { INCLUDED, PLANS, type PlanKey } from '@/components/site/ui'
 import { MembershipCard } from '@/components/site/membership-card'
@@ -14,9 +14,8 @@ import { SiteFooter } from '@/components/site/footer'
 // Checkout is hosted on thesoloentrepreneur.in (verified Razorpay account)
 const CHECKOUT_BASE_URL = 'https://www.thesoloentrepreneur.in/fw-membership'
 
-function checkoutUrl(plan: PlanKey, info: { name: string; email: string; whatsapp: string }, coupon: boolean) {
+function checkoutUrl(plan: PlanKey, info: { name: string; email: string; whatsapp: string }) {
   const query = new URLSearchParams({ plan, ...info })
-  if (coupon) query.set('coupon', COUPON_CODE)
   return `${CHECKOUT_BASE_URL}?${query.toString()}`
 }
 
@@ -34,7 +33,7 @@ function SecureSpotContent() {
     fetch('/api/public/member-count').then(r => r.json()).then(d => setCount(typeof d.count === 'number' ? d.count : null)).catch(() => {})
   }, [])
   const nextMemberNo = count !== null ? count + 1 : null
-  const couponOn = count !== null && offerSpotsLeft(count) > 0
+  const earlyLeft = count !== null && count >= COHORT_1_SIZE ? earlySpotsLeft(count) : 0
 
   return (
     <div className="min-h-screen bg-white text-neutral-950 flex flex-col">
@@ -46,7 +45,7 @@ function SecureSpotContent() {
             <div className="relative rounded-[28px] aspect-[5/4] flex items-center justify-center p-8 md:p-14" style={{ background: 'radial-gradient(70% 60% at 50% 45%, #e6f3fb 0%, #f4f4f5 72%)' }}>
               {nextMemberNo && (
                 <div className="absolute top-4 right-4 md:top-5 md:right-5 rounded-full bg-neutral-900 text-white text-xs font-medium px-3.5 py-2">
-                  You’d be member #{nextMemberNo}
+                  You’d be member #{nextMemberNo} · Cohort {cohortOf(nextMemberNo)}
                 </div>
               )}
               <MembershipCard plan={plan} memberNo={nextMemberNo} name={name} className="max-w-[400px]" />
@@ -83,7 +82,7 @@ function SecureSpotContent() {
                 return (
                   <a
                     key={k}
-                    href={checkoutUrl(k, info, couponOn)}
+                    href={checkoutUrl(k, info)}
                     target="_blank"
                     rel="noopener noreferrer"
                     onMouseEnter={() => setPlan(k)}
@@ -108,9 +107,9 @@ function SecureSpotContent() {
               })}
             </div>
 
-            {couponOn && (
-              <p className="mt-4 text-sm text-neutral-500">
-                Code <span className="font-mono font-semibold text-neutral-900">{COUPON_CODE}</span> is applied at checkout for 20% off.
+            {earlyLeft > 0 && (
+              <p className="mt-4 text-sm text-neutral-600">
+                You’d be one of the first {EARLY_SPOTS} in Cohort 2, which also gets you into the Cohort 1 group with the founding members. {earlyLeft} of {EARLY_SPOTS} spots left.
               </p>
             )}
 

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { STARTER_PRICE } from '@/lib/pricing'
 import Image from "next/image"
 import type React from "react"
 import { ArrowRight } from "lucide-react"
@@ -31,7 +32,7 @@ export function JoinCTA({ variant = "membership" }: { variant?: string }) {
   const messages: Record<string, { headline: string; sub: string }> = {
     membership: {
       headline: "Stop reading about it. Start building.",
-      sub: "Join Founders Wing — India's action-first founder community. From ₹5,999.",
+      sub: `Join Founders Wing — India's action-first founder community. From ${STARTER_PRICE}.`,
     },
     "first-10k": {
       headline: "Want to earn your first ₹10,000 online?",
@@ -48,7 +49,7 @@ export function JoinCTA({ variant = "membership" }: { variant?: string }) {
     // legacy aliases
     default: {
       headline: "Stop reading about it. Start building.",
-      sub: "Join Founders Wing — India's action-first founder community. From ₹5,999.",
+      sub: `Join Founders Wing — India's action-first founder community. From ${STARTER_PRICE}.`,
     },
     community: {
       headline: "Looking for a founder community that actually delivers?",

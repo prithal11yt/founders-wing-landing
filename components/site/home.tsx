@@ -5,7 +5,8 @@ import Image from 'next/image'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
 import { Check, Globe, Linkedin, MessageCircle, Phone, Plus, Play, Youtube, Zap, ShieldCheck, CreditCard } from 'lucide-react'
 import { PHONE_DISPLAY, PHONE_TEL, WHATSAPP_URL } from '@/lib/contact'
-import { COUPON_CODE, offerSpotsLeft } from '@/lib/offer'
+import { COHORT_1_SIZE, EARLY_SPOTS, cohortOf, earlySpotsLeft } from '@/lib/cohort'
+import { ANNUAL_MONTHLY, PRICE_SENTENCE, STARTER_PRICE } from '@/lib/pricing'
 import { ACCENT, WingMark, Wordmark } from '@/components/site/brand'
 import { INCLUDED, PLANS, PrimaryCTA, ToolLogo, TOOLS, type PlanKey, type ToolSlug } from '@/components/site/ui'
 import { MembershipCard } from '@/components/site/membership-card'
@@ -26,7 +27,8 @@ const STORIES = [
 const FAQS = [
   { q: 'What kind of projects is this for?', a: 'Anything you are building with AI: SaaS products, AI automations for clients, apps, AI agencies, content businesses. The goal is the same for everyone. Get it built, get it launched, and get people paying for it.' },
   { q: "I haven't started anything yet — is this for me?", a: "Yes, 100%. Most of our members are in the same boat — full of ideas but stuck overthinking. This community is specifically designed to help you go from 'I want to start' to actually launching. You don't need experience, just the willingness to take action." },
-  { q: 'How much does it cost?', a: 'Two plans: ₹5,999 for 6 months (just ₹1,000/month) or ₹9,999 for a full year (just ₹833/month). No monthly option — we want committed members who are serious about building.' },
+  { q: 'What are Cohort 1 and Cohort 2?', a: `Cohort 1 was the founding ${COHORT_1_SIZE} members, who joined at the founding price. It closed in October 2026. Cohort 2 is open now. The first ${EARLY_SPOTS} members of Cohort 2 also join the Cohort 1 group, so you learn alongside the founding members from day one; once Cohort 2 has ${EARLY_SPOTS} members it gets its own group. Live sessions and the main community are the same for everyone.` },
+  { q: 'How much does it cost?', a: `Two plans: ${PRICE_SENTENCE}. No monthly option — we want committed members who are serious about building.` },
   { q: 'What is the time commitment?', a: "No mandatory hours. Most members spend 2-3 hours per week — joining the weekly session, checking in with their accountability buddy, and sharing progress. The key is consistency, not hours." },
   { q: 'How is this different from your free WhatsApp group?', a: "The free WhatsApp group is great for general discussion, but it's 5,000+ people. Founders Wing is smaller, focused, and action-oriented — weekly live sessions, accountability partners, Hot Seat coaching, and members who are committed because they paid to be here." },
   { q: 'Can I cancel?', a: 'Your access continues for the full duration of your plan (6 or 12 months). After that, you can choose not to renew. There are no refunds — we want members who are committed to showing up and doing the work.' },
@@ -44,7 +46,7 @@ function useMemberCount() {
 export function Home() {
   const count = useMemberCount()
   const nextMemberNo = count !== null ? count + 1 : null
-  const couponOn = count !== null && offerSpotsLeft(count) > 0
+  const earlyLeft = count !== null && count >= COHORT_1_SIZE ? earlySpotsLeft(count) : 0
 
   return (
     <div className="min-h-screen bg-white text-neutral-950 antialiased">
@@ -54,7 +56,7 @@ export function Home() {
       <ToolsStrip />
       <FounderStory />
       <WhatYouGet />
-      <Membership nextMemberNo={nextMemberNo} couponOn={couponOn} />
+      <Membership nextMemberNo={nextMemberNo} earlyLeft={earlyLeft} />
       <MemberStories />
       <HowItWorks />
       <FAQ />
@@ -139,7 +141,7 @@ function Hero({ count }: { count: number | null }) {
 function StatsStrip({ count }: { count: number | null }) {
   const stats = [
     { v: '50K+', l: 'YouTube subscribers' },
-    { v: count !== null ? String(count) : '40+', l: 'Founding members' },
+    { v: count !== null ? String(count) : '50', l: 'Members' },
     { v: '26', l: 'Live sessions every 6 months' },
     { v: '5,000+', l: 'In the free WhatsApp community' },
   ]
@@ -238,7 +240,7 @@ function RevealLine({ text, className }: { text: string; className: string }) {
 }
 
 /* Superpower's membership block: card left, offer right, trust row, accordion. */
-function Membership({ nextMemberNo, couponOn }: { nextMemberNo: number | null; couponOn: boolean }) {
+function Membership({ nextMemberNo, earlyLeft }: { nextMemberNo: number | null; earlyLeft: number }) {
   const [plan, setPlan] = useState<PlanKey>('starter')
   const [open, setOpen] = useState<number | null>(null)
   const extra = [
@@ -252,7 +254,7 @@ function Membership({ nextMemberNo, couponOn }: { nextMemberNo: number | null; c
           <div className="relative rounded-[28px] aspect-[5/4] flex items-center justify-center p-8 md:p-14" style={{ background: 'radial-gradient(70% 60% at 50% 45%, #e6f3fb 0%, #f4f4f5 72%)' }}>
             {nextMemberNo && (
               <div className="absolute top-4 right-4 md:top-5 md:right-5 rounded-full bg-neutral-900 text-white text-xs font-medium px-3.5 py-2">
-                You&apos;d be member #{nextMemberNo}
+                You&apos;d be member #{nextMemberNo} · Cohort {cohortOf(nextMemberNo)}
               </div>
             )}
             <MembershipCard plan={plan} memberNo={nextMemberNo} className="max-w-[400px]" />
@@ -260,11 +262,22 @@ function Membership({ nextMemberNo, couponOn }: { nextMemberNo: number | null; c
         </div>
 
         <div>
-          <p className="text-[15px] text-neutral-500">Two days of offline workshops cost ₹6,000+. Six months here is ₹5,999.</p>
-          <h2 className="mt-3 text-5xl md:text-6xl font-medium tracking-[-0.045em] leading-[1.02]">Founders Wing<br />Membership</h2>
+          <p className="text-[15px] text-neutral-500">Two days of offline workshops cost ₹6,000+. Six months here is {STARTER_PRICE}.</p>
+          <h2 className="mt-3 text-5xl md:text-6xl font-medium tracking-[-0.045em] leading-[1.02]">Founders Wing<br />Cohort 2</h2>
           <p className="mt-5 text-neutral-600 leading-relaxed">
             Everything you need to build your AI project, launch it and get customers, with people who are doing the same.
           </p>
+          <div className="mt-6 rounded-[22px] border border-neutral-200 bg-neutral-50 p-5">
+            <p className="text-[15px] font-medium">Cohort 1, the founding {COHORT_1_SIZE}, is full. Cohort 2 is open.</p>
+            <p className="mt-1.5 text-sm text-neutral-600 leading-relaxed">
+              The first {EARLY_SPOTS} members of Cohort 2 also join the Cohort 1 group, so you build alongside the founding members from day one. Live sessions and the main community are the same for everyone.
+            </p>
+            {earlyLeft > 0 && (
+              <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-neutral-900 text-white text-xs font-medium px-3 py-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" /> {earlyLeft} of {EARLY_SPOTS} early spots left
+              </p>
+            )}
+          </div>
 
           <div className="mt-7 inline-flex rounded-full bg-neutral-100 p-1">
             {(Object.keys(PLANS) as PlanKey[]).map(k => (
@@ -287,11 +300,7 @@ function Membership({ nextMemberNo, couponOn }: { nextMemberNo: number | null; c
             <span className="text-6xl font-medium tracking-[-0.04em]">{PLANS[plan].monthly}</span>
             <span className="text-neutral-500">/month · {PLANS[plan].billed.toLowerCase()}</span>
           </div>
-          {couponOn && (
-            <p className="mt-2 text-sm text-neutral-500">
-              Use code <span className="font-mono font-semibold text-neutral-900">{COUPON_CODE}</span> for 20% off at checkout
-            </p>
-          )}
+          <p className="mt-2 text-sm text-neutral-500">One payment. Nothing renews by itself.</p>
 
           <div className="mt-6 flex items-center gap-2 text-xs text-neutral-500">
             <span>Pay with</span>
@@ -789,7 +798,7 @@ function FinalCTA() {
             <Phone className="w-4 h-4" /> {PHONE_DISPLAY}
           </a>
         </div>
-        <p className="mt-6 text-sm text-neutral-500 inline-flex items-center gap-1.5"><CreditCard className="w-3.5 h-3.5" /> From ₹833/month · UPI, cards &amp; netbanking</p>
+        <p className="mt-6 text-sm text-neutral-500 inline-flex items-center gap-1.5"><CreditCard className="w-3.5 h-3.5" /> From {ANNUAL_MONTHLY}/month · UPI, cards &amp; netbanking</p>
       </div>
     </section>
   )

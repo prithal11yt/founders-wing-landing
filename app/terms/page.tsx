@@ -1,4 +1,5 @@
 import { SiteNav } from '@/components/site/nav'
+import { ANNUAL_PRICE, STARTER_PRICE } from '@/lib/pricing'
 import { SiteFooter } from '@/components/site/footer'
 
 export const metadata = {
@@ -37,7 +38,7 @@ export default function TermsOfService() {
           <div>
             <h2 className="text-xl font-medium text-neutral-900 mb-2">3. Membership and Payment</h2>
             <ul className="list-disc pl-5 space-y-1">
-              <li>Membership is available on a 6-month (₹5,999) or 12-month (₹9,999) basis.</li>
+              <li>Membership is available on a 6-month ({STARTER_PRICE}) or 12-month ({ANNUAL_PRICE}) basis.</li>
               <li>Payment is due in full at the time of joining. All prices are in Indian Rupees (INR) and inclusive of applicable taxes.</li>
               <li>Access is granted after successful payment confirmation.</li>
               <li>Membership is personal and non-transferable.</li>

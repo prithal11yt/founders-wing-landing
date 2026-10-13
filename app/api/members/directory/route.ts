@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { COHORT_1_SIZE } from '@/lib/cohort'
 import { createClient } from "@supabase/supabase-js"
 import { verifyMemberToken } from "../session/route"
 
@@ -48,7 +49,7 @@ export async function GET(request: NextRequest) {
       return {
         name: m.full_name,
         member_no: i + 1,
-        isFounding: i + 1 <= 19,
+        isFounding: i + 1 <= COHORT_1_SIZE,
         isMe: key === lower,
         // A bio exists if they've shared any of the "who they are" fields.
         hasProfile: !!(occupation || location || link || how_i_help || need_help_with || stage || industry || tools || skills?.length || open_to?.length),
