@@ -3,8 +3,8 @@
 const inr = (n: number) => `₹${n.toLocaleString('en-IN')}`
 
 export const PRICING = {
-  starter: { label: '6 months', months: 6, price: 5999 },
-  annual: { label: '12 months', months: 12, price: 9999 },
+  starter: { label: '6 months', months: 6, price: 7499 },
+  annual: { label: '12 months', months: 12, price: 12499 },
 } as const
 export type PlanKey = keyof typeof PRICING
 
@@ -20,3 +20,4 @@ export const ANNUAL_PRICE = inr(PRICING.annual.price)
 export const STARTER_MONTHLY = PLANS.starter.monthly
 export const ANNUAL_MONTHLY = PLANS.annual.monthly
 export const PRICE_SENTENCE = `${STARTER_PRICE} for 6 months (${STARTER_MONTHLY}/month) or ${ANNUAL_PRICE} for a full year (${ANNUAL_MONTHLY}/month)`
+export const inrFmt = inr

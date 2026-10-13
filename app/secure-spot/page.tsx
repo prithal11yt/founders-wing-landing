@@ -5,6 +5,8 @@ import { useSearchParams } from 'next/navigation'
 import { ArrowRight, Check, CheckCircle2, Phone, ShieldCheck, Zap } from 'lucide-react'
 import { PHONE_DISPLAY, PHONE_TEL, WHATSAPP_URL } from '@/lib/contact'
 import { COHORT_1_SIZE, EARLY_SPOTS, cohortOf, earlySpotsLeft } from '@/lib/cohort'
+import { COUPON, COUPON_ENDS_LABEL, couponActive, discounted } from '@/lib/offer'
+import { PRICING, inrFmt } from '@/lib/pricing'
 import { ACCENT } from '@/components/site/brand'
 import { INCLUDED, PLANS, type PlanKey } from '@/components/site/ui'
 import { MembershipCard } from '@/components/site/membership-card'
@@ -16,6 +18,7 @@ const CHECKOUT_BASE_URL = 'https://www.thesoloentrepreneur.in/fw-membership'
 
 function checkoutUrl(plan: PlanKey, info: { name: string; email: string; whatsapp: string }) {
   const query = new URLSearchParams({ plan, ...info })
+  if (couponActive()) query.set('coupon', COUPON.code)
   return `${CHECKOUT_BASE_URL}?${query.toString()}`
 }
 
@@ -97,7 +100,14 @@ function SecureSpotContent() {
                       <p className="text-sm text-neutral-500 mt-0.5">{p.monthly}/month · {p.billed.toLowerCase()}</p>
                     </div>
                     <div className="flex items-center gap-3 shrink-0">
-                      <span className="text-2xl font-medium tracking-[-0.03em]">{p.price}</span>
+                      {couponActive() ? (
+                        <span className="text-right leading-tight">
+                          <span className="block text-2xl font-medium tracking-[-0.03em]">{inrFmt(discounted(PRICING[k].price))}</span>
+                          <span className="block text-xs text-neutral-400 line-through">{p.price}</span>
+                        </span>
+                      ) : (
+                        <span className="text-2xl font-medium tracking-[-0.03em]">{p.price}</span>
+                      )}
                       <span className="w-9 h-9 rounded-full flex items-center justify-center text-white transition-transform group-hover:translate-x-0.5" style={{ background: ACCENT }}>
                         <ArrowRight className="w-4 h-4" />
                       </span>
@@ -107,8 +117,13 @@ function SecureSpotContent() {
               })}
             </div>
 
-            {earlyLeft > 0 && (
+            {couponActive() && (
               <p className="mt-4 text-sm text-neutral-600">
+                Code <span className="font-mono font-semibold text-neutral-900">{COUPON.code}</span> is applied at checkout for {COUPON.percent}% off, until {COUPON_ENDS_LABEL}.
+              </p>
+            )}
+            {earlyLeft > 0 && (
+              <p className="mt-2 text-sm text-neutral-600">
                 You’d be one of the first {EARLY_SPOTS} in Cohort 2, which also gets you into the Cohort 1 group with the founding members. {earlyLeft} of {EARLY_SPOTS} spots left.
               </p>
             )}

@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     default: "Founders Wing | Build it with AI. Get paying customers.",
     template: "%s | Founders Wing",
   },
-  description: "India’s community for people building SaaS, AI automations and AI businesses. Build here, get feedback, and use the network to reach paying customers faster. From ₹833/month.",
+  description: "India’s community for people building SaaS, AI automations and AI businesses. Build here, get feedback, and use the network to reach paying customers faster. From ₹1,042/month.",
   keywords: ["founder community india", "ai tools for founders", "entrepreneur community india", "startup community india", "online business india"],
   authors: [{ name: "Prithal Bhardwaj", url: "https://thesoloentrepreneur.in" }],
   creator: "Prithal Bhardwaj",

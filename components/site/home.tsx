@@ -6,7 +6,8 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform }
 import { Check, Globe, Linkedin, MessageCircle, Phone, Plus, Play, Youtube, Zap, ShieldCheck, CreditCard } from 'lucide-react'
 import { PHONE_DISPLAY, PHONE_TEL, WHATSAPP_URL } from '@/lib/contact'
 import { COHORT_1_SIZE, EARLY_SPOTS, cohortOf, earlySpotsLeft } from '@/lib/cohort'
-import { ANNUAL_MONTHLY, PRICE_SENTENCE, STARTER_PRICE } from '@/lib/pricing'
+import { ANNUAL_MONTHLY, PRICE_SENTENCE, PRICING, STARTER_PRICE, inrFmt } from '@/lib/pricing'
+import { COUPON, COUPON_ENDS_LABEL, couponActive, discounted } from '@/lib/offer'
 import { ACCENT, WingMark, Wordmark } from '@/components/site/brand'
 import { INCLUDED, PLANS, PrimaryCTA, ToolLogo, TOOLS, type PlanKey, type ToolSlug } from '@/components/site/ui'
 import { MembershipCard } from '@/components/site/membership-card'
@@ -28,7 +29,7 @@ const FAQS = [
   { q: 'What kind of projects is this for?', a: 'Anything you are building with AI: SaaS products, AI automations for clients, apps, AI agencies, content businesses. The goal is the same for everyone. Get it built, get it launched, and get people paying for it.' },
   { q: "I haven't started anything yet — is this for me?", a: "Yes, 100%. Most of our members are in the same boat — full of ideas but stuck overthinking. This community is specifically designed to help you go from 'I want to start' to actually launching. You don't need experience, just the willingness to take action." },
   { q: 'What are Cohort 1 and Cohort 2?', a: `Cohort 1 was the founding ${COHORT_1_SIZE} members, who joined at the founding price. It closed in October 2026. Cohort 2 is open now. The first ${EARLY_SPOTS} members of Cohort 2 also join the Cohort 1 group, so you learn alongside the founding members from day one; once Cohort 2 has ${EARLY_SPOTS} members it gets its own group. Live sessions and the main community are the same for everyone.` },
-  { q: 'How much does it cost?', a: `Two plans: ${PRICE_SENTENCE}. No monthly option — we want committed members who are serious about building.` },
+  { q: 'How much does it cost?', a: `Two plans: ${PRICE_SENTENCE}.${couponActive() ? ` Until ${COUPON_ENDS_LABEL}, code ${COUPON.code} takes ${COUPON.percent}% off at checkout.` : ''} No monthly option — we want committed members who are serious about building.` },
   { q: 'What is the time commitment?', a: "No mandatory hours. Most members spend 2-3 hours per week — joining the weekly session, checking in with their accountability buddy, and sharing progress. The key is consistency, not hours." },
   { q: 'How is this different from your free WhatsApp group?', a: "The free WhatsApp group is great for general discussion, but it's 5,000+ people. Founders Wing is smaller, focused, and action-oriented — weekly live sessions, accountability partners, Hot Seat coaching, and members who are committed because they paid to be here." },
   { q: 'Can I cancel?', a: 'Your access continues for the full duration of your plan (6 or 12 months). After that, you can choose not to renew. There are no refunds — we want members who are committed to showing up and doing the work.' },
@@ -300,7 +301,13 @@ function Membership({ nextMemberNo, earlyLeft }: { nextMemberNo: number | null; 
             <span className="text-6xl font-medium tracking-[-0.04em]">{PLANS[plan].monthly}</span>
             <span className="text-neutral-500">/month · {PLANS[plan].billed.toLowerCase()}</span>
           </div>
-          <p className="mt-2 text-sm text-neutral-500">One payment. Nothing renews by itself.</p>
+          {couponActive() ? (
+            <p className="mt-2 text-sm text-neutral-600">
+              Use code <span className="font-mono font-semibold text-neutral-900">{COUPON.code}</span> at checkout for {COUPON.percent}% off: you pay <span className="font-semibold text-neutral-900">{inrFmt(discounted(PRICING[plan].price))}</span>. Ends {COUPON_ENDS_LABEL}.
+            </p>
+          ) : (
+            <p className="mt-2 text-sm text-neutral-500">One payment. Nothing renews by itself.</p>
+          )}
 
           <div className="mt-6 flex items-center gap-2 text-xs text-neutral-500">
             <span>Pay with</span>

@@ -4,6 +4,7 @@ import * as Accordion from '@radix-ui/react-accordion'
 import { Plus } from 'lucide-react'
 import { COHORT_1_SIZE, EARLY_SPOTS } from '@/lib/cohort'
 import { PRICE_SENTENCE } from '@/lib/pricing'
+import { COUPON, COUPON_ENDS_LABEL, couponActive } from '@/lib/offer'
 
 const faqs = [
   {
@@ -20,7 +21,7 @@ const faqs = [
   },
   {
     q: 'How much does it cost?',
-    a: `We offer two plans: ${PRICE_SENTENCE}. No monthly option — we want committed members who are serious about building, not people who sign up and forget.`,
+    a: `We offer two plans: ${PRICE_SENTENCE}.${couponActive() ? ` Until ${COUPON_ENDS_LABEL}, code ${COUPON.code} takes ${COUPON.percent}% off at checkout.` : ''} No monthly option — we want committed members who are serious about building, not people who sign up and forget.`,
   },
   {
     q: 'What do I actually get inside?',
