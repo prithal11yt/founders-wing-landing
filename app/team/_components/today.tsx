@@ -58,6 +58,11 @@ export default function Today({ role, overview, reload, goTo }: Props) {
         </div>
       </div>
 
+      {role === 'admin' && (
+        <div className="card small" style={{ background: '#f0f9ff', borderColor: 'rgba(2,132,199,.2)', color: '#0c4a6e', padding: '10px 14px' }}>
+          You're signed in as admin, so this page counts <b>your</b> calls and posts. Shreyas's day is in the <a href="/admin/team">Tracker</a>.
+        </div>
+      )}
       <div className="t-grid g3 stack">
         <Card title="Daily targets" right={<span className="faint small">{r.working ? 'Working day' : 'Not a working day'}</span>}>
           <TargetBar label="Lead calls" value={r.lead_calls} target={t.lead_calls} hint={`${r.lead_reached} reached · ${r.lead_converted} joined`} />
@@ -147,7 +152,6 @@ export default function Today({ role, overview, reload, goTo }: Props) {
         </Card>
 
         <Card title="End-of-day check-in" right={o.checkin ? <span className="tag tag-green">Saved {fmtTime(o.checkin.updated_at)}</span> : <span className="tag tag-amber">Not done</span>}>
-          {role === 'admin' && <p className="small muted mb">This is the team's note for the day. Numbers above are automatic; this is the human part.</p>}
           <Field label="What did you learn today? (patterns, what people said, what worked)">
             <textarea className="textarea" value={ci.learned} onChange={e => setCi({ ...ci, learned: e.target.value })} placeholder="e.g. 3 people said Wednesday 9pm clashes with family time. Twitter leads pick up faster than YouTube ones." />
           </Field>
@@ -157,7 +161,7 @@ export default function Today({ role, overview, reload, goTo }: Props) {
           <Field label="Plan for tomorrow">
             <textarea className="textarea" style={{ minHeight: 56 }} value={ci.plan_tomorrow} onChange={e => setCi({ ...ci, plan_tomorrow: e.target.value })} placeholder="Top 3 things" />
           </Field>
-          <button className="btn btn-p" disabled={savingCi || role === 'admin'} onClick={saveCheckin}>{savingCi ? 'Saving…' : o.checkin ? 'Update check-in' : 'Save check-in'}</button>
+          <button className="btn btn-p" disabled={savingCi} onClick={saveCheckin}>{savingCi ? 'Saving…' : o.checkin ? 'Update check-in' : 'Save check-in'}</button>
         </Card>
       </div>
 

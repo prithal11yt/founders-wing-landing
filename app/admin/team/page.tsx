@@ -21,7 +21,7 @@ export default function AdminTeamTracker() {
   }, [])
   const load = useCallback(async () => {
     try {
-      const [ov, ci] = await Promise.all([api<Overview>(`/api/team/overview?date=${date}`), api<Checkin[]>('/api/team/checkin')])
+      const [ov, ci] = await Promise.all([api<Overview>(`/api/team/overview?date=${date}&actor=team`), api<Checkin[]>('/api/team/checkin')])
       setO(ov); setCheckins(Array.isArray(ci) ? ci : [])
     } catch (e) { toast((e as Error).message, 'err') }
   }, [date])

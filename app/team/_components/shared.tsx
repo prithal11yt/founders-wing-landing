@@ -13,7 +13,7 @@ export type Activity = { kind: 'lead' | 'member'; id: string; ts: string; ref: n
 export type Checkin = { day: string; learned: string | null; blockers: string | null; plan_tomorrow: string | null; updated_at: string }
 export type SessionLite = { id: string; title: string; call_date: string; topic: string | null; target_attendance: number | null; recap_posted: boolean; attended: number }
 export type Overview = {
-  date: string; today: boolean; targets: Targets; today_row: DayRow; checkin: Checkin | null; activity: Activity[]; posts_today: WaPost[]
+  date: string; today: boolean; targets: Targets; actor: 'team' | 'admin'; today_row: DayRow; checkin: Checkin | null; activity: Activity[]; posts_today: WaPost[]
   days: DayRow[]
   week: { lead_calls: number; lead_reached: number; lead_converted: number; member_calls: number; member_reached: number; whatsapp_posts: number; checkins: number }
   streaks: { checkin: number; whatsapp: number; lead_target: number }

@@ -15,7 +15,10 @@ export async function GET(req: NextRequest) {
     const today = istDayKey()
     const qd = req.nextUrl.searchParams.get("date")
     const date = isValidDay(qd) ? qd : today
-    const actor = "team"
+    // The intern always sees their own day. The founder sees their own calls
+    // on /team, and the intern's on /admin/team (which passes ?actor=team),
+    // so the founder's test calls never inflate the intern's numbers.
+    const actor = s.role === "team" ? "team" : req.nextUrl.searchParams.get("actor") === "team" ? "team" : "admin"
     const since = addDays(date, -13)
     const sinceISO = dayStartUTC(since).toISOString()
     const untilISO = dayEndUTC(date).toISOString()
@@ -136,7 +139,7 @@ export async function GET(req: NextRequest) {
     const totalMembers = memRes.count ?? 0
 
     return json({
-      date, today: date === today, targets,
+      date, today: date === today, targets, actor,
       today_row: todayRow,
       checkin: checkins.get(date) || null,
       activity,

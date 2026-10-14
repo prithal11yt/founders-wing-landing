@@ -37,8 +37,10 @@ export default function TeamPage() {
     const h = window.location.hash.replace('#', '')
     if (isTab(h)) setTab(h)
     const onUnauth = () => setAuthed(false)
+    const onHash = () => { const h = window.location.hash.replace('#', ''); if (isTab(h)) setTab(h) }
     window.addEventListener('fw-unauth', onUnauth)
-    return () => window.removeEventListener('fw-unauth', onUnauth)
+    window.addEventListener('hashchange', onHash)
+    return () => { window.removeEventListener('fw-unauth', onUnauth); window.removeEventListener('hashchange', onHash) }
   }, [])
 
   const reload = useCallback(() => {
