@@ -3,6 +3,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  // Dev only: lets the local app be opened via 127.0.0.1 / LAN IP as well as
+  // localhost (useful for testing a second login session or a phone on wifi).
+  allowedDevOrigins: ['127.0.0.1', '192.168.0.12'],
   images: {
     formats: ['image/avif', 'image/webp'],
   },

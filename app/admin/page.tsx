@@ -385,6 +385,10 @@ export default function LeadsPage() {
               📡 Activity
               <span className="l-nav-count">→</span>
             </a>
+            <a href="/admin/team" className="l-nav-item" style={{ textDecoration: 'none' }}>
+              📅 Team Tracker
+              <span className="l-nav-count">→</span>
+            </a>
           </nav>
           <div className="l-sidebar-footer">
             <div className="l-user">{userEmail}</div>
@@ -400,6 +404,7 @@ export default function LeadsPage() {
           <a href="/admin/members"><span className="icon">💰</span> Members</a>
           <a href="/admin/community"><span className="icon">🎯</span> Community</a>
           <a href="/admin/activity"><span className="icon">📡</span> Activity</a>
+          <a href="/admin/team"><span className="icon">📅</span> Tracker</a>
           <button onClick={logout}><span className="icon">🚪</span> Sign out</button>
         </nav>
 
