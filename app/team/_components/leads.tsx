@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   api, toast, Card, Stat, Empty, CallLinks, Pill, Field, Modal, Chips, statusMeta, LEAD_STATUSES, LEAD_TAG_LABELS, SOURCE_LABELS, label,
-  fmtDateTime, fmtDay, timeAgo, todayISO, phoneDigits, type Lead, type LeadEvent, type Role,
+  fmtDateTime, fmtDay, timeAgo, todayISO, phoneDigits, TIER_META, tierRank, type Lead, type LeadEvent, type Role,
 } from './shared'
 
 type Tab = 'to_call' | 'due' | 'working' | 'won' | 'closed'
@@ -19,7 +19,9 @@ export default function Leads({ role, focusLeadId, onLogged }: Props) {
   const [tab, setTab] = useState<Tab>('to_call')
   const [source, setSource] = useState('all')
   const [search, setSearch] = useState('')
-  const [sort, setSort] = useState<'newest' | 'oldest'>('newest')
+  const [sort, setSort] = useState<'newest' | 'oldest' | 'best'>('best')
+  const [quality, setQuality] = useState<'all' | 'hot' | 'warm' | 'cold' | 'junk' | 'unscored'>('all')
+  const [scoring, setScoring] = useState(false)
   const [openId, setOpenId] = useState<number | null>(null)
   const [logFor, setLogFor] = useState<Lead | null>(null)
   const [addOpen, setAddOpen] = useState(false)
@@ -62,7 +64,7 @@ export default function Leads({ role, focusLeadId, onLogged }: Props) {
     if (buckets.won(l)) return 'won'; if (buckets.closed(l)) return 'closed'; if (buckets.working(l)) return 'working'; return 'to_call'
   }
   const srcOf = (l: Lead) => (l.heard_from === 'twitter' || l.heard_from === 'twitter-linkedin') ? 'twitter' : l.heard_from === 'youtube' ? 'youtube' : 'other'
-  const bySource = useMemo(() => leads.filter(l => source === 'all' || srcOf(l) === source), [leads, source])
+  const bySource = useMemo(() => leads.filter(l => (source === 'all' || srcOf(l) === source) && (quality === 'all' || (quality === 'unscored' ? !l.ai_tier : l.ai_tier === quality))), [leads, source, quality])
 
   const stats = useMemo(() => ({
     to_call: bySource.filter(buckets.to_call).length, due: bySource.filter(buckets.due).length,
@@ -75,6 +77,7 @@ export default function Leads({ role, focusLeadId, onLogged }: Props) {
   const visible = useMemo(() => bySource.filter(buckets[tab]).filter(l => !q || [l.full_name, l.email, l.whatsapp, l.twitter_handle, l.product].some(v => (v || '').toLowerCase().includes(q)))
     .sort((a, b) => {
       if (tab === 'due') return (a.follow_up_at || '').localeCompare(b.follow_up_at || '')
+      if (sort === 'best') { const d = tierRank(a.ai_tier) - tierRank(b.ai_tier); if (d) return d; const sd = (b.ai_score ?? -1) - (a.ai_score ?? -1); if (sd) return sd }
       const at = new Date(a.created_at).getTime(), bt = new Date(b.created_at).getTime()
       return sort === 'newest' ? bt - at : at - bt
     }), [bySource, buckets, tab, q, sort])
@@ -122,13 +125,23 @@ export default function Leads({ role, focusLeadId, onLogged }: Props) {
 
       <div className="row">
         <input className="search" placeholder="Search name, phone, email, handle…" value={search} onChange={e => setSearch(e.target.value)} />
-        <select className="select" style={{ width: 'auto' }} value={sort} onChange={e => setSort(e.target.value as 'newest' | 'oldest')}>
-          <option value="newest">Newest first</option><option value="oldest">Oldest first</option>
+        <select className="select" style={{ width: 'auto' }} value={sort} onChange={e => setSort(e.target.value as 'newest' | 'oldest' | 'best')}>
+          <option value="best">Best leads first</option><option value="newest">Newest first</option><option value="oldest">Oldest first</option>
         </select>
       </div>
 
       <div className="chips">
         {TABS.map(t => <button key={t.key} className={`chip${tab === t.key ? ' on' : ''}`} onClick={() => setTab(t.key)}>{t.label}<span className="c">{t.count}</span></button>)}
+      </div>
+
+      <div className="row-sb">
+        <div className="chips">
+          {(['all', 'hot', 'warm', 'cold', 'junk', 'unscored'] as const).map(k => {
+            const n = k === 'all' ? leads.length : k === 'unscored' ? leads.filter(l => !l.ai_tier).length : leads.filter(l => l.ai_tier === k).length
+            return <button key={k} className={`chip${quality === k ? ' on' : ''}`} onClick={() => setQuality(k)} title={k === 'all' ? 'AI quality: all' : undefined}>{k === 'all' ? '✨ All quality' : k === 'unscored' ? 'Not scored' : `${TIER_META[k].icon} ${TIER_META[k].label}`}<span className="c">{n}</span></button>
+          })}
+        </div>
+        <button className="btn btn-g btn-s" disabled={scoring} onClick={async () => { setScoring(true); try { const r = await fetch('/api/leads/qualify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' }); const j = await r.json(); if (!r.ok) throw new Error(j.error || 'Failed'); toast(`Scored ${j.scored} lead${j.scored === 1 ? '' : 's'}`); await load() } catch (e) { toast(e instanceof Error ? e.message : 'Scoring failed', 'err') } finally { setScoring(false) } }} title="Run the AI qualifier on leads that have no score yet">{scoring ? 'Scoring…' : '✨ Score new leads'}</button>
       </div>
 
       <div className="list" ref={listRef}>
@@ -147,6 +160,7 @@ export default function Leads({ role, focusLeadId, onLogged }: Props) {
                   <div className="item-name">{lead.full_name || 'Unnamed lead'} {lead.twitter_handle && <span className="muted" style={{ fontWeight: 400, fontSize: 13 }}>{lead.twitter_handle}</span>}</div>
                   <div className="item-meta">{lead.whatsapp || 'No number'}{lead.email && <> · {lead.email}</>}</div>
                   <div className="item-tags">
+                    {lead.ai_tier && TIER_META[lead.ai_tier] && <span className="tag" style={{ background: TIER_META[lead.ai_tier].bg, color: TIER_META[lead.ai_tier].fg, fontWeight: 600 }} title={lead.ai_reason || ''}>{TIER_META[lead.ai_tier].icon} {TIER_META[lead.ai_tier].label}{typeof lead.ai_score === 'number' ? ` · ${lead.ai_score}` : ''}</span>}
                     <span className={`tag ${srcOf(lead) === 'twitter' ? 'tag-blue' : ''}`}>{label(SOURCE_LABELS, lead.heard_from || 'other')}</span>
                     {(lead.call_attempts ?? 0) > 0 && <span className="tag">{lead.call_attempts} call{lead.call_attempts === 1 ? '' : 's'}{lead.last_called_at && <> · {timeAgo(lead.last_called_at)}</>}</span>}
                     {lead.follow_up_at && <span className={`tag${overdue ? ' tag-red' : dueToday ? ' tag-amber' : ''}`}>{overdue ? 'Overdue' : dueToday ? 'Follow up today' : `Follow up ${fmtDay(lead.follow_up_at, false)}`}</span>}
@@ -158,6 +172,7 @@ export default function Leads({ role, focusLeadId, onLogged }: Props) {
               {open && (
                 <div className="item-bd">
                   <div className="kv">
+                    {lead.ai_reason && <div style={{ gridColumn: '1 / -1' }}><span className="lbl">AI read</span><p className="val">{lead.ai_reason}{lead.ai_flags?.length ? <span className="muted"> · {lead.ai_flags.map(f => f.replace(/_/g, ' ')).join(', ')}</span> : null}</p></div>}
                     {lead.what_building && <div><span className="lbl">Building</span><p className="val">{lead.what_building}</p></div>}
                     {lead.join_reason && <div><span className="lbl">Why they want to join</span><p className="val">{lead.join_reason}</p></div>}
                     <div><span className="lbl">Applied</span><p className="val">{fmtDateTime(lead.created_at)}</p></div>

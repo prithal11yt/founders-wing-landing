@@ -15,6 +15,17 @@ type Lead = {
   call_status?: string
   starred?: boolean
   notes?: string
+  ai_score?: number | null
+  ai_tier?: string | null
+  ai_reason?: string | null
+  ai_flags?: string[] | null
+}
+
+const TIER_META: Record<string, { label: string; color: string; bg: string; icon: string }> = {
+  hot: { label: 'Hot', color: '#f59e0b', bg: 'rgba(245,158,11,0.14)', icon: '🔥' },
+  warm: { label: 'Warm', color: '#22c55e', bg: 'rgba(34,197,94,0.12)', icon: '🌱' },
+  cold: { label: 'Cold', color: '#94a3b8', bg: 'rgba(148,163,184,0.12)', icon: '❄️' },
+  junk: { label: 'Junk', color: '#ef4444', bg: 'rgba(239,68,68,0.12)', icon: '🚫' },
 }
 
 const CALL_STATUSES = [
@@ -46,6 +57,8 @@ export default function LeadsPage() {
   const [allData, setAllData] = useState<Lead[]>([])
   const [filtered, setFiltered] = useState<Lead[]>([])
   const [currentView, setCurrentView] = useState<ViewFilter>('all')
+  const [quality, setQuality] = useState<'all' | 'hot' | 'warm' | 'cold' | 'junk' | 'unscored'>('all')
+  const [scoring, setScoring] = useState(false)
   const [search, setSearch] = useState('')
   const [selected, setSelected] = useState<Set<number>>(new Set())
   const [panelLead, setPanelLead] = useState<Lead | null>(null)
@@ -130,6 +143,7 @@ export default function LeadsPage() {
       if (currentView === 'starred' && !d.starred) return false
       if (currentView === 'members' && d.call_status !== 'converted') return false
       if (currentView !== 'members' && d.call_status === 'converted') return false
+      if (quality !== 'all' && (quality === 'unscored' ? !!d.ai_tier : d.ai_tier !== quality)) return false
       if (q) {
         const haystack = [d.full_name, d.email, d.whatsapp, d.what_building, d.join_reason, d.heard_from].join(' ').toLowerCase()
         if (!haystack.includes(q)) return false
@@ -137,7 +151,7 @@ export default function LeadsPage() {
       return true
     })
     setFiltered(result)
-  }, [allData, currentView, search])
+  }, [allData, currentView, search, quality])
 
   // Stats
   const stats = {
@@ -204,9 +218,9 @@ export default function LeadsPage() {
   function exportCSV() {
     const data = filtered.length ? filtered : allData
     if (!data.length) return
-    const headers = ['ID', 'Date', 'Name', 'Email', 'WhatsApp', 'Building', 'Goal', 'Source', 'Status', 'Notes']
+    const headers = ['ID', 'Date', 'Name', 'Email', 'WhatsApp', 'Building', 'Goal', 'Source', 'Status', 'Notes', 'AI tier', 'AI score', 'AI reason']
     const rows = data.map(d =>
-      [d.id, d.created_at, d.full_name, d.email, d.whatsapp || '', d.what_building, d.join_reason, d.heard_from, d.status || 'new', d.notes || '']
+      [d.id, d.created_at, d.full_name, d.email, d.whatsapp || '', d.what_building, d.join_reason, d.heard_from, d.status || 'new', d.notes || '', d.ai_tier || '', d.ai_score ?? '', d.ai_reason || '']
         .map(v => `"${String(v || '').replace(/"/g, '""')}"`)
         .join(',')
     )
@@ -422,6 +436,11 @@ export default function LeadsPage() {
             </div>
             <div className="l-actions">
               <div className="l-live"><div className="l-live-dot" />Live</div>
+              <select className="l-btn" value={quality} onChange={e => setQuality(e.target.value as typeof quality)} style={{ cursor: 'pointer' }} title="AI lead quality">
+                <option value="all">✨ Quality: all</option>
+                <option value="hot">🔥 Hot</option><option value="warm">🌱 Warm</option><option value="cold">❄️ Cold</option><option value="junk">🚫 Junk</option><option value="unscored">Not scored</option>
+              </select>
+              <button className="l-btn" disabled={scoring} onClick={async () => { setScoring(true); try { const r = await fetch('/api/leads/qualify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' }); const j = await r.json(); if (!r.ok) throw new Error(j.error || 'Failed'); alert(`Scored ${j.scored} lead(s)`); fetchData() } catch (e) { alert(e instanceof Error ? e.message : 'Scoring failed') } finally { setScoring(false) } }} title="Run the AI qualifier on leads without a score">{scoring ? 'Scoring…' : '✨ Score leads'}</button>
               <a className="l-btn" href="/admin/performance">📊 Performance</a>
               <button className="l-btn" onClick={fetchData}>Refresh</button>
               <button className="l-btn l-btn-primary" onClick={exportCSV}>Export CSV</button>
@@ -481,6 +500,7 @@ export default function LeadsPage() {
                     <th style={{ width: 36 }}></th>
                     <th>Name</th>
                     <th>WhatsApp</th>
+                    <th>Quality</th>
                     <th>Building</th>
                     <th>Source</th>
                     <th>Call Status</th>
@@ -499,6 +519,7 @@ export default function LeadsPage() {
                         <td><button className={`l-star ${d.starred ? 'starred' : ''}`} onClick={() => updateField(d.id, 'starred', !d.starred)}>{d.starred ? '★' : '☆'}</button></td>
                         <td className="l-td-name" onClick={() => setPanelLead(d)}>{d.full_name}</td>
                         <td style={{ color: '#22d3ee', fontSize: 12 }}>{d.whatsapp || '—'}</td>
+                        <td>{d.ai_tier && TIER_META[d.ai_tier] ? <span title={d.ai_reason || ''} style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 999, fontSize: 11, fontWeight: 700, color: TIER_META[d.ai_tier].color, background: TIER_META[d.ai_tier].bg, whiteSpace: 'nowrap' }}>{TIER_META[d.ai_tier].icon} {TIER_META[d.ai_tier].label}{typeof d.ai_score === 'number' ? ` ${d.ai_score}` : ''}</span> : <span style={{ color: '#475569', fontSize: 11 }}>—</span>}</td>
                         <td>{d.what_building}</td>
                         <td style={{ color: '#475569' }}>{d.heard_from}</td>
                         <td>
@@ -575,6 +596,7 @@ export default function LeadsPage() {
                 <div className="l-panel-section">
                   <div className="l-panel-section-title">Application</div>
                   <div className="l-panel-field"><div className="l-panel-field-label">WhatsApp</div><div className="l-panel-field-value" style={{ color: '#22d3ee' }}>{panelLead.whatsapp || '—'}</div></div>
+                  {panelLead.ai_tier && TIER_META[panelLead.ai_tier] && <div className="l-panel-field"><div className="l-panel-field-label">AI qualification</div><div className="l-panel-field-value"><span style={{ color: TIER_META[panelLead.ai_tier].color, fontWeight: 700 }}>{TIER_META[panelLead.ai_tier].icon} {TIER_META[panelLead.ai_tier].label}{typeof panelLead.ai_score === 'number' ? ` · ${panelLead.ai_score}/100` : ''}</span>{panelLead.ai_reason ? ` — ${panelLead.ai_reason}` : ''}{panelLead.ai_flags?.length ? <div style={{ color: '#64748b', fontSize: 12, marginTop: 4 }}>{panelLead.ai_flags.map(f => f.replace(/_/g, ' ')).join(' · ')}</div> : null}</div></div>}
                   <div className="l-panel-field"><div className="l-panel-field-label">What they&apos;re building / idea</div><div className="l-panel-field-value">{panelLead.what_building}</div></div>
                   <div className="l-panel-field"><div className="l-panel-field-label">Goal in next 3 months</div><div className="l-panel-field-value">{panelLead.join_reason}</div></div>
                 </div>

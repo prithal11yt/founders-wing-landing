@@ -27,6 +27,7 @@ export type Lead = {
   id: number; created_at: string; full_name: string; email: string | null; whatsapp?: string | null; what_building?: string | null
   join_reason?: string | null; heard_from?: string | null; call_status?: string | null; notes?: string | null; last_called_at?: string | null
   call_attempts?: number | null; follow_up_at?: string | null; worked_by?: string | null; twitter_handle?: string | null; product?: string | null
+  ai_score?: number | null; ai_tier?: string | null; ai_reason?: string | null; ai_flags?: string[] | null; ai_scored_at?: string | null
 }
 export type LeadEvent = { id: number; lead_id: number; actor: string; call_status: string; note: string | null; tags: string[]; created_at: string }
 export type Touchpoint = {
@@ -93,6 +94,13 @@ export const IDEA_STATUSES: { value: string; label: string; fg: string; bg: stri
 export const SOURCE_LABELS: Record<string, string> = { youtube: 'YouTube', twitter: 'Twitter', 'twitter-linkedin': 'Twitter / LinkedIn', whatsapp: 'WhatsApp', 'friend-referral': 'Referral', other: 'Other' }
 export const OUTCOME_LABELS: Record<string, string> = { answered: 'Answered', no_answer: 'No answer', callback: 'Callback', messaged: 'Messaged' }
 export const label = (map: Record<string, string>, k: string) => map[k] || k.replace(/_/g, ' ')
+export const TIER_META: Record<string, { label: string; bg: string; fg: string; icon: string }> = {
+  hot: { label: 'Hot', bg: '#fef3c7', fg: '#b45309', icon: '🔥' },
+  warm: { label: 'Warm', bg: '#f0fdf4', fg: '#15803d', icon: '🌱' },
+  cold: { label: 'Cold', bg: '#f1f5f9', fg: '#475569', icon: '❄️' },
+  junk: { label: 'Junk', bg: '#fef2f2', fg: '#b91c1c', icon: '🚫' },
+}
+export const tierRank = (t?: string | null) => (t === 'hot' ? 0 : t === 'warm' ? 1 : t === 'cold' ? 2 : t === 'junk' ? 4 : 3)
 export const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 /* ───────────────────────── small utils ───────────────────────── */

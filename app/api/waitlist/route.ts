@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js"
-import { type NextRequest, NextResponse } from "next/server"
+import { qualifyLeads } from "@/lib/lead-qualifier"
+import { type NextRequest, NextResponse, after } from "next/server"
 
 // This endpoint is public, so it's the one surface an attacker can hammer.
 // In Aug 2026 someone used it to (a) insert ~90 junk rows with no real details
@@ -105,7 +106,7 @@ export async function POST(request: NextRequest) {
     // message told an attacker whether an address was in the database, which
     // is exactly how the August enumeration run worked.
     if (!existing) {
-      const { error } = await supabase.from("waitlist_applications").insert([
+      const { data: inserted, error } = await supabase.from("waitlist_applications").insert([
         {
           full_name: fullName,
           email,
@@ -114,11 +115,18 @@ export async function POST(request: NextRequest) {
           join_reason: goal || null,
           heard_from: heardFrom || null,
         },
-      ])
+      ]).select("id").single()
 
       if (error) {
         console.error("[waitlist] Supabase error:", error.message)
         return NextResponse.json({ error: "Could not save your application. Please try again." }, { status: 500 })
+      }
+
+      // Qualify the lead with AI once the applicant has their response.
+      if (inserted?.id) {
+        after(async () => {
+          try { await qualifyLeads({ ids: [inserted.id] }) } catch (e) { console.error("[waitlist] qualify failed:", e) }
+        })
       }
     }
 
