@@ -4,8 +4,23 @@
     {
       "name": "v2-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3001,
+      "autoPort": false
+    },
+    {
+      "name": "prod-check",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "next",
+        "start",
+        "-p",
+        "3002"
+      ],
+      "port": 3002,
       "autoPort": false
     }
   ]
