@@ -94,6 +94,7 @@ export default function TeamPage() {
             <div><div className="t-title">Team Workspace</div><div className="t-sub">{role === 'admin' ? 'Prithal (admin view)' : email}</div></div>
           </div>
           <div className="row" style={{ flexWrap: 'nowrap' }}>
+            <a className="btn btn-g btn-s" href="/team/members">🧭 Member progress</a>
             {role === 'admin' && <a className="btn btn-g btn-s" href="/admin/team">📊 Tracker</a>}
             <button className="btn btn-g btn-s" onClick={logout}>Sign out</button>
           </div>
