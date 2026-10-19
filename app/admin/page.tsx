@@ -373,6 +373,9 @@ export default function LeadsPage() {
               </button>
             ))}
             <div style={{ height: 1, background: 'rgba(255,255,255,0.06)', margin: '8px 0' }} />
+            <a href="/team/members" className="l-nav-item" style={{ textDecoration: 'none' }}>
+              <span className="icon">🧭</span> Member progress
+            </a>
             <a href="/admin/members" className="l-nav-item" style={{ textDecoration: 'none' }}>
               💰 Members
               <span className="l-nav-count">→</span>
@@ -401,6 +404,7 @@ export default function LeadsPage() {
           <button className="nav-active" onClick={() => window.scrollTo({ top: 0 })}>
             <span className="icon">📋</span> Leads
           </button>
+          <a href="/team/members"><span className="icon">🧭</span> Member progress</a>
           <a href="/admin/members"><span className="icon">💰</span> Members</a>
           <a href="/admin/community"><span className="icon">🎯</span> Community</a>
           <a href="/admin/activity"><span className="icon">📡</span> Activity</a>
