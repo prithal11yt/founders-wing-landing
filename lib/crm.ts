@@ -18,12 +18,15 @@ export const MEMBER_TYPES = [
 ] as const
 
 export const STAGES = [
-  { value: 'decide', label: 'Decide', hint: 'Exploring, selecting or validating an idea; no clear build target yet.' },
-  { value: 'build', label: 'Build', hint: 'Idea chosen, but no usable end-to-end product yet.' },
-  { value: 'launch', label: 'Launch', hint: 'A working product exists but is not fully available to users yet.' },
-  { value: 'sell', label: 'Sell', hint: 'Live, but no or few paying customers yet.' },
-  { value: 'grow', label: 'Grow with AI', hint: 'Already runs a business; using AI to improve revenue, operations or delivery.' },
+  { value: 'decide', label: 'Decide', hint: 'Exploring, selecting or validating an idea; no clear build target yet.', milestone: 'Choose one problem and target user, and validate it with 3–5 potential users.' },
+  { value: 'build', label: 'Build', hint: 'Idea chosen, but no usable end-to-end product yet.', milestone: 'Complete one usable core workflow or MVP slice.' },
+  { value: 'launch', label: 'Launch', hint: 'A working product exists but is not fully available to users yet.', milestone: 'Deploy a usable version and make the core user journey work.' },
+  { value: 'sell', label: 'Sell', hint: 'Live, but no or few paying customers yet.', milestone: 'Speak to prospects, get qualified trials, or secure the first paying customer.' },
+  { value: 'grow', label: 'Grow with AI', hint: 'Already runs a business; using AI to improve revenue, operations or delivery.', milestone: 'Ship one AI workflow and measure time saved, leads, conversion or another agreed result.' },
 ] as const
+
+/* Decide → Build → Launch → Sell is the path; Grow with AI is its own lane. */
+export const STAGE_PATH = ['decide', 'build', 'launch', 'sell'] as const
 
 export const OUTCOMES = [
   { value: 'clarity', label: 'Get clarity on idea' },
@@ -123,6 +126,8 @@ export type CrmProfile = {
   renewal_signal: string | null
   showcase_permission: boolean
   demo_url: string | null
+  board_summary: string | null
+  board_hidden: boolean
   updated_at: string | null
   updated_by: string | null
 }
@@ -183,6 +188,6 @@ export const PROFILE_FIELDS = [
   'preferred_name', 'membership_status', 'member_type', 'project_name', 'building', 'target_user',
   'stage', 'stage_evidence', 'main_outcome', 'blocker', 'time_available', 'preferred_support',
   'preferred_participation', 'skills', 'can_offer', 'call_notes', 'last_contacted', 'next_follow_up',
-  'renewal_signal', 'showcase_permission', 'demo_url',
+  'renewal_signal', 'showcase_permission', 'demo_url', 'board_summary', 'board_hidden',
 ] as const
 export type ProfileField = (typeof PROFILE_FIELDS)[number]

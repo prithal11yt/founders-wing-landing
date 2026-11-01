@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next"
 
-// Member portal stays dark — override the light site-wide theme color
+// Member portal uses its own light-grey background
 export const viewport: Viewport = {
-  themeColor: "#06090f",
+  themeColor: "#f7f8fa",
 }
 
 export const metadata: Metadata = {

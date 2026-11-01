@@ -226,7 +226,7 @@ export default function TeamMembersPage() {
 
 /* ─── Profile slide-over ─── */
 function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () => void; post: (b: Record<string, unknown>) => Promise<void> }) {
-  const blank: CrmProfile = { email: m.email, preferred_name: null, membership_status: 'active', member_type: null, project_name: null, building: null, target_user: null, stage: null, stage_evidence: null, main_outcome: null, blocker: null, time_available: null, preferred_support: [], preferred_participation: null, skills: null, can_offer: null, call_notes: null, last_contacted: null, next_follow_up: null, renewal_signal: null, showcase_permission: false, demo_url: null, updated_at: null, updated_by: null }
+  const blank: CrmProfile = { email: m.email, preferred_name: null, membership_status: 'active', member_type: null, project_name: null, building: null, target_user: null, stage: null, stage_evidence: null, main_outcome: null, blocker: null, time_available: null, preferred_support: [], preferred_participation: null, skills: null, can_offer: null, call_notes: null, last_contacted: null, next_follow_up: null, renewal_signal: null, showcase_permission: false, demo_url: null, board_summary: null, board_hidden: false, updated_at: null, updated_by: null }
   const [f, setF] = useState<CrmProfile>({ ...blank, ...(m.crm ?? {}) })
   const [reason, setReason] = useState('')
   const [saving, setSaving] = useState<string | null>(null)
@@ -310,6 +310,11 @@ function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () 
               <Field name="Renewal signal" hint="only after a respectful conversation"><Select value={f.renewal_signal} onChange={v => set('renewal_signal', v)} options={RENEWAL_SIGNAL} /></Field>
               <Field name="Demo / project URL"><input value={f.demo_url ?? ''} onChange={e => set('demo_url', e.target.value)} placeholder="https://" className={inp} /></Field>
               <label className="sm:col-span-2 flex items-center gap-2 text-[13px]"><input type="checkbox" checked={!!f.showcase_permission} onChange={e => set('showcase_permission', e.target.checked)} /> Member has given permission to feature their project publicly</label>
+              <div className="sm:col-span-2 rounded-xl border border-neutral-200 bg-neutral-50 p-3 space-y-2">
+                <p className="text-[12px] font-medium text-neutral-700">Members&apos; Journey board <span className="font-normal text-neutral-500">· every member sees the stage, this line, and the 30-day goal and next action</span></p>
+                <Field name="One line about what they’re building" hint="shown to members"><input value={f.board_summary ?? ''} onChange={e => set('board_summary', e.target.value)} placeholder={m.self?.what_building || 'e.g. HR and payroll app for small Indian companies'} className={inp} /></Field>
+                <label className="flex items-center gap-2 text-[13px]"><input type="checkbox" checked={!!f.board_hidden} onChange={e => set('board_hidden', e.target.checked)} /> Hide this member from the Journey board</label>
+              </div>
             </div>
             <div className="mt-4 flex items-center gap-3">
               <button onClick={saveProfile} disabled={saving === 'profile'} className={btnPrimary} style={{ background: '#0284c7' }}>{saving === 'profile' ? 'Saving…' : 'Save profile'}</button>
@@ -320,7 +325,7 @@ function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () 
 
           {/* 30-day goal */}
           <section className={section}>
-            <h3 className="font-semibold mb-3">30-day goal</h3>
+            <div className="flex items-center justify-between mb-3"><h3 className="font-semibold">30-day goal</h3><span className="text-[12px] text-neutral-500">Goal and next action are shown on the members&apos; Journey board</span></div>
             {g ? (
               <div className="rounded-xl bg-neutral-50 border border-neutral-200 p-4">
                 <p className="text-[14px] font-medium">{g.goal}</p>
