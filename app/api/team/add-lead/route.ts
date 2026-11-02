@@ -1,4 +1,5 @@
-import { NextRequest } from "next/server"
+import { after, type NextRequest } from "next/server"
+import { qualifyLeads } from "@/lib/lead-qualifier"
 import { db, session, json, unauthorized, bad, serverError, cleanText } from "@/lib/server/tracker"
 
 // POST → manually add a lead (a referral, a DM, someone who called in).
@@ -22,6 +23,7 @@ export async function POST(req: NextRequest) {
       source_ref: `manual:${crypto.randomUUID()}`,
     }).select("*").single()
     if (error) throw error
+    after(() => qualifyLeads({ ids: [data.id] }).catch(e => console.error("[team/add-lead] scoring failed:", e)))
     return json({ success: true, lead: data })
   } catch (err) {
     return serverError("team/add-lead", err)

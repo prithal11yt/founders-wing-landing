@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   api, toast, Stat, Empty, CallLinks, Pill, Field, Modal, Chips, fmtDay, fmtDateTime, timeAgo, phoneDigits, label,
   MEMBER_REASON_LABELS, MEMBER_WANT_LABELS, OUTCOME_LABELS, type Member, type Touchpoint, type SessionLite, type Role,
@@ -20,8 +20,14 @@ export default function Members({ role, focusEmail, onLogged }: Props) {
   const [openEmail, setOpenEmail] = useState<string | null>(null)
   const [logFor, setLogFor] = useState<Member | null>(null)
 
+  const loadSeq = useRef(0)
   const load = useCallback(async () => {
-    try { setData(await api<Data>('/api/team/members')) } catch (e) { toast((e as Error).message, 'err') }
+    const seq = ++loadSeq.current
+    try {
+      const d = await api<Data>('/api/team/members')
+      // A slower, older response must not overwrite something just logged.
+      if (seq === loadSeq.current) setData(d)
+    } catch (e) { toast((e as Error).message, 'err') }
   }, [])
   useEffect(() => { load() }, [load])
   useEffect(() => { if (focusEmail) { setView('all'); setOpenEmail(focusEmail) } }, [focusEmail])
@@ -161,7 +167,7 @@ function LogTouchModal({ member, nextDay, onClose, onSaved }: { member: Member |
         will_attend_next: attend[0] === 'yes' ? true : attend[0] === 'no' ? false : null,
         reasons, wants, note, follow_up_at: followUp || null,
       } })
-      toast('Logged'); onSaved()
+      toast(`Logged for ${member!.full_name}. It counts on Today.`); onSaved()
     } catch (e) { toast((e as Error).message, 'err') } finally { setSaving(false) }
   }
   return (

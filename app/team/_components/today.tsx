@@ -13,11 +13,15 @@ export default function Today({ role, overview, reload, goTo }: Props) {
   const [savingCi, setSavingCi] = useState(false)
   const [postOpen, setPostOpen] = useState(false)
   const [post, setPost] = useState({ category: ['learning'], content: '', replies: 0, reactions: 0 })
+  const [savingPost, setSavingPost] = useState(false)
   const [creatingSession, setCreatingSession] = useState(false)
 
+  // Keyed on the saved time, not the object: this screen refreshes every 90 seconds,
+  // and each refresh was wiping whatever was being typed into the check-in.
+  const savedCheckin = overview?.checkin
   useEffect(() => {
-    if (overview?.checkin) setCi({ learned: overview.checkin.learned || '', blockers: overview.checkin.blockers || '', plan_tomorrow: overview.checkin.plan_tomorrow || '' })
-  }, [overview?.checkin])
+    if (savedCheckin) setCi({ learned: savedCheckin.learned || '', blockers: savedCheckin.blockers || '', plan_tomorrow: savedCheckin.plan_tomorrow || '' })
+  }, [savedCheckin?.updated_at]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!overview) return <Empty>Loading today…</Empty>
   const o = overview, t = o.targets, r = o.today_row
@@ -32,10 +36,12 @@ export default function Today({ role, overview, reload, goTo }: Props) {
     catch (e) { toast((e as Error).message, 'err') } finally { setSavingCi(false) }
   }
   async function savePost() {
+    if (savingPost) return
+    setSavingPost(true)
     try {
       await api('/api/team/whatsapp', { method: 'POST', json: { posted_on: o.date, category: post.category[0] || 'other', content: post.content, replies: post.replies, reactions: post.reactions } })
       toast('Post logged'); setPostOpen(false); setPost({ category: ['learning'], content: '', replies: 0, reactions: 0 }); reload()
-    } catch (e) { toast((e as Error).message, 'err') }
+    } catch (e) { toast((e as Error).message, 'err') } finally { setSavingPost(false) }
   }
   async function createSession() {
     setCreatingSession(true)
@@ -192,7 +198,7 @@ export default function Today({ role, overview, reload, goTo }: Props) {
           <Field label="Reactions"><input className="input" type="number" min={0} value={post.reactions} onChange={e => setPost({ ...post, reactions: Number(e.target.value) })} /></Field>
         </div>
         <p className="hint" style={{ marginBottom: 12 }}>You can update the reply count later from the WhatsApp tab.</p>
-        <button className="btn btn-p btn-block" onClick={savePost}>Save post</button>
+        <button className="btn btn-p btn-block" disabled={savingPost} onClick={savePost}>{savingPost ? 'Saving…' : 'Save post'}</button>
       </Modal>
     </div>
   )

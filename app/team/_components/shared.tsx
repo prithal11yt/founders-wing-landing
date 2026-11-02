@@ -138,18 +138,26 @@ export const daysUntil = (d: string) => Math.round((new Date(d + 'T00:00:00Z').g
 export class ApiError extends Error { status: number; constructor(msg: string, status: number) { super(msg); this.status = status } }
 export async function api<T = unknown>(path: string, init?: RequestInit & { json?: unknown }): Promise<T> {
   const { json: body, ...rest } = init || {}
-  const r = await fetch(path, { ...rest, headers: { ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}), ...(rest.headers || {}) }, body: body !== undefined ? JSON.stringify(body) : rest.body })
-  if (r.status === 401) { window.dispatchEvent(new Event('fw-unauth')); throw new ApiError('Signed out', 401) }
+  const ctl = new AbortController()
+  const timer = setTimeout(() => ctl.abort(), 30_000)
+  let r: Response
+  try {
+    r = await fetch(path, { ...rest, signal: ctl.signal, headers: { ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}), ...(rest.headers || {}) }, body: body !== undefined ? JSON.stringify(body) : rest.body })
+  } catch {
+    throw new ApiError(ctl.signal.aborted ? 'The server took too long to answer. Check whether it saved before trying again.' : "Couldn't reach the server. Check your internet and try again.", 0)
+  } finally { clearTimeout(timer) }
+  if (r.status === 401) { window.dispatchEvent(new Event('fw-unauth')); throw new ApiError('You were signed out. Sign in again, then press Save.', 401) }
   const data = await r.json().catch(() => ({}))
   if (!r.ok) throw new ApiError((data as { error?: string }).error || `Request failed (${r.status})`, r.status)
   return data as T
 }
 export function toast(msg: string, kind: 'ok' | 'err' = 'ok') {
+  document.querySelectorAll('.t-toast').forEach(t => t.remove())
   const el = document.createElement('div')
   el.className = `t-toast ${kind}`; el.textContent = msg
   document.body.appendChild(el)
   setTimeout(() => el.classList.add('show'), 10)
-  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 300) }, 2600)
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 300) }, kind === 'err' ? 7000 : 3200)
 }
 
 /* ───────────────────────── primitives ───────────────────────── */
@@ -198,7 +206,7 @@ export function Modal({ open, title, onClose, children, wide }: { open: boolean;
   }, [open, onClose])
   if (!open) return null
   return (
-    <div className="modal-bg" onMouseDown={e => { if (e.target === e.currentTarget) onClose() }}>
+    <div className="modal-bg">
       <div className={`modal${wide ? ' wide' : ''}`} role="dialog" aria-modal="true">
         <div className="modal-hd"><h3>{title}</h3><button className="btn btn-g btn-s" onClick={onClose} aria-label="Close">✕</button></div>
         <div className="modal-bd">{children}</div>
@@ -208,7 +216,9 @@ export function Modal({ open, title, onClose, children, wide }: { open: boolean;
 }
 export function Empty({ children }: { children: ReactNode }) { return <div className="empty">{children}</div> }
 export function Field({ label, children, hint }: { label: string; children: ReactNode; hint?: string }) {
-  return <label className="field"><span className="lbl">{label}</span>{children}{hint && <span className="hint">{hint}</span>}</label>
+  // Not a <label>: tapping anywhere inside one clicks its first control, so a tap
+  // between chips silently changed the selected call outcome.
+  return <div className="field"><span className="lbl">{label}</span>{children}{hint && <span className="hint">{hint}</span>}</div>
 }
 export function Bars({ rows, labels, max }: { rows: { key: string; n: number }[]; labels?: Record<string, string>; max?: number }) {
   if (!rows.length) return <Empty>Nothing logged yet.</Empty>

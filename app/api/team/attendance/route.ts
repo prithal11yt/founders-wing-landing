@@ -18,7 +18,8 @@ export async function POST(req: NextRequest) {
     if (!call) return json({ error: "Session not found" }, 404)
 
     if (add.length) {
-      const { data: members } = await sb.from("fw_memberships").select("email, full_name").in("email", add)
+      const { data: members, error: memberErr } = await sb.from("fw_memberships").select("email, full_name")
+      if (memberErr) throw memberErr
       const byEmail = new Map((members || []).map(m => [m.email.toLowerCase(), m]))
       const rows = add.map(e => ({
         call_id: callId, member_email: byEmail.get(e)?.email || e, member_name: byEmail.get(e)?.full_name || null, marked_by: actorOf(s),
@@ -27,8 +28,15 @@ export async function POST(req: NextRequest) {
       if (error) throw error
     }
     if (remove.length) {
-      const { error } = await sb.from("fw_attendance").delete().eq("call_id", callId).in("member_email", remove)
-      if (error) throw error
+      // Delete by the address as stored: some rows keep the member's original casing.
+      const { data: rows, error: readErr } = await sb.from("fw_attendance").select("id, member_email").eq("call_id", callId)
+      if (readErr) throw readErr
+      const drop = new Set(remove)
+      const ids = (rows || []).filter(r => drop.has(r.member_email.toLowerCase())).map(r => r.id)
+      if (ids.length) {
+        const { error } = await sb.from("fw_attendance").delete().in("id", ids)
+        if (error) throw error
+      }
     }
     const { count } = await sb.from("fw_attendance").select("*", { count: "exact", head: true }).eq("call_id", callId)
     return json({ success: true, attended: count ?? 0 })

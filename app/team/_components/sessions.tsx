@@ -134,7 +134,7 @@ function MarkAttendanceModal({ session, onClose, onSaved }: { session: Session |
     if (!session) return
     const init = new Set(session.attendance.map(a => a.member_email.toLowerCase()))
     setChecked(new Set(init)); setInitial(init); setQ('')
-    api<{ members: Member[] }>('/api/team/members').then(d => setMembers(d.members)).catch(() => {})
+    api<{ members: Member[] }>('/api/team/members').then(d => setMembers(d.members)).catch(e => toast((e as Error).message, 'err'))
   }, [session])
   if (!session) return null
   const toggle = (e: string) => setChecked(prev => { const n = new Set(prev); n.has(e) ? n.delete(e) : n.add(e); return n })

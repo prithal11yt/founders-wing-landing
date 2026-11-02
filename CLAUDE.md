@@ -58,6 +58,8 @@ Daily workspace for the intern (Shreyas) and the founder's view of it. Same auth
 - Tables (migration in `supabase/migrations/20261014_team_tracker.sql`): `lead_call_events` (+`note`, `tags`), `fw_member_touchpoints`, `fw_whatsapp_posts`, `fw_ideas`, `fw_daily_checkins`, `fw_settings` (`team_targets`, `twitter_sync`), plus `fw_calls` session fields and `fw_attendance.marked_by`.
 - Twitter outreach leads come from a Google Sheet (`TWITTER_LEADS_SHEET_ID`, default hard-coded); `/api/team/twitter-sync` upserts them into `waitlist_applications` with `heard_from='twitter'` and `source_ref='twitter:@handle'`. It runs on Leads-tab load, throttled to once per 10 min.
 - Daily numbers always count `actor='team'`; anything the admin logs is kept out of the intern's stats.
+- Member contact has one record: `fw_member_touchpoints`. Log it from either the Members tab or the "Log a call" box on `/team/members`; both keep `fw_crm_members.last_contacted` in step through `syncCrmContact`. New call notes or a same-day check-in on `/team/members` also count, once per member per day (`countMemberContactOnce`).
+- Sessions last 7 days from last use, 30 at most, renewed by `/api/leads/verify` (`useSessionKeepAlive`). When one ends, `SessionExpiredOverlay` signs in over the page so unsaved forms survive. Don't swap the page for a login screen on a 401.
 
 ### Environment variables
 - `NEXT_PUBLIC_SUPABASE_URL` — Supabase project URL

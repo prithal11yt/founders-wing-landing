@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server"
 import {
   db, session, actorOf, json, unauthorized, bad, serverError, cleanTags, cleanText, isValidDay,
-  MEMBER_REASONS, MEMBER_WANTS, istDayKey, nextSessionDay,
+  MEMBER_REASONS, MEMBER_WANTS, likeExact, syncCrmContact, upcomingSessionId,
 } from "@/lib/server/tracker"
 
 const CHANNELS = new Set(["call", "whatsapp"])
@@ -21,22 +21,21 @@ export async function POST(req: NextRequest) {
     if (followUp && !isValidDay(followUp)) return bad("follow_up_at must be YYYY-MM-DD")
 
     const sb = db()
-    const { data: member } = await sb.from("fw_memberships").select("full_name").ilike("email", email).limit(1).maybeSingle()
+    // A failed read must not look like "no such member".
+    const { data: member, error: memberErr } = await sb.from("fw_memberships").select("full_name").ilike("email", likeExact(email)).limit(1).maybeSingle()
+    if (memberErr) throw memberErr
     if (!member) return json({ error: "Member not found" }, 404)
 
-    // Attach to the upcoming session so RSVPs line up with attendance later.
-    const today = istDayKey()
-    const { data: upcoming } = await sb.from("fw_calls").select("id").gte("call_date", today).lte("call_date", nextSessionDay(today))
-      .order("call_date", { ascending: true }).limit(1).maybeSingle()
-
+    // Attached to the upcoming session so RSVPs line up with attendance later.
     const row = {
       member_email: email, member_name: member.full_name, actor: actorOf(s), channel, outcome,
       reasons: cleanTags(b.reasons, MEMBER_REASONS), wants: cleanTags(b.wants, MEMBER_WANTS),
       note: cleanText(b.note), will_attend_next: typeof b.will_attend_next === "boolean" ? b.will_attend_next : null,
-      follow_up_at: followUp, session_id: upcoming?.id || null,
+      follow_up_at: followUp, session_id: await upcomingSessionId(sb),
     }
     const { data, error } = await sb.from("fw_member_touchpoints").insert(row).select("*").single()
     if (error) throw error
+    await syncCrmContact(sb, { email, outcome, followUp, by: s.email })
     return json({ success: true, touchpoint: data })
   } catch (err) {
     return serverError("team/member-touchpoint", err)

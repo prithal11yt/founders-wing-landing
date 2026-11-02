@@ -167,6 +167,8 @@ export type Checkin = {
 
 export type HistoryRow = { id: number; email: string; field: string; old_value: string | null; new_value: string | null; reason: string | null; changed_by: string | null; changed_at: string }
 
+export type MemberTouch = { id: string; member_email: string; actor: string; channel: string; outcome: string; note: string | null; follow_up_at: string | null; created_at: string }
+
 export type Member = {
   member_no: number
   cohort: number
@@ -181,9 +183,17 @@ export type Member = {
   goals: Goal[]
   checkins: Checkin[]
   history: HistoryRow[]
+  touchpoints: MemberTouch[]
 }
 
 /* The fields the team edits on the profile form, in the order they appear on the call. */
+export const TOUCH_OUTCOMES = [
+  { value: 'answered', label: 'Spoke to them' },
+  { value: 'no_answer', label: 'No answer' },
+  { value: 'callback', label: 'Asked to call back' },
+  { value: 'messaged', label: 'WhatsApp message' },
+] as const
+
 export const PROFILE_FIELDS = [
   'preferred_name', 'membership_status', 'member_type', 'project_name', 'building', 'target_user',
   'stage', 'stage_evidence', 'main_outcome', 'blocker', 'time_available', 'preferred_support',

@@ -27,10 +27,15 @@ export default function Leads({ role, focusLeadId, onLogged }: Props) {
   const [addOpen, setAddOpen] = useState(false)
   const [syncing, setSyncing] = useState(false)
   const listRef = useRef<HTMLDivElement>(null)
+  const loadSeq = useRef(0)
+  const focusHandled = useRef<number | null>(null)
 
   const load = useCallback(async () => {
+    const seq = ++loadSeq.current
     try {
       const [l, e] = await Promise.all([api<Lead[]>('/api/leads/data'), api<LeadEvent[]>('/api/team/lead-events')])
+      // A slower, older response must not overwrite a call that was just logged.
+      if (seq !== loadSeq.current) return
       setLeads(Array.isArray(l) ? l : []); setEvents(Array.isArray(e) ? e : [])
     } catch (e) { toast((e as Error).message, 'err') } finally { setLoading(false) }
   }, [])
@@ -45,7 +50,11 @@ export default function Leads({ role, focusLeadId, onLogged }: Props) {
 
   // Deep link from Today → open that lead.
   useEffect(() => {
-    if (!focusLeadId || !leads.length) return
+    // Once per deep link. Re-running on every refresh dragged the list back to this
+    // lead each time another call was logged.
+    if (focusLeadId === focusHandled.current) return
+    focusHandled.current = focusLeadId ?? null
+    if (!focusLeadId || !leads.length) { focusHandled.current = null; return }
     const l = leads.find(x => x.id === focusLeadId)
     if (!l) return
     setTab(l.follow_up_at && l.follow_up_at <= todayISO() ? 'due' : bucketOf(l)); setSource('all'); setSearch(''); setOpenId(l.id)
@@ -204,7 +213,8 @@ export default function Leads({ role, focusLeadId, onLogged }: Props) {
                   )}
 
                   <span className="lbl" style={{ marginTop: 14 }}>Summary notes</span>
-                  <textarea className="textarea" defaultValue={lead.notes || ''} placeholder="Running summary for this lead — budget, timing, what to say next time…"
+                  {/* Keyed on the saved text: logging a call updates the notes, and a stale box would write the old text back on blur. */}
+                  <textarea key={lead.notes || ''} className="textarea" defaultValue={lead.notes || ''} placeholder="Running summary for this lead — budget, timing, what to say next time…"
                     onBlur={e => { if (e.target.value !== (lead.notes || '')) patch(lead.id, 'notes', e.target.value) }} />
                 </div>
               )}
@@ -213,16 +223,23 @@ export default function Leads({ role, focusLeadId, onLogged }: Props) {
         })}
       </div>
 
-      <LogCallModal lead={logFor} onClose={() => setLogFor(null)} onSaved={(ev, notes) => {
-        setLeads(prev => prev.map(l => (l.id === ev.lead_id ? { ...l, call_status: ev.call_status, last_called_at: ev.created_at, call_attempts: (l.call_attempts ?? 0) + 1, notes, follow_up_at: logFor?.follow_up_at ?? l.follow_up_at } : l)))
+      <LogCallModal lead={logFor} onClose={() => setLogFor(null)} onSaved={(ev, notes, followUp) => {
+        const moved = bucketOf({ ...(logFor as Lead), call_status: ev.call_status })
+        toast(moved === tab ? 'Call logged' : `Call logged. Moved to ${TABS.find(t => t.key === moved)?.label}`)
+        setLeads(prev => prev.map(l => (l.id === ev.lead_id ? { ...l, call_status: ev.call_status, last_called_at: ev.created_at, call_attempts: (l.call_attempts ?? 0) + 1, notes, follow_up_at: followUp } : l)))
         setEvents(prev => [ev, ...prev]); setLogFor(null); onLogged(); load()
       }} />
-      <AddLeadModal open={addOpen} onClose={() => setAddOpen(false)} onAdded={() => { setAddOpen(false); load() }} />
+      <AddLeadModal open={addOpen} onClose={() => setAddOpen(false)} onAdded={async lead => {
+        // Clear every filter and open it, so a new lead can't look like it wasn't saved.
+        setAddOpen(false); setTab('to_call'); setSource('all'); setQuality('all'); setSearch(''); setOpenId(lead.id)
+        await load()
+        setTimeout(() => document.getElementById(`lead-${lead.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100)
+      }} />
     </div>
   )
 }
 
-function LogCallModal({ lead, onClose, onSaved }: { lead: Lead | null; onClose: () => void; onSaved: (ev: LeadEvent, notes: string | null) => void }) {
+function LogCallModal({ lead, onClose, onSaved }: { lead: Lead | null; onClose: () => void; onSaved: (ev: LeadEvent, notes: string | null, followUp: string | null) => void }) {
   const [status, setStatus] = useState<string[]>([])
   const [tags, setTags] = useState<string[]>([])
   const [note, setNote] = useState('')
@@ -236,7 +253,7 @@ function LogCallModal({ lead, onClose, onSaved }: { lead: Lead | null; onClose: 
     setSaving(true)
     try {
       const r = await api<{ event: LeadEvent; notes: string | null }>('/api/team/lead-call', { method: 'POST', json: { lead_id: lead!.id, call_status: status[0], tags, note, follow_up_at: followUp || null } })
-      toast('Call logged'); onSaved(r.event, r.notes)
+      onSaved(r.event, r.notes, followUp || null)
     } catch (e) { toast((e as Error).message, 'err') } finally { setSaving(false) }
   }
   const needsFollowUp = ['no_answer', 'callback', 'less_convinced', 'interested', 'very_convinced'].includes(status[0] || '')
@@ -264,12 +281,12 @@ function LogCallModal({ lead, onClose, onSaved }: { lead: Lead | null; onClose: 
   )
 }
 
-function AddLeadModal({ open, onClose, onAdded }: { open: boolean; onClose: () => void; onAdded: () => void }) {
+function AddLeadModal({ open, onClose, onAdded }: { open: boolean; onClose: () => void; onAdded: (lead: Lead) => void }) {
   const [f, setF] = useState({ full_name: '', whatsapp: '', email: '', heard_from: 'other', what_building: '', twitter_handle: '' })
   const [saving, setSaving] = useState(false)
   async function save() {
     setSaving(true)
-    try { await api('/api/team/add-lead', { method: 'POST', json: f }); toast('Lead added'); setF({ full_name: '', whatsapp: '', email: '', heard_from: 'other', what_building: '', twitter_handle: '' }); onAdded() }
+    try { const r = await api<{ lead: Lead }>('/api/team/add-lead', { method: 'POST', json: f }); toast('Lead added'); setF({ full_name: '', whatsapp: '', email: '', heard_from: 'other', what_building: '', twitter_handle: '' }); onAdded(r.lead) }
     catch (e) { toast((e as Error).message, 'err') } finally { setSaving(false) }
   }
   return (

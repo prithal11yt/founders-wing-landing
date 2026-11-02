@@ -17,6 +17,12 @@ function getSecret(): string {
   return secret
 }
 
+// A session lasts 7 days from last use, so nobody gets signed out mid-week, and at
+// most 30 days from sign-in, because these tokens can't be revoked individually.
+const SESSION_MS = 7 * 24 * 60 * 60 * 1000
+export const SESSION_RENEW_AFTER_MS = 60 * 60 * 1000
+export const SESSION_MAX_MS = 30 * 24 * 60 * 60 * 1000
+
 function signToken(payload: object): string {
   const secret = getSecret()
   const data = Buffer.from(JSON.stringify(payload)).toString("base64url")
@@ -46,6 +52,28 @@ function isRateLimited(ip: string): boolean {
   recentAttempts.set(ip, hits)
   if (recentAttempts.size > 5000) recentAttempts.clear()
   return hits.length > RATE_LIMIT_MAX
+}
+
+export function setSessionCookie(response: NextResponse, account: { email: string; role: LeadsRole }, startedAt = Date.now()) {
+  const now = Date.now()
+  const token = signToken({
+    // typ pins this token to the leads/admin surface. Member tokens are
+    // signed with the same secret, so without a type tag the verifier could
+    // be tricked into accepting a member's token as an admin session.
+    typ: "leads",
+    email: account.email,
+    role: account.role,
+    iat: now,
+    start: startedAt,
+    exp: now + SESSION_MS,
+  })
+  response.cookies.set("fw_leads_token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    maxAge: SESSION_MS / 1000,
+    path: "/",
+  })
 }
 
 function resolveRole(email: string, password: string): { email: string; role: LeadsRole } | null {
@@ -89,30 +117,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
     }
 
-    const token = signToken({
-      // typ pins this token to the leads/admin surface. Member tokens are
-      // signed with the same secret, so without a type tag the verifier could
-      // be tricked into accepting a member's token as an admin session.
-      typ: "leads",
-      email: account.email,
-      role: account.role,
-      iat: Date.now(),
-      exp: Date.now() + 24 * 60 * 60 * 1000,
-    })
-
     const response = NextResponse.json({
       success: true,
       email: account.email,
       role: account.role,
     })
 
-    response.cookies.set("fw_leads_token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      maxAge: 86400,
-      path: "/",
-    })
+    setSessionCookie(response, account)
 
     return response
   } catch (err) {

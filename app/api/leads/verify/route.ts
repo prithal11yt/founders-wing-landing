@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import crypto from "crypto"
-import type { LeadsRole } from "../auth/route"
+import { SESSION_MAX_MS, SESSION_RENEW_AFTER_MS, setSessionCookie, type LeadsRole } from "../auth/route"
 
 function getSecret(): string {
   const secret = process.env.LEADS_AUTH_SECRET
@@ -8,7 +8,7 @@ function getSecret(): string {
   return secret
 }
 
-export type LeadsSession = { email: string; role: LeadsRole }
+export type LeadsSession = { email: string; role: LeadsRole; iat?: number; start?: number }
 
 export function verifyToken(token: string): LeadsSession | null {
   try {
@@ -36,7 +36,7 @@ export function verifyToken(token: string): LeadsSession | null {
     if (payload.role !== "admin" && payload.role !== "team") return null
     const role: LeadsRole = payload.role
 
-    return { email: payload.email, role }
+    return { email: payload.email, role, iat: payload.iat, start: payload.start ?? payload.iat }
   } catch {
     return null
   }
@@ -64,5 +64,13 @@ export async function GET(request: NextRequest) {
     return response
   }
 
-  return NextResponse.json({ authenticated: true, email: result.email, role: result.role })
+  const response = NextResponse.json({ authenticated: true, email: result.email, role: result.role })
+
+  // Pages ping this while open, which keeps an active session alive.
+  const now = Date.now()
+  const start = result.start ?? now
+  if (now - (result.iat ?? 0) > SESSION_RENEW_AFTER_MS && now - start < SESSION_MAX_MS) {
+    setSessionCookie(response, { email: result.email, role: result.role }, start)
+  }
+  return response
 }

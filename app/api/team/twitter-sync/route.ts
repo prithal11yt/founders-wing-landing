@@ -1,5 +1,6 @@
-import { NextRequest } from "next/server"
-import { db, session, json, unauthorized, serverError, phoneDigits } from "@/lib/server/tracker"
+import { after, type NextRequest } from "next/server"
+import { qualifyLeads } from "@/lib/lead-qualifier"
+import { db, session, json, unauthorized, serverError, phoneDigits, fetchAll } from "@/lib/server/tracker"
 
 // Twitter outreach leads are auto-logged by a bot into a Google Sheet. This
 // pulls the sheet's CSV export and adds any new rows to the leads table so the
@@ -55,11 +56,10 @@ export async function POST(req: NextRequest) {
     }
     const get = (r: string[], i: number) => (i >= 0 ? (r[i] || "").trim() : "")
 
-    const { data: existing, error: exErr } = await sb
-      .from("waitlist_applications").select("source_ref, whatsapp").not("whatsapp", "is", null)
-    if (exErr) throw exErr
-    const knownRefs = new Set((existing || []).map(e => e.source_ref).filter(Boolean))
-    const knownPhones = new Set((existing || []).map(e => phoneDigits(e.whatsapp)).filter(Boolean))
+    const existing = await fetchAll<{ source_ref: string | null; whatsapp: string | null }>((from, to) =>
+      sb.from("waitlist_applications").select("source_ref, whatsapp").order("id", { ascending: true }).range(from, to))
+    const knownRefs = new Set(existing.map(e => e.source_ref).filter(Boolean))
+    const knownPhones = new Set(existing.map(e => phoneDigits(e.whatsapp)).filter(Boolean))
 
     const inserts = []
     for (const r of rows.slice(1)) {
@@ -97,6 +97,8 @@ export async function POST(req: NextRequest) {
       const { error: insErr } = await sb.from("waitlist_applications").upsert(inserts, { onConflict: "source_ref", ignoreDuplicates: true })
       if (insErr) throw insErr
     }
+    // Score anything still unscored, including rows from an earlier sync whose scoring failed.
+    after(() => qualifyLeads({}).catch(e => console.error("[team/twitter-sync] scoring failed:", e)))
     const at = new Date().toISOString()
     await sb.from("fw_settings").upsert({ key: "twitter_sync", value: { at, added: inserts.length, rows: rows.length - 1 }, updated_at: at })
     return json({ added: inserts.length, total: rows.length - 1, last_sync: at })

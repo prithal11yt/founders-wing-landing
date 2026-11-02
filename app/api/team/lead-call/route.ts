@@ -41,15 +41,20 @@ export async function POST(req: NextRequest) {
       patch.notes = `${stamp}: ${note}${lead.notes ? `\n${lead.notes}` : ""}`.slice(0, 8000)
     }
 
-    const { error: upErr } = await sb.from("waitlist_applications").update(patch).eq("id", id)
-    if (upErr) throw upErr
-
+    // The event is what the daily numbers count, so write it first and undo it
+    // if the lead can't be updated. A call is either fully logged or not at all.
     const { data: event, error: evErr } = await sb
       .from("lead_call_events")
       .insert({ lead_id: id, actor: actorOf(s), call_status: status, note, tags })
       .select("id, lead_id, actor, call_status, note, tags, created_at")
       .single()
     if (evErr) throw evErr
+
+    const { error: upErr } = await sb.from("waitlist_applications").update(patch).eq("id", id)
+    if (upErr) {
+      await sb.from("lead_call_events").delete().eq("id", event.id)
+      throw upErr
+    }
 
     return json({ success: true, event, notes: patch.notes ?? lead.notes })
   } catch (err) {

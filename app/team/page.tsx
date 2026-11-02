@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { api, CSS, type Overview, type Role } from './_components/shared'
+import { SessionExpiredOverlay, useSessionKeepAlive } from '@/components/team-session'
 import Today from './_components/today'
 import Leads from './_components/leads'
 import Members from './_components/members'
@@ -29,6 +30,7 @@ export default function TeamPage() {
   const [tab, setTab] = useState<Tab>('today')
   const [focus, setFocus] = useState<{ leadId?: number; memberEmail?: string }>({})
   const [overview, setOverview] = useState<Overview | null>(null)
+  const [expired, setExpired] = useState(false)
 
   useEffect(() => {
     fetch('/api/leads/verify').then(r => r.json())
@@ -36,7 +38,8 @@ export default function TeamPage() {
       .catch(() => {}).finally(() => setChecking(false))
     const h = window.location.hash.replace('#', '')
     if (isTab(h)) setTab(h)
-    const onUnauth = () => setAuthed(false)
+    // Keep the page mounted when a session ends, so half-typed forms survive signing back in.
+    const onUnauth = () => setExpired(true)
     const onHash = () => { const h = window.location.hash.replace('#', ''); if (isTab(h)) setTab(h) }
     window.addEventListener('fw-unauth', onUnauth)
     window.addEventListener('hashchange', onHash)
@@ -47,6 +50,8 @@ export default function TeamPage() {
     api<Overview>('/api/team/overview').then(setOverview).catch(() => {})
   }, [])
   useEffect(() => { if (authed) { reload(); const t = setInterval(reload, 90_000); return () => clearInterval(t) } }, [authed, reload])
+
+  useSessionKeepAlive(authed && !expired, () => setExpired(true))
 
   function goTo(t: string, f?: { leadId?: number; memberEmail?: string }) {
     if (!isTab(t)) return
@@ -115,6 +120,7 @@ export default function TeamPage() {
         {tab === 'ideas' && <Ideas role={role} />}
         {tab === 'patterns' && <Insights />}
       </main>
+      {expired && <SessionExpiredOverlay onSignedIn={a => { setExpired(false); setEmail(a.email); setRole(a.role === 'admin' ? 'admin' : 'team'); reload() }} />}
     </div>
   )
 }

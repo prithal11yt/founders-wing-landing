@@ -109,6 +109,63 @@ export function cleanText(v: unknown, max = 2000): string | null {
   return t ? t.slice(0, max) : null
 }
 
+// PostgREST returns at most 1,000 rows per request and doesn't say it truncated,
+// so anything that must see a whole table has to page through it.
+export async function fetchAll<T>(page: (from: number, to: number) => PromiseLike<{ data: T[] | null; error: unknown }>): Promise<T[]> {
+  const size = 1000
+  const rows: T[] = []
+  for (let from = 0; ; from += size) {
+    const { data, error } = await page(from, from + size - 1)
+    if (error) throw error
+    rows.push(...(data ?? []))
+    if (!data || data.length < size) return rows
+  }
+}
+
+// Stored member emails have mixed casing, hence ilike. Escaped so "_" in an
+// address isn't treated as a wildcard.
+export const likeExact = (email: string) => email.replace(/[\\%_]/g, "\\$&")
+
+// ── Member contact: one record shared by the Members tab and Member progress ──
+const REACHED_OUTCOMES = ["answered", "callback", "messaged"]
+
+// A logged contact keeps the Member progress page's dates in step. A missed call
+// is an attempt rather than contact, so it leaves "last contacted" alone.
+export async function syncCrmContact(sb: SupabaseClient, c: { email: string; outcome: string; followUp?: string | null; by: string }) {
+  const patch: Record<string, unknown> = {}
+  if (REACHED_OUTCOMES.includes(c.outcome)) patch.last_contacted = istDayKey()
+  if (c.followUp) patch.next_follow_up = c.followUp
+  if (!Object.keys(patch).length) return
+  const { error } = await sb.from("fw_crm_members").upsert(
+    { email: c.email, ...patch, updated_at: new Date().toISOString(), updated_by: c.by }, { onConflict: "email" },
+  )
+  if (error) console.error("[tracker] crm contact sync failed:", error.message)
+}
+
+export async function upcomingSessionId(sb: SupabaseClient): Promise<string | null> {
+  const today = istDayKey()
+  const { data } = await sb.from("fw_calls").select("id").gte("call_date", today).lte("call_date", nextSessionDay(today))
+    .order("call_date", { ascending: true }).limit(1).maybeSingle()
+  return data?.id ?? null
+}
+
+// Writing call notes or a check-in on Member progress means the team spoke to the
+// member, so it counts on the daily tracker too. Once per member per day, so
+// logging the call and then writing notes about it isn't counted twice.
+export async function countMemberContactOnce(sb: SupabaseClient, c: { email: string; actor: Actor; note?: string | null }) {
+  const { data: already, error: readErr } = await sb.from("fw_member_touchpoints").select("id")
+    .eq("member_email", c.email).eq("actor", c.actor).in("outcome", REACHED_OUTCOMES)
+    .gte("created_at", dayStartUTC(istDayKey()).toISOString()).limit(1)
+  if (readErr) throw readErr
+  if (already?.length) return
+  const { data: member } = await sb.from("fw_memberships").select("full_name").ilike("email", likeExact(c.email)).limit(1).maybeSingle()
+  const { error } = await sb.from("fw_member_touchpoints").insert({
+    member_email: c.email, member_name: member?.full_name ?? null, actor: c.actor, channel: "call", outcome: "answered",
+    note: cleanText(c.note ?? null), session_id: await upcomingSessionId(sb),
+  })
+  if (error) throw error
+}
+
 export function phoneDigits(raw?: string | null): string {
   if (!raw) return ""
   const d = raw.replace(/\D/g, "")

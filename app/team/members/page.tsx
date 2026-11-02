@@ -1,11 +1,12 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Download, Loader2, LogOut, Phone, Search, X } from 'lucide-react'
 import {
-  BLOCKERS, CHECKIN_STATUS, GOAL_STATUS, MEMBERSHIP_STATUS, MEMBER_TYPES, OUTCOMES, PARTICIPATION, RENEWAL_SIGNAL, STAGES, SUPPORT_TYPES, TIME_AVAILABLE,
+  BLOCKERS, CHECKIN_STATUS, GOAL_STATUS, MEMBERSHIP_STATUS, MEMBER_TYPES, OUTCOMES, PARTICIPATION, PROFILE_FIELDS, RENEWAL_SIGNAL, STAGES, SUPPORT_TYPES, TIME_AVAILABLE, TOUCH_OUTCOMES,
   label, type Checkin, type CrmProfile, type Goal, type Member,
 } from '@/lib/crm'
+import { SessionExpiredOverlay, useSessionKeepAlive } from '@/components/team-session'
 
 /* Member Progress Dashboard — the team's view of every member: who they are, what
    they're building, their stage, 30-day goal, weekly check-ins and follow-ups. */
@@ -68,16 +69,22 @@ export default function TeamMembersPage() {
   const [filters, setFilters] = useState({ stage: '', type: '', status: '', blocker: '', goal: '', renewal: '', contact: '' })
   const [sort, setSort] = useState<'member_no' | 'name' | 'last_contacted' | 'next_follow_up' | 'stage'>('member_no')
   const [openEmail, setOpenEmail] = useState<string | null>(null)
+  const [expired, setExpired] = useState(false)
+  const loadSeq = useRef(0)
 
   useEffect(() => { fetch('/api/leads/verify').then(r => setAuth(r.ok ? 'ok' : 'login')).catch(() => setAuth('login')) }, [])
   const load = useCallback(async () => {
+    const seq = ++loadSeq.current
     setLoading(true); setError('')
     try {
-      const r = await fetch('/api/team/crm'); if (r.status === 401) { setAuth('login'); return }
+      // Stay on the page when a session ends, so unsaved forms survive signing back in.
+      const r = await fetch('/api/team/crm'); if (r.status === 401) { setExpired(true); return }
       const j = await r.json(); if (!r.ok) throw new Error(j.error || 'Failed to load')
-      setMembers(j.members); setMe(j.me)
-    } catch (e) { setError(e instanceof Error ? e.message : 'Failed to load') } finally { setLoading(false) }
+      // A slower, older response must not overwrite something just saved.
+      if (seq === loadSeq.current) { setMembers(j.members); setMe(j.me) }
+    } catch (e) { setError(e instanceof Error ? e.message : 'Failed to load') } finally { if (seq === loadSeq.current) setLoading(false) }
   }, [])
+  useSessionKeepAlive(auth === 'ok' && !expired, () => setExpired(true))
   useEffect(() => { if (auth === 'ok') load() }, [auth, load])
 
   async function login(e: React.FormEvent) {
@@ -89,9 +96,13 @@ export default function TeamMembersPage() {
   }
   async function logout() { await fetch('/api/leads/auth', { method: 'DELETE' }); setAuth('login'); setMembers([]) }
 
-  const post = useCallback(async (body: Record<string, unknown>) => {
-    const r = await fetch('/api/team/crm', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
-    const j = await r.json(); if (!r.ok) throw new Error(j.error || 'Save failed')
+  const post = useCallback(async (body: Record<string, unknown>, url = '/api/team/crm') => {
+    let r: Response
+    try { r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }) }
+    catch { throw new Error("Not saved: couldn't reach the server. Check your internet and press Save again. Your text is still here.") }
+    if (r.status === 401) { setExpired(true); throw new Error('Not saved: you were signed out. Sign in, then press Save again.') }
+    const j = await r.json().catch(() => ({}))
+    if (!r.ok) throw new Error(`Not saved: ${j.error || `the server returned an error (${r.status})`}. Press Save again.`)
     await load()
   }, [load])
 
@@ -214,45 +225,100 @@ export default function TeamMembersPage() {
         </>
       )}
 
-      {tab === 'followups' && <Followups members={members} onOpen={setOpenEmail} post={post} />}
+      {tab === 'followups' && <Followups members={members} onOpen={setOpenEmail} post={post} onError={setError} />}
       {tab === 'board' && <Board members={members} onOpen={setOpenEmail} />}
       {tab === 'overview' && <Overview members={members} />}
       {tab === 'showcase' && <Showcase members={members} onOpen={setOpenEmail} />}
 
-      {open && <Profile key={open.email + open.crm?.updated_at} m={open} me={me} onClose={() => setOpenEmail(null)} post={post} />}
+      {open && <Profile key={open.email} m={open} me={me} onClose={() => setOpenEmail(null)} post={post} />}
+      {expired && <SessionExpiredOverlay onSignedIn={() => { setExpired(false); load() }} />}
     </Shell>
   )
 }
 
 /* ─── Profile slide-over ─── */
-function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () => void; post: (b: Record<string, unknown>) => Promise<void> }) {
+const sameValue = (a: unknown, b: unknown) => {
+  const norm = (v: unknown) => (v == null || v === '' || v === false ? null : Array.isArray(v) ? (v.length ? [...v].sort().join('|') : null) : v)
+  return norm(a) === norm(b)
+}
+const TOUCH_LABEL = Object.fromEntries(TOUCH_OUTCOMES.map(o => [o.value, o.label])) as Record<string, string>
+
+function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () => void; post: (b: Record<string, unknown>, url?: string) => Promise<void> }) {
   const blank: CrmProfile = { email: m.email, preferred_name: null, membership_status: 'active', member_type: null, project_name: null, building: null, target_user: null, stage: null, stage_evidence: null, main_outcome: null, blocker: null, time_available: null, preferred_support: [], preferred_participation: null, skills: null, can_offer: null, call_notes: null, last_contacted: null, next_follow_up: null, renewal_signal: null, showcase_permission: false, demo_url: null, board_summary: null, board_hidden: false, updated_at: null, updated_by: null }
   const [f, setF] = useState<CrmProfile>({ ...blank, ...(m.crm ?? {}) })
+  const [saved, setSaved] = useState<CrmProfile>({ ...blank, ...(m.crm ?? {}) })
   const [reason, setReason] = useState('')
   const [saving, setSaving] = useState<string | null>(null)
-  const [msg, setMsg] = useState('')
+  const [notice, setNotice] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null)
+  const noticeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const set = (k: keyof CrmProfile, v: unknown) => setF(p => ({ ...p, [k]: v }))
+  // Saving anything refreshes this member. Take the new values only for fields the
+  // user hasn't changed, so a refresh never wipes what they're in the middle of typing.
+  useEffect(() => {
+    const next = { ...blank, ...(m.crm ?? {}) } as CrmProfile
+    setF(cur => {
+      const merged = { ...cur } as Record<string, unknown>
+      for (const k of Object.keys(next) as (keyof CrmProfile)[]) if (sameValue(cur[k], saved[k])) merged[k] = next[k]
+      return merged as CrmProfile
+    })
+    setSaved(next)
+  }, [m.crm]) // eslint-disable-line react-hooks/exhaustive-deps
+  const profileDirty = PROFILE_FIELDS.some(k => !sameValue(f[k], saved[k]))
   const stageChanged = (m.crm?.stage ?? null) !== (f.stage || null)
+  // Setting a stage for the first time isn't a change that needs explaining.
+  const needsReason = stageChanged && !!m.crm?.stage
   const t = today()
   const g = activeGoal(m)
   const [newGoal, setNewGoal] = useState({ goal: '', next_action: '', due_on: new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10) })
   const [review, setReview] = useState({ status: '', result: '', proof: '', learning: '', reason: '' })
   const [ci, setCi] = useState<Partial<Checkin>>({ week_of: t, status: 'on_track' })
+  const [touch, setTouch] = useState({ outcome: '', note: '', follow_up_at: '' })
+  const ciTyped = (['progress', 'evidence', 'blocker', 'help_requested', 'next_action'] as const).some(k => ci[k]?.trim())
+  const hasUnsaved = profileDirty || ciTyped || !!newGoal.goal.trim() || !!touch.outcome || !!touch.note.trim()
+  useEffect(() => {
+    if (!hasUnsaved) return
+    const warn = (e: BeforeUnloadEvent) => e.preventDefault()
+    window.addEventListener('beforeunload', warn)
+    return () => window.removeEventListener('beforeunload', warn)
+  }, [hasUnsaved])
+  const requestClose = () => { if (!hasUnsaved || window.confirm('You have unsaved changes for this member. Close without saving them?')) onClose() }
   const section = 'rounded-[18px] border border-neutral-200 bg-white p-4 md:p-5'
 
-  async function run(name: string, body: Record<string, unknown>) {
-    setSaving(name); setMsg('')
-    try { await post(body); setMsg('Saved') } catch (e) { setMsg(e instanceof Error ? e.message : 'Save failed') } finally { setSaving(null); setTimeout(() => setMsg(''), 2500) }
+  const show = (kind: 'ok' | 'err', text: string) => {
+    clearTimeout(noticeTimer.current)
+    setNotice({ kind, text })
+    if (kind === 'ok') noticeTimer.current = setTimeout(() => setNotice(null), 3500)
   }
-  const saveProfile = () => {
-    if (stageChanged && !reason.trim()) { setMsg('Add a short reason for the stage change'); return }
+  // Returns whether it saved, so forms are only cleared after a real save.
+  async function run(name: string, body: Record<string, unknown>, okText = 'Saved', url?: string): Promise<boolean> {
+    setSaving(name); setNotice(null)
+    try { await post(body, url); show('ok', okText); return true }
+    catch (e) { show('err', e instanceof Error ? e.message : 'Not saved. Press Save again.'); return false }
+    finally { setSaving(null) }
+  }
+  const saveProfile = async () => {
+    if (needsReason && !reason.trim()) { show('err', 'Not saved: add a short reason for the stage change.'); return }
     const { email: _e, updated_at: _u, updated_by: _b, ...fields } = f; void _e; void _u; void _b
-    run('profile', { action: 'profile', email: m.email, fields, reason: reason.trim() || undefined })
+    if (await run('profile', { action: 'profile', email: m.email, fields, reason: reason.trim() || undefined }, 'Profile saved')) setReason('')
+  }
+  const logCall = async () => {
+    if (!touch.outcome) { show('err', 'Not saved: pick what happened on the call.'); return }
+    const body = { member_email: m.email, channel: touch.outcome === 'messaged' ? 'whatsapp' : 'call', outcome: touch.outcome, note: touch.note, follow_up_at: touch.follow_up_at || null }
+    if (await run('touch', body, 'Call logged. It counts on your Today tab.', '/api/team/member-touchpoint')) setTouch({ outcome: '', note: '', follow_up_at: '' })
+  }
+  const saveGoal = async () => {
+    if (await run('goal', { action: 'goal', email: m.email, ...newGoal }, 'Goal saved')) setNewGoal({ ...newGoal, goal: '', next_action: '' })
+  }
+  const saveReview = async () => {
+    if (await run('review', { action: 'goal_review', id: g!.id, ...review }, 'Review saved')) setReview({ status: '', result: '', proof: '', learning: '', reason: '' })
+  }
+  const saveCheckin = async () => {
+    if (await run('checkin', { action: 'checkin', email: m.email, fields: ci }, 'Check-in saved. It counts on your Today tab.')) setCi({ week_of: t, status: 'on_track' })
   }
 
   return (
     <div className="fixed inset-0 z-[80]">
-      <div className="absolute inset-0 bg-black/30" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/30" onClick={requestClose} />
       <aside className="absolute right-0 top-0 h-full w-full max-w-[720px] bg-neutral-50 shadow-2xl overflow-y-auto">
         <div className="sticky top-0 z-10 bg-white border-b border-neutral-200 px-5 py-3 flex items-start justify-between gap-4">
           <div>
@@ -264,7 +330,7 @@ function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () 
               <a href={`mailto:${m.email}`} className={btnGhost + ' h-8 px-3 text-[12px]'}>{m.email}</a>
             </div>
           </div>
-          <button onClick={onClose} className="p-2 rounded-full hover:bg-neutral-100" aria-label="Close"><X className="w-5 h-5" /></button>
+          <button onClick={requestClose} className="p-2 rounded-full hover:bg-neutral-100" aria-label="Close"><X className="w-5 h-5" /></button>
         </div>
 
         <div className="p-5 space-y-4">
@@ -279,6 +345,24 @@ function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () 
             </div>
           )}
 
+          {/* Log a call */}
+          <section className={section}>
+            <div className="flex items-center justify-between gap-3 mb-3"><h3 className="font-semibold">Log a call</h3><span className="text-[12px] text-neutral-500">Counts on your Today tab and updates last contacted</span></div>
+            <div className="flex flex-wrap gap-1.5">
+              {TOUCH_OUTCOMES.map(o => <button type="button" key={o.value} onClick={() => setTouch({ ...touch, outcome: touch.outcome === o.value ? '' : o.value })} className={`rounded-full px-3 h-8 text-[12px] font-medium border ${touch.outcome === o.value ? 'bg-neutral-900 text-white border-neutral-900' : 'border-neutral-200 bg-white hover:border-neutral-400'}`}>{o.label}</button>)}
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3 mt-3">
+              <div className="sm:col-span-2"><Field name="What did they say?" hint="optional"><textarea value={touch.note} onChange={e => setTouch({ ...touch, note: e.target.value })} className={inp + ' min-h-[60px]'} /></Field></div>
+              <Field name="Follow up on" hint="optional"><input type="date" value={touch.follow_up_at} onChange={e => setTouch({ ...touch, follow_up_at: e.target.value })} className={inp} /></Field>
+            </div>
+            <button onClick={logCall} disabled={saving === 'touch'} className={btnPrimary + ' mt-3'} style={{ background: '#0284c7' }}>{saving === 'touch' ? 'Saving…' : 'Log call'}</button>
+            {m.touchpoints.length > 0 && (
+              <ul className="mt-4 space-y-1.5 text-[12px] text-neutral-600">
+                {m.touchpoints.slice(0, 5).map(x => <li key={x.id}><span className="text-neutral-400">{fmt(x.created_at)}</span> · <span className="font-medium text-neutral-800">{TOUCH_LABEL[x.outcome] || x.outcome}</span>{x.note ? ` · ${x.note}` : ''}</li>)}
+              </ul>
+            )}
+          </section>
+
           {/* Call profile */}
           <section className={section}>
             <div className="flex items-center justify-between mb-3"><h3 className="font-semibold">Member profile</h3><span className="text-[12px] text-neutral-500">Fill what you can; the call should take 8–12 minutes</span></div>
@@ -290,7 +374,7 @@ function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () 
               <div className="sm:col-span-2"><Field name="What are they trying to build or improve?" hint="required, plain language"><textarea value={f.building ?? ''} onChange={e => set('building', e.target.value)} className={inp + ' min-h-[70px]'} /></Field></div>
               <Field name="Target user / customer" hint="who is this for?"><input value={f.target_user ?? ''} onChange={e => set('target_user', e.target.value)} className={inp} /></Field>
               <Field name="Current stage" hint="required"><Select value={f.stage} onChange={v => set('stage', v)} options={STAGES} />{f.stage && <p className="mt-1 text-[11px] text-neutral-500">{STAGES.find(s => s.value === f.stage)?.hint}</p>}</Field>
-              {stageChanged && <div className="sm:col-span-2"><Field name="Reason for the stage change" hint="required, goes in the history"><input value={reason} onChange={e => setReason(e.target.value)} placeholder="e.g. MVP deployed, first users onboarded" className={inp} /></Field></div>}
+              {needsReason && <div className="sm:col-span-2"><Field name="Reason for the stage change" hint="required, goes in the history"><input value={reason} onChange={e => setReason(e.target.value)} placeholder="e.g. MVP deployed, first users onboarded" className={inp} /></Field></div>}
               <div className="sm:col-span-2"><Field name="Stage evidence" hint="what exists today?"><input value={f.stage_evidence ?? ''} onChange={e => set('stage_evidence', e.target.value)} placeholder="idea, prototype, live product, first users, paying customers, workflow in use" className={inp} /></Field></div>
               <Field name="Main outcome wanted" hint="required"><Select value={f.main_outcome} onChange={v => set('main_outcome', v)} options={OUTCOMES} /></Field>
               <Field name="Biggest current blocker" hint="required"><Select value={f.blocker} onChange={v => set('blocker', v)} options={BLOCKERS} /></Field>
@@ -318,8 +402,6 @@ function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () 
             </div>
             <div className="mt-4 flex items-center gap-3">
               <button onClick={saveProfile} disabled={saving === 'profile'} className={btnPrimary} style={{ background: '#0284c7' }}>{saving === 'profile' ? 'Saving…' : 'Save profile'}</button>
-              <button onClick={() => set('last_contacted', t)} className={btnGhost}>Contacted today</button>
-              {msg && <span className="text-[13px] text-neutral-600">{msg}</span>}
             </div>
           </section>
 
@@ -340,7 +422,7 @@ function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () 
                     <Field name="Proof" hint="demo, link, payment, metric"><input value={review.proof} onChange={e => setReview({ ...review, proof: e.target.value })} className={inp} /></Field>
                     <Field name="Learning" hint="what did they learn, what blocked them"><input value={review.learning} onChange={e => setReview({ ...review, learning: e.target.value })} className={inp} /></Field>
                   </div>
-                  <button onClick={() => review.status && run('review', { action: 'goal_review', id: g.id, ...review })} disabled={!review.status || saving === 'review'} className={btnPrimary + ' mt-3 disabled:opacity-50'} style={{ background: '#0284c7' }}>{saving === 'review' ? 'Saving…' : 'Save review'}</button>
+                  <button onClick={() => review.status && saveReview()} disabled={!review.status || saving === 'review'} className={btnPrimary + ' mt-3 disabled:opacity-50'} style={{ background: '#0284c7' }}>{saving === 'review' ? 'Saving…' : 'Save review'}</button>
                 </details>
               </div>
             ) : <p className="text-[13px] text-neutral-500">No goal agreed yet.</p>}
@@ -351,7 +433,7 @@ function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () 
                 <Field name="Next action" hint="one thing they commit to doing next"><input value={newGoal.next_action} onChange={e => setNewGoal({ ...newGoal, next_action: e.target.value })} className={inp} /></Field>
                 <Field name="Due"><input type="date" value={newGoal.due_on} onChange={e => setNewGoal({ ...newGoal, due_on: e.target.value })} className={inp} /></Field>
               </div>
-              <button onClick={() => newGoal.goal.trim() && run('goal', { action: 'goal', email: m.email, ...newGoal }).then(() => setNewGoal({ ...newGoal, goal: '', next_action: '' }))} disabled={!newGoal.goal.trim() || saving === 'goal'} className={btnPrimary + ' mt-3 disabled:opacity-50'} style={{ background: '#0284c7' }}>{saving === 'goal' ? 'Saving…' : 'Save goal'}</button>
+              <button onClick={() => newGoal.goal.trim() && saveGoal()} disabled={!newGoal.goal.trim() || saving === 'goal'} className={btnPrimary + ' mt-3 disabled:opacity-50'} style={{ background: '#0284c7' }}>{saving === 'goal' ? 'Saving…' : 'Save goal'}</button>
             </details>
             {m.goals.filter(x => x.status !== 'active').length > 0 && (
               <div className="mt-4">
@@ -385,7 +467,7 @@ function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () 
               <Field name="Follow-up owner"><input value={ci.followup_owner ?? ''} onChange={e => setCi({ ...ci, followup_owner: e.target.value })} placeholder={me.split('@')[0]} className={inp} /></Field>
               <Field name="Follow-up due"><input type="date" value={ci.followup_due ?? ''} onChange={e => setCi({ ...ci, followup_due: e.target.value })} className={inp} /></Field>
             </div>
-            <button onClick={() => run('checkin', { action: 'checkin', email: m.email, fields: ci }).then(() => setCi({ week_of: t, status: 'on_track' }))} disabled={saving === 'checkin'} className={btnPrimary + ' mt-3'} style={{ background: '#0284c7' }}>{saving === 'checkin' ? 'Saving…' : 'Save check-in'}</button>
+            <button onClick={saveCheckin} disabled={saving === 'checkin'} className={btnPrimary + ' mt-3'} style={{ background: '#0284c7' }}>{saving === 'checkin' ? 'Saving…' : 'Save check-in'}</button>
             {m.checkins.length > 0 && (
               <ul className="mt-4 space-y-2">
                 {m.checkins.map(x => (
@@ -414,13 +496,27 @@ function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () 
             </section>
           )}
         </div>
+
+        {/* These stay on screen however far down the form you are. */}
+        {profileDirty && (
+          <div className="sticky bottom-0 z-10 bg-white border-t border-neutral-200 px-5 py-3 flex items-center justify-between gap-3">
+            <span className="text-[13px] font-medium text-amber-700">Profile changes not saved yet</span>
+            <button onClick={saveProfile} disabled={saving === 'profile'} className={btnPrimary} style={{ background: '#0284c7' }}>{saving === 'profile' ? 'Saving…' : 'Save profile'}</button>
+          </div>
+        )}
+        {notice && (
+          <div role={notice.kind === 'err' ? 'alert' : 'status'} className={`fixed z-[90] bottom-20 right-4 left-4 sm:left-auto sm:max-w-[420px] rounded-xl px-4 py-3 text-[14px] font-medium shadow-xl flex items-start justify-between gap-3 ${notice.kind === 'err' ? 'bg-red-700 text-white' : 'bg-neutral-900 text-white'}`}>
+            <span>{notice.text}</span>
+            <button onClick={() => setNotice(null)} aria-label="Dismiss" className="shrink-0 opacity-80 hover:opacity-100"><X className="w-4 h-4" /></button>
+          </div>
+        )}
       </aside>
     </div>
   )
 }
 
 /* ─── Follow-ups queue ─── */
-function Followups({ members, onOpen, post }: { members: Member[]; onOpen: (e: string) => void; post: (b: Record<string, unknown>) => Promise<void> }) {
+function Followups({ members, onOpen, post, onError }: { members: Member[]; onOpen: (e: string) => void; post: (b: Record<string, unknown>) => Promise<void>; onError: (msg: string) => void }) {
   const t = today(); const week = new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10)
   const active = members.filter(m => (m.crm?.membership_status ?? 'active') !== 'left')
   const overdue = active.filter(m => m.crm?.next_follow_up && m.crm.next_follow_up < t)
@@ -446,7 +542,7 @@ function Followups({ members, onOpen, post }: { members: Member[]; onOpen: (e: s
           <li key={c.id} className="py-2 text-[13px]">
             <div className="flex items-center justify-between gap-3"><button onClick={() => onOpen(m.email)} className="font-medium hover:underline text-left">{m.crm?.preferred_name || m.full_name}</button><span className="text-[12px] text-neutral-500">{fmt(c.week_of)}{c.followup_owner ? ` · ${c.followup_owner}` : ''}{c.followup_due ? ` · due ${fmt(c.followup_due)}` : ''}</span></div>
             <p className="text-neutral-700">{c.help_requested}</p>
-            <button onClick={() => post({ action: 'checkin_update', id: c.id, fields: { followup_done: true } })} className="mt-1 text-[12px] text-sky-700 hover:underline">Mark resolved</button>
+            <button onClick={() => post({ action: 'checkin_update', id: c.id, fields: { followup_done: true } }).catch(e => onError(e instanceof Error ? e.message : 'Not saved'))} className="mt-1 text-[12px] text-sky-700 hover:underline">Mark resolved</button>
           </li>
         ))}</ul> : <p className="text-[13px] text-neutral-400">Nothing open.</p>}
       </section>
