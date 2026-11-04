@@ -179,7 +179,7 @@ export async function enrichStep(deadline: number) {
       const v = verdicts.get(r.id)
       if (!v) { stats.failed++; continue }
       const at = new Date().toISOString()
-      if (!v.relevant || v.score < 50 || !v.summary) {
+      if (!v.relevant || v.score < 60 || !v.summary) {
         await sb.from('fw_events').update({ status: 'rejected', score: v.score, ai_reason: v.reason, classified_at: at, updated_at: at }).eq('id', r.id)
         stats.rejected++
         continue

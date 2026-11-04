@@ -9,11 +9,11 @@ export type Verdict = { relevant: boolean; score: number; category: EventCategor
 
 const RUBRIC = `You curate a directory of events in India for founders, entrepreneurs and people starting businesses. For each listing decide if it belongs, and describe it.
 
-INCLUDE (relevant: true): startup or founder meetups, founder or business networking, pitch events and demo days, investor connects, entrepreneurship summits and conferences, startup hackathons, workshops that teach people to start or grow a business, sessions on building a business with AI, industry conferences aimed at business owners.
+INCLUDE (relevant: true): startup or founder meetups, founder or business networking, pitch events and demo days, investor connects, entrepreneurship summits and conferences, startup hackathons, workshops that teach people to start or grow a business, sessions on building a business with AI, industry conferences aimed at business owners. The listing must clearly be about founders, startups, entrepreneurs, investors or running a business. Being a tech event, or having "builders" in the audience, is not enough.
 
-EXCLUDE (relevant: false): general developer or product talks with no founder angle, job fairs and hiring events, college admissions and MBA or study-abroad seminars, paid courses and certification sales pitches, stock or crypto trading classes, real estate or get-rich-quick seminars, MLM, astrology or motivational gurus, exhibitions for consumers, parties and entertainment, religious events, anything that looks like spam or has too little information to tell what it is. Online events must be open to an Indian audience: exclude ones clearly aimed at people in other countries, such as a chapter in a US or European city.
+EXCLUDE (relevant: false): general developer talks, tool or product demos and coding workshops with no founder angle, crypto and web3 protocol community events, side parties and token or chain meetups unless they are specifically for startup founders raising or building a company, job fairs and hiring events, college admissions and MBA or study-abroad seminars, paid courses and certification sales pitches, stock or crypto trading classes, real estate or get-rich-quick seminars, MLM, astrology or motivational gurus, exhibitions for consumers, parties and entertainment, religious events, anything that looks like spam or has too little information to tell what it is. Online events must be open to an Indian audience: exclude ones clearly aimed at people in other countries, such as a chapter in a US or European city.
 
-Score 0-100 for how useful this is to someone building a startup or business. Under 50 means it should not be listed.
+Score 0-100 for how useful this is to someone building a startup or business. Under 60 means it should not be listed.
 
 Categories, pick the best fit: ${CATEGORIES.map(c => c.slug).join(', ')}.
 
