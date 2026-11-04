@@ -7,6 +7,7 @@ const LINKS = [
   { label: 'What’s Included', href: '/#benefits' },
   { label: 'Stories', href: '/#stories' },
   { label: 'Our Why', href: '/#founder' },
+  { label: 'Events', href: '/events' },
   { label: 'Blog', href: '/blog' },
   { label: 'FAQs', href: '/#faq' },
 ]

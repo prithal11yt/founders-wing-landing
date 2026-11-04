@@ -4,6 +4,11 @@ import { Wordmark } from './brand'
 
 // The resource links feed the SEO pages; keep them on every page.
 const RESOURCES = [
+  { href: '/events', label: 'Founder events in India' },
+  { href: '/events/city/bengaluru', label: 'Startup events in Bengaluru' },
+  { href: '/events/city/mumbai', label: 'Startup events in Mumbai' },
+  { href: '/events/city/delhi', label: 'Startup events in Delhi' },
+  { href: '/events/free', label: 'Free startup events' },
   { href: '/community/founder-community-india', label: 'Founder community India' },
   { href: '/guide/how-to-make-first-money-online-india', label: 'Make your first money online' },
   { href: '/tools/ai-tools-for-founders-india', label: 'AI tools for founders' },
@@ -20,6 +25,7 @@ const SITE = [
   { href: '/#stories', label: 'Member stories' },
   { href: '/founder', label: 'About Prithal' },
   { href: '/build', label: 'Building with Prithal' },
+  { href: '/events', label: 'Events' },
   { href: '/blog', label: 'Blog' },
   { href: '/#faq', label: 'FAQs' },
 ]

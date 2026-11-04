@@ -1,10 +1,15 @@
 import { MetadataRoute } from 'next'
 import { seoPages } from '@/lib/seo-pages'
 import { getAllPosts } from '@/lib/blog'
+import { getSitemapEvents, getUpcomingEvents } from '@/lib/events/data'
+import { indexableHubPaths } from '@/lib/events/hubs'
 
 const BASE_URL = 'https://www.founderswing.com'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+// Events change weekly, so this can't be frozen at build time.
+export const revalidate = 3600
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
     { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
@@ -29,5 +34,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  return [...staticRoutes, ...blogRoutes, ...dynamicRoutes]
+  const [upcoming, eventRows] = await Promise.all([getUpcomingEvents(), getSitemapEvents()])
+  const eventHubRoutes: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/events`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    ...indexableHubPaths(upcoming).map(path => ({ url: `${BASE_URL}${path}`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.8 })),
+  ]
+  const eventRoutes: MetadataRoute.Sitemap = eventRows.map(e => ({ url: `${BASE_URL}/events/${e.slug}`, lastModified: new Date(e.updated_at), changeFrequency: 'weekly', priority: 0.6 }))
+
+  return [...staticRoutes, ...blogRoutes, ...dynamicRoutes, ...eventHubRoutes, ...eventRoutes]
 }

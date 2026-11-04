@@ -1,0 +1,12 @@
+{
+  "crons": [
+    { "path": "/api/cron/events?step=eventbrite", "schedule": "0 18 * * 0" },
+    { "path": "/api/cron/events?step=meetup", "schedule": "0 19 * * 0" },
+    { "path": "/api/cron/events?step=luma", "schedule": "0 20 * * 0" },
+    { "path": "/api/cron/events?step=allevents", "schedule": "0 21 * * 0" },
+    { "path": "/api/cron/events?step=enrich", "schedule": "0 22 * * 0" },
+    { "path": "/api/cron/events?step=enrich", "schedule": "0 23 * * 0" },
+    { "path": "/api/cron/events?step=enrich", "schedule": "0 0 * * 1" },
+    { "path": "/api/cron/events?step=verify", "schedule": "0 1 * * 1" }
+  ]
+}
