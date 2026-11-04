@@ -189,7 +189,7 @@ export function EventBrowser({ events, lock = {}, emptyHint }: { events: ListedE
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[240px_minmax(0,1fr)]">
         <aside className="hidden lg:block" aria-label="Filter events">
-          <div className="sticky top-[244px] max-h-[calc(100vh-260px)] overflow-y-auto pr-1">{panel}</div>
+          <div className="sticky top-[244px] max-h-[calc(100vh-260px)] overflow-y-auto pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{panel}</div>
         </aside>
 
         <div>

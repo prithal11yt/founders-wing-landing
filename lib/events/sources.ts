@@ -39,13 +39,13 @@ export async function fetchText(url: string, timeoutMs = 20_000): Promise<{ stat
   for (let attempt = 0; ; attempt++) {
     const r = await fetch(url, { headers: { 'User-Agent': USER_AGENT, Accept: 'text/html,application/json;q=0.9,*/*;q=0.8' }, redirect: 'follow', signal: AbortSignal.timeout(timeoutMs), cache: 'no-store' })
     // Told to slow down: wait once and try again, then leave it for the next run.
-    if (r.status === 429 && attempt === 0) { await new Promise(res => setTimeout(res, 8000)); continue }
+    if (r.status === 429 && attempt === 0) { await new Promise(res => setTimeout(res, 5000)); continue }
     return { status: r.status, text: r.ok ? await r.text() : '' }
   }
 }
 
 /** Eventbrite rate-limits quickly, so it gets gentler treatment than the others. */
-export const pace = (source: string) => (source === 'eventbrite' ? { size: 2, delayMs: 900 } : { size: 4, delayMs: 200 })
+export const pace = (source: string) => (source === 'eventbrite' ? { size: 1, delayMs: 1500 } : source === 'luma' ? { size: 2, delayMs: 700 } : { size: 4, delayMs: 200 })
 
 /** Runs tasks with limited concurrency, stopping early when the time budget runs out. */
 export async function pool<T>(items: T[], size: number, deadline: number, work: (item: T) => Promise<void>, delayMs = 150): Promise<number> {
@@ -249,9 +249,12 @@ export async function crawlSource(source: SourceName, deadline: number): Promise
   }
   const urls = listUrls(source)
   const { size, delayMs } = pace(source)
+  let blocked = false
   const pages = await pool(urls, size, deadline, async url => {
+    if (blocked) return
     const { status, text } = await fetchText(url)
     if (status === 404) return // Not every city has every listing.
+    if (status === 429) { blocked = true; errors.push(`${source}: rate limited at ${url}, stopped for this run`); return }
     if (status !== 200) { errors.push(`${source} ${url}: HTTP ${status}`); return }
     ldEvents(text).forEach(l => add(mapLd(source, l)))
   }, delayMs)

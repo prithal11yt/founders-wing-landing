@@ -136,8 +136,12 @@ export async function enrichStep(deadline: number) {
   for (const r of needDetail) bySource.set(r.source, [...(bySource.get(r.source) ?? []), r])
   await Promise.all([...bySource.entries()].map(([source, rows]) => {
     const { size, delayMs } = pace(source)
+    let blocked = false
     return pool(rows, size, deadline - 60_000, async r => {
+      if (blocked) return
       const { status, event, meetupFee } = await fetchDetail(r.source, r.source_url)
+      // Told to slow down: stop asking this source until the next run.
+      if (status === 429) { blocked = true; return }
       if (status === 404 || status === 410) { await sb.from('fw_events').update({ status: 'hidden', ai_reason: `Source page returned ${status}`, detail_at: new Date().toISOString() }).eq('id', r.id); dead++; return }
       if (status !== 200) return // Temporary failure: left pending for the next run.
       const patch: Record<string, unknown> = { detail_at: new Date().toISOString() }
@@ -158,7 +162,9 @@ export async function enrichStep(deadline: number) {
 
   // 3. Check relevance, write our own summary, publish.
   const stats = { detailed, dead, duplicates, published: 0, rejected: 0, failed: 0, remaining: 0, aiMissing: false }
-  const pending = await allRows<PendingRow>((f, t) => sb.from('fw_events').select(PENDING_COLS).eq('status', 'pending').not('detail_at', 'is', null).gte('start_at', nowIso).order('start_at').range(f, t))
+  // An event whose own page stayed unreadable for a day is judged on its listing data alone.
+  const dayAgo = new Date(Date.now() - 864e5).toISOString()
+  const pending = await allRows<PendingRow>((f, t) => sb.from('fw_events').select(PENDING_COLS).eq('status', 'pending').or(`detail_at.not.is.null,first_seen_at.lt.${dayAgo}`).gte('start_at', nowIso).order('start_at').range(f, t))
   if (!hasAiKey()) { stats.aiMissing = true; stats.remaining = pending.length; return stats }
 
   const batches: PendingRow[][] = []
