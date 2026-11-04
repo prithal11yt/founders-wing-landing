@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ChevronDown, Search, SlidersHorizontal, X } from 'lucide-react'
 import { ACCENT } from '@/components/site/brand'
 import { CATEGORIES, categoryBySlug } from '@/lib/events/config'
@@ -108,8 +108,15 @@ export function EventBrowser({ events, lock = {}, emptyHint }: { events: ListedE
   // Applied after the first render, so the server HTML and first client render match.
   useEffect(() => { setF(readUrl()); setNow(Date.now()) }, [])
 
+  // Skips the first run, which would wipe the URL before the filters are read from it.
+  const urlReady = useRef(false)
+  useEffect(() => {
+    if (urlReady.current) writeUrl(f)
+    else if (f !== EMPTY || !window.location.search) urlReady.current = true
+  }, [f])
+
   const update = useCallback((patch: Partial<Filters>) => {
-    setF(prev => { const next = { ...prev, ...patch }; writeUrl(next); return next })
+    setF(prev => ({ ...prev, ...patch }))
     setLimit(PAGE)
   }, [])
   const clear = () => update({ ...EMPTY, sort: f.sort })
@@ -167,8 +174,8 @@ export function EventBrowser({ events, lock = {}, emptyHint }: { events: ListedE
 
   return (
     <div>
-      {/* Search and date. Stays in reach while scrolling a long list. */}
-      <div className="sticky top-[108px] z-30 -mx-5 border-b border-neutral-200 bg-white/95 px-5 py-3 backdrop-blur md:top-[124px] md:mx-0 md:rounded-[18px] md:border md:px-4">
+      {/* Search and date. Stays in reach on larger screens, where there's room for it. */}
+      <div className="-mx-5 border-y border-neutral-200 bg-white px-5 py-3 md:sticky md:top-[124px] md:z-30 md:mx-0 md:rounded-[18px] md:border md:px-4 md:shadow-[0_8px_24px_rgba(0,0,0,0.05)]">
         <div className="flex items-center gap-2">
           <div className="relative min-w-0 flex-1">
             <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />

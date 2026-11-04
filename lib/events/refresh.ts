@@ -25,7 +25,7 @@ export async function allRows<T>(page: (from: number, to: number) => PromiseLike
   }
 }
 
-const place = (e: Pick<RawEvent, 'city_raw' | 'region_raw' | 'address'>) => resolvePlace(e.city_raw, e.region_raw, e.address)
+const place = (e: Pick<RawEvent, 'city_raw' | 'region_raw' | 'address' | 'lat' | 'lng'>) => resolvePlace(e.city_raw, e.region_raw, e.address, e.lat, e.lng)
 
 function placeColumns(e: RawEvent) {
   const p = place(e)

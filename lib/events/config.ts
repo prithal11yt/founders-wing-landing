@@ -22,7 +22,7 @@ export const CITIES: City[] = [
   { slug: 'bengaluru', name: 'Bengaluru', state: 'Karnataka', aliases: ['bangalore', 'bangaluru', 'bengalore', 'whitefield', 'koramangala', 'indiranagar', 'hsr layout', 'electronic city'], lat: 12.9716, lng: 77.5946, crawl: { eventbrite: 'bangalore', meetup: 'Bangalore', allevents: 'bangalore', luma: true }, blurb: 'Bengaluru has India’s largest startup scene, with founder meetups clustered around Koramangala, HSR Layout, Indiranagar and Whitefield.' },
   { slug: 'mumbai', name: 'Mumbai', state: 'Maharashtra', aliases: ['bombay', 'navi mumbai', 'thane', 'bandra', 'andheri', 'powai'], lat: 19.076, lng: 72.8777, crawl: { eventbrite: 'mumbai', meetup: 'Mumbai', allevents: 'mumbai', luma: true }, blurb: 'Mumbai is India’s finance capital, so its founder events lean towards fintech, consumer brands and meeting investors, around BKC, Powai and Lower Parel.' },
   { slug: 'delhi', name: 'Delhi', state: 'Delhi', aliases: ['new delhi', 'delhi ncr', 'ncr'], lat: 28.6139, lng: 77.209, crawl: { eventbrite: 'delhi', meetup: 'Delhi', allevents: 'delhi', luma: true }, blurb: 'Delhi anchors the NCR startup scene, and many of its events draw founders from Gurugram and Noida as well.' },
-  { slug: 'gurugram', name: 'Gurugram', state: 'Haryana', aliases: ['gurgaon'], lat: 28.4595, lng: 77.0266, crawl: { eventbrite: 'gurgaon', meetup: 'Gurgaon', allevents: 'gurgaon', luma: true }, blurb: 'Gurugram’s startup events are concentrated around Cyber City and Golf Course Road, with a strong B2B and SaaS crowd.' },
+  { slug: 'gurugram', name: 'Gurugram', state: 'Haryana', aliases: ['gurgaon', 'gur gram', 'gurugaon'], lat: 28.4595, lng: 77.0266, crawl: { eventbrite: 'gurgaon', meetup: 'Gurgaon', allevents: 'gurgaon', luma: true }, blurb: 'Gurugram’s startup events are concentrated around Cyber City and Golf Course Road, with a strong B2B and SaaS crowd.' },
   { slug: 'noida', name: 'Noida', state: 'Uttar Pradesh', aliases: ['greater noida'], lat: 28.5355, lng: 77.391, crawl: { eventbrite: 'noida', meetup: 'Noida', allevents: 'noida' } },
   { slug: 'hyderabad', name: 'Hyderabad', state: 'Telangana', aliases: ['secunderabad', 'hitec city', 'gachibowli', 'madhapur', 'nanakramguda'], lat: 17.385, lng: 78.4867, crawl: { eventbrite: 'hyderabad', meetup: 'Hyderabad', allevents: 'hyderabad', luma: true }, blurb: 'Hyderabad’s startup scene centres on T-Hub and HITEC City, with regular founder and deep-tech meetups.' },
   { slug: 'chennai', name: 'Chennai', state: 'Tamil Nadu', aliases: ['madras'], lat: 13.0827, lng: 80.2707, crawl: { eventbrite: 'chennai', meetup: 'Chennai', allevents: 'chennai', luma: true }, blurb: 'Chennai is known for SaaS founders, and its events often connect with the IIT Madras research park community.' },
@@ -36,7 +36,7 @@ export const CITIES: City[] = [
   { slug: 'lucknow', name: 'Lucknow', state: 'Uttar Pradesh', lat: 26.8467, lng: 80.9462, crawl: { eventbrite: 'lucknow', allevents: 'lucknow' } },
   { slug: 'coimbatore', name: 'Coimbatore', state: 'Tamil Nadu', lat: 11.0168, lng: 76.9558, crawl: { eventbrite: 'coimbatore', allevents: 'coimbatore' } },
   { slug: 'surat', name: 'Surat', state: 'Gujarat', lat: 21.1702, lng: 72.8311, crawl: { eventbrite: 'surat', allevents: 'surat' } },
-  { slug: 'goa', name: 'Goa', state: 'Goa', aliases: ['panaji', 'panjim', 'margao', 'vasco da gama', 'north goa', 'south goa'], lat: 15.4909, lng: 73.8278, crawl: { eventbrite: 'goa', allevents: 'goa', luma: true } },
+  { slug: 'goa', name: 'Goa', state: 'Goa', aliases: ['panaji', 'panjim', 'margao', 'madgaon', 'mapusa', 'vasco da gama', 'north goa', 'south goa'], lat: 15.4909, lng: 73.8278, crawl: { eventbrite: 'goa', allevents: 'goa', luma: true } },
   { slug: 'thiruvananthapuram', name: 'Thiruvananthapuram', state: 'Kerala', aliases: ['trivandrum'], lat: 8.5241, lng: 76.9366, crawl: { allevents: 'trivandrum' } },
   { slug: 'bhubaneswar', name: 'Bhubaneswar', state: 'Odisha', aliases: ['bhubaneshwar'], lat: 20.2961, lng: 85.8245, crawl: { allevents: 'bhubaneswar' } },
   { slug: 'nagpur', name: 'Nagpur', state: 'Maharashtra', lat: 21.1458, lng: 79.0882, crawl: { allevents: 'nagpur' } },
@@ -47,6 +47,13 @@ export const CITIES: City[] = [
   { slug: 'bhopal', name: 'Bhopal', state: 'Madhya Pradesh', lat: 23.2599, lng: 77.4126 },
   { slug: 'guwahati', name: 'Guwahati', state: 'Assam', lat: 26.1445, lng: 91.7362 },
   { slug: 'patna', name: 'Patna', state: 'Bihar', lat: 25.5941, lng: 85.1376 },
+  { slug: 'faridabad', name: 'Faridabad', state: 'Haryana', lat: 28.4089, lng: 77.3178 },
+  { slug: 'ghaziabad', name: 'Ghaziabad', state: 'Uttar Pradesh', lat: 28.6692, lng: 77.4538 },
+  { slug: 'mangaluru', name: 'Mangaluru', state: 'Karnataka', aliases: ['mangalore'], lat: 12.9141, lng: 74.856 },
+  { slug: 'madurai', name: 'Madurai', state: 'Tamil Nadu', lat: 9.9252, lng: 78.1198 },
+  { slug: 'rajkot', name: 'Rajkot', state: 'Gujarat', lat: 22.3039, lng: 70.8022 },
+  { slug: 'dehradun', name: 'Dehradun', state: 'Uttarakhand', lat: 30.3165, lng: 78.0322 },
+  { slug: 'cuttack', name: 'Cuttack', state: 'Odisha', lat: 20.4625, lng: 85.8828 },
 ]
 
 const STATE_CODES: Record<string, string> = {
@@ -66,20 +73,46 @@ export const cityBySlug = (slug: string) => CITIES.find(c => c.slug === slug)
 export const stateBySlug = (slug: string) => STATES.find(s => slugify(s) === slug)
 
 /** Turns whatever an address says into a canonical city and state. */
-export function resolvePlace(cityRaw?: string | null, regionRaw?: string | null, addressRaw?: string | null): { city: string | null; citySlug: string | null; state: string | null; stateSlug: string | null } {
-  const lower = (cityRaw ?? '').trim().toLowerCase()
-  let match = CITY_BY_NAME.get(lower)
+export function resolvePlace(cityRaw?: string | null, regionRaw?: string | null, addressRaw?: string | null, lat?: number | null, lng?: number | null): { city: string | null; citySlug: string | null; state: string | null; stateSlug: string | null } {
+  const raw = (cityRaw ?? '').trim()
+  const lower = raw.toLowerCase()
+  // Addresses write things like "New Delhi, Delhi" or "Pune, Pimpri-Chinchwad".
+  let match = CITY_BY_NAME.get(lower) ?? lower.split(',').map(p => CITY_BY_NAME.get(p.trim())).find(Boolean)
+  // A suburb belongs on its metro's page, so use the map before trusting an unfamiliar name.
+  if (!match && lat != null && lng != null) {
+    const near = nearestCity(lat, lng)
+    // Close to a metro but in another state, like Bhiwadi near Gurugram, stays where it is.
+    const stated = STATE_CODES[(regionRaw ?? '').trim().toUpperCase()] ?? STATE_BY_LOWER.get((regionRaw ?? '').trim().toLowerCase())
+    if (near && (!stated || stated === near.state)) match = near
+  }
   if (!match && addressRaw) {
-    // Fall back to the address only for whole-word matches, longest name first.
+    // Whole-word matches only, longest name first.
     const addr = ` ${addressRaw.toLowerCase().replace(/[^a-z0-9]+/g, ' ')} `
     const names = [...CITY_BY_NAME.keys()].sort((a, b) => b.length - a.length)
-    const hit = lower ? null : names.find(n => addr.includes(` ${n.replace(/[^a-z0-9]+/g, ' ')} `))
+    const hit = names.find(n => addr.includes(` ${n.replace(/[^a-z0-9]+/g, ' ')} `))
     if (hit) match = CITY_BY_NAME.get(hit)
   }
   const region = (regionRaw ?? '').trim()
-  const state = match?.state ?? STATE_CODES[region.toUpperCase()] ?? STATE_BY_LOWER.get(region.toLowerCase()) ?? null
-  const city = match?.name ?? (lower ? (cityRaw as string).trim().replace(/\s+/g, ' ').replace(/\b[a-z]/g, m => m.toUpperCase()) : null)
+  const regionState = STATE_CODES[region.toUpperCase()] ?? STATE_BY_LOWER.get(region.toLowerCase()) ?? null
+  // Some listings put the state in the city field. That isn't a city page.
+  const cityIsState = STATE_BY_LOWER.get(lower) ?? null
+  const state = match?.state ?? regionState ?? cityIsState
+  const name = cityIsState ? null : raw.split(',')[0].trim().replace(/\s+/g, ' ').replace(/\b[a-z]/g, m => m.toUpperCase()) || null
+  const city = match?.name ?? name
   return { city, citySlug: match?.slug ?? (city ? slugify(city) : null), state, stateSlug: state ? slugify(state) : null }
+}
+
+const METRO_RADIUS_KM = 40
+
+function nearestCity(lat: number, lng: number): City | undefined {
+  const rad = (d: number) => (d * Math.PI) / 180
+  const km = (c: City) => {
+    const a = Math.sin(rad(c.lat - lat) / 2) ** 2 + Math.cos(rad(lat)) * Math.cos(rad(c.lat)) * Math.sin(rad(c.lng - lng) / 2) ** 2
+    return 6371 * 2 * Math.asin(Math.sqrt(a))
+  }
+  let best: City | undefined, bestKm = METRO_RADIUS_KM
+  for (const c of CITIES) { const d = km(c); if (d < bestKm) { best = c; bestKm = d } }
+  return best
 }
 
 export type EventCategory = 'networking' | 'pitch' | 'conference' | 'meetup' | 'workshop' | 'hackathon' | 'investor' | 'webinar'

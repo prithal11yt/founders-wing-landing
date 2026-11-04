@@ -61,11 +61,21 @@ Daily workspace for the intern (Shreyas) and the founder's view of it. Same auth
 - Member contact has one record: `fw_member_touchpoints`. Log it from either the Members tab or the "Log a call" box on `/team/members`; both keep `fw_crm_members.last_contacted` in step through `syncCrmContact`. New call notes or a same-day check-in on `/team/members` also count, once per member per day (`countMemberContactOnce`).
 - Sessions last 7 days from last use, 30 at most, renewed by `/api/leads/verify` (`useSessionKeepAlive`). When one ends, `SessionExpiredOverlay` signs in over the page so unsaved forms survive. Don't swap the page for a login screen on a 401.
 
+### Founder events directory (`/events`, `/api/cron/events`)
+SEO directory of founder and startup events in India. Table `fw_events` (migration in Supabase, RLS on, service role only). Listings are facts plus our own AI summary; never display a source's description.
+- **Weekly refresh** runs from `vercel.json` crons on Sunday night UTC, one step per source so a slow one can't starve the rest: `eventbrite`, `meetup`, `luma`, `allevents` (crawl), `enrich` three times (read event pages, mark duplicates, AI relevance check, publish), `verify` (re-check booking links, hide dead ones). Code is in `lib/events/` (`sources.ts`, `classify.ts`, `refresh.ts`). Status is in `fw_settings` key `events_refresh`.
+- **Auth**: with `CRON_SECRET` set the route needs the Bearer token. Without it, it accepts only the `vercel-cron/` user agent and limits each step to one run per 20 minutes.
+- **Sources rate-limit quickly**, Eventbrite above all, so pacing lives in `pace()` and a 429 stops that source for the rest of the run. Event statuses: `pending`, `published`, `rejected`, `duplicate`, `cancelled`, `hidden`.
+- **Flagship events** (`source='curated'`) come from research, not a crawl, and were each checked on an official page. The weekly job re-checks their links but doesn't find new ones.
+- **Pages** cache for an hour (`revalidate`, tag `events`). Landing pages are built from `lib/events/hubs.ts`; under `INDEX_MIN_EVENTS` a page is noindexed and left out of the sitemap, so new landing pages must go through `indexableHubPaths`. Filters run client-side in `components/events/event-browser.tsx`, with the first page of cards in the server HTML. Dates always display in IST (`lib/events/format.ts`).
+
 ### Environment variables
 - `NEXT_PUBLIC_SUPABASE_URL` — Supabase project URL
 - `SUPABASE_SERVICE_ROLE_KEY` — Supabase admin key (server-side only)
 - `LEADS_AUTH_SECRET` — JWT signing secret for leads dashboard
 - `LEADS_PASSWORD` — Dashboard login password
+- `CRON_SECRET` — Optional but recommended. Locks the weekly events refresh to Vercel Cron
+- `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` — Needed by the events relevance check and the lead qualifier
 
 ### Build config
 `next.config.mjs` ignores TypeScript build errors and uses unoptimized images. `netlify.toml` exists but deployment is on Vercel — ignore it.
