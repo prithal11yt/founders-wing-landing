@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react'
 import { ACCENT } from '@/components/site/brand'
+import { saveApplicant } from '@/lib/applicant'
 
 const field =
   'w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-[15px] text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-neutral-900'
@@ -57,12 +58,8 @@ export function WaitlistForm({
       if (comingSoon) {
         setSubmitted(true)
       } else {
-        const query = new URLSearchParams({
-          name: formData.fullName,
-          email: formData.email,
-          whatsapp: formData.whatsapp,
-        })
-        router.push(`/secure-spot?${query.toString()}`)
+        saveApplicant({ name: formData.fullName, email: formData.email, whatsapp: formData.whatsapp })
+        router.push('/secure-spot')
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to submit application')

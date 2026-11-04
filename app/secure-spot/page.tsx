@@ -1,8 +1,9 @@
 'use client'
 
-import { Suspense, useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import type React from 'react'
+import { useEffect, useState } from 'react'
 import { ArrowRight, Check, CheckCircle2, Phone, ShieldCheck, Zap } from 'lucide-react'
+import { readApplicant, type Applicant } from '@/lib/applicant'
 import { PHONE_DISPLAY, PHONE_TEL, WHATSAPP_URL } from '@/lib/contact'
 import { COHORT_1_SIZE, EARLY_SPOTS, cohortOf, earlySpotsLeft } from '@/lib/cohort'
 import { COUPON, COUPON_ENDS_LABEL, couponActive, discounted } from '@/lib/offer'
@@ -16,23 +17,30 @@ import { SiteFooter } from '@/components/site/footer'
 // Checkout is hosted on thesoloentrepreneur.in (verified Razorpay account)
 const CHECKOUT_BASE_URL = 'https://www.thesoloentrepreneur.in/fw-membership'
 
-function checkoutUrl(plan: PlanKey, info: { name: string; email: string; whatsapp: string }) {
-  const query = new URLSearchParams({ plan, ...info })
+function checkoutUrl(plan: PlanKey) {
+  const query = new URLSearchParams({ plan })
   if (couponActive()) query.set('coupon', COUPON.code)
   return `${CHECKOUT_BASE_URL}?${query.toString()}`
 }
 
-function SecureSpotContent() {
-  const params = useSearchParams()
-  const name = params.get('name') || ''
-  const email = params.get('email') || ''
-  const whatsapp = params.get('whatsapp') || ''
+// The details go in the fragment, which is never sent to a server, and only at the moment
+// of the click, so the link itself is clean for the Google tag's outbound-click event.
+// Checkout removes them from the address before its own tag loads.
+function goToCheckout(e: React.MouseEvent, plan: PlanKey, info: Applicant) {
+  if (!info.email) return
+  e.preventDefault()
+  window.location.assign(`${checkoutUrl(plan)}#${new URLSearchParams(info).toString()}`)
+}
+
+export default function SecureSpotPage() {
+  const [info, setInfo] = useState<Applicant>({ name: '', email: '', whatsapp: '' })
+  const { name } = info
   const firstName = name.split(' ')[0]
-  const info = { name, email, whatsapp }
 
   const [plan, setPlan] = useState<PlanKey>('annual')
   const [count, setCount] = useState<number | null>(null)
   useEffect(() => {
+    setInfo(readApplicant())
     fetch('/api/public/member-count').then(r => r.json()).then(d => setCount(typeof d.count === 'number' ? d.count : null)).catch(() => {})
   }, [])
   const nextMemberNo = count !== null ? count + 1 : null
@@ -85,9 +93,8 @@ function SecureSpotContent() {
                 return (
                   <a
                     key={k}
-                    href={checkoutUrl(k, info)}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={checkoutUrl(k)}
+                    onClick={e => goToCheckout(e, k, info)}
                     onMouseEnter={() => setPlan(k)}
                     onFocus={() => setPlan(k)}
                     className={`group flex items-center justify-between gap-4 rounded-[22px] border p-5 transition-all ${selected ? 'border-neutral-900 bg-white shadow-[0_20px_50px_-30px_rgba(0,0,0,0.35)]' : 'border-neutral-200 bg-white hover:border-neutral-400'}`}
@@ -157,13 +164,5 @@ function SecureSpotContent() {
       </main>
       <SiteFooter />
     </div>
-  )
-}
-
-export default function SecureSpotPage() {
-  return (
-    <Suspense>
-      <SecureSpotContent />
-    </Suspense>
   )
 }
