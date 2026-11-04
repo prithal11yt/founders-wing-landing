@@ -69,6 +69,12 @@ SEO directory of founder and startup events in India. Table `fw_events` (migrati
 - **Flagship events** (`source='curated'`) come from research, not a crawl, and were each checked on an official page. The weekly job re-checks their links but doesn't find new ones.
 - **Pages** cache for an hour (`revalidate`, tag `events`). Landing pages are built from `lib/events/hubs.ts`; under `INDEX_MIN_EVENTS` a page is noindexed and left out of the sitemap, so new landing pages must go through `indexableHubPaths`. Filters run client-side in `components/events/event-browser.tsx`, with the first page of cards in the server HTML. Dates always display in IST (`lib/events/format.ts`).
 
+### Business ideas directory (`/ideas`)
+Free SEO pages, one per idea, in `lib/ideas/data.json` (static, built at deploy). They are short summaries in our own words of the plans sold as the ₹499 "100 Business Ideas PDF", so never add a full plan, revenue projections or the plans' unverified market stats. This repo is public. Costs and prices come from the plans and are labelled as estimates. Landing pages come from `lib/ideas/index.ts`; under `INDEX_MIN_IDEAS` a page is noindexed and left out of the sitemap.
+
+### Grants directory (`/grants`)
+Hand-researched list of grants, schemes, loans and credits in `lib/grants/data.json`. Every entry was read on an official page on its `checkedOn` date; don't add an entry from a blog or aggregator. Nothing refreshes this automatically, so it needs re-checking by hand. Closed schemes keep their page and appear in a "Closed" block on `/grants`, because people still search for them. Status badges compare `deadline` to today, so pages revalidate daily.
+
 ### Environment variables
 - `NEXT_PUBLIC_SUPABASE_URL` — Supabase project URL
 - `SUPABASE_SERVICE_ROLE_KEY` — Supabase admin key (server-side only)

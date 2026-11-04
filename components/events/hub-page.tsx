@@ -35,13 +35,13 @@ export function Crumbs({ items }: { items: { name: string; href: string }[] }) {
   )
 }
 
-const Pill = ({ href, name, n }: { href: string; name: string; n?: number }) => (
+export const Pill = ({ href, name, n }: { href: string; name: string; n?: number }) => (
   <Link href={href} className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3.5 text-[13.5px] font-medium text-neutral-800 transition-colors hover:border-neutral-400">
     {name}{n !== undefined && <span className="text-[12px] font-normal text-neutral-400">{n}</span>}
   </Link>
 )
 
-function LinkBlock({ title, links }: { title: string; links: { href: string; name: string; n?: number }[] }) {
+export function LinkBlock({ title, links }: { title: string; links: { href: string; name: string; n?: number }[] }) {
   if (!links.length) return null
   return (
     <div>
@@ -53,12 +53,31 @@ function LinkBlock({ title, links }: { title: string; links: { href: string; nam
   )
 }
 
-export function CommunityBand() {
+export function FaqSection({ faqs }: { faqs: { q: string; a: string }[] }) {
+  if (!faqs.length) return null
+  return (
+    <section className="pb-16">
+      <div className="mx-auto max-w-3xl px-5">
+        <h2 className="text-2xl font-medium tracking-[-0.03em] md:text-3xl">Questions people ask</h2>
+        <div className="mt-6 divide-y divide-neutral-200 border-y border-neutral-200">
+          {faqs.map(f => (
+            <details key={f.q} className="group py-4">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-medium text-neutral-950 [&::-webkit-details-marker]:hidden">{f.q}<ChevronRight className="h-4 w-4 shrink-0 text-neutral-400 transition-transform group-open:rotate-90" /></summary>
+              <p className="mt-2 text-[15px] leading-relaxed text-neutral-600">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export function CommunityBand({ title = 'An event is one evening. Your founder circle is every week.' }: { title?: string }) {
   return (
     <section className="rounded-[24px] bg-neutral-950 px-6 py-10 text-white md:px-12 md:py-12">
       <div className="grid items-center gap-6 md:grid-cols-[1fr_auto]">
         <div>
-          <h2 className="text-2xl font-medium tracking-[-0.03em] md:text-3xl">An event is one evening. Your founder circle is every week.</h2>
+          <h2 className="text-2xl font-medium tracking-[-0.03em] md:text-3xl">{title}</h2>
           <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-white/65">Founders Wing is India’s community for people building with AI: weekly live sessions, a private group, and people who help you reach paying customers.</p>
         </div>
         <PrimaryCTA href="/">See Founders Wing</PrimaryCTA>
@@ -117,21 +136,7 @@ export async function HubPage({ hub }: { hub: Hub }) {
 
       <section className="pb-16"><div className="mx-auto max-w-7xl px-5"><CommunityBand /></div></section>
 
-      {hub.faqs.length > 0 && (
-        <section className="pb-16">
-          <div className="mx-auto max-w-3xl px-5">
-            <h2 className="text-2xl font-medium tracking-[-0.03em] md:text-3xl">Questions people ask</h2>
-            <div className="mt-6 divide-y divide-neutral-200 border-y border-neutral-200">
-              {hub.faqs.map(f => (
-                <details key={f.q} className="group py-4">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-medium text-neutral-950 [&::-webkit-details-marker]:hidden">{f.q}<ChevronRight className="h-4 w-4 shrink-0 text-neutral-400 transition-transform group-open:rotate-90" /></summary>
-                  <p className="mt-2 text-[15px] leading-relaxed text-neutral-600">{f.a}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      <FaqSection faqs={hub.faqs} />
 
       <section className="border-t border-neutral-200 bg-neutral-50 py-12">
         <div className="mx-auto grid max-w-7xl gap-8 px-5 sm:grid-cols-2 lg:grid-cols-4">

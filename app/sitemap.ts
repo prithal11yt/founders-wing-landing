@@ -3,6 +3,8 @@ import { seoPages } from '@/lib/seo-pages'
 import { getAllPosts } from '@/lib/blog'
 import { getSitemapEvents, getUpcomingEvents } from '@/lib/events/data'
 import { indexableHubPaths } from '@/lib/events/hubs'
+import { IDEAS, PUBLISHED_ON, indexableIdeaHubPaths } from '@/lib/ideas'
+import { GRANTS, indexableGrantHubPaths } from '@/lib/grants'
 
 const BASE_URL = 'https://www.founderswing.com'
 
@@ -41,5 +43,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]
   const eventRoutes: MetadataRoute.Sitemap = eventRows.map(e => ({ url: `${BASE_URL}/events/${e.slug}`, lastModified: new Date(e.updated_at), changeFrequency: 'weekly', priority: 0.6 }))
 
-  return [...staticRoutes, ...blogRoutes, ...dynamicRoutes, ...eventHubRoutes, ...eventRoutes]
+  const ideaRoutes: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/ideas`, lastModified: new Date(PUBLISHED_ON), changeFrequency: 'monthly', priority: 0.9 },
+    ...indexableIdeaHubPaths().map(path => ({ url: `${BASE_URL}${path}`, lastModified: new Date(PUBLISHED_ON), changeFrequency: 'monthly' as const, priority: 0.8 })),
+    ...IDEAS.map(i => ({ url: `${BASE_URL}/ideas/${i.slug}`, lastModified: new Date(PUBLISHED_ON), changeFrequency: 'monthly' as const, priority: 0.6 })),
+  ]
+  const grantRoutes: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/grants`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    ...indexableGrantHubPaths().map(path => ({ url: `${BASE_URL}${path}`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 })),
+    ...GRANTS.map(g => ({ url: `${BASE_URL}/grants/${g.slug}`, lastModified: new Date(g.checkedOn), changeFrequency: 'monthly' as const, priority: 0.6 })),
+  ]
+
+  return [...staticRoutes, ...blogRoutes, ...dynamicRoutes, ...eventHubRoutes, ...eventRoutes, ...ideaRoutes, ...grantRoutes]
 }

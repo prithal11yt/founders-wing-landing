@@ -1,0 +1,2559 @@
+[
+ {
+  "slug": "ai-annual-report-analyser",
+  "name": "AI annual report analyser",
+  "type": "app",
+  "oneLine": "An app that turns long company annual reports into plain summaries and answers for investors and creators.",
+  "what": "Users upload an annual report or pick a listed company, and the app returns a plain-language summary, year-on-year charts of key numbers and common ratios, and flags for things like court cases or audit notes. A chat box lets them ask questions about the report. Later versions compare companies, read summaries aloud and send alerts when results arrive. It serves retail investors, finance students, YouTubers, small research firms and fintech teams, using public filings from India and the US.",
+  "problem": "Annual reports often run past a hundred pages of jargon. Retail investors rarely have the time or training to read them, and finance creators lose hours summarising them for videos. Warning signs sit deep in the notes. People want the main points fast, with the source page shown.",
+  "bestFor": [
+   "Developers who have worked with PDFs and AI models",
+   "Finance students, CAs or analysts who know what to check",
+   "Finance creators who need a tool they can trust"
+  ],
+  "moneyModel": [
+   "Free plan with one report a week",
+   "Pro at ₹690 a month",
+   "Creator at ₹1,990 a month with Q&A and exports",
+   "Business at ₹4,999 a month with team access and API"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": false,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Pick five public reports and run them through an AI model by hand, then check every number it gives against the original page.",
+   "Show the results to ten finance creators or CAs and ask which part they would pay for, and which errors would end their trust.",
+   "Build a small version that cites the source page for every claim, then let a few people use it free for a month."
+  ],
+  "watchOut": "A wrong number in a financial summary can cost someone real money, and AI models do make errors. Anything that looks like advice on what to buy or sell may need SEBI registration, so stick to explaining filings and say so clearly. Data feeds and reuse of filings carry their own terms. Speak to a lawyer or compliance professional first.",
+  "keywords": [
+   "ai annual report analyzer india",
+   "ai stock research tool business idea",
+   "summarise annual report with ai",
+   "chat with annual report"
+  ]
+ },
+ {
+  "slug": "ai-automation-agency",
+  "name": "AI automation agency for small businesses",
+  "type": "agency",
+  "oneLine": "You build and run AI automations for small businesses, who pay per project or per month.",
+  "what": "You set up AI helpers that take over repetitive office work for other businesses. A typical job is reading supplier invoices from an email inbox, pulling out amounts and dates, and passing them to the accounts software for a person to approve. Other jobs include answering common customer questions, sorting sales leads, and drafting follow-up emails. You pick one slow, boring process per client, build it with a tool like n8n or Make plus an AI model such as Claude, test it on the client's real data, then run it for a monthly fee.",
+  "problem": "Small and mid-sized Indian firms have staff who spend hours a day on copy-paste work: typing invoice details, replying to the same ten customer questions, moving data between sheets. They cannot afford a developer and do not know which AI tools to trust. They want someone to take one process, fix it, and stay around when it breaks.",
+  "bestFor": [
+   "Freelancers or ex-operations people who like fixing messy processes",
+   "No-code builders who want recurring clients instead of one-off gigs",
+   "Anyone with contacts in accounting, logistics, or online stores"
+  ],
+  "moneyModel": [
+   "Custom agent builds at ₹50,000 to ₹5,00,000 per project",
+   "Monthly agent subscriptions at ₹5,000 to ₹50,000 per agent",
+   "Consulting and setup at ₹10,000 to ₹1,00,000 per project",
+   "Maintenance and support at ₹2,000 to ₹20,000 a month per client"
+  ],
+  "startupCost": "₹4,25,000",
+  "budget": "50k-5l",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Pick one process, such as invoice entry or WhatsApp enquiry replies, and build a working demo on dummy data you can show quickly.",
+   "Message thirty owners of distributors, clinics, or online stores and offer to automate one task free for a week in return for honest feedback.",
+   "Turn the best trial into a paid monthly plan, and write down the hours it saved so your next pitch has a real example."
+  ],
+  "watchOut": "The first automation is the easy part. Clients send odd invoice formats, change their software, and blame you when an AI reply goes wrong, so upkeep eats time. You will also touch their financial and customer data. Put scope and data handling in a written contract, keep a human check on money, and have a lawyer review it.",
+  "keywords": [
+   "ai automation agency india",
+   "ai agents agency business",
+   "start ai automation business india",
+   "n8n automation agency",
+   "ai invoice processing for small business"
+  ]
+ },
+ {
+  "slug": "ai-book-summary-podcast",
+  "name": "AI book summary podcast",
+  "type": "content",
+  "oneLine": "Publish short AI-scripted book summary episodes on YouTube and Spotify, paid by ads, affiliates and sponsors.",
+  "what": "You pick a book, write an original summary script with Claude or ChatGPT, turn it into audio with an AI voice tool such as ElevenLabs, and publish an episode of 10 to 15 minutes. Every episode follows one shape: a short intro, what the book is about, the main takeaways, and a closing ask to subscribe or click a book link. The same audio goes to YouTube with simple visuals and to podcast apps like Spotify. Short clips on Reels and Shorts bring listeners in. Aim for two or three episodes a week. A channel with an audience earns from ads, affiliate links, sponsors and a paid tier.",
+  "problem": "Many people want to read more but cannot find time for a 300-page book. Before buying one, they want to know what it says and whether it is worth their evening. Audio summaries fit a commute or a gym session. Making them by hand takes hours per episode, which is why a single creator rarely publishes often.",
+  "bestFor": [
+   "Book lovers who can add a personal opinion to every episode",
+   "Creators who want a low-cost channel to run beside a job",
+   "People happy to post for months before earning anything"
+  ],
+  "moneyModel": [
+   "YouTube ad revenue once the channel qualifies for monetisation",
+   "Affiliate links to book stores and audiobook services",
+   "Sponsorships from brands aimed at readers and learners",
+   "Paid memberships for ad-free or early-access episodes"
+  ],
+  "startupCost": "$110 to $270 a month for tools and hosting",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Choose one narrow shelf, such as personal finance books, and write the scripts for three episodes yourself first.",
+   "Voice those three with an AI tool, post them on YouTube and a podcast app, and share clips in two book communities.",
+   "Add an affiliate link to each description, ask ten listeners what to cover next, and only then consider publishing more often."
+  ],
+  "watchOut": "Copyright is the big one. A summary that follows a book's wording, structure or chapter order closely can infringe, and a paid summary service may not allow you to republish its text. Platforms also push down channels full of near-identical AI-made videos, and views from India pay less than views from the US. Ask a lawyer before scaling.",
+  "keywords": [
+   "ai book summary podcast",
+   "book summary youtube channel business",
+   "ai generated podcast income india",
+   "start a book summary channel"
+  ]
+ },
+ {
+  "slug": "ai-career-coach-app",
+  "name": "AI career coach app for Indian job seekers",
+  "type": "app",
+  "oneLine": "An app that scores resumes, matches jobs, and runs mock interviews, paid by job seekers and employers.",
+  "what": "Job seekers upload a resume and get a score, a rewritten version built to pass automated screening, and a list of matching roles. A chatbot answers career questions and runs practice interviews. Premium users get a skills roadmap with course suggestions and unlimited mock interviews. Employers can pay for shortlists of candidates who have opted in. You can build the first version with a no-code site, an AI model for chat and feedback, and a resume-parsing tool.",
+  "problem": "Graduates from smaller cities, people switching fields, and women returning after a career break often have nobody to ask about their resume or what to say in an interview. Human coaches charge per session, which is out of reach for many. They need patient, cheap feedback at midnight, in their own job market.",
+  "bestFor": [
+   "Former recruiters or HR people who know what employers screen for",
+   "No-code builders who want a subscription product",
+   "Creators with a student or early-career audience"
+  ],
+  "moneyModel": [
+   "Premium plan at ₹299 a month",
+   "15% to 20% commission on referrals to course providers",
+   "Employer access to curated candidate shortlists at ₹10,000 a month"
+  ],
+  "startupCost": "₹2,50,000",
+  "budget": "50k-5l",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Review twenty resumes by hand for students or job seekers using an AI model, and note which feedback they actually act on.",
+   "Post before-and-after resume examples in college and job-seeker groups, and offer a free review in exchange for a short feedback call.",
+   "Turn the review into a simple web form, charge ₹299 for a premium version to your first users, and ask three recruiters about paid shortlists."
+  ],
+  "watchOut": "Pulling listings from big job sites usually breaks their terms and can get you blocked, so plan on licensed feeds or employers posting their own roles. Resumes hold phone numbers, addresses, and work history, so you need clear consent and secure storage. AI feedback can be generic or wrong, and users stop paying quickly when it is.",
+  "keywords": [
+   "ai career coach india",
+   "resume checker with ai",
+   "ai mock interview app",
+   "career guidance app startup",
+   "ats resume optimizer india"
+  ]
+ },
+ {
+  "slug": "ai-character-video-channel",
+  "name": "AI character video channel",
+  "type": "content",
+  "oneLine": "Post short AI-made videos about a recurring fictional character and build an audience around it.",
+  "what": "You invent a fictional character in a clear setting, like a medieval blacksmith or a guide to a lost city, and post short episodes on TikTok, Instagram Reels and YouTube Shorts. AI video tools make the clips, AI voices and royalty-free music fill the sound, and you edit in CapCut or Final Cut Pro. Written scripts keep the character's personality steady from one episode to the next. Once people follow the character, you can sell prompt packs, teach the method, add affiliate links and take brand sponsors.",
+  "problem": "Many one-off AI clips are forgotten quickly because nothing connects them. Live-action story videos need cameras, actors and money. Fans of sci-fi, fantasy and quirky comedy like ongoing characters they can follow, and one person with AI tools can now make that at low cost.",
+  "bestFor": [
+   "Writers who enjoy short, funny scripts",
+   "Video editors who want to add AI footage to their skills",
+   "Patient people who can post three to five times a week"
+  ],
+  "moneyModel": [
+   "Platform payouts from YouTube Shorts, TikTok and Instagram once you qualify",
+   "Prompt packs and templates sold on Gumroad or Lemon Squeezy",
+   "A course on building an AI character channel",
+   "Merchandise, affiliate links and brand sponsorships"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Design one character with a name, voice, setting and a running joke, then write ten one-line episode ideas you could make this week.",
+   "Make and post five 15-second episodes on a single platform with the same character look, and note which get replies and saves.",
+   "Ask commenters what the character should do next, then turn the most requested idea into your next three episodes."
+  ],
+  "watchOut": "Payout programmes have eligibility rules and often pay little at first. Platforms ask you to label AI content and may limit reuse, so read the current rules. Video tools charge per clip, and keeping a character looking the same across clips is hard. Do not copy existing films or real people's faces, which brings copyright and likeness trouble.",
+  "keywords": [
+   "ai video content studio",
+   "ai character youtube shorts channel",
+   "make money with ai generated videos india",
+   "veo 3 video business idea"
+  ]
+ },
+ {
+  "slug": "ai-chatbot-agency-india",
+  "name": "AI chatbot agency",
+  "type": "agency",
+  "oneLine": "Build and maintain chatbots for small businesses in India and the US, paid per project plus monthly upkeep.",
+  "what": "You set up chatbots for other businesses and charge for the build and for upkeep. A client might want a bot on its website that answers common questions, collects lead details or books appointments, and sometimes on WhatsApp too. You do not need to code. No-code chatbot builders let you load the client's FAQs and website content, set the tone and publish. After launch you read the chats, fix wrong answers and bill a monthly fee for maintenance. Your clients are small and mid-size businesses in India and companies in the US.",
+  "problem": "Small businesses lose customers when nobody replies to a website query at 10 pm or a WhatsApp message on a Sunday. They rarely have a developer, or time to learn chatbot tools. Owners want someone to set the bot up, train it on their own information and fix it when it gives a bad answer. You do that for them.",
+  "bestFor": [
+   "Freelancers or agency staff who already sell to small businesses",
+   "People comfortable running demos for business owners",
+   "Non-technical founders who like no-code tools"
+  ],
+  "moneyModel": [
+   "One-time project fee of ₹1,00,000 to ₹5,00,000 for Indian clients, depending on complexity",
+   "Project fee of about $10,000 to $30,000 for US clients",
+   "Monthly maintenance at ₹5,000 to ₹15,000 per client ($100 to $300 in the US)",
+   "Consulting and team training sessions"
+  ],
+  "startupCost": "₹8 lakh to ₹17 lakh in year one",
+  "budget": "over-5l",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Build one demo bot with a no-code tool for a business type you know, such as a clinic, and record a short video.",
+   "Message 20 local business owners with the demo link and offer a free pilot bot for their ten top questions, for a testimonial.",
+   "Show the best pilot owner the questions customers asked and the leads captured, then quote a fixed monthly fee to keep the bot updated."
+  ],
+  "watchOut": "Chatbot builders are easy to use, so clients may ask why they should pay you instead of doing it themselves. A bot that gives wrong answers about prices, refunds or health can hurt your client. Chats hold personal details, so data protection rules apply, especially for health or finance clients. Have a lawyer check your contracts.",
+  "keywords": [
+   "ai chatbot agency business india",
+   "start chatbot agency no code",
+   "sell chatbots to small businesses",
+   "whatsapp chatbot business idea"
+  ]
+ },
+ {
+  "slug": "ai-consulting-business-india",
+  "name": "AI consulting for Indian businesses",
+  "type": "service",
+  "oneLine": "Advise mid-sized Indian companies on which AI tools to use, and charge for the plan and the hand-holding.",
+  "what": "You sell advice, not software. A business owner tells you where time and money leak, such as slow quotations, manual reports or a stretched support team. You study the tools on offer, pick the few that fit that company and its budget, and write down what to set up and in what order. Then you stay available while their staff try the tools. Work is priced as fixed packages: a short assessment with a tool report, a larger package with a rollout roadmap and savings estimate, and a big engagement spanning several departments. Clients are established firms in the large tech cities, reached mostly through LinkedIn and personal contacts.",
+  "problem": "Owners of established Indian companies hear about a new AI tool every week. They have no time to test them, they fear paying for software their staff will never open, and their IT person, if they have one, is busy with other work. They need someone to say which two tools to use, for which tasks, and which ones to ignore.",
+  "bestFor": [
+   "Ex-consultants or operations people who know many business owners",
+   "Marketers or engineers who already use AI tools daily at work",
+   "People who can explain technology plainly to non-technical owners"
+  ],
+  "moneyModel": [
+   "Basic package at ₹75,000: needs assessment, tool report and 30 days of guidance",
+   "Premium package at ₹1,50,000: integration roadmap, ROI analysis and 90 days of support",
+   "Enterprise engagements starting at ₹5,00,000 with six months of support"
+  ],
+  "startupCost": "₹2,00,000, half of it a cash buffer",
+  "budget": "50k-5l",
+  "buildableWithAi": false,
+  "market": "india",
+  "firstSteps": [
+   "List ten owners or managers you know at companies with real revenue, and offer each a free one-hour call to map where they waste time.",
+   "With permission, turn the best three calls into short case notes, and post one a week on LinkedIn showing a specific tool choice and why.",
+   "Offer your first two paying clients a discounted assessment in return for a testimonial, and log your hours so you can price later ones properly."
+  ],
+  "watchOut": "Nobody pays ₹75,000 to a stranger for advice, so early clients will come from people who already trust you, and a thin network makes this slow. The value is in getting tools working inside a messy company, which is harder than writing a report. Tools change every month, so a recommendation can go stale within weeks.",
+  "keywords": [
+   "ai consulting business india",
+   "start ai consultancy india",
+   "ai consultant for small business",
+   "ai tool advisory services"
+  ]
+ },
+ {
+  "slug": "ai-content-writing-agency",
+  "name": "AI content writing agency",
+  "type": "agency",
+  "oneLine": "A small agency that makes blogs, social posts and infographics with AI for businesses on monthly plans.",
+  "what": "You sell monthly content packages to small businesses and startups. A client gets a fixed number of social media posts, blog articles and infographics each month. You use AI tools to draft the writing and images, then a person checks every piece for facts and tone before it goes out. The basic package is ₹7,000 a month and the bigger one is ₹20,000. Single pieces start at ₹3,000 for a blog and ₹5,000 for an infographic. You can also do the same work under another agency's name, mainly for agencies abroad that want extra hands.",
+  "problem": "Small businesses know they need regular content to be found online, but a traditional agency costs more than they can spend and a full-time writer is out of reach. Their pages go quiet for weeks. They need steady, decent posts and articles at a price they can say yes to.",
+  "bestFor": [
+   "Writers or marketers who can edit AI drafts well",
+   "People who want a service business with low tool costs",
+   "Anyone comfortable selling on LinkedIn and Instagram"
+  ],
+  "moneyModel": [
+   "Basic monthly plan at ₹7,000",
+   "Pro monthly plan at ₹20,000",
+   "One-off blogs from ₹3,000 and infographics from ₹5,000",
+   "White-label work for other agencies, priced by project"
+  ],
+  "startupCost": "About ₹25,000 a month to run",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Choose two industries, such as dental clinics and coaching institutes, and write one sample blog and five posts for each to show in your outreach.",
+   "Offer one free sample piece to 20 local business owners by message, then ask those who reply to try the basic plan for a month.",
+   "Message small marketing agencies in India and abroad with your samples and ask whether they need overflow writing delivered under their own name."
+  ],
+  "watchOut": "Unedited AI writing is easy to spot, and clients stop paying for text they could generate themselves. Your value is accuracy, a steady voice and on-time delivery. Read the licence terms of any AI image tool, because not every generated image can be used commercially. Expect some clients to leave if results take long to show.",
+  "keywords": [
+   "ai content agency india",
+   "content writing agency business",
+   "ai blog writing service small business",
+   "social media content packages india",
+   "white label content agency"
+  ]
+ },
+ {
+  "slug": "ai-domain-name-finder",
+  "name": "AI domain name finder",
+  "type": "app",
+  "oneLine": "A website that suggests brandable domain names with AI and earns from registrar affiliate links.",
+  "what": "Users type a business idea, industry or city and get a list of short, memorable name ideas from an AI model. The site checks which domains are free, compares registration and renewal prices in rupees across registrars and hosting companies, and sends the user to buy through your affiliate link. Extras include a check for matching social media handles and basic logo ideas. Later you can sell featured spots to registrars and offer paid access to agencies that want names inside their own apps.",
+  "problem": "Founders can spend days looking for a name, only to find the domain is taken or priced oddly. Registrar sites show prices in different ways, and renewal costs surprise people. Someone launching a first business wants one place that gives ideas, availability and fair prices in rupees.",
+  "bestFor": [
+   "Developers or no-code builders who can connect APIs",
+   "SEO-minded people who can write useful content pages",
+   "Founders happy to earn small amounts from many users"
+  ],
+  "moneyModel": [
+   "Affiliate commission when users buy a domain or hosting",
+   "Direct deals with registrars for better rates",
+   "Sponsored listings for domain endings like .tech or .shop",
+   "Paid API access for agencies and apps"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Build a one-page name generator that takes a business idea and returns twenty names with a live domain availability check.",
+   "Apply to two or three registrar affiliate programmes, and read their rules carefully before you place any links.",
+   "Write ten pages on naming for specific groups, like cafe owners or D2C brands, and share them in founder groups to see who clicks buy."
+  ],
+  "watchOut": "Many free name generators already exist, and people use one once, not every month. You earn only when someone buys, so you need steady search traffic. Affiliate programmes can change or cut payouts without notice, and live price data from registrars is hard to get properly and keep accurate. Show prices only from official feeds.",
+  "keywords": [
+   "ai domain name generator india",
+   "business name generator business idea",
+   "domain price comparison tool",
+   "affiliate domain registrar website"
+  ]
+ },
+ {
+  "slug": "ai-ebook-store",
+  "name": "AI ebook store for US readers",
+  "type": "ecommerce",
+  "oneLine": "Write short how-to ebooks with AI help and sell them to US readers from India, from $4.99 a book.",
+  "what": "You pick a few topics, such as personal growth, money basics or hobby guides, and use AI tools to draft short ebooks. Then you edit them, lay them out in Canva and add small extras like planners or spreadsheets. Books sell on your own site through Gumroad, and you bring in readers through Pinterest, X and a free email list. You sell in dollars to readers in the US while you work from India. Basic books run 30 to 50 pages and premium ones 80 to 100.",
+  "problem": "Busy people want a quick, practical guide on one topic, not a 300-page book. Much of what they find online is padded or scattered across blog posts. A short, well-organised ebook with templates attached saves them time, and a writer in India can produce it at low cost.",
+  "bestFor": [
+   "Writers and editors who can fix weak AI drafts",
+   "Pinterest or social media fans who like steady posting",
+   "Anyone who wants a cheap way to test digital products"
+  ],
+  "moneyModel": [
+   "Basic ebooks at $4.99 to $7.99",
+   "Premium ebooks at $9.99 to $14.99",
+   "Bundles of 3 to 4 books at $19.99 to $24.99",
+   "Later, a subscription or an affiliate programme"
+  ],
+  "startupCost": "₹5,000 to ₹40,000",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Pick one narrow topic you know well and write a free five-page guide on it, using AI for the first draft and your own edits.",
+   "Post the guide's pages as Pinterest pins for two weeks and see which pins get saved and which send clicks to your sign-up page.",
+   "Sell your first paid ebook on Gumroad at the low end of the price range, then ask the first ten buyers what was missing."
+  ],
+  "watchOut": "AI drafts are often generic and sometimes wrong, and readers can tell. Health, money and travel topics are risky when facts are off, so check every claim yourself. Large book stores have their own rules about AI-written books, and Pinterest traffic builds slowly. Many people sell this same kind of product, so a narrow topic and real editing matter.",
+  "keywords": [
+   "ai ebook business india",
+   "sell ebooks to us customers from india",
+   "gumroad ebook business",
+   "pinterest ebook marketing"
+  ]
+ },
+ {
+  "slug": "ai-freelancer-marketplace",
+  "name": "AI freelancer marketplace for Indian firms",
+  "type": "marketplace",
+  "oneLine": "A site where Indian businesses hire vetted AI consultants and freelancers, and you take a cut.",
+  "what": "You build a website where businesses post an AI task and vetted freelancers, trainers and consultants get booked or bid for it. You start on WordPress with a marketplace theme, or a no-code builder, with profiles, job posts, messaging and payments. You check each expert before listing them, using work samples, LinkedIn and a short call. You earn a commission on completed projects and a monthly fee from experts who want a highlighted profile. To avoid an empty marketplace, you pick one niche first, such as AI automation for small businesses.",
+  "problem": "A founder who wants a chatbot or an automation does not know whom to trust. General freelance sites return hundreds of profiles with no easy way to judge AI skills. Experts, on the other side, have no focused place to show AI project results to Indian buyers who are ready to spend.",
+  "bestFor": [
+   "People with a network of AI freelancers or trainers",
+   "Community builders who already know founders needing AI help",
+   "Operators who enjoy vetting people and matchmaking"
+  ],
+  "moneyModel": [
+   "Commission of 15% on each project done through the site",
+   "Premium expert listings at ₹500 a month",
+   "Sponsored profiles or ads once the site has traffic"
+  ],
+  "startupCost": "₹20,000 to ₹80,000",
+  "budget": "50k-5l",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "List 30 AI freelancers you can personally vouch for in one niche, and ask ten of them for a past project and a price.",
+   "Before building anything, collect five real AI jobs from business owners in a spreadsheet and match them to experts by hand over WhatsApp.",
+   "Charge a fee only when a match leads to paid work, and build the WordPress or no-code site after ten matches have worked."
+  ],
+  "watchOut": "A marketplace needs buyers and sellers at the same time, and most stall at that start. Both sides will also try to take deals off the site to dodge your commission. Holding client money and paying experts out raises payment and tax questions in India, so use a licensed payment partner and ask an accountant about GST.",
+  "keywords": [
+   "ai experts marketplace india",
+   "hire ai freelancers india",
+   "ai consultant marketplace business",
+   "start freelance marketplace wordpress"
+  ]
+ },
+ {
+  "slug": "ai-infographic-maker",
+  "name": "AI infographic maker",
+  "type": "app",
+  "oneLine": "A web app that turns a topic or pasted text into an infographic, paid for with monthly credits.",
+  "what": "Users paste notes or type a topic into a web page. The app asks an AI model to organise the points, choose a layout and colour palette, and draw small icons or illustrations. The user then edits the text, regenerates any picture they dislike, and exports a PNG, JPG, or PDF. You can build the screens with a tool like v0 or Lovable and call an image API for the artwork. Each plan includes a fixed number of credits, because every generated image costs you money.",
+  "problem": "Marketers, teachers, and small business owners need a clean infographic for a post, a class, or a report. Design software feels slow to learn, and a freelance designer costs more than the task is worth. They want to start from their own text and get something presentable in minutes.",
+  "bestFor": [
+   "Non-technical founders comfortable with AI coding tools",
+   "Designers or marketers who already make infographics for clients",
+   "Builders who want a small product with clear usage costs"
+  ],
+  "moneyModel": [
+   "Free tier with a few generations a month",
+   "Starter plan at ₹299 to ₹699 a month",
+   "Pro plan at ₹999 to ₹1,999 a month",
+   "Extra credit packs for people who run out"
+  ],
+  "startupCost": "₹24,500 to ₹66,000",
+  "budget": "50k-5l",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Make ten infographics by hand with an image model and template, on topics like a sales summary or revision sheet, and see where it breaks.",
+   "Show the samples to five digital marketers and two teachers, ask what they would pay, and borrow their real text to test with.",
+   "Build a bare version with one layout and ten free credits, run it with those testers for two weeks, and track API cost per infographic."
+  ],
+  "watchOut": "Image models often garble text and numbers inside pictures, and an infographic is mostly text and numbers. You will probably draw the words with normal fonts and use AI only for artwork. Image fees are charged per picture, so one heavy free user can cost more than a paying one. Price your credits against real usage, not guesses.",
+  "keywords": [
+   "ai infographic generator india",
+   "free infographic maker with ai",
+   "text to infographic tool",
+   "build ai infographic saas",
+   "infographic generator for marketers"
+  ]
+ },
+ {
+  "slug": "ai-learning-path-planner",
+  "name": "AI learning path planner",
+  "type": "app",
+  "oneLine": "A site that builds a personal course roadmap from your career goal, budget and time, free with paid upgrades.",
+  "what": "A learner answers a short quiz about their goal, current skills, budget, weekly hours and how they like to learn. The AI then builds a step-by-step roadmap using courses, videos and free resources from several platforms. They can track progress and join a community. The basic plan is free and paid for by ads. A paid plan adds unlimited roadmaps, mentor access, progress tracking and verified certificates, and companies can buy team licences with an HR dashboard.",
+  "problem": "Someone who wants a new career faces thousands of courses and no clear order to take them in. Choosing alone means guessing the sequence and sometimes paying for overlapping courses. They want one plan that fits their goal, money and free hours, with someone to check in on them.",
+  "bestFor": [
+   "Career coaches, teachers or HR people who know job paths",
+   "Builders who can make a quiz and AI recommendations",
+   "Founders who can sell to colleges and companies"
+  ],
+  "moneyModel": [
+   "A free plan supported by ads",
+   "Premium at ₹499 a month with mentors and certificates",
+   "Company plans at ₹25,000 a year per company"
+  ],
+  "startupCost": "₹50,000",
+  "budget": "50k-5l",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Pick one career, such as data analyst, and build one roadmap by hand with free and paid resources, weekly hours and costs.",
+   "Give that roadmap to ten people aiming for that job and ask them to follow it for two weeks and report where they get stuck.",
+   "Turn your questions into a short form, add AI to draft roadmaps, and review each result yourself before sending it."
+  ],
+  "watchOut": "You do not own the courses, so recommendations are only as good as your knowledge of each one, and course details and prices change. Pulling data from course sites may break their terms, so link by hand or use official partner programmes. Mentors, certificates and community need real people. Free users are easy to get but few pay.",
+  "keywords": [
+   "personalized learning path platform india",
+   "ai career roadmap generator",
+   "online course recommendation startup",
+   "edtech business idea india"
+  ]
+ },
+ {
+  "slug": "newsletter-analytics-ai-tool",
+  "name": "AI newsletter analytics tool",
+  "type": "saas",
+  "oneLine": "AI analysis of a newsletter's past issues and reader behaviour, telling the writer what to publish next.",
+  "what": "Newsletter writers can see opens and clicks but not why some issues work. This tool connects to an account on Beehiiv, ConvertKit or Substack, or takes an exported file, and uses AI to group past issues by topic, format and sending time. It shows what drove opens, clicks and unsubscribes, forms simple reader groups from their behaviour, and suggests what to write next. A first version can run on Supabase, a no-code builder like Bubble and the OpenAI API, with Make or Zapier moving the data around. Prices are in dollars, for creators worldwide.",
+  "problem": "A writer with thousands of subscribers sits on years of issues and data but has no time to dig through it. Built-in dashboards show averages. The writer still guesses which topics, subject lines and send times work, and notices too late when readers drift away. Agencies and company newsletters face the same problem across several clients.",
+  "bestFor": [
+   "Newsletter writers or agency owners who feel this pain themselves",
+   "No-code builders comfortable connecting tools and data",
+   "Analysts who can tell real patterns from noise"
+  ],
+  "moneyModel": [
+   "Starter plan at $29 a month for up to 5,000 subscribers analysed",
+   "Professional plan at $79 a month for up to 25,000 subscribers",
+   "Enterprise plan at $199 a month with no subscriber limit",
+   "Done-for-you content audits at $500 to $2,000 each"
+  ],
+  "startupCost": "Under $20,000 for a no-code build, plus AI usage fees",
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Find five newsletter writers with a few thousand readers, and offer each a free review of their last 20 issues from an exported file.",
+   "Do those reviews by hand with an AI model, write a one-page report for each writer, and ask whether they would pay for it monthly.",
+   "Sell the review alone first, at a low price. Build the dashboard only when three people ask you for the same report again."
+  ],
+  "watchOut": "Your insights are only as good as the data, and small lists give noisy results: a topic that beat the average once may simply have been luck. You also handle data about readers, so work with totals rather than email addresses, and check each platform's terms on data access. Platforms can add their own analytics.",
+  "keywords": [
+   "newsletter analytics tool",
+   "ai newsletter insights saas",
+   "newsletter engagement optimization",
+   "newsletter audit service"
+  ]
+ },
+ {
+  "slug": "ai-product-description-generator",
+  "name": "AI product description tool",
+  "type": "saas",
+  "oneLine": "A web tool that writes search-friendly product descriptions in bulk for online sellers abroad.",
+  "what": "Online sellers upload a spreadsheet of products and get back several written descriptions for each one. They pick a tone, such as casual or technical, add the keywords they want, and compare versions to see which sells better. Templates exist for categories like electronics, fashion, beauty and home goods. You build the app with a no-code builder, connect an AI model for the writing, and charge a monthly fee through a card payment tool. You sell to small Amazon and Shopify sellers in the US, UK, Canada and Australia, run by one founder based in India.",
+  "problem": "A seller with hundreds of products cannot write a fresh, persuasive description for each one. Copying the supplier's text hurts search ranking, and hiring a freelance copywriter is slow and uneven in quality. The result is thin listings that rank poorly and convert few visitors.",
+  "bestFor": [
+   "No-code builders ready to run a subscription product",
+   "People comfortable selling to customers in other countries",
+   "Founders who can judge good product copy themselves"
+  ],
+  "moneyModel": [
+   "Starter plan at $29 a month for 200 descriptions",
+   "Growth plan at $49 a month for 500 descriptions",
+   "Pro plan at $99 a month for 1,500 descriptions",
+   "Extra descriptions beyond the plan, from $0.05 to $0.15 each"
+  ],
+  "startupCost": "No upfront capital; about ₹35,500 a month to run",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Write descriptions by hand with an AI model for ten small online sellers, free of charge, and ask which version they would really publish.",
+   "Build a bare version with a CSV upload, a tone choice and one export button, then run those sellers' catalogues through it yourself.",
+   "Charge your first five users the Starter price, ask what stopped them paying more, and fix that before you spend anything on ads."
+  ],
+  "watchOut": "Anyone can paste a product into a general AI chatbot for free, so your tool must save real time through bulk upload and good templates. AI also invents specifications a product does not have, which can break marketplace rules and mislead buyers. Work out how you will collect card payments from abroad as an Indian business.",
+  "keywords": [
+   "ai product description generator",
+   "bulk product description tool shopify",
+   "ecommerce copywriting saas",
+   "no code saas business idea",
+   "amazon listing description ai"
+  ]
+ },
+ {
+  "slug": "prompt-engineering-agency",
+  "name": "AI prompt services agency",
+  "type": "agency",
+  "oneLine": "Sell custom prompts, chatbot setups and monthly AI tuning to small businesses and creators.",
+  "what": "You work alone and help small businesses, creators and agencies get better results from tools like ChatGPT and Claude. One-time jobs include a pack of custom prompts, a prompt audit, an FAQ chatbot for a website and image prompts. Ongoing work is monthly tuning and a fresh pack of prompts each week. You find clients on Upwork, Fiverr, LinkedIn and Reddit, show samples on a simple portfolio page and quote in dollars, so most clients will be abroad.",
+  "problem": "Small teams use AI tools but get uneven results. One day the output is good, the next day it is off-brand or wrong. They have no time to test prompts and cannot hire an AI specialist. They will pay someone to set things up once and keep them working.",
+  "bestFor": [
+   "Freelance writers, marketers and assistants moving into AI work",
+   "Beginners who want clients before spending any money",
+   "People who enjoy testing and fixing things until they work"
+  ],
+  "moneyModel": [
+   "Starter pack of 3 custom prompts at $49",
+   "Pro pack of 10 prompts with a workflow guide at $149",
+   "FAQ chatbot setup at $199",
+   "Monthly support at $299, and team training from $999"
+  ],
+  "startupCost": "Zero upfront, using free tools",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Write three before and after examples for one business type, such as a dentist's reply emails, and put them on a free Carrd page.",
+   "Offer five small businesses you know a free review of how they use ChatGPT today, and ask each for a short testimonial.",
+   "Turn your best review into a paid starter pack, then list the same pack on Fiverr or Upwork with your sample work attached."
+  ],
+  "watchOut": "Prompts are easy to copy and clients can learn the basics from free videos, so a pack of prompts alone is a weak product. AI models change often, so your work needs retesting. You win clients by fixing one specific business task and proving the result. Expect price pressure on freelance sites.",
+  "keywords": [
+   "ai prompt engineering agency",
+   "prompt engineering freelance business india",
+   "sell chatgpt prompts business",
+   "ai chatbot setup service for small business"
+  ]
+ },
+ {
+  "slug": "ai-search-visibility-audit-tool",
+  "name": "AI search visibility audit tool",
+  "type": "saas",
+  "oneLine": "A beginner-friendly tool that checks a site for AI search readiness and gives fixes, sold monthly.",
+  "what": "You build a tool where a website owner enters a URL and gets an audit of how well AI assistants and AI search results can understand and cite their pages. The tool crawls the site, flags issues such as missing FAQ markup or unclear authorship, and explains each one in plain language. It then gives fix steps for WordPress, Webflow or Shopify and can generate the structured data code to paste in. Later versions add a chat helper and a check that asks AI tools questions to see whether the site gets mentioned. Free users get one audit, and paid plans show the full list of fixes.",
+  "problem": "People now ask ChatGPT and similar tools for recommendations, and small site owners cannot tell whether their business gets mentioned. Tools built for SEO professionals are heavy, expensive and full of jargon. A solo founder or shop owner wants one clear list of what to change, in plain words, without learning SEO first.",
+  "bestFor": [
+   "SEO freelancers or marketers who can explain things simply",
+   "Builders who can ship a first version on no-code plus AI",
+   "Creators who already teach online marketing to an audience"
+  ],
+  "moneyModel": [
+   "Free plan with one audit",
+   "Starter plan at $15 a month with unlimited audits and fix templates",
+   "Pro plan at $49 a month with a structured data generator and visibility checks",
+   "Agency plan at $199 a month for up to 25 domains with white-label reports"
+  ],
+  "startupCost": "Under $500 a month for hosting and AI usage at MVP stage",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Write a checklist of 15 things you can verify on a web page, then run it by hand on ten friends' sites and send reports.",
+   "Ask the ten which fixes they actually made, and whether they would pay for a monthly re-check. That answer decides what you automate first.",
+   "Turn the checklist into a simple form with AI explanations, publish a free single audit, and post three before and after examples as proof."
+  ],
+  "watchOut": "Nobody outside the AI companies knows exactly what makes an assistant mention a website, so some of your advice will be educated guesses. Selling it as a guaranteed ranking trick would lose trust fast. Answers from AI tools also vary between queries, which makes an honest visibility tracker hard to build. Say what is checked and what is theory.",
+  "keywords": [
+   "ai search optimization tool",
+   "llm seo audit tool",
+   "optimize website for chatgpt",
+   "generative engine optimization saas"
+  ]
+ },
+ {
+  "slug": "ai-space-bedtime-story-app",
+  "name": "AI space bedtime story app for kids",
+  "type": "app",
+  "oneLine": "A mobile app that turns a daily space photo into a short narrated bedtime story, sold by family subscription.",
+  "what": "Every day the app takes an astronomy picture and its caption, and asks an AI model to write a calm story of a few minutes for a child of a chosen age. A text-to-speech tool reads it aloud in a gentle voice. Parents set the child's age, themes and story length. A friendly space character introduces each story and answers simple questions. After each story, the child collects stickers in a personal collection. The first story each day is free, and more stories, offline listening and personalised names sit behind a subscription. Families can gift months. Pricing is in dollars, aimed at English-speaking families abroad.",
+  "problem": "Parents want a bedtime routine on screen that feels calm and teaches something, but most story apps are fixed libraries a child finishes in a week. Parents also worry about what an AI might say to a young child. They want a fresh story every night, a voice the child likes, and control over age, topic and length.",
+  "bestFor": [
+   "Parents of young children who know what a calm bedtime needs",
+   "Builders comfortable with React Native, Expo and AI coding tools",
+   "People who can reach parents through short videos or parenting pages"
+  ],
+  "moneyModel": [
+   "Free daily story, with paid access to more stories and offline mode",
+   "Family subscription between $4.99 and $9.99 a month",
+   "Gift subscriptions for grandparents and friends",
+   "Licences for schools, libraries and science centres"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": false,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Write ten stories with an AI model from past daily astronomy pictures, and test them with five parents whose children are the right age.",
+   "Add narration, send one story each night to those parents for two weeks, and ask on which nights the child asked for it again.",
+   "Build the app only if repeat requests are strong, and start with a single daily story, leaving out stickers and the character."
+  ],
+  "watchOut": "A children's product carries heavier duties. Most countries have extra rules on collecting data from kids and on asking parents for consent, and app stores review kids' apps closely. AI stories need strict filters because one odd line ruins trust. Many astronomy photos belong to outside photographers, so check each credit and usage term, and never imply NASA endorses you.",
+  "keywords": [
+   "ai bedtime story app for kids",
+   "space stories for children app",
+   "kids storytelling app business idea",
+   "ai narrated stories subscription"
+  ]
+ },
+ {
+  "slug": "ai-tax-saving-app",
+  "name": "AI tax saving app for salaried Indians",
+  "type": "app",
+  "oneLine": "A tax-saving guide that shows salaried people which deductions they are missing, paid by yearly plans.",
+  "what": "Users enter their salary, rent, loans, and investments, and the app works out their tax under the available options. It then points to deductions they have not used and explains each in plain language. Paid users can upload payslips and Form 16 so the app reads the numbers for them and tracks deductions through the year. The free version is a calculator with simple suggestions. Partner links for investments, insurance, or a chartered accountant can bring in referral income.",
+  "problem": "Many first-time and salaried taxpayers learn about unused deductions in March, when it is nearly too late to act, or they pay a stranger to file a return they could understand themselves. Jargon and scattered documents make people put it off. They want a clear answer to one question: what can I still do this year to pay less tax?",
+  "bestFor": [
+   "Founders with tax-filing or accounting experience",
+   "Developers who understand Indian salary slips and deductions",
+   "Creators with an audience of young salaried professionals"
+  ],
+  "moneyModel": [
+   "Premium plan at ₹499 to ₹999 a year",
+   "Referral commission on partner investment or insurance products",
+   "Paid introductions to chartered accountants for complex cases",
+   "Tax-saving tools sold to HR and payroll teams"
+  ],
+  "startupCost": "₹5 lakh to ₹7 lakh",
+  "budget": "over-5l",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Build a one-page calculator for the old and new tax regimes, have a chartered accountant check the formulas, and test it on twenty payslips.",
+   "Write ten plain posts on questions people really search, like deductions for rent or a home loan, and share them in salaried-professional groups.",
+   "Ask thirty users what stopped them acting on tax advice last year, then add a reminder feature before building paid plans or document upload."
+  ],
+  "watchOut": "Tax rules change with each Budget, and a wrong figure can cost a user money or bring a notice, so a qualified person must check every rule. Recommending specific investments or selling insurance can need SEBI or IRDAI registration. You will also hold salary and PAN documents. Speak to a chartered accountant and a lawyer before launch.",
+  "keywords": [
+   "ai tax saving app india",
+   "how to save income tax salaried",
+   "tax planning app startup india",
+   "form 16 tax calculator app",
+   "old vs new tax regime calculator"
+  ]
+ },
+ {
+  "slug": "ai-tools-directory-website",
+  "name": "AI tools directory for businesses",
+  "type": "directory",
+  "oneLine": "A website listing AI tools by business task, paid by tool makers for placement and by referral commissions.",
+  "what": "A website that lists AI tools for business owners and sorts them by job, such as HR, marketing, finance and customer support. Each listing explains what the tool does and how it could cut costs, with side-by-side comparisons and user reviews. You start with a few dozen tools you have checked yourself, built on WordPress or a no-code platform. Money comes from tool makers who pay for better placement, referral commissions and ads.",
+  "problem": "Business owners hear about new AI tools every week but cannot tell which ones suit a small team or save money. Tool makers, in turn, struggle to be seen among hundreds of similar products. A directory organised by business task gives owners a shortcut and gives makers a place to reach buyers.",
+  "bestFor": [
+   "Writers and SEO-minded people who can publish steadily for months",
+   "Freelancers who already test tools for clients",
+   "Founders who want a content business with low upfront cost"
+  ],
+  "moneyModel": [
+   "Free basic listings, with paid upgrades for priority placement, more categories and view statistics",
+   "Referral commissions when readers sign up through your links",
+   "Sponsored and featured spots for tool makers",
+   "Display ads and an optional paid membership"
+  ],
+  "startupCost": "$200 to $500 for the site",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Choose one narrow group, such as accounting firms or clinics, and list 30 AI tools you have actually tried, with honest notes on price.",
+   "Publish the site on WordPress with comparison pages for the five most searched tasks, and share each page in two relevant groups.",
+   "Email 20 tool makers a link to their free listing and ask if they want a featured spot or an affiliate link."
+  ],
+  "watchOut": "Traffic takes months to arrive, and large sites already rank for broad AI tool searches. Tools shut down or change prices often, so old listings go stale fast. Reviews can be faked, and you must label paid placements and affiliate links clearly. Any savings claim needs proof you have checked yourself.",
+  "keywords": [
+   "ai tools directory business",
+   "how to start ai directory website",
+   "ai tools for small business list",
+   "affiliate directory website idea india"
+  ]
+ },
+ {
+  "slug": "ai-ugc-video-agency",
+  "name": "AI UGC video agency for D2C brands",
+  "type": "agency",
+  "oneLine": "Make short AI-assisted product videos and ad creatives for Indian online brands on a monthly retainer.",
+  "what": "You make short product videos and images for online stores that sell through Instagram and run ads. A brand sends a product photo and a few lines about it. An automation built in n8n turns that into a creative brief, then image and video tools such as Nano Banana and Veo 3 produce several variants. You check every output for quality and brand safety, fix what looks off, and deliver through a shared board. Brands buy monthly packages with a fixed number of videos, and a cheap trial pack gets the first clients in the door. Freelance editors can polish the output once volume grows.",
+  "problem": "Small online brands need fresh ad videos almost every week because old ones stop working. Hiring creators or influencers costs a lot and takes time, and editing in-house is slow. Many founders end up reusing the same three clips. They need a steady supply of decent-looking videos at a price they can pay every month.",
+  "bestFor": [
+   "Freelance editors or designers who want recurring clients",
+   "Someone comfortable with n8n or Make who can also sell",
+   "Small agency owners adding a creative service"
+  ],
+  "moneyModel": [
+   "Starter retainer at ₹8,000 a month for 5 short videos and captions",
+   "Growth retainer at ₹20,000 a month for 12 videos plus ad variants",
+   "Scale retainer at ₹45,000 a month for 30 videos and a monthly strategy call",
+   "One-time trial pack at ₹3,999 for 3 videos"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Make three sample videos for imaginary products in fashion, beauty and home decor, and cut them into one short portfolio reel.",
+   "Message 50 Shopify store owners on Instagram or WhatsApp with one sample made from their own product photo, and offer the ₹3,999 trial pack.",
+   "Ask trial customers which video performed best, then offer a monthly package before the trial pack runs out, while the result is fresh."
+  ],
+  "watchOut": "AI video often looks off: stiff faces, odd hands, wrong product details. Brands notice, so human checking is the real work. Fake people giving testimonials, or copying a real person's face or voice, can mislead shoppers and bring legal trouble. Get written client approval and say when content is AI-made. Tool prices change without notice. Check with a professional.",
+  "keywords": [
+   "ai ugc agency india",
+   "ai video ads for shopify brands",
+   "ugc content agency business",
+   "ai ad creative agency"
+  ]
+ },
+ {
+  "slug": "ai-ui-design-agency",
+  "name": "AI UI and UX design agency",
+  "type": "agency",
+  "oneLine": "Fast, affordable app and website designs for early startups, made with AI tools and a designer's eye.",
+  "what": "You design landing pages, app screens, dashboards and design systems for early startups. AI design tools produce first drafts in hours, and you refine them by hand. The offer is speed at a price a founder with no designer can afford, such as a landing page in 48 hours. You can also audit a weak design and redo it, or publish a finished site in a website builder. Later you can sell ready-made templates and a flat monthly design subscription. You find buyers on X, Product Hunt and freelance marketplaces, mostly founders abroad.",
+  "problem": "Founders building a first product need screens that look trustworthy, but a good designer is slow and expensive and templates all look alike. With weak design, visitors leave a landing page in seconds and app users lose confidence. These founders need something presentable, fast, for a small budget.",
+  "bestFor": [
+   "Designers or developers with taste who want paying clients",
+   "People who can produce a small portfolio quickly",
+   "Anyone happy to message strangers online"
+  ],
+  "moneyModel": [
+   "Landing page design at ₹4,000 to ₹7,000",
+   "Mobile app UI at ₹6,000 to ₹12,000 and SaaS dashboard UI at ₹10,000 to ₹20,000",
+   "Design systems at ₹7,000 to ₹15,000 and website setup at ₹8,000 to ₹20,000",
+   "Design audit and redesign at ₹4,000 to ₹8,000, later a flat ₹20,000 monthly subscription"
+  ],
+  "startupCost": "₹0 to start, using free tools",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Redesign one real landing page with AI tools in a day, then do two more, so you have three samples to show strangers.",
+   "Find 50 founders who recently launched on Product Hunt or X, and message each with a link to a redesign of their own page.",
+   "Give your first three clients a free or discounted page in return for a written testimonial, then raise your price after the third."
+  ],
+  "watchOut": "AI screens look generic unless you add real design judgment, so clients may feel they could have made them alone. Free work attracts people who never pay. Check who owns the final files and whether your AI tools allow commercial use. Quality slips fast if you take on too many projects at once.",
+  "keywords": [
+   "ai ui ux design agency",
+   "startup landing page design service",
+   "figma ai design freelance business",
+   "saas dashboard ui design service",
+   "framer website design agency india"
+  ]
+ },
+ {
+  "slug": "ai-video-ad-agency",
+  "name": "AI video ad agency for small brands",
+  "type": "agency",
+  "oneLine": "You make short video ads with AI tools for small brands and agencies that cannot afford a shoot.",
+  "what": "You sell video ads, 15 to 30 seconds long, made with AI video tools instead of cameras and crews. A client sends a product and a brief. You write the script, build the scenes with a video generator, add a voiceover and music, and cut it together in a simple editor. You sell fixed packages, from one ad to a bundle of variations with scripts and headlines, plus a monthly bundle for agencies that resell your work under their own name. Your first portfolio is a folder of sample ads you made before anyone paid you.",
+  "problem": "A small online store or coaching business wants a video ad, but a normal shoot costs more than a month of its ad budget. Template tools give every brand the same look, so owners either skip video or post weak clips. They need something that looks made for their product, delivered in days, at a price that does not scare them.",
+  "bestFor": [
+   "Video editors and designers who want a service business",
+   "Freelancers who already use AI image or video tools",
+   "Marketers who want to add video to what they sell"
+  ],
+  "moneyModel": [
+   "Single ad at ₹2,999",
+   "Ad with script and two revisions at ₹5,999",
+   "Pack of three variations with headlines and copy at ₹14,999",
+   "White-label bundle of 5 ads a month for agencies at ₹24,999"
+  ],
+  "startupCost": "₹0, using free tool credits to start",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Make five sample ads in one niche, such as skincare or Shopify stores, and put them in a public folder or YouTube channel.",
+   "Message 20 small brand owners a day on Instagram or LinkedIn with a ten-second sample made from their own product photo.",
+   "Offer your first three clients the ₹2,999 ad with one revision in return for a written review and permission to show the result."
+  ],
+  "watchOut": "Free credits on video tools run out fast, and every retry on a paid plan costs money. Output from the same tools looks similar across sellers, and AI-made people or products can look slightly off, which brands notice. Check each tool's licence for commercial use, and never copy a real person's face or voice without permission.",
+  "keywords": [
+   "ai video ad agency india",
+   "ai ads creation business",
+   "ai generated commercial service",
+   "start ai video agency",
+   "ai ad maker for small business"
+  ]
+ },
+ {
+  "slug": "ai-wallpaper-app",
+  "name": "AI wallpaper app",
+  "type": "app",
+  "oneLine": "A phone app with a steady feed of AI-made wallpapers, free to try and paid for unlimited access.",
+  "what": "You make a phone app that shows wallpapers created with AI image tools such as Midjourney or DALL-E. Users browse themed collections, such as seasonal, abstract or aesthetic styles, and set a wallpaper on their phone. The free version gives access to ten wallpapers. A cheap monthly subscription opens everything, and single collections can be sold separately. You keep the content fresh by generating batches often and sorting them into collections. Before the app is even live, you build an audience by posting the wallpapers on Instagram, TikTok and Pinterest. It targets phone users in the US, Europe and India, priced in dollars.",
+  "problem": "Many people change their phone background to match their mood or taste, and like it fresh. Free wallpaper sites are cluttered with ads and low-quality images, and they all show the same popular pictures. Someone who wants something distinctive and tidy has little choice and ends up scrolling endless thumbnails.",
+  "bestFor": [
+   "Creators with a visual eye and a social media following",
+   "People who write good image prompts and curate well",
+   "First-time app builders who want a simple product"
+  ],
+  "moneyModel": [
+   "Free tier with 10 wallpapers",
+   "Premium subscription at $1.99 a month for unlimited access",
+   "One-time purchases of single collections"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Generate 100 wallpapers in one clear style and post a few daily on Pinterest and Instagram to learn which looks get saved and shared.",
+   "Link a simple page in your bio with free downloads in exchange for an email address, and count the sign-ups after two weeks.",
+   "If people sign up, build a basic app with free and paid collections, and test the price with early subscribers before spending on ads."
+  ],
+  "watchOut": "Wallpapers are free everywhere, so convincing anyone to pay is hard, and $1.99 leaves little room after app store fees and ad spend. The copyright status of purely AI-made images is unclear in many places, so others may copy your collections. Check each image tool's commercial-use terms, and avoid images that copy a real person's likeness or a brand's artwork.",
+  "keywords": [
+   "ai wallpaper app business",
+   "wallpaper app subscription idea",
+   "ai generated wallpapers app",
+   "start a mobile app with ai"
+  ]
+ },
+ {
+  "slug": "ai-web-development-agency",
+  "name": "AI web development agency",
+  "type": "agency",
+  "oneLine": "A small agency that builds websites, stores and landing pages for local businesses using AI coding tools.",
+  "what": "You build simple websites for small businesses: company sites of three to five pages, small online stores with payments, and landing pages for campaigns. AI design and coding tools produce the first version fast, and you refine it by hand, test it and publish. After launch, clients can pay a monthly maintenance fee for updates and fixes. Add-ons include logo design, search optimisation and written content. You can start alone, then bring in a part-time designer and an assistant for admin. Clients come from social media, local networking, ads and freelance marketplaces.",
+  "problem": "Local shops, clinics, coaches and startups often have no proper website, or one that looks dated and breaks on phones. Agencies quote prices they cannot afford and freelancers sometimes vanish after delivery. They want a clean site, built quickly, by someone who will still answer messages later.",
+  "bestFor": [
+   "Developers or designers going freelance",
+   "Non-technical people willing to learn AI site builders",
+   "Anyone with a network of local business owners"
+  ],
+  "moneyModel": [
+   "Basic websites at ₹15,000 to ₹30,000",
+   "Online stores at ₹30,000 to ₹50,000",
+   "Landing pages at ₹10,000 to ₹15,000",
+   "Maintenance plans at ₹2,000 to ₹5,000 a month, plus add-ons"
+  ],
+  "startupCost": "About ₹18,000 a month in running costs",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Build free sample sites for two real local businesses you know, and put them on a simple portfolio page with before and after views.",
+   "Visit or message 30 local shops that have no website or an old one, and show each a mock homepage made for their business.",
+   "Sell your first three sites at a lower price in return for testimonials, and attach a paid monthly maintenance plan to each from the start."
+  ],
+  "watchOut": "AI-built sites can look fine and still break on phones, load slowly or leave security gaps, so test everything yourself. Clients ask for endless changes, so write down what is included and what costs extra. Online stores that take payments and customer data carry extra responsibility. Many freelancers compete on price.",
+  "keywords": [
+   "web development agency india",
+   "ai website development business",
+   "small business website design service",
+   "ecommerce website freelance business",
+   "website maintenance plans business"
+  ]
+ },
+ {
+  "slug": "youtube-analytics-report-tool",
+  "name": "AI YouTube analytics reports",
+  "type": "app",
+  "oneLine": "A subscription that emails YouTubers a plain-language monthly report on what worked and what to change.",
+  "what": "A creator connects their YouTube channel, and each month the tool pulls their numbers: watch time, retention, click-through rate and subscriber growth. It compares them with earlier months, finds patterns such as which video lengths or posting days do better, and uses AI to write a short report with charts and specific suggestions. The report lands in their inbox, so they never need to open a dashboard. Agencies can connect several channels on one plan.",
+  "problem": "YouTube's own analytics has many tabs and numbers, and small creators do not know which ones matter. Comparing videos by hand takes hours, and few can pay for an analyst. They want a few clear lines on what to do differently next month.",
+  "bestFor": [
+   "Developers or no-code builders comfortable with APIs and email",
+   "YouTube editors or managers who already work with creators",
+   "Creators who want a tool for their own channel first"
+  ],
+  "moneyModel": [
+   "Free plan with a basic comparison",
+   "Pro at $10 a month",
+   "Agency at $30 a month for multiple channels"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Take your own channel or a friend's, export six months of data and write one monthly report by hand, using AI to spot patterns.",
+   "Send that report to ten small creators and ask which suggestion they would act on and whether they would pay $10 a month.",
+   "Automate only the part they valued, connect the YouTube API for five test channels, and email the report for three months."
+  ],
+  "watchOut": "Google reviews apps that ask to read a channel's data, and approval can take time. Small channels have little data, so AI advice can turn generic or wrong, and a creator who follows bad advice will leave. Creators also get free tools inside YouTube itself. Retention is a risk: many will read one report and cancel.",
+  "keywords": [
+   "youtube analytics report tool",
+   "ai youtube channel analysis saas",
+   "monthly youtube analytics email report",
+   "youtube growth tool for small creators"
+  ]
+ },
+ {
+  "slug": "ai-youtube-comment-reply-extension",
+  "name": "AI YouTube comment reply extension",
+  "type": "saas",
+  "oneLine": "A Chrome extension that drafts replies to YouTube comments for creators, billed monthly.",
+  "what": "You build a browser extension that sits on a creator's comment page in YouTube Studio. It finds comments with no reply and drafts an answer with an AI model, using the video's title and the comment's text for context. The creator picks a tone, such as professional, casual or funny, and a length, edits the draft if needed, and sends it. Later versions add saved templates, sorting of comments into questions, praise and spam, and a daily count of replies. Agencies can run several channels.",
+  "problem": "A channel with a few hundred comments per video leaves most of them unanswered, because each reply takes a few minutes to write. Viewers who get ignored stop commenting. Creators who do reply spend an hour a day on near-copy-paste answers that need little thought but still need to sound like them.",
+  "bestFor": [
+   "Developers or AI-tool builders who like small focused products",
+   "YouTubers who have felt this problem themselves",
+   "People who manage channels for several creators"
+  ],
+  "moneyModel": [
+   "Free plan with 15 replies a day",
+   "Pro plan at $9 a month",
+   "Agency plan at $29 a month with team members"
+  ],
+  "startupCost": "About $5, plus AI usage",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Build a bare version for your own or a friend's channel that drafts replies in a side panel, and use it for a week.",
+   "Message ten creators with 1,000 to 10,000 subscribers, offering free use in return for a weekly feedback call.",
+   "Record a short before-and-after demo of replying to 50 comments, and post it where small creators gather."
+  ],
+  "watchOut": "The extension reads a page you do not control, so a layout change can break it overnight, and automated actions on a platform may go against its terms. Never auto-send. Keep a human approving each reply. AI replies can sound generic, and every draft costs you usage fees, so the free plan needs a careful cap.",
+  "keywords": [
+   "youtube comment reply chrome extension",
+   "ai reply to youtube comments",
+   "youtube creator tools saas",
+   "build chrome extension business"
+  ]
+ },
+ {
+  "slug": "ai-digital-marketing-agency",
+  "name": "AI-assisted digital marketing agency",
+  "type": "agency",
+  "oneLine": "You run social media, search and ads for small Indian businesses on monthly plans, using AI to speed up work.",
+  "what": "You manage online marketing for local businesses on a monthly retainer. Your menu covers social posts on two or three platforms, search optimisation, Google Ads setup and management, email campaigns, blog writing and a monthly report. You use AI writing and design tools to draft content faster, and you check every piece before it goes live. For shops that depend on foot traffic, you add simple offline pushes like flyers or local events. Your first clients come from your own network and early case studies.",
+  "problem": "A restaurant, clinic or coaching centre owner knows customers search online, but has nobody to post regularly, run ads or read the numbers. A full-time hire costs more than the business can justify, and past agencies sent reports nobody understood. They want one person who handles it and shows what changed.",
+  "bestFor": [
+   "Freelance writers and designers moving into recurring work",
+   "Marketing employees who want to go independent",
+   "People with a local network of shop owners"
+  ],
+  "moneyModel": [
+   "Starter plan at ₹15,000 a month",
+   "Growth plan at ₹30,000 a month",
+   "Premium plan at ₹50,000 a month"
+  ],
+  "startupCost": "About ₹15,000",
+  "budget": "under-50k",
+  "buildableWithAi": false,
+  "market": "india",
+  "firstSteps": [
+   "Choose one type of business, such as dental clinics in your city, and write a one-page audit of five of their Instagram pages and listings.",
+   "Send each owner their audit with three specific fixes, and offer your starter plan to the first two who reply.",
+   "Report the first client's numbers monthly in a simple page, and turn the before-and-after into a case study for LinkedIn."
+  ],
+  "watchOut": "Clients judge you on leads and sales you only partly control, and they leave quickly when numbers stall. A full menu across search, ads, social and email is a lot for one person, so start with two services. Be clear who pays the ad platforms. AI-written content needs your edits, because sameness is easy to spot.",
+  "keywords": [
+   "digital marketing agency india start",
+   "ai marketing agency for small business",
+   "social media management business india",
+   "seo and ads agency for local businesses"
+  ]
+ },
+ {
+  "slug": "ai-virtual-assistant-agency",
+  "name": "AI-assisted virtual assistant agency",
+  "type": "agency",
+  "oneLine": "You supply remote assistants backed by AI tools to overseas small businesses, billed by hour or package.",
+  "what": "You run a team of remote assistants who handle inbox cleanup, calendar booking, data entry, customer support replies, social media scheduling, and basic research for clients abroad. AI tools do the first pass, such as drafting replies, summarising threads, and running repeat steps through workflow tools like Zapier, while a person checks the output. You start with two part-time assistants and a few clients found on freelance sites and LinkedIn. Clients pay hourly or buy monthly packages, and you pay your assistants less than you bill.",
+  "problem": "Solo founders, coaches, and small agencies in the US and UK spend hours a week on email, scheduling, and admin that earns them nothing. Hiring locally is expensive, and a full-time hire is more than they need. They want reliable part-time help they can brief once and trust.",
+  "bestFor": [
+   "People who have worked as executive assistants or operations managers",
+   "Freelancers who already serve overseas clients and want to scale",
+   "Organised managers comfortable hiring and checking others' work"
+  ],
+  "moneyModel": [
+   "Hourly rates of ₹1,000 to ₹2,000",
+   "Monthly packages, such as 20 hours for ₹18,000",
+   "Add-on workflow automation setups billed per project"
+  ],
+  "startupCost": "₹30,000 to ₹50,000",
+  "budget": "under-50k",
+  "buildableWithAi": false,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Take two clients from LinkedIn or freelance sites at the hourly rate, and do their work yourself with AI tools before hiring anyone.",
+   "Write a short step-by-step guide for each recurring task, such as inbox sorting, so a new assistant can follow it from day one.",
+   "Hire your first part-time assistant only when you have more hours than you can handle, and run a paid test task before committing."
+  ],
+  "watchOut": "You pay assistants whether or not clients pay you, and one client cancelling can leave you with idle staff. Giving assistants access to a client's email, calendar, and accounts is a serious trust risk, so you need confidentiality contracts and access controls. Receiving foreign payments also brings paperwork, so ask an accountant to set it up before your first invoice.",
+  "keywords": [
+   "virtual assistant agency india",
+   "start va agency for us clients",
+   "ai virtual assistant business",
+   "outsourced admin services india",
+   "hire indian virtual assistant business"
+  ]
+ },
+ {
+  "slug": "ai-website-design-agency",
+  "name": "AI-assisted website design agency",
+  "type": "agency",
+  "oneLine": "You design and launch websites for small Indian businesses faster, using AI mockups and Framer.",
+  "what": "You build business websites for small companies and startups in India. The process is short. You meet the client, create design mockups with an AI design tool, refine them with their feedback, then build the real responsive site in Framer. You add forms that feed their CRM, simple shop features if needed, and basic SEO. After launch you offer a monthly plan for updates, fixes and performance checks. Your pitch is speed and a clear price, since the first design appears in days.",
+  "problem": "Many small businesses have no website, or an old slow one nobody can update. Agency quotes feel high, and freelancers often vanish after delivery. Owners want something that looks credible, loads well on a phone, and can be changed when prices, menus or opening hours change.",
+  "bestFor": [
+   "Freelance designers who want to sell complete websites",
+   "Developers tired of one-off jobs who want monthly clients",
+   "Marketers who already know local business owners"
+  ],
+  "moneyModel": [
+   "Project fees of ₹1,00,000 to ₹2,00,000 per website, by size",
+   "Monthly retainers for maintenance and updates",
+   "Add-on services such as SEO and content"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Build three sample sites for one kind of business, such as dental clinics or boutique hotels, and publish them live.",
+   "Find 30 businesses of that kind with slow or outdated sites and send each a short note with a screenshot of your redesign.",
+   "Quote your first two clients a fixed price with half upfront, and offer a monthly update plan on the day you deliver."
+  ],
+  "watchOut": "At ₹1,00,000 and above, small business owners will ask for plenty of proof and compare you with cheaper freelancers, so the first few projects are hard to land. The tools you rely on can change price or limits. AI mockups also look alike, so taste and good writing decide the result. Agree in writing who owns the domain and content.",
+  "keywords": [
+   "ai web design agency india",
+   "framer website agency business",
+   "start website design agency india",
+   "ai website builder service for small business"
+  ]
+ },
+ {
+  "slug": "ai-mvp-development-agency",
+  "name": "AI-built software MVP agency",
+  "type": "agency",
+  "oneLine": "You sell fixed-price first versions of software to founders, built fast by freelancers using AI tools.",
+  "what": "You run a small studio that turns a founder's software idea into a working first version in two to four weeks. You handle scoping, pricing and client conversations. Freelance builders, paid per project, do the coding with tools such as Next.js, Supabase and AI code assistants. Packages are fixed by size, with extras for hosting, design polish and monthly maintenance. Your buyers are mostly creators and first-time founders in India, the US and South-East Asia who have an idea but no developer.",
+  "problem": "A first-time founder gets quotes from software firms that stretch to months, or tries to build alone and stalls halfway. They want something they can show customers soon, at a price that fits a test and not a bet. Good freelance builders, meanwhile, want steady client work without doing the selling.",
+  "bestFor": [
+   "Sales-minded people who can scope work and talk to clients",
+   "Developers who want to run a studio instead of working solo",
+   "Creators with an audience of aspiring founders"
+  ],
+  "moneyModel": [
+   "Starter build at $999",
+   "Pro build at $1999",
+   "Custom AI agent or workflow builds at $3000 to $4000",
+   "Hosting setup at $150 and maintenance at $100 a month"
+  ],
+  "startupCost": "$0 upfront, with builders paid per project",
+  "budget": "under-50k",
+  "buildableWithAi": false,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Build one small demo app yourself, such as a quiz tool, and write a one-page case study of what it took and how long.",
+   "Message 20 founders or creators on X and LinkedIn who posted an app idea, offering a fixed-scope two-week build.",
+   "Test three freelance builders with a paid mini task before promising any client a date, and take 50% upfront from each client."
+  ],
+  "watchOut": "You are promising dates and quality that depend on other people's work. If a builder vanishes or the app breaks after launch, your name is on it. AI-written code can hide bugs and security gaps. Clients keep asking for more than the agreed scope, so write down what is included and what costs extra.",
+  "keywords": [
+   "ai saas development agency",
+   "build mvp with ai agency business",
+   "mvp development agency india",
+   "start software agency with freelancers"
+  ]
+ },
+ {
+  "slug": "bangalore-cafe-pub-directory",
+  "name": "Bangalore cafe and pub directory",
+  "type": "directory",
+  "oneLine": "A local guide site to Bangalore cafes and pubs, paid by featured listings, ads and referral links.",
+  "what": "You build a website that lists cafes, pubs and breweries in Bangalore with filters people really search for, such as live music, pet-friendly, rooftop or good for working. Each venue gets a page with photos, a map and tags. You write guides for each area of the city to bring in visitors from Google, and let readers suggest corrections and leave reviews. Cafes and bars pay to be featured once the site has regular readers. You can start on a basic site builder and a cheap domain.",
+  "problem": "People choosing where to go on a Saturday night, or where to work from for an afternoon, flip between general listing apps, maps and Instagram posts. Those rarely filter by small details like pets, board games or quiet seating. Local venues also have few places where they control how they appear.",
+  "bestFor": [
+   "Bangalore locals who know the cafe and pub scene well",
+   "Bloggers and food creators who want a website of their own",
+   "Builders who like content and search traffic"
+  ],
+  "moneyModel": [
+   "Featured venue listings at ₹1,000 to ₹2,000 a month",
+   "Display ads once traffic grows",
+   "Affiliate links for ordering, tickets and rides",
+   "Sponsored guides from drinks and event brands"
+  ],
+  "startupCost": "About ₹15,000 in year one for domain, hosting and tools",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Pick one neighbourhood, such as Indiranagar or Koramangala, and build 30 venue pages there using photos you took or owners gave you.",
+   "Publish three guides, like rooftop cafes or pet-friendly places, then visit ten venues and offer each a free featured spot for three months.",
+   "Add a suggest-a-change form to every page and ask owners to check their listing, so the details stay correct."
+  ],
+  "watchOut": "Traffic comes slowly, and few readers click through to anything paid. Venues close or change hours and menus often, so listings go stale unless you keep checking. Alcohol advertising is tightly restricted in India, so ask a lawyer what your pubs pages and ads may say. Reviews of named businesses will bring takedown requests, so write a moderation policy early.",
+  "keywords": [
+   "bangalore cafe directory website",
+   "best pubs in bangalore directory",
+   "start local city directory india",
+   "pet friendly cafes bangalore"
+  ]
+ },
+ {
+  "slug": "ai-automation-consulting",
+  "name": "Business automation consulting",
+  "type": "service",
+  "oneLine": "Fix small businesses' repeat tasks with Make, Zapier and AI, sold as fixed-price packages.",
+  "what": "You help small businesses stop doing repeat tasks by hand. You sit with the owner, find one process that eats time, such as copying orders into a sheet, chasing invoices or following up leads, and rebuild it with tools like Make, Zapier, n8n and Google Apps Script. You add AI where text must be read or written. You sell it as fixed packages: an audit with a quick fix, a few workflows, or a whole department. You work remotely and alone at first.",
+  "problem": "Owners of small firms often have staff typing the same data into three places and answering the same messages every day. They know it wastes time but have nobody to map the work and build the fix. Hiring a developer feels heavy, and software tutorials do not tell them which task to automate first.",
+  "bestFor": [
+   "Operations people or freelancers who like fixing messy processes",
+   "Marketers or analysts who already use Zapier or similar tools",
+   "Anyone with a network of small business owners"
+  ],
+  "moneyModel": [
+   "Micro package at ₹15,000 to ₹25,000 for one process audit with a quick fix",
+   "Basic package at ₹30,000 to ₹50,000 for assessing 2 to 3 processes and building one workflow",
+   "Growth package at ₹75,000 to ₹1,00,000 for a department plan, three workflows and staff training",
+   "Recurring maintenance packages once you have clients"
+  ],
+  "startupCost": "₹20,000 to ₹40,000",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Pick one industry you can talk about, such as online stores, and list the five repeat tasks their owners complain about most.",
+   "Offer a free 30 minute process review to ten owners you know, and write down roughly how many hours each task costs them per week.",
+   "Take the clearest case, quote the micro package, build the fix, and ask for a written testimonial and two referrals once it works."
+  ],
+  "watchOut": "Your clients' customer and payment data will pass through third-party tools, so you carry some responsibility for how it is handled, and Indian data protection rules apply. Check with a professional. Automations break when a tool changes, and clients will call you. Fixed prices invite scope creep, so write down exactly what each package includes.",
+  "keywords": [
+   "automation consulting business india",
+   "start ai automation agency",
+   "make.com zapier freelance business",
+   "process automation for small business"
+  ]
+ },
+ {
+  "slug": "canva-design-youtube-business",
+  "name": "Canva tutorials and design services",
+  "type": "content",
+  "oneLine": "You teach Canva on YouTube and sell design work to viewers who would rather hire than learn.",
+  "what": "You run a YouTube channel teaching Canva: basic tutorials, shortcuts, templates for specific industries and before-and-after case studies. Viewers who like the lessons but lack time hire you for social posts, brand kits and presentations. You also add affiliate links for design tools you teach. One skill then earns in three ways: ad income, client projects and referral commissions. Expect to upload steadily for months before any of it pays.",
+  "problem": "Business owners know they need decent graphics, but lack the time, taste or patience for design tools. A studio feels costly for a few posts a month. Beginners following free tutorials often still produce work that looks amateur, and some of them would pay a small amount to have it done for them.",
+  "bestFor": [
+   "Students and beginners with an eye for design",
+   "Freelance designers who want clients to find them",
+   "People comfortable recording their screen and voice"
+  ],
+  "moneyModel": [
+   "Basic design projects at ₹1,500",
+   "Medium projects at ₹3,000",
+   "Premium projects from ₹5,000",
+   "YouTube ad income and design tool affiliate commissions"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Pick one kind of customer, such as coaches or cafe owners, and make five Canva designs for them as your portfolio.",
+   "Post two short tutorials a week showing how you made one of those designs, with a pinned comment offering paid design help.",
+   "Offer three people from your comments a basic design at ₹1,500 and ask each for a testimonial after delivery."
+  ],
+  "watchOut": "YouTube is slow. Many channels upload for months with little reach, and ad income stays tiny for a long time. Client work pays sooner but pulls hours away from making videos. Canva templates and stock elements come with licence limits on what you may resell, so read them. Affiliate programs can change their terms or end.",
+  "keywords": [
+   "canva design business india",
+   "canva freelancing from home",
+   "start youtube channel canva tutorials",
+   "design services for small business india"
+  ]
+ },
+ {
+  "slug": "cofounder-compatibility-test",
+  "name": "Cofounder compatibility test",
+  "type": "saas",
+  "oneLine": "An online test for founder pairs, sold to individuals and accelerators, that flags where they may clash.",
+  "what": "A short online questionnaire that two founders each take before committing to work together. It looks at big-picture versus detail focus, appetite for risk, how directly each person communicates and how they decide. When both finish, the tool gives a fit score, points to where they are likely to clash, suggests ways to handle each difference and creates a report an investor could read. You can build a first version with a form tool, a database and a simple dashboard. You sell to Indian accelerators first and to US ones later.",
+  "problem": "People pick cofounders because they are friends or ex-colleagues, then find out months later that one wants to move fast and the other wants certainty. By then equity is split and money is spent. A structured exercise before that point helps founders spot differences early and agree how to handle them.",
+  "bestFor": [
+   "Psychology or HR graduates who can design sound questions",
+   "Community builders who know many early-stage founders",
+   "No-code builders who want a niche product to sell to accelerators"
+  ],
+  "moneyModel": [
+   "Individual test at ₹3,000 per person, or about ₹5,000 per team",
+   "Accelerator pilots with a ₹1,00,000 setup fee plus ₹10,000 per batch of up to five teams",
+   "Annual licence at ₹15,00,000 for unlimited teams",
+   "Coaching at ₹5,000 an hour and custom analysis projects from ₹2,00,000"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Write 30 questions with a psychology graduate or HR professional, and try them on ten founders to see which ones separate people.",
+   "Run the test for three real cofounder pairs free, spend 30 minutes with each on the results, and ask whether it changed their talks.",
+   "Take those write-ups to the organisers of two founder meetups or accelerators and offer a paid pilot."
+  ],
+  "watchOut": "Anyone can write a personality quiz, but few can show it measures what it claims. A fit score that scares a pair apart, or falsely reassures them, does real harm, so present it as a conversation aid, not a verdict. The answers are sensitive personal data, and contracts with accelerators move slowly.",
+  "keywords": [
+   "cofounder compatibility test",
+   "cofounder matching startup idea",
+   "psychometric test for founders",
+   "founder assessment saas india"
+  ]
+ },
+ {
+  "slug": "cofounder-matching-platform",
+  "name": "Cofounder matching platform for India",
+  "type": "marketplace",
+  "oneLine": "An India-focused site where aspiring founders find a cofounder, with members paying monthly.",
+  "what": "A website, and later an app, where aspiring founders create profiles, search by skills, city and idea stage, and message people they might build with. The free level offers a basic profile and limited messages. A paid level, priced between ₹500 and ₹1,000 a month, gives better filters, unlimited messaging and priority placement. Other income comes from job listings and hiring services, event sponsorships, and ads from startup-focused businesses. The pitch is trust: checked profiles, ratings, local language support, guides on equity splits, and ties with Indian incubators, plus in-person meetups.",
+  "problem": "Many people in India have an idea or a skill but nobody to build with. They look for partners through friends, college circles and scattered social media posts, which limits who they meet. Strangers online raise worries about scams and flaky commitment, and it is hard to tell whether someone is serious or compatible.",
+  "bestFor": [
+   "Community builders with a strong startup network",
+   "Founders who can run events and recruit early users",
+   "Teams with some budget for a larger build"
+  ],
+  "moneyModel": [
+   "Premium membership at ₹499 to ₹999 a month",
+   "Job listings and hiring services for startups",
+   "Sponsorships and ads from startup-focused businesses",
+   "Paid events and featured startup listings"
+  ],
+  "startupCost": "₹5 lakh to ₹10 lakh",
+  "budget": "over-5l",
+  "buildableWithAi": false,
+  "market": "india",
+  "firstSteps": [
+   "Run a manual version first: one form for cofounder seekers and one WhatsApp group, then personally introduce ten pairs in a single city.",
+   "Hold a meetup at a coworking space for people seeking cofounders, and note what they want to know about each other first.",
+   "Charge the first 20 members a small monthly fee for curated introductions, and build only the checks and filters they actually ask for."
+  ],
+  "watchOut": "A matching site is empty until both sides show up, and people who find a cofounder leave. Verifying identity means collecting government ID, which makes you responsible for protecting it under Indian data protection rules, so speak to a lawyer. Fake profiles, safety concerns and disputes between matched founders will land on you.",
+  "keywords": [
+   "find cofounder india",
+   "cofounder matching platform india",
+   "startup cofounder search website",
+   "cofounder finder app business idea",
+   "co-founder matchmaking startup"
+  ]
+ },
+ {
+  "slug": "maker-collaborator-matching-app",
+  "name": "Collaborator matching app for makers",
+  "type": "app",
+  "oneLine": "Build a swipe-style app where makers and indie builders find project partners, paid by subscription.",
+  "what": "This is a matching app for people who build things, such as hardware tinkerers, indie developers, musicians and designers. Each person lists their skills, interests and the projects they want help with. The app suggests people with complementary skills, using AI to compare profiles, and lets two people who like each other start a private chat. A public board shows open project ideas. Free users get a limited number of matches a month. Paid users get skill and location filters, project boards and unlimited matches. Events and team plans come later.",
+  "problem": "Someone with an idea for a robot, a song or an app often lacks one key skill, and has no easy way to find a partner outside their friends. Facebook groups and Reddit threads are messy, hard to search and full of people who never reply. They want to meet the right collaborator and start working.",
+  "bestFor": [
+   "Indie builders already active in a maker or hobby community",
+   "Someone who can run a community and post online every week",
+   "Non-technical founders happy to build with Lovable and Supabase"
+  ],
+  "moneyModel": [
+   "Free plan with 5 matches a month",
+   "Pro plan at ₹299 a month for unlimited matches, filters and project boards",
+   "Pro Teams plan at ₹999 a month for group collaboration and event tools",
+   "A 10 percent cut on event tickets and 30 percent on template sales"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Before building anything, start a Telegram or Discord group for makers in one city or one craft, and personally introduce ten pairs of people.",
+   "Track how many introductions turn into a started project. If few do, fix the matching idea before you write any app code.",
+   "Then build a plain profile and chat version, invite the group's members, and ask each one to bring a friend with a different skill."
+  ],
+  "watchOut": "A matching app is useless until it fills up. With ten users there are no good matches and people leave. Trust is the other problem: strangers share contact details, so you need reporting, blocking and some verification from day one. You will hold personal data, so check India's data protection law with a professional. Pairs may also move to WhatsApp.",
+  "keywords": [
+   "collaborator matching app",
+   "find co-founder or project partner app",
+   "maker community app idea",
+   "tinder for creators business idea"
+  ]
+ },
+ {
+  "slug": "content-repurposing-agency-india",
+  "name": "Content repurposing agency",
+  "type": "agency",
+  "oneLine": "Turn a brand's existing blogs, videos and posts into reels, clips and newsletters for a monthly fee.",
+  "what": "You take content a business has already made and reshape it for other places. A long video becomes short clips and a blog post. A blog becomes a video, a set of social posts or an infographic. You can also translate pieces into other Indian languages. Clients pay monthly for a set number of pieces, or a flat fee per item. You handle onboarding, decide what to convert, and check the final work. Freelancers or AI editing tools do most of the cutting, captioning and design in Canva or CapCut, while Google Drive holds the files.",
+  "problem": "Small businesses and creators put effort into one video or article, post it once, and it disappears from view. They know it could become reels, quotes or a newsletter, but they lack the time or editing skill. A full agency feels too expensive. They want the same message in more places without making new content from scratch.",
+  "bestFor": [
+   "Video editors or writers who want steady monthly clients",
+   "People fluent in Hindi or another regional language",
+   "Freelancers who can manage other freelancers"
+  ],
+  "moneyModel": [
+   "Monthly plans at ₹5,000 (up to 5 pieces), ₹15,000 (up to 20) and ₹25,000 (unlimited)",
+   "One-time projects at ₹1,000 per repurposed item",
+   "Regional language versions at ₹2,000 per language",
+   "Add-ons such as basic video editing, scripts and SEO for blog versions"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Pick one niche, such as coaches or D2C brands, and cut one of their public YouTube videos into three reels and a blog summary.",
+   "Send that sample to 30 owners in the niche by email or LinkedIn, and offer one more free piece for honest feedback.",
+   "Move the best replies onto the Starter plan, and track hours per piece to check the price works."
+  ],
+  "watchOut": "An unlimited plan at ₹25,000 can eat your whole month, because a client can keep sending work and asking for edits. Set a monthly cap and a revision limit. Work only on content the client owns or has rights to, especially music and clips of other people. Free AI clipping tools also mean some clients will try doing it themselves.",
+  "keywords": [
+   "content repurposing agency india",
+   "repurpose content business",
+   "video to reels service for brands",
+   "content repurposing services small business"
+  ]
+ },
+ {
+  "slug": "custom-map-poster-store",
+  "name": "Custom map poster store",
+  "type": "ecommerce",
+  "oneLine": "A site where people design a map poster of any place and order it printed and delivered on demand.",
+  "what": "Customers search any place, such as a hometown, a wedding venue or a trekking route, then style the map with colours, zoom, terrain and labels. They preview it as a poster, canvas or phone case and order on the spot. A print-on-demand partner prints and ships each order, so you hold no stock. You earn on the gap between print cost and selling price, plus add-ons like a frame or gift wrap. Businesses such as real estate agents and hotels can order in bulk with their own branding, and interior designers might subscribe for premium styles and a commercial licence.",
+  "problem": "People want gifts and wall art that mean something, such as the place they met or the city they grew up in. Most map prints on sale are fixed designs of famous cities. Anyone wanting their own street or a custom style needs a designer, which costs more than the gift is worth.",
+  "bestFor": [
+   "Developers or no-code builders who enjoy visual products",
+   "Gift and decor sellers with Instagram or Pinterest reach",
+   "People who can handle shipping questions and complaints"
+  ],
+  "moneyModel": [
+   "Posters printed for about ₹400 and sold from ₹1,200",
+   "Frame add-on at ₹500 and gift wrap at ₹200",
+   "Subscription at ₹399 a month for premium styles and a commercial licence",
+   "Discounted bulk and branded orders for businesses"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": false,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Make 20 map designs by hand for specific places and sell them as prints through Instagram and gifting groups before building any tool.",
+   "Order sample prints from two printers and check colours, paper quality and delivery time to the cities where your buyers live.",
+   "Pitch five wedding planners, real estate agents or cafe owners on branded map prints, and ask each for one small paid order."
+  ],
+  "watchOut": "Print quality and delivery time decide your reviews, and you control neither once the order reaches your print partner. Check that the partner ships to your buyers at a sensible cost. Map data comes with licence terms, and some require credit on the product, so read them before you sell. Ads for gifts can get expensive.",
+  "keywords": [
+   "custom map poster business",
+   "personalised map art india",
+   "print on demand map poster",
+   "map art generator website",
+   "city map print gift business"
+  ]
+ },
+ {
+  "slug": "review-collection-tool",
+  "name": "Customer review collection tool",
+  "type": "app",
+  "oneLine": "A simple tool that asks customers for reviews by email or SMS and shows the best ones on a web page.",
+  "what": "A small business adds its customers, and the tool sends a review request by email or SMS after a sale or job. It tracks who opened the link, reminds people who did not respond, and gives happy customers a simple page to leave written or video feedback. The business then shows the best ones on a testimonial wall embedded in its website. You can build a first version in under two weeks with Tally, Airtable, Zapier and Softr, and no code.",
+  "problem": "Local shops, coaches and freelancers know reviews bring in new customers, but asking each customer by hand feels awkward and gets forgotten. They have no system, no marketing staff and no time. Without reviews, a new visitor has little reason to trust them over the next listing.",
+  "bestFor": [
+   "Non-coders who like linking tools such as Airtable and Zapier",
+   "Freelancers or agency owners who already know many small businesses",
+   "People who prefer a simple product over a big one"
+  ],
+  "moneyModel": [
+   "Free plan with up to 10 review requests",
+   "Starter at ₹800 a month",
+   "Pro at ₹2,000 a month",
+   "Agency at ₹4,000 a month, plus lifetime deals for early users"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Build the simplest version: a Tally form, an Airtable list and one Zapier email that goes out after you add a customer.",
+   "Offer it free to five local businesses, such as a salon, a coaching class and a shop, and send their first requests yourself.",
+   "Count how many customers actually reply, then ask the owners whether they would pay ₹800 a month to keep it."
+  ],
+  "watchOut": "Business SMS in India needs sender and message-template registration, and WhatsApp is where many customers actually reply. Asking only happy customers for reviews, or paying for them, can break the rules of review sites. Many similar tools exist, so a clear niche matters. Free users rarely upgrade, and no-code stacks get slow and costly as you grow.",
+  "keywords": [
+   "review collection tool for small business",
+   "testimonial collection software india",
+   "automated review request sms email",
+   "micro saas business idea reviews"
+  ]
+ },
+ {
+  "slug": "slack-daily-digest-tool",
+  "name": "Daily chat digest tool for founders",
+  "type": "saas",
+  "oneLine": "A tool that reads a founder's team chat and emails a short evening digest, paid monthly.",
+  "what": "This tool connects to a team's Slack, reads the channels the founder picks, and sends a short email each evening. The email lists decisions made, action items, blockers and key discussions. The founder sets topics and keywords to prioritise and chooses the send time. An AI model does the reading and summarising, and the email goes out through a mail service. Later versions can add other chat apps, a Notion page or a Slack message as places to receive the digest, and views for the whole team.",
+  "problem": "A founder with a team of ten or more cannot read every channel, yet needs to know what was decided, what is stuck and who needs them. Scrolling through the day's threads takes an hour, so important things get missed or the founder interrupts people to ask. Remote teams and agencies feel this most.",
+  "bestFor": [
+   "Solo builders comfortable with APIs and AI coding tools",
+   "Operators who run remote teams and feel this pain themselves",
+   "Founders of small agencies who want an internal tool to sell"
+  ],
+  "moneyModel": [
+   "Plan at $19 a month for the daily summary with Slack",
+   "Plan at $49 a month for multiple sources and customisation",
+   "Plan at $99 a month for team-wide insights and analytics",
+   "Free trial for 7 or 14 days"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Ask ten founders of teams with 10 or more people to share a day of exported chat, then send back a hand-made digest.",
+   "Run those exports through an AI model with your own prompt, then ask each founder what to remove or add. Repeat for a week.",
+   "Build the Slack connection and nightly email only after three founders say they would pay, and charge $19 from the first month."
+  ],
+  "watchOut": "You are reading private workplace conversations, so trust is the sale. The company admin has to approve the connection, employees may object, and message text goes to an AI provider. Store as little as possible, delete it quickly, and check data protection duties with a lawyer. One summary that misses an important message loses a founder fast.",
+  "keywords": [
+   "slack daily summary tool",
+   "ai chat digest for founders",
+   "slack summarizer saas",
+   "build ai saas for startup teams"
+  ]
+ },
+ {
+  "slug": "dog-breed-quiz-app",
+  "name": "Dog breed matching quiz",
+  "type": "app",
+  "oneLine": "A free quiz that suggests dog breeds to fit your home, paid for by guides, affiliate links and a Pro plan.",
+  "what": "People answer ten to twelve questions about their home, time, budget, allergies, children and how much grooming they can handle. An AI model turns the answers into one to three suggested breeds, with pros, cons, temperament, care needs and training tips. The result can be saved, shared or emailed, and asking for an email address before showing the full result builds your mailing list. The quiz is free and draws visitors from search and short videos. You earn from small digital guides, affiliate links for pet products and, later, a paid plan with deeper reports.",
+  "problem": "First-time dog owners often pick a breed for its looks, then find it needs more exercise, grooming or space than they have. Some end up giving the dog away. Reading dozens of breed pages is confusing, and most advice ignores Indian flats, heat and family set-ups.",
+  "bestFor": [
+   "Builders who want a simple first product with AI",
+   "Creators who can make short videos about pets",
+   "People who enjoy writing and search-driven content"
+  ],
+  "moneyModel": [
+   "Dog breed handbook at $7 to $10",
+   "First-time owner checklist at $5",
+   "Pro plan at ₹199 a month or $3.99 a month",
+   "Affiliate links to pet products and paid placements from pet businesses"
+  ],
+  "startupCost": "Close to ₹0, using free tiers of the tools",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Write the twelve quiz questions yourself and test them on 20 friends and neighbours who own or want a dog, noting where results feel wrong.",
+   "Build the quiz with an AI app builder, send answers to an AI model, and check its breed advice against a vet's guidance.",
+   "Publish three articles on topics like best dogs for flats in India, and share the quiz in pet groups where you help first."
+  ],
+  "watchOut": "Traffic is the whole game, and search rankings take months. Pet advice has real consequences, and an AI model can state breed traits or health issues wrongly, so have a vet review your content and add a clear disclaimer. Taking paid promotion from breeders can push buyers toward irresponsible sellers and harm your credibility.",
+  "keywords": [
+   "dog breed quiz india",
+   "best dog breed for apartment india",
+   "ai pet recommendation app",
+   "dog breed selector tool",
+   "pet startup idea ai"
+  ]
+ },
+ {
+  "slug": "employee-engagement-tool-small-business",
+  "name": "Employee engagement tool for small teams",
+  "type": "saas",
+  "oneLine": "Simple HR software for firms under 50 staff, with surveys and check-ins, paid monthly by the owner.",
+  "what": "A simple HR web app for small companies that have no HR team. The owner sends short pulse surveys, staff can raise concerns anonymously, teammates can recognise each other, and managers run light goal check-ins. It also offers checklists for onboarding new hires and exit interviews for people who leave. An AI layer can read survey answers and summarise the mood. You build it on a standard web stack with a hosted database, and a free tier draws small teams in.",
+  "problem": "In a team of fifteen, a good employee quits and the owner learns why only in the exit chat. Big HR platforms cost too much and have too many features for a small business. Owners want an early warning when morale drops and a simple routine that keeps staff feeling heard.",
+  "bestFor": [
+   "Developers or no-code builders with some HR experience",
+   "Founders who run a small team and feel this pain",
+   "HR consultants who want a product to offer clients"
+  ],
+  "moneyModel": [
+   "Free plan for up to 5 users with basic surveys",
+   "Starter plan at ₹999 per month for up to 25 users",
+   "Growth plan at ₹2,499 per month for up to 75 users with AI insights",
+   "Custom enterprise plans, branding add-ons and optional HR consulting"
+  ],
+  "startupCost": "₹0 on free tiers",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Run a manual version first: send a five-question Google Form to three small companies you know, then give each owner a summary.",
+   "Ask those owners which part they would pay ₹999 a month for, then build only that, such as surveys plus an anonymous box.",
+   "Put the first version in front of 20 agency and startup owners in your city and offer a 30 day free run for feedback."
+  ],
+  "watchOut": "Anonymous feedback is not anonymous in a team of five, and staff stop being honest if they think the owner can tell who wrote what. Employee data is sensitive, so you need clear privacy practices. Small firms cancel quickly when money is tight, and many owners ignore the survey results. Avoid presenting it as HR or legal advice.",
+  "keywords": [
+   "employee engagement software small business india",
+   "pulse survey tool for startups",
+   "hr saas idea",
+   "employee retention tool"
+  ]
+ },
+ {
+  "slug": "google-ads-agency-india",
+  "name": "Google Ads agency for Indian businesses",
+  "type": "agency",
+  "oneLine": "You run Google search ads for local businesses and charge a monthly fee or a share of ad spend.",
+  "what": "You manage paid search campaigns for businesses that want enquiries or online orders. The work covers choosing keywords, writing ads, setting budgets, checking which clicks turn into leads, and sending the client a simple monthly report. Good targets are schools, clinics, property developers, and online stores in your own city. You can charge a flat monthly fee, a share of what the client spends on ads, or a base fee plus a share above an agreed limit. AI tools help with keyword lists, ad copy, and report drafts.",
+  "problem": "Small Indian businesses burn money on ads they set up themselves: wrong keywords, no tracking, and a website that never turns a click into a call. They cannot tell whether the ad or the agency is at fault. They need someone who shows where each rupee went and what came back.",
+  "bestFor": [
+   "Marketers who already run ads for an employer or side client",
+   "Freelancers who can explain numbers to non-technical owners",
+   "People with local networks in education, health, or property"
+  ],
+  "moneyModel": [
+   "Flat fee of ₹20,000 to ₹50,000 a month for smaller accounts",
+   "10% to 20% of the client's monthly ad spend",
+   "Base fee plus a percentage above an agreed spend level",
+   "Paid training sessions for a client's in-house team"
+  ],
+  "startupCost": "About ₹3.5 lakh to ₹6 lakh, less with a home office",
+  "budget": "50k-5l",
+  "buildableWithAi": false,
+  "market": "india",
+  "firstSteps": [
+   "Pick one industry in your city, such as dental clinics or coaching institutes, and audit ten of their current Google ads or missing ads.",
+   "Send each owner a one-page audit of what they waste or miss, and offer a one-month trial at a flat fee with weekly reports.",
+   "Set up call tracking and a simple dashboard for your first client, and save the before-and-after results as a case study to show others."
+  ],
+  "watchOut": "Your results depend on things you do not control: the client's website, how fast they call back leads, and their budget. When leads dry up, you get the blame. Percentage-of-spend pricing also rewards you for higher spend, which owners notice. Get ad-account access in writing, agree what counts as a lead, and check platform rules for health and finance ads.",
+  "keywords": [
+   "google ads agency india",
+   "start ppc agency india",
+   "google ads freelancer business",
+   "digital marketing agency for local business",
+   "google ads management pricing india"
+  ]
+ },
+ {
+  "slug": "government-schemes-help-service",
+  "name": "Government schemes help service",
+  "type": "service",
+  "oneLine": "Explain government schemes on YouTube, then charge fixed fees to help people apply.",
+  "what": "You start by making YouTube videos that explain government schemes in plain language: how a loan or subsidy works, who qualifies and how to apply. As viewers gather, you offer a paid service to individuals and small businesses who want help checking eligibility, preparing documents, filing applications and following up. A free scheme guide collects email addresses along the way. The paid service begins once people trust your explanations. The daily work is research, scripting and patient handholding.",
+  "problem": "India has a large number of central and state schemes, and many eligible people never use them because the information is scattered across portals and hard to follow. Small business owners and families struggle with forms, document lists and eligibility rules. They want someone to say which scheme fits them and to help with the paperwork.",
+  "bestFor": [
+   "Former bankers, CAs or scheme specialists who understand the rules",
+   "Video creators who enjoy research-heavy teaching content",
+   "People with contacts in NGOs or local business groups"
+  ],
+  "moneyModel": [
+   "Fixed fees, about ₹25,000 for one simple scheme for an individual and ₹1,00,000 or more for full start-up incentive help",
+   "YouTube ad earnings once the channel qualifies",
+   "A free scheme finder guide that builds an email list for the paid service"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": false,
+  "market": "india",
+  "firstSteps": [
+   "Choose one group, such as small manufacturers or women entrepreneurs, and write down five schemes you can explain correctly from official sources.",
+   "Publish three videos on those schemes, each linking a free checklist, and share them in business groups and local NGO WhatsApp groups.",
+   "Offer to handle one real application for a small business owner at a low fee, record every step, and use that to set your package."
+  ],
+  "watchOut": "Many schemes can be applied for free on official portals, so be clear about what your fee covers. Never promise approval or imply any link with the government. Rules change and wrong advice can cost someone a benefit, so check each video against official notices and have a professional review your service terms. YouTube growth is slow.",
+  "keywords": [
+   "government schemes consulting business india",
+   "sarkari yojana consultancy",
+   "msme scheme consultant business",
+   "youtube channel government schemes"
+  ]
+ },
+ {
+  "slug": "influencer-marketing-agency",
+  "name": "Influencer marketing agency",
+  "type": "agency",
+  "oneLine": "A one-person agency that connects local brands with small creators and earns a fee on each campaign.",
+  "what": "You connect brands that want attention on Instagram or YouTube with small creators, usually those with 1,000 to 100,000 followers. You find the creators, agree the deal, brief them, track the posts and report results to the brand. Brands pay you a commission on the campaign budget or a flat monthly retainer. Start in your own city with a niche such as food, fashion or local services, and register as a sole proprietor, which needs very little paperwork. Free tools like spreadsheets and a basic CRM handle contacts and tracking.",
+  "problem": "Small brands know creators can sell, but they do not know whom to trust, what to pay or how to measure results. Creators with modest followings rarely have a manager and get ignored or underpaid. Both sides waste time on cold messages and unclear terms.",
+  "bestFor": [
+   "Social media managers or creators who know many other creators",
+   "People who enjoy talking to business owners",
+   "Founders based in a city full of startups and shops"
+  ],
+  "moneyModel": [
+   "Commission of about 15% to 30% on campaign budgets",
+   "Monthly retainers of ₹25,000 to ₹50,000 to run ongoing campaigns",
+   "Flat fee of about ₹15,000 for a one-month campaign",
+   "Extras such as content creation or creator workshops"
+  ],
+  "startupCost": "₹0, using a sole proprietorship and free tools",
+  "budget": "under-50k",
+  "buildableWithAi": false,
+  "market": "india",
+  "firstSteps": [
+   "List 100 creators in one niche in your city, message them, and record rates, audience location and past brand work in a shared sheet.",
+   "Pick 30 local brands with weak social media, and send each a short pitch naming three creators you could place and what each would cost.",
+   "Offer two brands a discounted pilot campaign for a written testimonial, track reach and enquiries, and turn the numbers into a one-page case study."
+  ],
+  "watchOut": "You carry the risk in the middle. Creators may post late while the brand blames you, and brands can pay late after creators were promised money. Written agreements are essential. Paid posts should be clearly labelled as ads under Indian advertising rules, and GST and income tax duties apply, so check with a professional.",
+  "keywords": [
+   "influencer marketing agency india",
+   "start influencer agency with no money",
+   "micro influencer marketing business",
+   "influencer agency bangalore",
+   "creator marketing agency business idea"
+  ]
+ },
+ {
+  "slug": "ingredient-scanner-app",
+  "name": "Ingredient scanner app",
+  "type": "app",
+  "oneLine": "A phone app that reads product labels and flags concerning ingredients; users pay monthly for more scans.",
+  "what": "A phone app that reads the ingredient list on a food or beauty product. The user takes a photo, text recognition pulls out the words, and an AI compares each ingredient against lists of concerning substances and the user's own filters, such as nut allergy, vegan or no parabens. The result marks each ingredient as fine or worth a look, with a short explanation and an overall score. You can build it with Glide or Thunkable, a free text-recognition library and a hosted database.",
+  "problem": "Ingredient labels are printed small and full of chemical names. Parents, people with allergies and skincare fans want to know what is in a product before buying, but searching every name takes ages and sources disagree. They need a quick, plain-language read in the shop aisle.",
+  "bestFor": [
+   "Health, skincare or parenting creators with an audience",
+   "No-code builders who like consumer apps",
+   "Nutrition or cosmetic science students who can check the ingredient data"
+  ],
+  "moneyModel": [
+   "Free plan with 5 scans a month",
+   "Premium at ₹199 per month or $4.99 per month for unlimited scans and alerts",
+   "Affiliate links to alternative products on shopping sites",
+   "Licensing the analysis to health bloggers, clinics or D2C brands, or selling API access"
+  ],
+  "startupCost": "₹0 on free tiers",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Collect 100 ingredient lists from products Indian shoppers buy, and agree with an expert how a small set of ingredients should be rated.",
+   "Build the scan-and-explain flow for a single category, such as baby skincare, and test it with 20 parents in WhatsApp groups.",
+   "Post short videos scanning everyday products, and note which questions viewers ask, since those show what to add next."
+  ],
+  "watchOut": "A wrong result can hurt: if the camera misreads a label and the app says a product suits a nut allergy, someone could be harmed. Calling real products harmful can draw complaints. Many ingredient lists come from the US, so map them to Indian food and cosmetic rules with an expert. Copying data from other sites may breach their terms.",
+  "keywords": [
+   "ingredient scanner app india",
+   "food label scanner app idea",
+   "cosmetic ingredient checker",
+   "ocr app business idea"
+  ]
+ },
+ {
+  "slug": "interactive-pitch-deck-tool",
+  "name": "Interactive AI pitch deck tool",
+  "type": "saas",
+  "oneLine": "A tool where investors ask a deck questions and AI answers; founders pay monthly and see what investors read.",
+  "what": "Founders upload their business data and the tool builds an editable pitch deck. When an investor opens the shared link, they can click through the slides and type questions, such as how revenue is split or who the rivals are. An AI answers from the founder's own data. The founder then sees which slides were read, what investors asked and who came back. You can build a first version with no-code tools and an AI API, and sell monthly plans to founders anywhere in the world.",
+  "problem": "Investors skim a deck, then have questions that nobody is awake to answer. Founders email the same deck file to many people and never learn which slide lost someone's interest. A static file gives no feedback at all. Founders want a way to answer common questions on their own and to see what investors actually look at.",
+  "bestFor": [
+   "Founders who have pitched before and know the usual questions",
+   "No-code builders comfortable wiring an AI API to a database",
+   "People active in startup communities or accelerator circles"
+  ],
+  "moneyModel": [
+   "Free plan with templates and limited Q&A",
+   "Basic plan at $49 per month",
+   "Pro plan at $199 per month",
+   "Licences for investor firms, white-label versions for accelerators and API links to fundraising platforms"
+  ],
+  "startupCost": "$500 to $2,000",
+  "budget": "50k-5l",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Pick five founders you know who are raising money and offer to turn their deck into a free trial.",
+   "Make the AI answer only from a fact sheet the founder fills in, and show a plain 'not covered' message when something is missing.",
+   "Ask each founder to send the link to three investors, then call after a week to learn which questions came up and whether analytics helped."
+  ],
+  "watchOut": "The AI will sometimes answer wrongly, and a wrong number in front of an investor can cost a founder credibility. Decks hold confidential figures, so security matters. Many investors prefer a plain file and may not click an unfamiliar link. Tracking what investors view also raises privacy questions. Test the answers heavily before anyone relies on them.",
+  "keywords": [
+   "ai pitch deck tool for startups",
+   "interactive pitch deck saas",
+   "investor q&a pitch deck",
+   "no code saas idea founders"
+  ]
+ },
+ {
+  "slug": "landlord-review-site-india",
+  "name": "Landlord review site for renters",
+  "type": "app",
+  "oneLine": "A site where Indian renters read and write landlord reviews, paid by subscriptions and partner referrals.",
+  "what": "You build a searchable site where tenants rate landlords and properties on repairs, deposit returns, rent increases and fairness of the lease. Users search by landlord name or building before they sign. Reviews carry a verification step, such as a rental agreement or work email, so people trust them. You start in one or two cities, seeded with reviews you collect from real tenants. Later you earn from premium reports, landlord response pages and partners such as movers and lease reviewers.",
+  "problem": "Renters hand over a deposit and sign a lease knowing almost nothing about the landlord. Stories about unreturned deposits, ignored leaks and sudden rent hikes sit scattered across social threads and are hard to search. The tenant finds out the hard way, and the landlord faces no consequence.",
+  "bestFor": [
+   "Renters tired of surprises who can collect honest reviews",
+   "Community site builders with moderation experience",
+   "Students or relocation groups who know local housing pain"
+  ],
+  "moneyModel": [
+   "Tenant premium reports at ₹199 a month or ₹999 a year",
+   "Landlord page claim and reply tools at ₹999 a month",
+   "Dashboards for lawyers and housing groups at ₹5,000 to ₹20,000 a month",
+   "Affiliate commissions from movers and rental services"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Pick one city and one pocket, such as students near a college, and ask 50 renters about their landlords with a short form.",
+   "Publish the first 100 reviews yourself as a free searchable list, after asking each reviewer for permission to share.",
+   "Share the site in local housing and college groups asking tenants to add reviews, and add verification as volume grows."
+  ],
+  "watchOut": "Reviews name real people, so expect angry landlords, legal notices for defamation, and fake or revenge reviews. You need a moderation and takedown process before launch, and a lawyer's view on posting names and addresses. Do not copy or scrape reviews from other sites. The site is also useless until one area has enough reviews.",
+  "keywords": [
+   "landlord review website india",
+   "rate my landlord india",
+   "tenant review platform startup",
+   "rental deposit problems tenants india"
+  ]
+ },
+ {
+  "slug": "find-businesses-without-websites",
+  "name": "Lead finder for businesses without websites",
+  "type": "saas",
+  "oneLine": "A tool that finds local businesses with no website and sells the lists to freelancers and agencies.",
+  "what": "A user picks a city and a kind of business, such as dentists or caterers, and gets a list of local businesses with no website, only a social page, or a broken link. Each row shows the name, address, phone number and a tag for its web status. Users export the list or track their outreach in a simple dashboard. Buyers are web designers, marketers and agencies who want local clients. The lists come from business listing sources, and the status check runs automatically.",
+  "problem": "Freelancers who build websites lose hours scrolling maps and directories to find businesses that need one. Checking each listing by hand is slow, and the businesses with the biggest gap are the hardest to spot in bulk. So most freelancers keep pitching the same few warm contacts.",
+  "bestFor": [
+   "Freelance web designers who want a steady supply of prospects",
+   "Developers comfortable with data collection and APIs",
+   "Small agencies that sell to local shops"
+  ],
+  "moneyModel": [
+   "Plans at $19 for one city, $49 for five cities and $99 for national access",
+   "Pay per exported lead at $0.50 to $2",
+   "White-label licence for agencies",
+   "Done-for-you website service as an upsell"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Before building software, make a list of 100 businesses without websites in one city and niche by hand, using map listings.",
+   "Offer that list free to five freelancers and ask which columns they used, whether they got a client, and what they would pay.",
+   "If three of them come back for a second list, script the website check and the export, and put a price on it."
+  ],
+  "watchOut": "Collecting listings in bulk often breaks the terms of the sites you take them from, and official data has fees and limits. Cold contact with owners has rules for calls, SMS and email, so check with a professional. The idea is built around US sources and dollar prices, so for India you must find your own data.",
+  "keywords": [
+   "find businesses without websites",
+   "lead generation tool for web designers",
+   "local business lead finder saas",
+   "web design client finder india"
+  ]
+ },
+ {
+  "slug": "legal-document-summary-extension",
+  "name": "Legal document summary Chrome extension",
+  "type": "app",
+  "oneLine": "A browser extension that explains terms and contracts in plain language, paid by monthly subscribers.",
+  "what": "Install the extension, open any terms and conditions page or paste a contract, and it gives a short plain-language summary. It points out what you are agreeing to, fees and penalties, how your data may be used, and clauses that look one-sided. A free tier covers a few documents a month. Paid users get unlimited documents and deeper risk checks. Small businesses could pay for bulk analysis, and the summary engine could later be licensed to other tools. An AI model does the reading.",
+  "problem": "Almost nobody reads the terms they accept. Freelancers and small business owners sign vendor agreements, NDAs, and partnership contracts without a lawyer because lawyers are slow and costly. They do not need legal advice for every document. They need a quick warning: here is what you are agreeing to, and here is the part to question.",
+  "bestFor": [
+   "Developers or no-code builders who can ship a browser extension",
+   "Lawyers or paralegals who want a product built from their expertise",
+   "Founders who sign many vendor and client contracts themselves"
+  ],
+  "moneyModel": [
+   "Premium plan at ₹499 a month",
+   "Annual plan at ₹4,999 a year",
+   "Custom bulk plans for small businesses and startups",
+   "Licensing the summary engine to other legal tools"
+  ],
+  "startupCost": "₹20 lakh to ₹25 lakh",
+  "budget": "over-5l",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Take twenty real documents, such as a freelance contract and a software terms page, test how an AI model summarises them, and mark every mistake.",
+   "Build a bare extension that summarises the page you are on, then give it to ten freelancers to try on their next contract.",
+   "Ask those ten whether they would pay ₹499 a month and which clause types they check first, before you build any paid plan."
+  ],
+  "watchOut": "A wrong or missing summary can lead someone to sign something harmful. The tool must say clearly that it is not legal advice, and a lawyer should review how you word that. Contracts users paste often hold confidential or personal data, so decide what you store and for how long. Legal text varies widely, and summaries can miss context.",
+  "keywords": [
+   "legal document summarizer chrome extension",
+   "terms and conditions summary tool",
+   "ai contract review for freelancers",
+   "privacy policy explainer extension",
+   "simplify legal documents with ai"
+  ]
+ },
+ {
+  "slug": "linkedin-post-formatting-extension",
+  "name": "LinkedIn post formatting extension",
+  "type": "saas",
+  "oneLine": "Build a Chrome extension that styles LinkedIn posts, suggests emojis and previews them, sold monthly.",
+  "what": "This is a small add-on for the Chrome browser. When someone writes a LinkedIn post, it adds bold, italic and other text styles, suggests emojis that fit what was written, and shows a preview of how the post will look before it goes live. The free version has two text styles and a few emoji suggestions per post. Paid users get every style, unlimited suggestions, and later extras such as an AI post writer and basic analytics. You list it on the Chrome Web Store, which charges a small one-time developer fee, and sell to users in India and abroad.",
+  "problem": "Plenty of people post on LinkedIn and find their writing buried because it looks like a wall of text. LinkedIn's own editor offers almost no formatting. Job seekers, freelancers and founders want neat posts that get noticed, but they do not know how to style text or which emojis look professional.",
+  "bestFor": [
+   "A developer or vibe-coder who can maintain a browser extension",
+   "Someone with an active LinkedIn audience who can promote it",
+   "Solo builders who like small products with clear pricing"
+  ],
+  "moneyModel": [
+   "Free tier with basic styles and a few emoji suggestions",
+   "Monthly plan at ₹299 for Indian users and $6.99 for US users",
+   "Annual plan at ₹2,999 for Indian users and $69 for US users",
+   "Affiliate commission for creators who promote the extension"
+  ],
+  "startupCost": "Less than $50",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Build the simplest version first, bold and italic conversion plus a live preview, and use it on your own posts for a week.",
+   "Give it free to 20 people who post on LinkedIn weekly, watch two use it on a call, and note where they get confused.",
+   "Publish on the Chrome Web Store, share a short demo video on LinkedIn, and add the paid plan once users ask for more styles."
+  ],
+  "watchOut": "Fancy text from tools like this uses special Unicode characters that screen readers handle badly and some devices show as empty boxes, so posts can look broken to part of your audience. LinkedIn can also change its page layout and break your extension overnight, and its rules on third-party tools may limit you. Free formatters are easy to find.",
+  "keywords": [
+   "linkedin post formatter chrome extension",
+   "linkedin text styles extension",
+   "build a chrome extension business",
+   "linkedin growth tool idea"
+  ]
+ },
+ {
+  "slug": "small-business-market-research",
+  "name": "Market research for small businesses",
+  "type": "agency",
+  "oneLine": "Write affordable local market research reports for small businesses and startups in Indian cities.",
+  "what": "You research local markets for small businesses that cannot afford a big firm. Using Google Trends, government data from places like data.gov.in, industry association reports and competitors' own websites, you write short reports on competitors, customer habits and demand in a city or niche. You start with a free first call and a small pilot project, then charge per report, with monthly updates for clients who want them. Local retail and tech startups are the starting niches, in big cities and tier-II towns.",
+  "problem": "A shop owner deciding where to open, or a startup choosing a price, usually has to guess. A research firm costs more than they can spend, and public data is scattered and hard to read. They need a clear, short answer about customers and competitors in their own city.",
+  "bestFor": [
+   "Analysts, MBA graduates or consultants who like digging into data",
+   "Freelancers who write clearly and explain numbers simply",
+   "People who want a service business with almost no cost"
+  ],
+  "moneyModel": [
+   "Project reports, starting around ₹8,000 to ₹12,000",
+   "Monthly retainers for regular updates",
+   "Paid workshops and webinars on market research"
+  ],
+  "startupCost": "Nothing upfront, ₹2,000 to ₹3,000 a month to run",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Choose one niche, such as cafes in your city, and write a two-page sample report on competitors, prices and demand.",
+   "Offer ten owners in that niche a free 30-minute call plus a one-page summary of what you found about their local market.",
+   "Turn the best pilot into a paid report at the low end of your range and ask the owner for a short written testimonial."
+  ],
+  "watchOut": "Free data is thin, and AI tools make up facts, so every number in a report needs a source you can name. Clients pay for answers to their exact question, which often needs surveys or visits that cost time. Free pilots can eat weeks without paying. Survey data about people has privacy duties, and copying paid reports breaks copyright.",
+  "keywords": [
+   "market research business india",
+   "freelance market research for small business",
+   "start market research agency",
+   "competitor analysis service india"
+  ]
+ },
+ {
+  "slug": "newsletter-writing-agency",
+  "name": "Newsletter and blog writing agency",
+  "type": "agency",
+  "oneLine": "Write blogs and newsletters for US founders on monthly retainers, from India with AI-assisted drafts.",
+  "what": "You write blogs and email newsletters for other businesses on a monthly retainer. You target startup founders, solo creators and small B2B tech firms in the US, using India as a cost advantage. Packages scale from a weekly newsletter with ten posts a month to a daily newsletter with a content manager. AI tools draft the work and humans edit it to match the client's voice. You begin alone with a few clients and hire writers only when the work outgrows you.",
+  "problem": "Founders know they should publish a newsletter and blog, but weeks pass without a post. Hiring an in-house writer is costly, and local freelancers charge a lot. They want a steady rhythm of useful content that sounds like them, delivered without having to manage it every week.",
+  "bestFor": [
+   "Writers or marketers who write well in English",
+   "People comfortable with cold outreach to overseas clients",
+   "Freelancers who want recurring work instead of one-off projects"
+  ],
+  "moneyModel": [
+   "Starter retainer at $500 per month: 10 blog posts, a weekly newsletter and basic SEO",
+   "Growth retainer at $1,000 per month: 20 posts, two newsletters a week and a content strategy session",
+   "Enterprise retainer at $2,000 per month: 50 posts, a daily newsletter and a dedicated content manager"
+  ],
+  "startupCost": "₹12,000 to ₹15,000 (website, tools and basic paperwork)",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Pick one niche, such as B2B software founders, and write one sample newsletter issue for each of three real companies in it.",
+   "Message 30 founders on LinkedIn with an honest observation about their blog, not a pitch, and offer a paid one-month Starter trial.",
+   "Set a process of AI draft plus human edit for facts and voice, and time each issue before you promise any volume."
+  ],
+  "watchOut": "Clients can tell when AI writing is generic, and a few weak posts can end a retainer. Hours add up fast, so many posts at the Starter price leave little margin once you pay writers and editors. Payments from abroad bring export-of-services, GST and foreign exchange paperwork, so check with an accountant. Copyright rules for AI text are unsettled.",
+  "keywords": [
+   "newsletter writing agency india",
+   "content writing agency for us clients",
+   "start blog and newsletter agency",
+   "ghostwriting newsletter business"
+  ]
+ },
+ {
+  "slug": "online-stylist-marketplace-india",
+  "name": "Online personal stylist marketplace",
+  "type": "marketplace",
+  "oneLine": "Connect shoppers with freelance stylists for outfit advice, and keep a commission on each paid order.",
+  "what": "This is a website where fashion-minded freelancers list themselves as stylists and shoppers pay them for outfit advice. A customer picks a stylist, describes an occasion such as a wedding or a first job, and receives a lookbook with product links, or a chat or video session. Stylists join for free. You collect payment through a gateway such as Razorpay and keep a share of every completed order. Product links can also earn affiliate commission. Quality is controlled through portfolio checks, reviews and ratings. It aims at shoppers in India's larger and mid-sized cities.",
+  "problem": "Professional stylists are priced for the wealthy, so most people in tier-1 and tier-2 cities rely on friends or Instagram reels for advice. Meanwhile many young fashion enthusiasts have a good eye for outfits but no way to earn from it. Each side needs the other, and neither has a trusted place to meet and pay safely.",
+  "bestFor": [
+   "Fashion-aware founders who already know stylists or creators",
+   "Operations-minded people who can vet and onboard freelancers",
+   "Builders who can use a ready-made marketplace tool"
+  ],
+  "moneyModel": [
+   "Commission of 15 to 20 percent on each paid styling order, on orders of around ₹2,000",
+   "Affiliate income when customers buy products from outfit links"
+  ],
+  "startupCost": "About ₹7 lakh",
+  "budget": "over-5l",
+  "buildableWithAi": false,
+  "market": "india",
+  "firstSteps": [
+   "Skip the app. Recruit ten Instagram stylists, agree on a fixed package such as three outfits for one occasion, and collect payment by Razorpay link.",
+   "Offer the package at an introductory price to twenty friends of friends, and personally review each lookbook before it reaches the customer.",
+   "After thirty completed orders, see which part hurts most, matching, payments or chat, and build or buy only that."
+  ],
+  "watchOut": "Marketplaces struggle on small orders: 15 percent of a ₹2,000 order is little, so you need many orders and low support costs. Customers and stylists may also move to WhatsApp after the first chat and skip your commission. Stylist quality varies. You will hold customers' photos and take payments, so check privacy and payout rules with a professional.",
+  "keywords": [
+   "online stylist marketplace india",
+   "personal stylist platform business",
+   "fashion styling service startup",
+   "start a marketplace for freelancers"
+  ]
+ },
+ {
+  "slug": "outdoor-venue-marketplace",
+  "name": "Outdoor venue rental marketplace",
+  "type": "marketplace",
+  "oneLine": "A booking site that rents private land to couples, photographers, and event planners for a commission.",
+  "what": "Landowners list farms, lawns, and scenic plots that sit idle. Couples planning small weddings, photographers, and companies planning offsites browse photos, check dates, pay a deposit, and book. You take a share of every booking and can add extras such as tent and lighting hire from partner vendors, plus optional event insurance. The real work starts offline: someone visits each plot, photographs it, and confirms access, parking, power, and toilets before it goes live. You begin in one city.",
+  "problem": "Hotels and banquet halls dominate the venue market, so couples who want an open-air setting end up calling farm owners one by one, with no prices, no photos, and no protection if the booking falls through. Landowners with unused land have no safe way to find renters or take payments from strangers.",
+  "bestFor": [
+   "People with local contacts among farm owners and wedding vendors",
+   "Event planners or photographers who know what clients ask for",
+   "Founders happy to do field visits before building software"
+  ],
+  "moneyModel": [
+   "Commission of 15% to 20% of each booking",
+   "Markup of 10% on tents, lighting, and other add-ons",
+   "Optional insurance priced at ₹500 to ₹2,000 per booking"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": false,
+  "market": "india",
+  "firstSteps": [
+   "Visit ten plots within two hours of one city, photograph them properly, and note what each lacks, such as toilets, power, or parking.",
+   "Put the plots on a simple listing page or Instagram account, message photographers and planners with a clear price list, and take bookings by hand.",
+   "Complete five bookings manually with a written agreement and a deposit, note what went wrong in each, and only then decide what software to build."
+  ],
+  "watchOut": "Land-use rules differ by state and local body, and agricultural plots may not legally host paid events without permission. Crowds, noise, fire, and accidents bring liability, and weddings cluster in a few months, leaving long quiet stretches. Selling insurance needs a licensed partner. Check land use, permits, and cover with a local lawyer before your first booking.",
+  "keywords": [
+   "outdoor wedding venue marketplace india",
+   "rent farmland for events",
+   "list my land for weddings",
+   "farmhouse venue booking platform",
+   "photoshoot location rental india"
+  ]
+ },
+ {
+  "slug": "pay-per-subscriber-marketplace",
+  "name": "Pay-per-subscriber growth marketplace",
+  "type": "marketplace",
+  "oneLine": "A marketplace where newsletter owners pay promoters for each verified new subscriber.",
+  "what": "You run a platform with two sides. Newsletter owners and creators post a campaign that says how much they will pay for each verified new subscriber. Promoters, such as bloggers and people with email lists, apply, get a personal tracking link and share it. Your system checks that each sign-up is a real person with a working email, pays the promoter and keeps a commission. Campaign owners can also pay to be shown at the top of the list. Later versions can add invite-only campaigns and pay for verified social media followers, not only email sign-ups.",
+  "problem": "New newsletters and small creators struggle to find their first thousand readers. Ads cost money before anyone knows if they work, and bots fill sign-up forms with fake emails. Promoters with a real audience have no easy way to earn from recommending a newsletter. This idea pays only when a real person signs up.",
+  "bestFor": [
+   "Builders comfortable with databases, payments and tracking links",
+   "People already active in newsletter or creator communities",
+   "Founders who can survive a slow two-sided start"
+  ],
+  "moneyModel": [
+   "A 15% commission on each payout to a promoter",
+   "Featured campaign slots, for example ₹999 a week",
+   "Paid add-ons for fraud checks and deeper reports",
+   "Invite-only campaigns for brands that want chosen promoters"
+  ],
+  "startupCost": "₹1 lakh to ₹2 lakh",
+  "budget": "50k-5l",
+  "buildableWithAi": false,
+  "market": "india",
+  "firstSteps": [
+   "Message 20 newsletter owners you know and ask whether they would pay per verified subscriber, and what amount would feel fair to them.",
+   "Run one campaign by hand with a spreadsheet, tracking links and a manual email check before you write any code or set up payouts.",
+   "Recruit five promoters from newsletter groups, pay them yourself for approved sign-ups, and note every fake or duplicate sign-up you catch."
+  ],
+  "watchOut": "The cold start is the hard part: campaigns need promoters and promoters need campaigns. Fraud is the second problem, because people will fake sign-ups to get paid. Holding and paying out other people's money raises payment, tax and GST questions, and storing sign-up emails brings privacy duties. Check all of this with a CA or lawyer before launch.",
+  "keywords": [
+   "pay per subscriber platform",
+   "newsletter growth marketplace india",
+   "affiliate marketplace for creators",
+   "cpa affiliate network business idea"
+  ]
+ },
+ {
+  "slug": "personal-branding-coaching",
+  "name": "Personal branding coaching",
+  "type": "service",
+  "oneLine": "Paid coaching that helps professionals and creators build a clear presence online.",
+  "what": "You coach people on how they show up online: who they are for, what they post on LinkedIn or Instagram, and how to turn posts into opportunities. Clients are job seekers, founders, freelancers and creators. A session is a video call, and longer packages add weekly sessions plus a written branding plan. AI tools help you draft the plan, content ideas and post calendars for each client, so your time goes into the conversation. You also run paid workshops and can recommend tools through affiliate links. Booking and payment run on a free scheduling tool and an Indian payment gateway.",
+  "problem": "Many skilled people get overlooked because their profiles say little and they post rarely. They know they should build a presence but do not know what to say, where to start or how to stay consistent. Hiring a full agency feels like too much for one person.",
+  "bestFor": [
+   "Marketers or creators who have grown their own audience",
+   "Career coaches wanting a modern online offer",
+   "Experienced professionals who enjoy mentoring"
+  ],
+  "moneyModel": [
+   "One-on-one sessions at ₹1,500 to ₹5,000",
+   "Monthly packages at ₹10,000 to ₹30,000 with weekly sessions and a plan",
+   "AI-assisted branding reports at ₹2,500 to ₹10,000 per client",
+   "Workshops at ₹500 to ₹2,000 per person, plus affiliate links to tools"
+  ],
+  "startupCost": "₹0, using free tools",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Rebuild your own LinkedIn profile first and post for 30 days, so you have a before and after to show prospective clients.",
+   "Offer three free profile reviews to people in your network, then invite those who value it to book one paid session.",
+   "Run one small paid workshop for job seekers in a college group or community, and offer packages to the best attendees afterwards."
+  ],
+  "watchOut": "Branding coaching is crowded and clients buy on proof, so you need a visible profile of your own before anyone pays. Never promise jobs, followers or sales. Advice written by AI without your judgment sounds like everyone else's and hurts your name. Packages grow through word of mouth, so a slow start is normal.",
+  "keywords": [
+   "personal branding coach india",
+   "linkedin personal branding coaching business",
+   "start personal branding consultant",
+   "online coaching business idea india",
+   "personal brand strategy service"
+  ]
+ },
+ {
+  "slug": "podcast-guest-booking-tool",
+  "name": "Podcast guest booking tool",
+  "type": "saas",
+  "oneLine": "A tool that helps podcasters and YouTubers find guests, send invites, and track who replied.",
+  "what": "Creators search a database of possible guests by topic, platform, and audience size. The tool shows public contact details, drafts a personal invite with AI, sends it by email, and tracks each guest through a simple pipeline from invited to recorded. Later versions can sync calendars and give each show a booking page for guests. Paid plans add more contact lookups, plus team features for agencies that manage several shows. You can build a first version with no-code tools, a database like Supabase, and an AI model for invites.",
+  "problem": "Interview shows live and die on guests, yet finding them means scrolling social media, hunting for email addresses, writing the same pitch again and again, and losing track of who replied in a notes app. Hosts waste hours a week on this before recording a single episode. Scheduling across time zones adds more back and forth.",
+  "bestFor": [
+   "Creators who run an interview show and feel this pain weekly",
+   "No-code or AI-tool builders who like selling to creators",
+   "Booking agents or producers who manage several shows"
+  ],
+  "moneyModel": [
+   "Free plan with limited searches and 5 contact reveals",
+   "Creator plan at ₹790 a month",
+   "Pro plan at ₹1,990 a month",
+   "Agency plan at ₹4,990 a month"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Hand-build a list of fifty possible guests in one niche, such as AI founders, with public contact links, and offer it to five hosts.",
+   "Draft invites with an AI model for those hosts, send them yourself, and track replies in a sheet to learn which wording gets answers.",
+   "Build the search, invite sender, and pipeline screens only after hosts ask for more, and charge a small monthly fee to twenty users."
+  ],
+  "watchOut": "The guest database is both the product and the risk. Collecting contact details from the web and sending cold emails can break platform rules and anti-spam laws, and bad sending habits get your email domain blacklisted. Stale contacts make the tool useless. Use only public contacts, add opt-out links, verify addresses, and ask a lawyer about privacy and spam rules.",
+  "keywords": [
+   "podcast guest booking software",
+   "find podcast guests tool",
+   "podcast guest outreach crm",
+   "youtube interview guest finder",
+   "podcast saas idea"
+  ]
+ },
+ {
+  "slug": "podcast-summary-subscription",
+  "name": "Podcast summaries for busy professionals",
+  "type": "content",
+  "oneLine": "A paid service turning long business podcasts into short written summaries for busy Indian professionals.",
+  "what": "You pick one niche, such as business or technology, and follow five to ten podcasts in it. For each new episode you publish a written summary of 200 to 500 words with the key ideas and what to do with them. Readers get these through a website or newsletter on a paid plan. A higher tier adds deeper notes and picks tailored to a reader's job. Companies can buy bulk seats for staff learning. AI can transcribe and draft, but you edit so the summaries are accurate and worth paying for.",
+  "problem": "Professionals want the ideas in long business and tech podcasts but do not have an hour per episode. Free summaries online are shallow or scattered. People want one trusted place that tells them what was said, what mattered, and whether the full episode is worth their time.",
+  "bestFor": [
+   "Writers or analysts who know one industry well",
+   "Newsletter creators looking for a paid product",
+   "Learning and development staff at companies"
+  ],
+  "moneyModel": [
+   "Basic plan at ₹299 a month for niche summaries",
+   "Premium plan at ₹599 a month with deeper insights and custom picks",
+   "Bulk subscriptions for company teams",
+   "Affiliate links to books and tools mentioned"
+  ],
+  "startupCost": "About ₹5,000 a year, plus ₹1,000 a month",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Choose one niche and write summaries of ten recent episodes. Share three free on LinkedIn and see which get saved and reshared.",
+   "Start a free weekly email with your best summary and one question, and ask 20 readers what they would pay for.",
+   "Open paid access at ₹299 a month to your first 30 subscribers, and ask each which episode they wished you had covered."
+  ],
+  "watchOut": "Podcasts are copyrighted work, and summaries that quote at length or reuse transcripts can bring complaints. Write original summaries, link to the episode, and ask a lawyer where fair dealing ends in India. Paying readers expect accuracy, so AI mistakes cost trust. Doing this daily means hours of listening or checking.",
+  "keywords": [
+   "podcast summary newsletter india",
+   "ai podcast summaries business",
+   "paid newsletter business idea india",
+   "podcast curation for professionals"
+  ]
+ },
+ {
+  "slug": "posting-streak-tracker-app",
+  "name": "Posting streak tracker for X creators",
+  "type": "app",
+  "oneLine": "An app that tracks how often you post and reply on X and rewards daily streaks, sold by subscription.",
+  "what": "You build an app that watches your daily output on X: posts, replies and likes. You set a goal such as three posts and ten replies, and the app shows progress, streaks and badges, plus a home-screen widget so the count is always in view. The free plan covers one platform with basic tracking. Paid plans add more platforms, custom goals and better reports. Think of it as a habit tracker for building an audience, with the same pull as a language-learning streak.",
+  "problem": "Creators know consistency matters, yet platforms show followers and likes, not whether you did the work today. Without a visible count, posting slips for a week and growth stalls. People who already stick to habits with streak apps would use the same trick for audience building.",
+  "bestFor": [
+   "Creators and indie makers who post daily and like habit apps",
+   "Builders comfortable with APIs who want a small paid app",
+   "Community managers who run posting challenges"
+  ],
+  "moneyModel": [
+   "Paid plan at $4.99 a month or $39 a year",
+   "One-time lifetime purchase option",
+   "Partner deals with growth coaches and creator tools"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Track your own posting in a spreadsheet or Notion board for two weeks and see whether a daily count changes what you do.",
+   "Share your streak publicly each day and offer your template free to 20 creators. Note who asks for an app.",
+   "Build a simple web dashboard with a daily goal for your first ten users before attempting a mobile app or widget."
+  ],
+  "watchOut": "Everything depends on getting your users' activity data from X, and access to that data can change in price, limits or rules. If it turns expensive or restricted, the product breaks. Charging customers abroad from India also needs a payment setup that works for you. Streak apps are easy to copy, and many creators stop tracking once the novelty fades.",
+  "keywords": [
+   "twitter posting tracker app",
+   "x creator streak tracker",
+   "social media habit tracker",
+   "build creator tool saas"
+  ]
+ },
+ {
+  "slug": "print-on-demand-tshirt-store",
+  "name": "Print on demand T-shirt store",
+  "type": "ecommerce",
+  "oneLine": "Sell AI-designed T-shirts online with no stock; a print partner makes and ships each order.",
+  "what": "An online store selling printed T-shirts with designs you create using AI image tools. You hold no stock: when an order arrives, a print-on-demand partner prints, packs and ships it. You can use WordPress with WooCommerce for the shop and Qikink for printing, with delivery through India Post or couriers. You launch with 20 to 30 designs aimed at young Indian entrepreneurs and tech fans, then add mugs and tote bags through the same pipeline. Instagram reels and paid ads bring shoppers in.",
+  "problem": "Selling clothing normally means buying stock before you know what sells. Many people with design ideas or a following cannot take that risk. Customers, meanwhile, like tees that show who they are, whether founder, maker or gamer. Print on demand lets you test designs without stock, but you still have to find the buyers yourself.",
+  "bestFor": [
+   "Creators or designers who already have a small audience",
+   "People who like testing designs and ad creatives",
+   "First-time sellers who want to learn e-commerce with little stock risk"
+  ],
+  "moneyModel": [
+   "T-shirts sold at ₹499 each, including basic packaging",
+   "Add-on products such as mugs and tote bags through the same print partner"
+  ],
+  "startupCost": "About ₹13,500 to ₹16,500, plus ads",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Make ten designs for one clear group, such as indie founders, and order three samples to check print quality and delivery time yourself.",
+   "Set up the WooCommerce store, connect the printing plugin and place a test order from start to finish before sharing the link.",
+   "Post design reels for two weeks, then spend a small ad budget on your two best designs and track the cost per sale."
+  ],
+  "watchOut": "At ₹499 a shirt, printing and shipping costs leave a thin gap, and ad spend, returns and payment fees can erase it. AI designs can echo existing characters, logos or slogans without you noticing, which invites takedown notices, and ownership of AI images is unsettled. Check GST and trademark basics with a professional.",
+  "keywords": [
+   "print on demand business india",
+   "start tshirt business no inventory",
+   "woocommerce print on demand",
+   "ai designed tshirts business"
+  ]
+ },
+ {
+  "slug": "reddit-business-idea-finder",
+  "name": "Reddit business idea finder",
+  "type": "saas",
+  "oneLine": "A tool that finds repeated complaints on Reddit and turns them into business ideas for subscribers.",
+  "what": "The tool collects discussions from chosen communities, filters them by niche, picks out posts where people describe a problem, and groups similar ones. For each group it writes a short summary and a few business ideas. Users see results on a simple dashboard, and paid users also get a weekly email of ideas, a score based on how much people engaged, and more niches. The free level gives three ideas a week in one niche. It is built with Python, the Reddit API and an AI model, and a first version can run on free hosting.",
+  "problem": "People who want to start a business but lack an idea often copy whatever is trending on social media. Real demand shows up in the complaints people post when asking for help, but nobody has time to read thousands of threads. The tool does the reading and sorting for them.",
+  "bestFor": [
+   "Developers or no-code builders who like data projects",
+   "Creators who make business idea videos or newsletters",
+   "Aspiring founders who research before building"
+  ],
+  "moneyModel": [
+   "Free tier with three ideas a week",
+   "Paid plan at ₹499 a month for unlimited niches and idea scores",
+   "Annual plan at ₹1,499 a year",
+   "Paid newsletters, affiliate links and access for coaches through an API"
+  ],
+  "startupCost": "Close to ₹0, using free tiers",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Read threads in two communities yourself, write ten idea summaries by hand, and send them as a free weekly email to see who replies.",
+   "Build the simplest version: pull posts on one topic, ask an AI model to list the problems, and show the results on a basic page.",
+   "Ask your first 20 subscribers what they would pay for, and open the ₹499 plan only to those who say they would use it weekly."
+  ],
+  "watchOut": "Reddit's terms and API rules decide what you may collect and sell, so read them before building and ask a professional. Complaints are not proof that people will pay, and an AI summary is a starting point only. Idea tools also lose users quickly, since most people need ideas for a short time.",
+  "keywords": [
+   "reddit business idea generator",
+   "find startup ideas from reddit",
+   "reddit pain points research tool",
+   "saas idea validation tool",
+   "micro saas ideas reddit scraper"
+  ]
+ },
+ {
+  "slug": "women-safe-travel-directory",
+  "name": "Safe travel directory for women",
+  "type": "directory",
+  "oneLine": "A website rating cities and neighbourhoods for solo women travellers, earning from guides and referrals.",
+  "what": "You build a website with a page for each city and neighbourhood, covering how safe it feels at different times of day, how to get around, where to stay, and what local women say. Visitors can read reviews, add their own, and filter a map. Start with ten Indian cities that travellers already ask about, such as Goa, Rishikesh, and Pondicherry. Income comes from affiliate links, sponsored listings of cafes and hostels, paid guides and checklists, and later a premium membership. AI helps summarise reviews and draft guides.",
+  "problem": "Women planning a solo trip, and parents worried about them, find safety advice scattered across old blog posts, forum threads, and one-line ratings that say nothing about which lane or which hour. They want specific, recent, honest information on how a place feels and what to avoid.",
+  "bestFor": [
+   "Women travel bloggers whose audience already asks these questions",
+   "Writers who can run an SEO content site",
+   "Solo travellers who can visit and verify places themselves"
+  ],
+  "moneyModel": [
+   "Affiliate commission on travel insurance, hostels, and women-led tours",
+   "Sponsored listings for cafes, hostels, and co-living spaces",
+   "Paid safety guides, itineraries, and travel checklists",
+   "Premium membership with deeper city detail and alerts"
+  ],
+  "startupCost": "Under ₹30,000 to start lean",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Choose one city you know well and write a detailed page with area-by-area notes, night-time transport, and places you personally stayed.",
+   "Post it in women's travel groups, ask members to correct or add details, and record which questions come up most often.",
+   "Build ten more city pages from those questions, then test a paid checklist and affiliate links on the pages that get the most visits."
+  ],
+  "watchOut": "A wrong safety rating can put a real person at risk, so accuracy matters more than traffic. Official crime data for Indian cities is patchy, and reviews can be fake or unfair to named businesses. You need moderation, visible sources, and a clear disclaimer, and you should ask a lawyer about defamation risk from reviews of named places.",
+  "keywords": [
+   "safe places for solo female travel india",
+   "women travel safety website",
+   "solo female travel directory",
+   "is goa safe for women",
+   "start a travel directory website"
+  ]
+ },
+ {
+  "slug": "subscription-cancellation-assistant",
+  "name": "Subscription cancellation assistant",
+  "type": "app",
+  "oneLine": "An app that finds forgotten subscriptions, helps cancel them and drafts refund requests for a monthly fee.",
+  "what": "Users connect their email or upload bank statements. The app spots recurring charges from streaming, apps and software, and lists them with amounts and renewal dates. Users pick the ones to stop, and the app drafts the cancellation message and, if they were charged recently, a polite refund request written for that company. The free level detects up to five subscriptions and helps cancel one a month, and a paid level removes those limits. It starts in India and later adds the US, UK, Europe and South-East Asia with local pricing.",
+  "problem": "People sign up for free trials and streaming plans, then forget them. Small charges repeat for months before anyone notices. Cancelling can mean hunting through settings, calling support, or being steered into keeping the plan. Asking for a refund feels awkward, so most people never try.",
+  "bestFor": [
+   "Builders comfortable with privacy and security work",
+   "People with experience in personal finance apps",
+   "Teams that can run a small support desk"
+  ],
+  "moneyModel": [
+   "Free tier that detects five subscriptions and cancels one a month",
+   "Premium at ₹99 a month in India",
+   "Premium at $5 in the US, €4 in Europe and $3 in South-East Asia",
+   "Annual plans at a discount, plus affiliate partnerships"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": false,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Skip the app and offer a manual service: ask 20 friends to share statements with account numbers hidden, and list every recurring charge.",
+   "Write and send the cancellation and refund messages for them by hand, noting which companies make it hardest and which requests actually work.",
+   "Charge a small one-time fee for the review, and build automation only for the steps you repeated the most."
+  ],
+  "watchOut": "Reading inboxes and bank data makes you responsible for protecting it, and email providers review apps that ask for inbox access. Data protection laws apply in India and in any other country where you have users, so get professional advice first. Companies can make cancelling hard on purpose, so full automation across services will not work reliably.",
+  "keywords": [
+   "subscription cancellation app india",
+   "ai refund request assistant",
+   "track and cancel subscriptions app",
+   "subscription manager startup idea",
+   "cancel unused subscriptions tool"
+  ]
+ },
+ {
+  "slug": "virtual-event-planning-tool",
+  "name": "Virtual event planning tool",
+  "type": "saas",
+  "oneLine": "A no-code web tool for online event organisers, free to start with a per-user monthly paid plan.",
+  "what": "A web tool that helps organisers run online events. It handles the schedule and reminders, registration forms and paid tickets, an attendee list, messages to attendees, and links with Zoom and Slack. After the event, an AI analysis shows who took part and how engaged they were. You can build it on Bubble with Zapier for automations and a data analysis service, starting on free plans. A free tier draws organisers in and a per-user monthly plan pays for the rest.",
+  "problem": "People who organise webinars and online workshops juggle a calendar, a form, a payment link, reminder emails and a spreadsheet of attendees. Each piece comes from a different tool, and details fall through. After the event they struggle to say who turned up and what worked. They want one place that handles the routine parts.",
+  "bestFor": [
+   "Community managers or organisers who know the daily pain",
+   "No-code builders willing to learn Bubble",
+   "Consultants who run paid webinars for clients"
+  ],
+  "moneyModel": [
+   "Free tier with limited features",
+   "Paid plan at $20 per month per user",
+   "Referral and cross-promotion deals with event agencies and venue providers"
+  ],
+  "startupCost": "$1,200 a year in tool subscriptions once you move beyond free plans",
+  "budget": "50k-5l",
+  "buildableWithAi": false,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Interview eight people who run paid webinars or workshops, and list each tool they use from announcement to follow-up.",
+   "Build only registration, reminders and an attendee export for one event type, such as paid workshops, using a form, payment link and sheet.",
+   "Run three real events for friendly organisers on that setup, then ask which missing feature they would pay $20 a month for."
+  ],
+  "watchOut": "Event software is crowded and large tools already bundle registration, video and payments, so you need a clear niche. Taking ticket payments means handling refunds, failed payments and disputes. Building scheduling, payments, messaging, integrations and analytics together is a lot for one person. AI predictions of event success need data you will not have at the start.",
+  "keywords": [
+   "virtual event planning software",
+   "webinar management tool saas",
+   "no code event registration app",
+   "event organiser saas idea"
+  ]
+ },
+ {
+  "slug": "expert-opinions-newsletter",
+  "name": "Weekly expert opinions newsletter",
+  "type": "content",
+  "oneLine": "Run a weekly email where founders or investors answer one sharp question, paid by sponsors and members.",
+  "what": "Each week you pick one question that busy business people are arguing about, for example whether a tech trend is overhyped. You message a handful of founders, investors or operators and ask for three or four sentences each. You put their answers together in one email of around a thousand words, add a short note of your own, and place one sponsor message. The email goes out through Beehiiv or Substack. Later you add a searchable archive and a paid tier for readers who want past issues and the chance to suggest questions. Quotes also become posts on LinkedIn and X.",
+  "problem": "Founders and investors read endless opinion threads and still cannot tell what informed people actually think. Long essays take too long and social feeds are noisy. Experts like the visibility but dislike writing long pieces. A one-question format gives readers quick, varied views and gives contributors easy exposure for very little effort.",
+  "bestFor": [
+   "People with a strong network among founders, investors or operators",
+   "Writers who enjoy editing and chasing replies",
+   "Creators with a LinkedIn or X audience in business or tech"
+  ],
+  "moneyModel": [
+   "One sponsor slot per issue, sold to B2B tools and services",
+   "Paid membership at $5 to $10 a month for the archive, topic requests and a community",
+   "Later, reports built from the expert answers you have collected"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Write down 20 founders, investors or operators you can reach, pick a first question, and ask five of them for three sentences each.",
+   "Publish four issues on a free plan, tag every contributor when you share, and ask each one to forward the issue to two people.",
+   "After issue four, ask your most engaged readers which questions they would pay to see answered, and approach two sponsors whose product suits them."
+  ],
+  "watchOut": "Every issue depends on other people replying on time, and the busiest experts are the hardest to get, so early issues rely on smaller names. Sponsors want proof of an engaged audience. Quote people exactly, get their approval, and never use AI to invent answers. It aims at global business readers.",
+  "keywords": [
+   "expert opinions newsletter business",
+   "start a business newsletter india",
+   "curated newsletter sponsorship",
+   "crowdsourced newsletter idea"
+  ]
+ },
+ {
+  "slug": "meesho-dropshipping-business",
+  "name": "WhatsApp and Instagram reselling business",
+  "type": "ecommerce",
+  "oneLine": "You sell supplier products to your own customers on WhatsApp and Instagram and keep the markup.",
+  "what": "You pick products from a reselling app's catalogue, such as clothes, home decor, or personal care items, and show them to your own customers through WhatsApp groups, Instagram, or a small online store. You add a markup of 10% to 30% on the supplier price. When a customer pays you, you place the order with the supplier, who ships it straight to the buyer. You never hold stock, so you only need a phone, a Canva account for pictures, and a way to collect payments.",
+  "problem": "People in smaller Indian cities may have limited choice nearby for trendy products, and many are more comfortable buying from a known person on WhatsApp than from an unknown website. Meanwhile, someone who wants to earn through selling often has little money to buy stock. This model lets you sell without buying anything first.",
+  "bestFor": [
+   "Students and homemakers with large WhatsApp or Instagram circles",
+   "People who want to start selling with almost no savings",
+   "Anyone who enjoys chatting with customers and posting daily"
+  ],
+  "moneyModel": [
+   "Markup of 10% to 30% on the supplier's price for each order",
+   "Bundles and add-on items to raise the size of each order",
+   "Repeat sales to past buyers through WhatsApp broadcast lists"
+  ],
+  "startupCost": "₹15,000 to ₹20,000, less if you own a smartphone",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Choose one niche, such as kurtis or kitchen organisers, and order three sample products yourself to check quality and delivery time before selling.",
+   "Post the samples with real photos on your WhatsApp status and in two local groups, and take your first five orders by hand.",
+   "Keep a sheet with each order's supplier price, markup, delivery date, and complaint, so you can drop slow or poor products after twenty orders."
+  ],
+  "watchOut": "You carry the customer's trust but not control of the product. If an item arrives late, wrong, or poor, the buyer blames you, and returns can eat your whole margin. Customers can often find the supplier price themselves. Read the supplier app's reseller rules, and ask an accountant when GST registration or income tax filing applies to your sales.",
+  "keywords": [
+   "meesho dropshipping business india",
+   "reselling business without investment",
+   "whatsapp reselling business",
+   "start dropshipping in india",
+   "work from home reselling business"
+  ]
+ },
+ {
+  "slug": "website-tutorial-youtube-channel",
+  "name": "YouTube affiliate review channel",
+  "type": "content",
+  "oneLine": "A YouTube channel on website building and online tools, paid through affiliate links and ads.",
+  "what": "You run a YouTube channel about building websites. Videos cover how to set up a site on popular builders, which hosting plan suits which kind of business, and how to make a site load faster. Under each video you place affiliate links, so when a viewer signs up through your link the company pays you a commission. Ads and brand sponsorships can follow later. AI tools help with scripts, voiceovers, subtitles in several languages and basic editing, so one person can publish two or three videos a week. You start with small business owners, freelancers and students in India, then widen to viewers abroad.",
+  "problem": "Small business owners and freelancers in India want a website but get lost choosing between builders and hosting plans. Most reviews are written for American buyers and ignore Indian pricing, payment methods and support hours. A channel that compares options in plain language, shows the steps on screen and speaks to local needs can save viewers from costly mistakes.",
+  "bestFor": [
+   "People comfortable explaining tech on camera or screen",
+   "Freelancers who already build or host websites",
+   "Patient creators who can post weekly for many months"
+  ],
+  "moneyModel": [
+   "Affiliate commissions on hosting, website builders and online tools",
+   "Ad revenue once the channel qualifies for YouTube monetisation",
+   "Sponsorships from tool companies as the audience grows",
+   "Higher-paying software affiliate programs in later videos"
+  ],
+  "startupCost": "₹25,000 to ₹30,000",
+  "budget": "under-50k",
+  "buildableWithAi": false,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Pick one narrow topic, such as hosting for small Indian shops, and write ten video titles from questions people ask in forums and comments.",
+   "Join the affiliate programs of three tools you have really used, then record your first five videos on a phone before buying any gear.",
+   "Post each video in WhatsApp and LinkedIn groups of small business owners, answer every comment, and track which topics bring signups through your links."
+  ],
+  "watchOut": "Affiliate sales depend on viewers trusting you, and that takes months of steady posting before anything pays. Programs can reject you or cut commissions without notice. In India, paid and affiliate promotions are expected to be clearly disclosed to viewers, so label every link. Check the current rules with a professional before you start.",
+  "keywords": [
+   "youtube affiliate marketing india",
+   "website tutorial youtube channel business",
+   "hosting review youtube channel india",
+   "ai youtube channel business idea"
+  ]
+ },
+ {
+  "slug": "youtube-broken-link-checker",
+  "name": "YouTube broken link checker",
+  "type": "saas",
+  "oneLine": "Software that finds dead links in YouTube descriptions; creators and agencies pay a monthly plan.",
+  "what": "A web tool for YouTube creators that finds dead links in their video descriptions. The creator connects a channel, the tool pulls every description, extracts each link and tests whether it still works, then lists problems with the most-viewed videos first. It exports a CSV and explains how to fix links in YouTube Studio. Paid plans re-scan weekly or monthly and send email alerts. You can assemble a first version with the YouTube Data API, Make, Airtable and a no-code dashboard.",
+  "problem": "Creators who earn through affiliate links often have old videos pointing to products or offers that no longer exist. Checking hundreds of descriptions by hand is too slow, so nobody does it. Agencies that manage many channels face the same chore at a larger scale.",
+  "bestFor": [
+   "No-code builders who want a small, focused software product",
+   "Creators or editors who live with this problem",
+   "People who can sell to YouTube agencies"
+  ],
+  "moneyModel": [
+   "One-time channel audit at $29 to $49",
+   "Creator plans at $9, $29 and $49 per month",
+   "Agency plans at $199 and $499 per month",
+   "Done-for-you link fixing at $99 to $299, and API access at $199 to $999 per month"
+  ],
+  "startupCost": "$35 to $40 a month for the tools",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "global-from-india",
+  "firstSteps": [
+   "Scan three friendly creators' channels with a rough script and send each a screenshot summary of dead links in their most-viewed videos.",
+   "Ask them whether they would pay to have it re-run every month, and at what price, before you build any dashboard.",
+   "Offer free audits in creator Discord and Reddit communities where self-promotion is allowed, and message five small agencies with a trial for their channels."
+  ],
+  "watchOut": "Link checks give false alarms: many shops and affiliate links redirect or block automated checks even when they work for people. You cannot know how much money a dead link cost a creator, so avoid promising figures. YouTube API limits and its terms of service apply to everything you build. Many creators may want only a one-time fix.",
+  "keywords": [
+   "youtube broken link checker",
+   "youtube description link audit tool",
+   "affiliate link checker saas",
+   "creator tools saas idea"
+  ]
+ },
+ {
+  "slug": "youtube-channel-marketplace",
+  "name": "YouTube channel marketplace",
+  "type": "marketplace",
+  "oneLine": "A listing site where creators sell monetised YouTube channels to buyers, with verification and escrow.",
+  "what": "You build a site where channel owners list a channel for sale with anonymous stats like subscribers, views and revenue. Buyers, such as individual investors and media companies, browse and make offers. You check the analytics through screen recordings, help set up escrow through a third-party service and take a fee when a sale closes. Extras include paid verification packs and featured listings. A later step is buying small educational channels yourself and running them as a media business.",
+  "problem": "Creators who are tired or want to move on have no safe way to sell a channel with an audience. Buyers worry about faked numbers, sellers who disappear after payment and messy handovers. Both sides need someone to check the numbers and hold the money until the handover is done.",
+  "bestFor": [
+   "Deal-makers who enjoy negotiation and checking details",
+   "Creators and editors with a network of channel owners",
+   "Founders who can handle legal paperwork and scam risk"
+  ],
+  "moneyModel": [
+   "A 10% to 15% fee on each completed sale",
+   "Verification packs at ₹2,000 to ₹5,000",
+   "Featured listings at ₹500 to ₹1,000",
+   "Later, income from channels you own"
+  ],
+  "startupCost": "Zero, using no-code tools and manual outreach",
+  "budget": "under-50k",
+  "buildableWithAi": true,
+  "market": "india-and-global",
+  "firstSteps": [
+   "Message channel owners directly and list ten channels by hand, keeping a sheet of each one's stats and the reason for selling.",
+   "Write one clear guide on how to value and sell a channel, and post it where small creators gather.",
+   "Find one buyer and one seller, use an established escrow service for the payment, and write down every step of the handover."
+  ],
+  "watchOut": "Scams are the main risk, from faked analytics to sellers who keep access after payment. Check what the platform's own terms say about transferring a channel and whether income programmes carry over. Do not hold buyers' money yourself, because that has payment and legal rules. Use an established escrow service and a lawyer-drafted contract. Listings will arrive slowly.",
+  "keywords": [
+   "sell youtube channel marketplace",
+   "buy youtube channel business idea",
+   "youtube channel valuation website",
+   "creator exit marketplace india"
+  ]
+ },
+ {
+  "slug": "youtube-freelancer-marketplace",
+  "name": "YouTube creator freelancer marketplace",
+  "type": "marketplace",
+  "oneLine": "A marketplace where YouTubers hire editors, designers, and writers, and you take a commission.",
+  "what": "Creators post a job, such as editing a video, designing a thumbnail, or writing a script. Freelancers who specialise in YouTube bid, message the creator, and get paid through the site, and you take a share of each payment. Profiles show past YouTube work and reviews, so a creator can judge quickly. Freelancers can pay to boost their profile, and creators can pay for extra tools like thumbnail generators. A first version can be built on a no-code platform such as Bubble, with Razorpay handling payments.",
+  "problem": "Small YouTubers struggle to find editors and thumbnail designers who understand the platform, so they scroll through general freelance sites full of unrelated profiles. Freelancers in turn compete with everyone else there. Both sides lose time sorting through poor matches and uncertain pay.",
+  "bestFor": [
+   "Creators or editors who know both sides of this market",
+   "No-code builders who want to run a marketplace",
+   "People already active in Indian YouTuber communities"
+  ],
+  "moneyModel": [
+   "Commission of 10% to 15% on each job",
+   "Creator subscription from $9.99 a month for extra tools",
+   "Freelancer profile boosts for a fee of $5 to $20"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": true,
+  "market": "india",
+  "firstSteps": [
+   "Start with a WhatsApp group or Google Form: gather twenty editors and designers with portfolios, and ten creators who need work done this month.",
+   "Match jobs by hand for a month, take a small commission through a payment link, and note why jobs fail or move off your channel.",
+   "Build the profile, job post, and messaging screens in a no-code tool only after you see repeat jobs, then add payments and reviews."
+  ],
+  "watchOut": "Every marketplace has a chicken-and-egg problem, and a niche one has fewer people on each side. Once a creator and an editor meet, they can move to WhatsApp and skip your commission. Holding money between two parties is regulated, so use a licensed payment provider's marketplace features and have a chartered accountant check the setup.",
+  "keywords": [
+   "youtube freelancer marketplace india",
+   "hire youtube video editor india",
+   "thumbnail designer marketplace",
+   "freelance platform for youtubers",
+   "start a niche freelance marketplace"
+  ]
+ },
+ {
+  "slug": "youtube-video-production-agency",
+  "name": "YouTube video production agency",
+  "type": "agency",
+  "oneLine": "A remote agency that scripts, edits and makes thumbnails for small YouTube creators on monthly plans.",
+  "what": "You manage a small creator's YouTube channel for a monthly fee. Each plan covers a set number of edited videos, scripts written with AI help and a human check, custom thumbnails, and search-friendly titles and descriptions. Bigger plans add thumbnail testing, a monthly look at channel numbers and, at the top, full management from ideas to publishing. Editors and scriptwriters work remotely, first you, then freelancers you hire per project. Clients are small and mid-size creators, coaches, consultants and small businesses, including those making Hindi, Kannada, Tamil or Bengali videos. A share of ad revenue is an optional way to price.",
+  "problem": "Creators with a small audience know that regular, polished videos help a channel grow, but scripting, editing and thumbnails eat whole days. Large production houses are priced for big brands. Coaches and shop owners who want a channel have no time to learn editing, so their channels stay empty or patchy.",
+  "bestFor": [
+   "Video editors who want to turn a skill into a business",
+   "Creators who understand YouTube and can coach clients",
+   "People good at managing freelancers and deadlines"
+  ],
+  "moneyModel": [
+   "Starter plan at ₹12,000 a month for 4 edited videos",
+   "Growth plan at ₹25,000 a month for 8 videos",
+   "Full management from ₹50,000 a month",
+   "One-off video projects at ₹3,000 to ₹15,000 each, or an optional share of ad revenue"
+  ],
+  "startupCost": null,
+  "budget": "unknown",
+  "buildableWithAi": false,
+  "market": "india",
+  "firstSteps": [
+   "Edit two videos free for creators who speak your language, in return for a public testimonial and permission to show before and after clips.",
+   "Write a one-page offer with your three plans, then message 30 small creators and coaches with a thumbnail you made for their channel.",
+   "Ask early clients for a two-month minimum, and test two freelance editors on paid trial videos before promising more capacity."
+  ],
+  "watchOut": "You cannot control the YouTube algorithm, so promising growth or guaranteeing views will end in angry clients. Churn is the real risk, since creators leave when their numbers stall. Editing quality must stay steady as you hire, so give each editor a clear style guide. Write contracts around deliverables, not outcomes.",
+  "keywords": [
+   "youtube video editing agency india",
+   "youtube channel management service",
+   "video production agency for creators",
+   "youtube growth agency business",
+   "hindi youtube editing service"
+  ]
+ }
+]

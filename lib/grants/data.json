@@ -1,0 +1,3416 @@
+[
+ {
+  "slug": "aditi-idex",
+  "name": "Acing Development of Innovative Technologies with iDEX",
+  "shortName": "ADITI",
+  "provider": "Defence Innovation Organisation, Ministry of Defence",
+  "level": "central",
+  "state": null,
+  "kind": "grant",
+  "summary": "A larger iDEX grant for startups and innovators developing strategically critical defence technologies that need much bigger budgets. It funds up to half of a product development budget, with challenges and hackathons run against defence problem statements. Winners are incubated by iDEX Partner Incubators and must bring the remaining money themselves.",
+  "amount": "Up to 50% of the product development budget, capped at ₹25 crore",
+  "amountMaxInr": 250000000,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "growth"
+  ],
+  "sectors": [
+   "deeptech",
+   "defence"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "DPIIT-recognised startup or Indian company under the Companies Act",
+   "Individual innovators can also apply",
+   "Working on a listed critical or strategic technology challenge"
+  ],
+  "howToApply": [
+   "Watch the iDEX challenges page for an ADITI edition",
+   "Choose a listed problem statement",
+   "Apply online before the closing date"
+  ],
+  "status": "periodic",
+  "statusNote": "ADITI 4 is listed as closed with a last date of 4 May 2026. The scheme paper budgets FY 2023-24 to FY 2025-26, and no notice covering later years or another edition was found.",
+  "deadline": null,
+  "watchOut": "You must fund the other half, which can mean raising serious money. The published budget period ended in FY 2025-26, so a further edition is not assured. This is for hard defence technology, not typical SaaS.",
+  "officialUrl": "https://idex.gov.in/uploads/page/aditi_scheeme.pdf",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "andhra-pradesh-seed-funding-with-equity",
+  "name": "Seed Funding with Equity, Andhra Pradesh Innovation and Startup Policy 4.0",
+  "shortName": null,
+  "provider": "Andhra Pradesh Innovation Society, ITE&C Department, Government of Andhra Pradesh",
+  "level": "state",
+  "state": "andhra-pradesh",
+  "kind": "seed-funding",
+  "summary": "State equity funding for startups registered in Andhra Pradesh, on an equity sharing model. The policy lists a separate go-to-market support line of the same size, also for equity, and need-based seed funding of up to ₹1 crore for deep tech and advanced technology startups. The share of equity is not stated in the policy.",
+  "amount": "Up to ₹50 lakh for equity; deep tech and advanced technology startups up to ₹1 crore based on need",
+  "amountMaxInr": 10000000,
+  "repayable": true,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Registered with the Government of Andhra Pradesh on the AP Startup One portal",
+   "Equity sharing with the state's funding model",
+   "Deep tech and advanced technology startups for the ₹1 crore line"
+  ],
+  "howToApply": [
+   "Register on the AP Startup One portal",
+   "Apply through the rolling application portal",
+   "Ask the Innovation Society about current programmes such as AP Build"
+  ],
+  "status": "open-rolling",
+  "statusNote": "APIS home page says the application portal stays open on a rolling basis. Policy valid five years from notification or until replaced. Equity terms were not seen; operating guidelines are issued separately.",
+  "deadline": null,
+  "watchOut": "You give up equity and the policy does not say how much. Ask for the equity terms in writing, and compare them with what an angel would offer, before you accept.",
+  "officialUrl": "https://apis.ap.gov.in/assets/images/resources/policies/2025/AP%20Innovation%20Policy_2025ITC_36043_MS3.pdf",
+  "applyUrl": "https://apis.ap.gov.in/home/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "andhra-pradesh-startup-grants",
+  "name": "Startup Grants, Andhra Pradesh Innovation and Startup Policy 4.0",
+  "shortName": "AP startup grant",
+  "provider": "Andhra Pradesh Innovation Society, ITE&C Department, Government of Andhra Pradesh",
+  "level": "state",
+  "state": "andhra-pradesh",
+  "kind": "grant",
+  "summary": "Grants to turn an idea into a tested product. A startup can get an upfront amount of up to ₹2 lakh, then more in phases based on its stage and performance until the product is viable. The limit is higher for startups with a founder who is a woman, BC, SC, ST, minority or differently abled.",
+  "amount": "Up to ₹15 lakh in total, or ₹20 lakh with a founder from specified groups; initial grant up to ₹2 lakh",
+  "amountMaxInr": 2000000,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Registered with the Government of Andhra Pradesh on the AP Startup One portal",
+   "Working to turn an innovative idea into a tested solution or proof of concept",
+   "Further phases depend on stage and performance",
+   "₹20 lakh limit needs a founder from the listed groups"
+  ],
+  "howToApply": [
+   "Register on the AP Startup One portal",
+   "Read the application process for the AP Ignite programme on the APIS site",
+   "Apply on the portal, which is open on a rolling basis"
+  ],
+  "status": "open-rolling",
+  "statusNote": "APIS home page announces the application portal stays open on a rolling basis. G.O. dated 24.03.2025 says the policy is valid five years from notification or until replaced.",
+  "deadline": null,
+  "watchOut": "Money comes in phases, so ₹15 lakh is reached only if you keep clearing reviews. Operating guidelines are issued separately, so ask what each stage demands before you plan your spend.",
+  "officialUrl": "https://apis.ap.gov.in/assets/images/resources/policies/2025/AP%20Innovation%20Policy_2025ITC_36043_MS3.pdf",
+  "applyUrl": "https://apis.ap.gov.in/home/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "atal-incubation-centres",
+  "name": "Atal Incubation Centres",
+  "shortName": "AIC",
+  "provider": "Atal Innovation Mission, NITI Aayog",
+  "level": "central",
+  "state": null,
+  "kind": "incubation",
+  "summary": "A network of 72 incubators backed by Atal Innovation Mission, many focused on sectors such as health, energy, agriculture, education and cyber security. Startups can join a centre for workspace, equipment, mentors, business planning, industry partnerships and help reaching seed capital. Government grants go to the centre rather than to startups directly.",
+  "amount": null,
+  "amountMaxInr": null,
+  "repayable": null,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Innovative startup aiming to be scalable",
+   "Fits the focus sector of the chosen centre",
+   "Accepted through that centre's own selection"
+  ],
+  "howToApply": [
+   "Look up Atal Incubation Centres in India on the AIM site",
+   "Contact a centre that suits your sector",
+   "Apply through its own intake"
+  ],
+  "status": "unclear",
+  "statusNote": "AIM's home page says the portals for new ATL, AIC and ACIC applications are not open. That concerns institutions setting up centres. No central founder intake is shown, and each existing centre runs its own.",
+  "deadline": null,
+  "watchOut": "The ₹10 crore figure online is a grant to set up a centre, not money for your startup. AIM publishes no founder amount, so ask each centre about its fees, equity and any seed support.",
+  "officialUrl": "https://aim.gov.in/atal-incubation-centres.php",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "aws-activate-credits",
+  "name": "AWS Activate Credits",
+  "shortName": "AWS Activate",
+  "provider": "Amazon Web Services",
+  "level": "private",
+  "state": null,
+  "kind": "credits",
+  "summary": "AWS credits for startups below Series B. Self-funded founders can apply directly under the Founders tier and start with $1,000, rising to $5,000 for select participants. Startups linked to an accelerator, angel or VC can apply under the Portfolio tier for up to $200,000. A further invite-only tier exists for AI startups.",
+  "amount": "Up to $5,000 for self-funded startups (starts at $1,000). Up to $200,000 with an Activate Provider. $200,000+ for AI startups, invite only.",
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Has not raised a Series B.",
+   "Founded in the last 10 years.",
+   "AWS account on a paid tier plan.",
+   "New to Activate Credits, or asking for more than you received before.",
+   "The Portfolio tier needs an Organization ID from your Activate Provider."
+  ],
+  "howToApply": [
+   "Create or sign in with an AWS Builder ID using a professional email.",
+   "Pick Founders if self-funded, or enter your provider's Org ID for Portfolio.",
+   "Add product, funding and company details, link an AWS account, and submit.",
+   "AWS says to expect a reply in 5 to 10 business days."
+  ],
+  "status": "open-rolling",
+  "statusNote": "Application page live with no deadline or cohort dates shown. The page does not list any country limits.",
+  "deadline": null,
+  "watchOut": "The headline $200,000 is not open to bootstrapped founders. Without an Activate Provider's Org ID you are capped at $5,000, and most people should plan around the first $1,000.",
+  "officialUrl": "https://aws.amazon.com/startups/credits/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "bihar-startup-policy-seed-loan",
+  "name": "Seed Support, Bihar Startup Policy 2022",
+  "shortName": "Startup Bihar seed loan",
+  "provider": "Department of Industries, Government of Bihar",
+  "level": "state",
+  "state": "bihar",
+  "kind": "loan",
+  "summary": "An interest-free loan for startups recognised by the Bihar government, repayable over ten years. Money is released as the startup hits milestones. It can pay for idea validation, prototypes, market research, marketing and initial setup. Women, SC, ST and differently abled founders get extra support. Startups take an evaluation test as part of selection.",
+  "amount": "Up to ₹10 lakh as an interest-free loan",
+  "amountMaxInr": 1000000,
+  "repayable": true,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Registered on the Startup Bihar portal and recognised by the Department of Industries",
+   "Registered with an incubation centre",
+   "Startup puts in 5% of the seed amount",
+   "Extra support only where owned fully by women, SC, ST or differently abled founders"
+  ],
+  "howToApply": [
+   "Register on the Startup Bihar portal during an open window",
+   "Take the evaluation test",
+   "Apply for the benefit through the portal"
+  ],
+  "status": "periodic",
+  "statusNote": "Startup Bihar home page shows applications were open 1 October to 31 October 2026, 11:59 PM, now closed. Evaluation test results were posted through 2026. Next window not shown.",
+  "deadline": null,
+  "watchOut": "This is a loan, not a grant, even though some pages say seed grant. Conditions come from a Startup India summary of an older policy text, so confirm them with Startup Bihar.",
+  "officialUrl": "https://startup.bihar.gov.in/",
+  "applyUrl": "https://startup.bihar.gov.in/startupregistration",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "biotechnology-ignition-grant",
+  "name": "Biotechnology Ignition Grant",
+  "shortName": "BIG",
+  "provider": "BIRAC, Department of Biotechnology, Government of India",
+  "level": "central",
+  "state": null,
+  "kind": "grant",
+  "summary": "BIRAC's flagship early-stage grant for biotech startups turning an innovative idea into proof of concept. Selected applicants get grant money for up to 18 months, paid in stages against milestones, along with mentoring and networking through BIG Partners. It is for life sciences work and needs a functioning lab or an incubator.",
+  "amount": "Up to ₹50 lakh as grant-in-aid for up to 18 months",
+  "amountMaxInr": 5000000,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype"
+  ],
+  "sectors": [
+   "biotech"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "Company or LLP registered in India",
+   "Incorporated not more than 5 years before the call opens",
+   "At least 51% owned by resident Indian citizens or Indian-owned companies",
+   "Own working R&D facility, or incubated at an incubator",
+   "A technically qualified Project Leader"
+  ],
+  "howToApply": [
+   "Register on the BIRAC website",
+   "Wait for the national call, normally on 1 January and 1 July",
+   "Submit your proposal online before the system closes",
+   "Clear screening, expert review and committee stages"
+  ],
+  "status": "periodic",
+  "statusNote": "BIRAC says calls are announced twice a year, on 1 January and 1 July, and stay open about 45 days. Its current calls table was empty when checked, and the site was updated 2 November 2026.",
+  "deadline": null,
+  "watchOut": "Windows are short and the portal closes automatically at the stated time. Competition is national, and being only a biotech idea is not enough, since you need lab access. Software-only health ideas are a poor fit.",
+  "officialUrl": "https://birac.nic.in/big.php",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "cartier-womens-initiative-regional-awards",
+  "name": "Cartier Women's Initiative Regional Awards",
+  "shortName": "Cartier Women's Initiative",
+  "provider": "Cartier Women's Initiative",
+  "level": "private",
+  "state": null,
+  "kind": "grant",
+  "summary": "An annual international award for women-run impact businesses, with South Asia and Central Asia as one of nine regions. Three fellows from each region receive grants of $100,000, $60,000 or $30,000 by place, plus a fellowship with training and a network. Businesses need revenue, a team and a measurable social or environmental impact.",
+  "amount": "$100,000 for first place, $60,000 for second, $30,000 for third",
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "social",
+   "climate"
+  ],
+  "audience": [
+   "women"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Annual revenue between $50,000 and $5 million in the last closed fiscal year.",
+   "Between 5 and 250 team members, counting contractors and part-time staff.",
+   "No more than $2 million raised in equity, SAFEs or convertible notes.",
+   "A woman in a main leadership role, owning a share equal to or above each co-founder.",
+   "An incorporated for-profit business, majority owned by founders and team. Sole proprietorships and non-profits are out.",
+   "Measurable social or environmental impact tied to at least one UN Sustainable Development Goal."
+  ],
+  "howToApply": [
+   "Read the application guide and scoring rubric on the Regional Awards page.",
+   "Submit one online application in English, as a founder who meets every rule, when the next edition opens.",
+   "Finalists are ranked by a jury."
+  ],
+  "status": "periodic",
+  "statusNote": "Applications for the 2027 edition are closed. That deadline was 16 June 2026, with fellows announced in spring 2027. The next edition's dates are not posted.",
+  "deadline": null,
+  "watchOut": "Only three fellows win per large region. The revenue floor rules out pre-revenue startups, and a plain SaaS with no measurable impact will not fit. Grants may also be taxable locally.",
+  "officialUrl": "https://www.cartierwomensinitiative.com/regional-awards",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "claude-for-startups-anthropic",
+  "name": "Claude for Startups",
+  "shortName": null,
+  "provider": "Anthropic",
+  "level": "private",
+  "state": null,
+  "kind": "credits",
+  "summary": "A cohort programme for early-stage founders building on Claude. It offers discounts and credits worth up to $45,000 from companies building with Claude, regular Applied AI sessions, and invitations to events. Founders backed by a VC in Anthropic's partner network may also claim up to $100,000 in API credits through that VC.",
+  "amount": "Partner discounts and credits worth up to $45,000. VC-backed founders may get up to $100,000 in additional API credits through their VC.",
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "ai"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Aimed at early-stage founders building on Claude.",
+   "The extra API credits need backing from a VC in Anthropic's partner network and are claimed through that VC.",
+   "Credits apply to the first-party Claude API through Claude Console, not AWS, Google Cloud or Azure."
+  ],
+  "howToApply": [
+   "Applications are paused, so subscribe to the Claude Startup newsletter on the programme page.",
+   "Apply when the next cohort opens.",
+   "If VC-backed, ask your VC whether it can unlock the API credits."
+  ],
+  "status": "closed",
+  "statusNote": "The page says the current cohort is full and new applications are not being accepted. It gives no date for the next cohort. No country limit is stated.",
+  "deadline": null,
+  "watchOut": "The $45,000 is described as offers from other companies, not Anthropic API credits. The $100,000 needs a partner VC, which most bootstrapped Indian founders will not have.",
+  "officialUrl": "https://claude.com/programs/startups",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "cloudflare-for-startups",
+  "name": "Cloudflare for Startups",
+  "shortName": null,
+  "provider": "Cloudflare",
+  "level": "private",
+  "state": null,
+  "kind": "credits",
+  "summary": "Cloudflare credits valid for one year, sized by how much you have raised. Bootstrapped companies with under $1 million raised can get $10,000. Companies funded by an affiliated partner can get $100,000 with under $5 million raised, or $350,000 with $5 million or more. Higher tiers add technical sessions and support.",
+  "amount": "$10,000, $100,000 or $350,000 by tier, valid for one year.",
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Incorporated within the last 10 years.",
+   "Funded up to Series B, with funding in the last 12 months.",
+   "Actively building a technology product, with a live website and a public LinkedIn, X or GitHub presence.",
+   "First-time applicant, for-profit, using a business email on your own domain.",
+   "Consultancies, agencies, managed service providers, resellers, educational institutions and personal blogs are excluded."
+  ],
+  "howToApply": [
+   "Use the Apply button on the programme page.",
+   "Reviews typically take up to 48 hours, and approval comes by email.",
+   "If you hear nothing after a week, write to startups@cloudflare.com."
+  ],
+  "status": "open-rolling",
+  "statusNote": "Application form linked from the page with no deadline shown. No country limit is stated.",
+  "deadline": null,
+  "watchOut": "The two big tiers need a partner investor. Some products have sub-limits, such as R2 at $10,000 and Workers AI at $2,500 on the lowest tier. The funding rule and bootstrapped tier read awkwardly, so check first.",
+  "officialUrl": "https://www.cloudflare.com/forstartups/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "credit-guarantee-fund-trust-micro-small-enterprises",
+  "name": "Credit Guarantee Fund Trust for Micro and Small Enterprises",
+  "shortName": "CGTMSE",
+  "provider": "Ministry of MSME and SIDBI",
+  "level": "central",
+  "state": null,
+  "kind": "credit-guarantee",
+  "summary": "Lets new or existing micro and small enterprises, including service and trading businesses, borrow from banks and other lenders without collateral or a third-party guarantee. The trust guarantees a share of the loan to the lender. Cover is higher for micro loans and for women and SC or ST founders, among others.",
+  "amount": "Guarantee cover up to ₹10 crore per borrower, covering 75% to 90% depending on category and loan size",
+  "amountMaxInr": 100000000,
+  "repayable": true,
+  "stages": [
+   "idea",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "New or existing micro or small enterprise, as the MSME Ministry defines it",
+   "Loan from a lender registered with the trust",
+   "Credit given without collateral or third-party guarantee, or under the partial collateral option"
+  ],
+  "howToApply": [
+   "Approach a registered lender for a term loan or working capital",
+   "The lender assesses and sanctions under its own process",
+   "The lender then applies for the guarantee and pays the fee"
+  ],
+  "status": "open-rolling",
+  "statusNote": "The CGTMSE site shows activity to 31 March 2026, with 322 registered lenders and notices on the ₹10 crore limit. The guarantee scheme document is updated to 1 April 2025. No end date or window is published.",
+  "deadline": null,
+  "watchOut": "You cannot apply yourself, because the lender has to agree first. Guarantee fees start at 0.37% a year and rise with loan size, and lenders often pass them on. CGTMSE warns about lookalike sites and agents.",
+  "officialUrl": "https://www.cgtmse.in/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "credit-guarantee-scheme-for-startups",
+  "name": "Credit Guarantee Scheme for Startups",
+  "shortName": "CGSS",
+  "provider": "DPIIT, operated by National Credit Guarantee Trustee Company (NCGTC)",
+  "level": "central",
+  "state": null,
+  "kind": "credit-guarantee",
+  "summary": "Gives banks, NBFCs and venture debt funds a government guarantee on money they lend to DPIIT-recognised startups, so they can lend with less collateral. Cover reaches 85% of the default on loans up to ₹10 crore and 75% above that. The startup still has to win and repay the loan.",
+  "amount": "Guarantee cover up to ₹20 crore per borrower. This protects the lender and is not cash to you.",
+  "amountMaxInr": 200000000,
+  "repayable": true,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Recognised by DPIIT",
+   "Not in default to any lender or investor",
+   "Not classified as a Non-Performing Asset under RBI rules",
+   "Eligibility certified by the member lender"
+  ],
+  "howToApply": [
+   "Get DPIIT recognition first",
+   "Apply online for the startup loan on the Jan Samarth portal, or visit a branch of a member lender",
+   "The lender appraises you under its normal rules and takes the guarantee from NCGTC"
+  ],
+  "status": "open-rolling",
+  "statusNote": "No end date is published. The NCGTC page lists the May 2025 gazette notification and 2025-26 FAQ, and the Startup India page was last updated 30 October 2026. Jan Samarth has a live startup loan route.",
+  "deadline": null,
+  "watchOut": "A guarantee is not a loan approval. The lender still judges your cash flows, and Jan Samarth asks for at least 25% margin plus audited balance sheets and a project report from existing units.",
+  "officialUrl": "https://www.ncgtc.in/en/product-details/CGSS/Credit-Guarantee%20Scheme%20for%20Start-ups%20(CGSS)",
+  "applyUrl": "https://www.jansamarth.in/business-loan-startup-scheme",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "elevenlabs-startup-grants",
+  "name": "ElevenLabs Startup Grants",
+  "shortName": null,
+  "provider": "ElevenLabs",
+  "level": "private",
+  "state": null,
+  "kind": "credits",
+  "summary": "Twelve months of free access to the ElevenLabs voice AI platform for small startups, on its Scale plan. The grant includes 33 million characters, which ElevenLabs values at more than $5,500, plus founder events and startup support. It suits founders building voice agents, speech or audio features into a long-term product.",
+  "amount": "12 months of free access with 33,000,000 characters, valued by ElevenLabs at more than $5,500.",
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "ai"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Fewer than 25 employees when you apply.",
+   "A business or monetisation plan, and a valid business email.",
+   "A long-term product, not a one-off project or campaign.",
+   "Agencies, consulting firms and SMBs are not eligible.",
+   "One application per company. Existing enterprise customers cannot apply."
+  ],
+  "howToApply": [
+   "Submit the form on the grants page, covering your startup, team and growth plans.",
+   "Reviews are rolling, with a reply expected within one week.",
+   "The grant is applied to the account you applied with."
+  ],
+  "status": "open-rolling",
+  "statusNote": "The page says applications are reviewed on a rolling basis with no deadline. No country limit is stated.",
+  "deadline": null,
+  "watchOut": "This is usage on one vendor's platform, not money. After 12 months the account drops to the Free plan unless you choose to pay, so plan for that cost.",
+  "officialUrl": "https://elevenlabs.io/startup-grants",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "genesis-meity",
+  "name": "Gen-Next Support for Innovative Startups",
+  "shortName": "GENESIS",
+  "provider": "Ministry of Electronics and IT, through MeitY Startup Hub",
+  "level": "central",
+  "state": null,
+  "kind": "seed-funding",
+  "summary": "MeitY's umbrella scheme for tech startups, focused on Tier-II and Tier-III cities. Through selected implementing agencies it offers entrepreneur-in-residence support, early-stage money, pilot funding, matched investment and a larger cheque for a few deep tech startups. Its entrepreneur-in-residence track has a third cohort call running now.",
+  "amount": "Up to ₹10 lakh for early-stage, average ₹40 lakh up to ₹50 lakh for pilots or matched investment, up to ₹1 crore for select deep tech",
+  "amountMaxInr": 10000000,
+  "repayable": null,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Technology startup, or an aspiring founder, student or researcher for the residence track",
+   "Focus on Tier-II and Tier-III cities",
+   "Selected through an implementing agency's expert process",
+   "Investment component needs 1:1 private sector matching"
+  ],
+  "howToApply": [
+   "Check the list of selected implementing agencies on MeitY Startup Hub",
+   "Apply to an agency near you or to the current EIR 3.0 call",
+   "Expect its own screening before any money is released"
+  ],
+  "status": "open-window",
+  "statusNote": "Approved in July 2023 for five years. MeitY Startup Hub's September 2026 note says the EIR Cohort 3 call launched on 4 August 2026 is live. No closing date was shown. Other tracks run through implementing agencies.",
+  "deadline": null,
+  "watchOut": "The ₹1 crore figure is only for a select few deep tech startups. Most founders see much smaller sums, the live call covers only the residence track, and implementing agencies decide. Check the closing date with MeitY Startup Hub.",
+  "officialUrl": "https://msh.meity.gov.in/schemes/genesis",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "goa-internet-software-cloud-reimbursement",
+  "name": "Internet, Software and Cloud Reimbursement, Goa Startup Policy 2025",
+  "shortName": null,
+  "provider": "Startup and IT Promotion Cell, Department of Information Technology, Government of Goa",
+  "level": "state",
+  "state": "goa",
+  "kind": "subsidy",
+  "summary": "Goa startups working from their own or rented premises, not government facilities, can claim back internet connectivity, software licence and cloud service fees for one year. It suits software teams because it covers everyday running costs. The limit applies each quarter, and the policy also has a separate lease subsidy for local startups.",
+  "amount": "Up to ₹1 lakh per quarter for one year",
+  "amountMaxInr": 400000,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Meets the Goa Startup Policy definition of a startup",
+   "Operates from own or rented premises, not a government facility",
+   "Costs are for internet, software licences or cloud services",
+   "Certified by the Startup and IT Promotion Cell"
+  ],
+  "howToApply": [
+   "Get certified by the Startup and IT Promotion Cell",
+   "Claim through the single-window portal with bills",
+   "The cell assesses and the Empowered Committee sanctions"
+  ],
+  "status": "unclear",
+  "statusNote": "Goa Startup Policy 2025 is linked on the portal and runs three years from gazette notification. The portal also shows an old notice about the 2017 policy. No claim dates seen.",
+  "deadline": null,
+  "watchOut": "It lasts only one year, so time your claim to your highest spend. Confirm the 2025 policy schemes are live, because the portal still refers to older policies. The Goa portal's security certificate had expired when we checked, so your browser may show a warning.",
+  "officialUrl": "https://www.startup.goa.gov.in/Notification/Goa-Startup-Policy-2025.pdf",
+  "applyUrl": "https://www.goaonline.gov.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "goa-seed-capital-grant",
+  "name": "Seed Capital Grant Scheme, Goa Startup Policy 2025",
+  "shortName": "Goa seed capital grant",
+  "provider": "Startup and IT Promotion Cell, Department of Information Technology, Government of Goa",
+  "level": "state",
+  "state": "goa",
+  "kind": "grant",
+  "summary": "A one-time grant from the Goa government for startups that already have a promising minimum viable product. The state's startup cell decides the amount. A startup must be up to ten years old, with turnover up to ₹100 crore, and be incorporated or operating in Goa. Applications go through a single-window portal and a committee.",
+  "amount": "Up to ₹10 lakh, as determined by the cell",
+  "amountMaxInr": 1000000,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Registered or operating in Goa, up to ten years from incorporation",
+   "Annual turnover up to ₹100 crore",
+   "Private limited company, registered partnership or LLP",
+   "A promising minimum viable product"
+  ],
+  "howToApply": [
+   "Get certified as a startup by the Startup and IT Promotion Cell",
+   "Apply for incentives through the single-window portal",
+   "The cell assesses and the Empowered Committee sanctions"
+  ],
+  "status": "unclear",
+  "statusNote": "Goa Startup Policy 2025 is linked on the portal and runs three years from gazette notification. The portal also shows an old notice about the 2017 policy and refers to 2021 schemes.",
+  "deadline": null,
+  "watchOut": "The portal mixes old and new policy notices, so confirm that claims under the 2025 policy are open. The cell sets the amount, and only an MVP stage startup qualifies. The Goa portal's security certificate had expired when we checked, so your browser may show a warning.",
+  "officialUrl": "https://www.startup.goa.gov.in/Notification/Goa-Startup-Policy-2025.pdf",
+  "applyUrl": "https://www.goaonline.gov.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "goa-women-entrepreneur-monthly-allowance",
+  "name": "Women Entrepreneur Vitality Scheme, Goa Startup Policy 2025",
+  "shortName": null,
+  "provider": "Startup and IT Promotion Cell, Department of Information Technology, Government of Goa",
+  "level": "state",
+  "state": "goa",
+  "kind": "grant",
+  "summary": "A monthly allowance for women-founded Goa startups at idea, prototype, validation or early traction stage, working in emerging technologies such as AI, IoT, drones, robotics, AR/VR and 3D printing. It is a one-time package lasting up to twelve months, with mentoring. Incubators or accelerators linked to the startup report progress every quarter.",
+  "amount": "₹20,000 a month for up to one year",
+  "amountMaxInr": 240000,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "ai",
+   "deeptech"
+  ],
+  "audience": [
+   "women"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Startup founded by women",
+   "Meets the Goa Startup Policy definition of a startup",
+   "Works in an emerging technology such as AI, IoT, drones or AR/VR",
+   "Linked to an incubator or accelerator that can file quarterly reports"
+  ],
+  "howToApply": [
+   "Get certified by the Startup and IT Promotion Cell",
+   "Apply through the single-window portal",
+   "The cell does due diligence and approves it directly"
+  ],
+  "status": "unclear",
+  "statusNote": "Goa Startup Policy 2025 is linked on the portal and runs three years from gazette notification. The portal also shows an old notice about the 2017 policy. No call dates seen.",
+  "deadline": null,
+  "watchOut": "This is available only once and is modest money. Only emerging technology startups qualify, and you need a linked incubator or accelerator to report on your progress. The Goa portal's security certificate had expired when we checked, so your browser may show a warning.",
+  "officialUrl": "https://www.startup.goa.gov.in/Notification/Goa-Startup-Policy-2025.pdf",
+  "applyUrl": "https://www.goaonline.gov.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "google-for-startups-accelerator-india",
+  "name": "Google for Startups Accelerator: India",
+  "shortName": null,
+  "provider": "Google",
+  "level": "private",
+  "state": null,
+  "kind": "incubation",
+  "summary": "A three-month, equity-free programme for funded AI-first startups based in India, mainly at Seed to Series A. Selected teams get mentoring, training, expert access, early access to Google AI products and product credits. Cloud credits need a separate application. The page mentions no cash investment. Applications for the 2026 round have closed.",
+  "amount": null,
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "ai"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Based or headquartered in India and funded, ideally Seed to Series A.",
+   "Past the idea stage, with customer validation and market traction.",
+   "Building AI-first products or foundational models with potential Google AI use cases.",
+   "Deeply technical, with a scalable product and a large market.",
+   "CEO, CTO and relevant team members must attend all programme elements."
+  ],
+  "howToApply": [
+   "Applications are closed, so register interest for future programmes on the page.",
+   "When a new round opens, submit the application before the deadline.",
+   "Selection runs through eligibility review, a shortlist with interviews and pitches, then a final board."
+  ],
+  "status": "periodic",
+  "statusNote": "Applications for the 2026 round closed on 19 April 2026. That programme ran from June to September 2026. No next round is announced.",
+  "deadline": null,
+  "watchOut": "Do not expect money. This is mentoring and access, with a selective funnel. It needs funding and traction, so an unfunded idea-stage founder will not fit.",
+  "officialUrl": "https://startup.google.com/programs/accelerator/india/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "google-for-startups-cloud-program",
+  "name": "Google for Startups Cloud Program",
+  "shortName": "Google Cloud for Startups",
+  "provider": "Google Cloud",
+  "level": "private",
+  "state": null,
+  "kind": "credits",
+  "summary": "Google Cloud credits matched to your stage. The Start tier gives up to $2,000 for young startups planning to raise venture money. The Scale tier gives up to $200,000 over two years to funded startups, or up to $350,000 for AI startups. Credits also cover Google models such as Gemini, plus training and support.",
+  "amount": "Start tier up to $2,000 for one year. Scale tier up to $200,000 over two years, or up to $350,000 for AI startups.",
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Start tier: founded in the last 24 months, with a working MVP, a clear business model and plans to seek venture funding soon.",
+   "Start tier: no Google Cloud credits received beyond the trial.",
+   "Scale tier: founded in the last five years, with Pre-Seed or Seed raised in the last five years, or Series A in the last 12 months.",
+   "Scale tier: no more than $5,000 in Google Cloud credits received so far.",
+   "Not open to agencies, consultancies, dev shops, nonprofits, educational institutions, government bodies, or companies that have listed or been acquired."
+  ],
+  "howToApply": [
+   "Check your tier on the eligibility and benefits page.",
+   "Apply from the programme page, signed in with a Google account.",
+   "Google reviews the application against the listed requirements and matches you to a tier."
+  ],
+  "status": "open-rolling",
+  "statusNote": "Programme page and tier table live with no deadline shown. India is not named, and the tier rules show no country limit.",
+  "deadline": null,
+  "watchOut": "The large amounts need verifiable funding. A bootstrapped founder gets at most $2,000, and only if founded within 24 months. Year 2 credits cover only 20% of usage, not all of it.",
+  "officialUrl": "https://cloud.google.com/startup/benefits",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "gujarat-ssip-proof-of-concept-grant",
+  "name": "Student Startup and Innovation Policy (SSIP 2.0) Proof of Concept Support",
+  "shortName": "SSIP 2.0",
+  "provider": "Education Department, Government of Gujarat",
+  "level": "state",
+  "state": "gujarat",
+  "kind": "grant",
+  "summary": "Gujarat's student innovation policy pays for proof of concept and prototype work by people up to 35 years old who are students, alumni or dropouts of a Gujarat institution. Support reaches them through mapped universities and institutes, with up to ₹2.5 lakh per prototype for higher and technical education and help with patent costs.",
+  "amount": "Up to ₹2.5 lakh per proof of concept or prototype, plus IP support up to 100% of expenses",
+  "amountMaxInr": 250000,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "students"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Age up to 35 years",
+   "Student, alumnus or alumna, or dropout",
+   "Registered as a beneficiary at a Gujarat educational institution",
+   "Innovation improves a product, process or service, or is a scalable business model"
+  ],
+  "howToApply": [
+   "Check whether your institution is a mapped grantee under SSIP",
+   "Register as a beneficiary at that institution",
+   "Submit your proposal for evaluation by the institution's committee"
+  ],
+  "status": "unclear",
+  "statusNote": "Startup Gujarat page gives the policy period as January 11, 2022 to March 31, 2027, so the term is running. No central application window seen.",
+  "deadline": null,
+  "watchOut": "This goes through your institute, so the bar and speed depend on them. Founders over 35 are out, and the policy term ends in March 2027 unless extended.",
+  "officialUrl": "https://startup.gujarat.gov.in/files/2022/2/b6152e79-790a-4f64-9da5-4b5738228179_SSIP_2.0_Education_Department_Gujarat.pdf",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "gujarat-startup-srujan-seed-support",
+  "name": "Startup Srujan Seed Support",
+  "shortName": "S4",
+  "provider": "Student Startup and Innovation Hub (i-Hub), Education Department, Government of Gujarat",
+  "level": "state",
+  "state": "gujarat",
+  "kind": "grant",
+  "summary": "A grant from Gujarat's i-Hub under SSIP 2.0 that helps young innovators and startups move from prototype to product and market. It is open to people up to 35 who are students, alumni or dropouts from Gujarat, at ideation, MVP or early stage. The amount depends on need, and it runs as cohorts.",
+  "amount": "Between ₹2.5 lakh and ₹10 lakh, based on need",
+  "amountMaxInr": 1000000,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "students"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Innovator or startup up to 35 years old",
+   "School or college student, alumnus or alumna, or dropout, from Gujarat",
+   "At ideation, validation (MVP) or early stage"
+  ],
+  "howToApply": [
+   "Read the S4 manual on the i-Hub site",
+   "Register and apply through the Srujan page while a cohort is open",
+   "A screening committee evaluates proposals"
+  ],
+  "status": "periodic",
+  "statusNote": "i-Hub home page carries a notice inviting applications for Cohort 4, but the Srujan page still shows a last date of 31st May 2024. Current closing date could not be confirmed.",
+  "deadline": null,
+  "watchOut": "Conflicting dates on the site mean you should email srujan@ihubgujarat.in before preparing. Founders over 35 are excluded, and the parent policy ends in March 2027 unless extended.",
+  "officialUrl": "https://ihubgujarat.in/srujan",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "haryana-cloud-storage-reimbursement",
+  "name": "Reimbursement for Cloud Storage Scheme",
+  "shortName": null,
+  "provider": "Industries and Commerce Department, Government of Haryana",
+  "level": "state",
+  "state": "haryana",
+  "kind": "subsidy",
+  "summary": "Pays back part of what Startup Haryana registered startups spend on hosting and cloud computing, but only on data centres based in Haryana. Startups can claim 75% of the bill each year for five years. Pre-commercial startups get two years. Claims are made annually, with no carry forward between years.",
+  "amount": "75% of expenses, up to ₹2.5 lakh per startup per year",
+  "amountMaxInr": 250000,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Registered with Startup Haryana",
+   "Cloud services billed by a Haryana-based, tier certified data centre",
+   "Bills in the startup's name, paid from the company account",
+   "Applied within six months of the financial year end"
+  ],
+  "howToApply": [
+   "Register with Startup Haryana",
+   "Apply online each year with invoices, audited accounts and the data centre certificate",
+   "The department takes up to 30 working days on complete applications"
+  ],
+  "status": "open-rolling",
+  "statusNote": "Scheme document says it runs till 06.07.2027 under the Haryana State Startup Policy 2022. Listed on the Startup Haryana schemes page with annual claims.",
+  "deadline": null,
+  "watchOut": "Most small startups use AWS, GCP or Azure regions elsewhere, and those bills may not qualify. Check that your provider has a certified Haryana data centre before relying on this.",
+  "officialUrl": "https://startupharyana.gov.in/pages/schemes-guidelines",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "haryana-seed-funding-for-startups",
+  "name": "Seed Funding for Startups Scheme",
+  "shortName": "Startup Haryana seed grant",
+  "provider": "Industries and Commerce Department, Government of Haryana",
+  "level": "state",
+  "state": "haryana",
+  "kind": "grant",
+  "summary": "A seed grant for DPIIT recognised startups registered in Haryana. It pays for validating an idea, proof of concept, prototype development, market research, marketing and some travel. The number of grants is capped by block category. Founders present to a committee that reviews applications each quarter.",
+  "amount": "Up to ₹10 lakh per startup",
+  "amountMaxInr": 1000000,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Category 1 startup registered with Startup Haryana",
+   "DPIIT recognised, with registered office in Haryana",
+   "Holds a Haryana Udhyam Memorandum",
+   "Not in the state's restricted list of activities",
+   "Has not taken similar incentives under another state policy"
+  ],
+  "howToApply": [
+   "Register with Startup Haryana",
+   "Apply online on the Industries and Commerce portal with the prescribed documents",
+   "Present your idea or product to the Evaluation and Approval Committee"
+  ],
+  "status": "open-rolling",
+  "statusNote": "Gazette scheme dated 23 July 2024 runs to 06.07.2027 under Haryana State Startup Policy 2022. Scheme page says each quarter's applications are evaluated the next quarter.",
+  "deadline": null,
+  "watchOut": "Office rent, team salaries, laptops and daily travel are all excluded. Travel and market research are capped at ₹50,000 each, so little remains unless you have real development or marketing costs.",
+  "officialUrl": "https://startupharyana.gov.in/assets/images/pdf/Startup-Seed-Funding-Scheme.pdf",
+  "applyUrl": "https://startupharyana.gov.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "idex-innovations-for-defence-excellence",
+  "name": "Innovations for Defence Excellence",
+  "shortName": "iDEX",
+  "provider": "Defence Innovation Organisation, Ministry of Defence",
+  "level": "central",
+  "state": null,
+  "kind": "grant",
+  "summary": "Grant challenges that pay startups, MSMEs and individual innovators to build technology for the armed forces against published problem statements. Tracks include the Defence India Startup Challenge, the Open Challenge and iDEX Prime. Domains include AI, cryptography and communications as well as drones and radar. Winners can move towards procurement.",
+  "amount": "Up to ₹1.5 crore under Defence India Startup Challenge, up to ₹10 crore under iDEX Prime",
+  "amountMaxInr": 100000000,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "deeptech",
+   "defence"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "DPIIT-recognised startup, or a company that is primarily an MSME",
+   "Individual innovators can also apply",
+   "Solution must answer a listed problem statement or qualify for the Open Challenge"
+  ],
+  "howToApply": [
+   "Watch the iDEX challenges page for a live edition",
+   "Read the problem statements and pick one you can solve",
+   "Apply online before the stated closing date"
+  ],
+  "status": "periodic",
+  "statusNote": "Every listing on the challenges page showed closed. The latest were the Open Challenge on 30 September 2026, DISC 12 Re Open on 15 July 2026 and DISC 14 on 4 May 2026. No next edition is shown.",
+  "deadline": null,
+  "watchOut": "You must solve a specific defence problem, and the buyer is effectively the armed forces. Expect long trials and procurement steps. A software team can fit AI or cryptography statements but this is not a general startup grant.",
+  "officialUrl": "https://idex.gov.in/challenges",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "in-space-seed-fund-scheme",
+  "name": "IN-SPACe Seed Fund Scheme",
+  "shortName": null,
+  "provider": "IN-SPACe, Department of Space",
+  "level": "central",
+  "state": null,
+  "kind": "grant",
+  "summary": "Support for early-stage space startups and micro and small enterprises using space technology across upstream, midstream and downstream problems. Selected applicants get funding, mentoring, training and networking. IN-SPACe announces sector-specific opportunities from time to time, and looks for a clear business plan, target market and implementation strategy.",
+  "amount": "Grant of ₹1 crore on a milestone basis",
+  "amountMaxInr": 10000000,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "deeptech"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "Early-stage startup or micro or small enterprise",
+   "Innovative idea using space technology",
+   "Not more than ₹50 lakh of support under other Central or State schemes, per the June 2026 playbook",
+   "A clear business plan and target market"
+  ],
+  "howToApply": [
+   "Register on the IN-SPACe Digital Platform",
+   "Watch the announcements page for a sector-specific opportunity",
+   "Apply under that announcement"
+  ],
+  "status": "periodic",
+  "statusNote": "The IN-SPACe page, updated 23 February 2026, says sector-specific opportunities are announced periodically. It listed no live window or date when checked.",
+  "deadline": null,
+  "watchOut": "No current window is visible, so you may be waiting a while. Money comes in milestones, and the ₹1 crore figure comes from the Startup India playbook rather than the IN-SPACe page, so confirm it in the call.",
+  "officialUrl": "https://www.inspace.gov.in/inspace?id=announcement_for_opportunities",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "indiaai-compute-portal",
+  "name": "IndiaAI Compute Portal",
+  "shortName": "IndiaAI Compute",
+  "provider": "IndiaAI Mission, Ministry of Electronics and IT",
+  "level": "central",
+  "state": null,
+  "kind": "subsidy",
+  "summary": "Gives approved Indian AI builders cloud GPUs and related services at government-negotiated rates, with a subsidy on top that is requested when you apply. Startups, MSMEs, researchers and students can apply online. It suits teams training or running models that would otherwise pay full market price for compute.",
+  "amount": "Up to 40% off the cost of AI compute",
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "ai"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Startups and MSMEs: DPIIT recognition and AI or ML experience",
+   "Startups and MSMEs: annual revenue of ₹50 lakh or funding of ₹100 lakh",
+   "Early-stage startups: 4 years of AI or ML experience",
+   "Early-stage startups: a letter from the IndiaAI CEO or an officer of Joint Secretary rank or above"
+  ],
+  "howToApply": [
+   "Log in to the portal with DigiLocker, e-Pramaan or Jan Parichay",
+   "Complete user registration and wait for verification",
+   "Submit a compute request with a draft bill and your subsidy request",
+   "Wait for approval by the project management unit"
+  ],
+  "status": "open-rolling",
+  "statusNote": "The portal, last updated 2 November 2026, shows Apply Now with no deadline. A March 2026 PIB release says more than 38 thousand GPUs are onboarded and 76 startup and MSME projects are approved.",
+  "deadline": null,
+  "watchOut": "Pre-revenue founders may struggle with the revenue, funding or letter tests. The subsidy covers part of the bill, so you still pay. A separate up to 25% figure applies to sovereign model builders, not general users.",
+  "officialUrl": "https://compute.indiaai.gov.in/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "indiaai-startups-global",
+  "name": "IndiaAI Startups Global Acceleration Program",
+  "shortName": "IndiaAI Startups Global",
+  "provider": "IndiaAI Mission, Ministry of Electronics and IT",
+  "level": "central",
+  "state": null,
+  "kind": "prize",
+  "summary": "A funded four-month acceleration programme that helps 10 Indian AI startups per cohort enter Europe, run with Station F and HEC Paris. It starts online and moves to Station F in Paris. IndiaAI pays the programme fee and adds prize money, and startups get mentors, investor meetings and legal guidance.",
+  "amount": "Programme fee covered, plus up to ₹5 lakh prize money per startup",
+  "amountMaxInr": 500000,
+  "repayable": false,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "ai"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Indian AI startup",
+   "Selected as one of about 10 startups in a cohort",
+   "Interested in European market entry",
+   "Able to complete an online phase and an onsite phase at Station F, Paris"
+  ],
+  "howToApply": [
+   "Watch the IndiaAI Startup Financing page for the next call",
+   "Apply through the form linked there during the window"
+  ],
+  "status": "periodic",
+  "statusNote": "The latest call ran from 15 June to 28 June 2026. The hub page still marks a cohort as live, but that closing date has passed. The next cohort is not announced.",
+  "deadline": null,
+  "watchOut": "This pays for market access, not your burn. Windows have been very short, under two weeks last time, and you must spend months in Paris. Published eligibility is thin, so read the call when it opens.",
+  "officialUrl": "https://indiaai.gov.in/article/indiaai-startups-global-international-acceleration-programs-for-indian-ai-startups-2026-2nd-cohort",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "karnataka-elevate-idea2poc-grant",
+  "name": "Idea2PoC / ELEVATE Grant-in-Aid",
+  "shortName": "ELEVATE",
+  "provider": "Department of Electronics, IT, BT and S&T, Government of Karnataka",
+  "level": "state",
+  "state": "karnataka",
+  "kind": "grant",
+  "summary": "Karnataka's main startup grant, run as periodic calls. It gives one-time funding to take an idea to proof of concept or scale it through technology, plus mentoring and subsidised incubation at government supported centres. The last general call on the department site was ELEVATE 2025, which also had a separate track for SC/ST founders.",
+  "amount": "Up to ₹50 lakh as one-time grant-in-aid",
+  "amountMaxInr": 5000000,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Private limited company, partnership or LLP registered in Karnataka",
+   "Turnover of ₹100 crore or less in every year (2025 call)",
+   "Up to 10 years from incorporation",
+   "Working on innovation in products, services or processes with job or wealth potential"
+  ],
+  "howToApply": [
+   "Watch the Startup Karnataka site for the next general call",
+   "Register on the ELEVATE portal and apply online when a call opens",
+   "Go through evaluation and pitching rounds"
+  ],
+  "status": "periodic",
+  "statusNote": "ELEVATE 2025 has closed and its winners list is posted. The portal says only NxT and Minorities are active now. No date seen for the next general call.",
+  "deadline": null,
+  "watchOut": "There is no open general call today, so this is one to prepare for, not apply to. Rules change a little each year, and the turnover limit differs between calls.",
+  "officialUrl": "https://eitbt.karnataka.gov.in/startup/public/135/elevate-2025/en",
+  "applyUrl": "https://elevate.startupkarnataka.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "karnataka-elevate-minorities-grant",
+  "name": "ELEVATE Minorities 2026",
+  "shortName": null,
+  "provider": "Department of Electronics, IT, BT and S&T, Government of Karnataka",
+  "level": "state",
+  "state": "karnataka",
+  "kind": "grant",
+  "summary": "A one-time grant for Karnataka startups majority owned by founders from eligible minority communities: Muslims, Buddhists, Jains, Sikhs and Parsis. It helps take an idea to proof of concept or scale through better technology. Winners also get mentoring and subsidised incubation at government supported centres. Selection includes multi-city pitching and a finale.",
+  "amount": "Up to ₹50 lakh as one-time grant-in-aid",
+  "amountMaxInr": 5000000,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "minorities"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Private limited company, OPC, partnership, LLP or cooperative, registered in Karnataka",
+   "Turnover of ₹200 crore or less in every year, and up to 10 years from incorporation",
+   "Minority directors or partners together hold at least 51% equity for the whole project",
+   "Those founders hold a valid digital minority certificate from the Karnataka Revenue Department",
+   "Working on an innovative product, service or process with job or wealth potential"
+  ],
+  "howToApply": [
+   "Register on the ELEVATE portal and apply online",
+   "Upload the incorporation certificate, minority certificate, MoA or deed, and notarised affidavit",
+   "Pass the eligibility check, then multi-city pitching and the Grand Finale"
+  ],
+  "status": "open-window",
+  "statusNote": "Department page shows applications open 13 Oct 2026, 9:00 AM to 13 Nov 2026, 5:00 PM. Portal lists this as one of two active ELEVATE calls.",
+  "deadline": "2026-11-13",
+  "watchOut": "Any dilution that takes minority holding below 51% during the project means disqualification or termination, so plan fundraising around it. The certificate must be the digital one issued in Karnataka.",
+  "officialUrl": "https://eitbt.karnataka.gov.in/startup/public/163/elevate-nxt-2026-and-elevate-minorities-2026/en",
+  "applyUrl": "https://elevate.startupkarnataka.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "karnataka-elevate-nxt-deeptech-grant",
+  "name": "ELEVATE NxT 2026",
+  "shortName": "ELEVATE NxT",
+  "provider": "Department of Electronics, IT, BT and S&T, Government of Karnataka",
+  "level": "state",
+  "state": "karnataka",
+  "kind": "grant",
+  "summary": "A one-time grant for deep tech startups, including those built on AI, ML, IoT, robotics and generative AI. Paid against milestones, with mentoring. Startups from anywhere in India can apply, but winners from outside Karnataka must move their registered office there. Selection runs through a masked jury review and two in-person pitch rounds.",
+  "amount": "Up to ₹1 crore as grant-in-aid, released against milestones",
+  "amountMaxInr": 10000000,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "ai",
+   "deeptech",
+   "fintech",
+   "climate",
+   "biotech",
+   "agritech",
+   "manufacturing"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Registered as a private limited company, partnership firm, LLP or cooperative society anywhere in India",
+   "Turnover of ₹300 crore or less in every year, and within 20 years of incorporation",
+   "Independent entity with at least two team members, not a subsidiary or spin-off",
+   "No ELEVATE grant in the last three years",
+   "Real deep tech at technology readiness level 3 to 8, with evidence such as a prototype or patent filing"
+  ],
+  "howToApply": [
+   "Register on the ELEVATE portal and fill in the online form",
+   "Upload two pitch decks on the set templates, plus the affidavit and CA revenue certificate",
+   "Clear the masked jury review, then pitch in person in Round 1 and the Grand Finale"
+  ],
+  "status": "open-window",
+  "statusNote": "Department page shows applications open 13 Oct 2026, 9:00 AM to 13 Nov 2026, 5:00 PM. Karnataka Startup Policy 2025-30 is the current policy.",
+  "deadline": "2026-11-13",
+  "watchOut": "A plain SaaS tool is unlikely to pass the deep tech test. The first deck must hide your company identity and stay to two slides, and winners from outside Karnataka must shift there within four months.",
+  "officialUrl": "https://eitbt.karnataka.gov.in/startup/public/163/elevate-nxt-2026-and-elevate-minorities-2026/en",
+  "applyUrl": "https://elevate.startupkarnataka.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "kerala-ksum-idea-grant",
+  "name": "Idea Grant",
+  "shortName": "KSUM Idea Grant",
+  "provider": "Kerala Startup Mission (KSUM), Government of Kerala",
+  "level": "state",
+  "state": "kerala",
+  "kind": "grant",
+  "summary": "A small non-repayable grant for Kerala innovators at the idea, design or proof of concept stage with a technology-based product. It covers work such as prototyping, testing and validation. You can apply before incorporating, but need a registered company and a KSUM Unique ID before any money is released. Paid in milestone tranches.",
+  "amount": "Up to ₹3 lakh, usually 50% first and the rest after review",
+  "amountMaxInr": 300000,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Innovators based in Kerala",
+   "At ideation, design or proof of concept stage",
+   "Innovative technology-based product",
+   "Private limited, LLP or OPC and a KSUM Unique ID before disbursal, not at application",
+   "No application or grant under this scheme in the past three months"
+  ],
+  "howToApply": [
+   "Apply on the KSUM grants portal during an official call",
+   "If shortlisted by email, pitch to the Expert Committee",
+   "After approval, submit documents and sign an agreement with KSUM"
+  ],
+  "status": "periodic",
+  "statusNote": "KSUM funding page shows Apply Now, but the scheme page says to apply during an official call and gives no dates. Could not see inside the login-only grants portal.",
+  "deadline": null,
+  "watchOut": "The call window is not published on the scheme page, so confirm with the scheme office. Founder salaries, fixed assets and rent are not allowed, and only tech products qualify.",
+  "officialUrl": "https://startupmission.kerala.gov.in/schemes/idea-grant",
+  "applyUrl": "https://grants.startupmission.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "kerala-ksum-productisation-grant",
+  "name": "Productisation Grant",
+  "shortName": "KSUM Productisation Grant",
+  "provider": "Kerala Startup Mission (KSUM), Government of Kerala",
+  "level": "state",
+  "state": "kerala",
+  "kind": "grant",
+  "summary": "A non-repayable grant for Kerala startups turning a working prototype into a market-ready product. Standard support is up to ₹7 lakh, and startups led by women or transgender founders with at least 51% shareholding can get up to ₹12 lakh. Anyone who already took the Idea Grant can claim only the remaining amount.",
+  "amount": "Up to ₹7 lakh, or up to ₹12 lakh for women or transgender-led startups",
+  "amountMaxInr": 1200000,
+  "repayable": false,
+  "stages": [
+   "prototype"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "In the product development stage, with an innovative technology-based product",
+   "Private limited or LLP with active MCA status (the FAQ also mentions OPC)",
+   "KSUM Unique ID when applying",
+   "For ₹12 lakh, women or transgender founders hold at least 51%"
+  ],
+  "howToApply": [
+   "Apply on the KSUM grants portal during an official call",
+   "If shortlisted, pitch your idea and spending plan to the Expert Committee",
+   "After approval, submit documents and sign an agreement"
+  ],
+  "status": "periodic",
+  "statusNote": "KSUM funding page shows Apply Now, but the scheme page says to apply during an official call and gives no dates. Grants portal is login-only.",
+  "deadline": null,
+  "watchOut": "You must bring 20% of the approved amount as margin money at the second tranche. Founder salaries, rent and costly software above ₹2 lakh are not allowed.",
+  "officialUrl": "https://startupmission.kerala.gov.in/schemes/productisation-grant",
+  "applyUrl": "https://grants.startupmission.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "kerala-ksum-scale-up-grant",
+  "name": "Scale-up Grant",
+  "shortName": "KSUM Scale-up Grant",
+  "provider": "Kerala Startup Mission (KSUM), Government of Kerala",
+  "level": "state",
+  "state": "kerala",
+  "kind": "grant",
+  "summary": "A non-repayable grant for Kerala technology startups with real market proof that are ready to grow. You qualify with ₹10 lakh of product revenue in the last six months, or ₹30 lakh raised as external equity. Startups that took earlier KSUM grants can claim only the remaining amount. Money is released in milestone tranches.",
+  "amount": "Up to ₹15 lakh, with 50% margin money from the startup",
+  "amountMaxInr": 1500000,
+  "repayable": false,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "₹10 lakh product revenue in the last 6 months, or at least ₹30 lakh external equity",
+   "Innovative technology-based product",
+   "Valid KSUM Unique ID",
+   "Private limited, LLP or OPC with active MCA status"
+  ],
+  "howToApply": [
+   "Apply on the KSUM grants portal during an official call",
+   "If shortlisted, pitch to the Expert Committee",
+   "After approval, submit documents, sign the agreement and report on tranche use"
+  ],
+  "status": "periodic",
+  "statusNote": "KSUM funding page shows Apply Now, but the scheme page says to apply during an official call and gives no dates. Grants portal is login-only.",
+  "deadline": null,
+  "watchOut": "You must show margin money equal to half the approved grant, so ₹15 lakh needs ₹7.5 lakh of your own funds. Past recipients of the old ₹12 lakh grant get only a ₹3 lakh top-up.",
+  "officialUrl": "https://startupmission.kerala.gov.in/schemes/scaleup-grant",
+  "applyUrl": "https://grants.startupmission.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "madhya-pradesh-assistance-on-investment-or-loan",
+  "name": "Assistance on Investment or Loan Received",
+  "shortName": null,
+  "provider": "Department of Micro, Small and Medium Enterprises, Government of Madhya Pradesh",
+  "level": "state",
+  "state": "madhya-pradesh",
+  "kind": "subsidy",
+  "summary": "A top-up for Madhya Pradesh startups that have raised money. If you get funding or a loan from a recognised financial institution, bank, or SEBI or RBI recognised fund, the state adds 15% of it, up to ₹15 lakh, up to four times. SC, ST, women, disabled and transgender founders get 18%, up to ₹18 lakh.",
+  "amount": "15% of the amount received, up to ₹15 lakh each time and ₹60 lakh in total; 18%, up to ₹18 lakh and ₹72 lakh for specified founders",
+  "amountMaxInr": 7200000,
+  "repayable": false,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "DPIIT recognised startup registered or incorporated in Madhya Pradesh",
+   "Funding or loan from a recognised financial institution, bank or fund",
+   "Loan repayment period of at least one year",
+   "Grants do not count as qualifying money"
+  ],
+  "howToApply": [
+   "Raise the qualifying investment or loan",
+   "Apply through the state startup portal with proof",
+   "The MP Startup Center and Laghu Udyog Nigam review, and the MSME Department approves"
+  ],
+  "status": "unclear",
+  "statusNote": "Policy PDF on Invest MP says it runs five years from notification or until replaced. The state portal startup.mp.gov.in would not open because of a certificate error, so current intake is unconfirmed.",
+  "deadline": null,
+  "watchOut": "This rewards money you have already raised, so it does not help pre-funding founders. A loan under one year or a grant will not qualify, and the portal could not be checked.",
+  "officialUrl": "https://invest.mp.gov.in/wp-content/uploads/2025/02/Start-up-Policy-Inner-page-1.pdf",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "madhya-pradesh-startup-seed-fund",
+  "name": "Madhya Pradesh Startup Seed Fund Assistance",
+  "shortName": "MP seed fund",
+  "provider": "Department of Micro, Small and Medium Enterprises, Government of Madhya Pradesh",
+  "level": "state",
+  "state": "madhya-pradesh",
+  "kind": "grant",
+  "summary": "A grant under Madhya Pradesh's 2025 startup policy, given to selected startups through empanelled incubators. It can pay for manpower, professional services, software, product testing, market research, market entry and scale-up. Instalments depend on progress reported by the incubator. Construction, land and fixed assets are not covered.",
+  "amount": "Up to ₹30 lakh",
+  "amountMaxInr": 3000000,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Recognised by DPIIT under Startup India",
+   "Registered or incorporated in Madhya Pradesh",
+   "Selected through an empanelled incubator",
+   "SC, ST, women, Divyangjan or transgender promoters must own at least 51% to use that category"
+  ],
+  "howToApply": [
+   "Join an incubator empanelled under the policy",
+   "Apply through the state startup portal",
+   "The MP Startup Center and Laghu Udyog Nigam review, and the MSME Department approves"
+  ],
+  "status": "unclear",
+  "statusNote": "Policy PDF on Invest MP says it runs five years from notification or until replaced. The state portal startup.mp.gov.in would not open because of a certificate error, so current intake is unconfirmed.",
+  "deadline": null,
+  "watchOut": "You need a place at an empanelled incubator first, and instalments follow its progress reports. ₹30 lakh is the ceiling, not the typical amount, and the portal could not be checked.",
+  "officialUrl": "https://invest.mp.gov.in/wp-content/uploads/2025/02/Start-up-Policy-Inner-page-1.pdf",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "maharashtra-innovation-technological-development-fund",
+  "name": "Maharashtra Innovation and Technological Development Fund",
+  "shortName": "MITDF",
+  "provider": "Maharashtra State Innovation Society with IDBI Capital Markets & Securities as investment manager",
+  "level": "state",
+  "state": "maharashtra",
+  "kind": "seed-funding",
+  "summary": "A SEBI registered venture capital fund that buys equity in early-stage Maharashtra companies with innovative, scalable models. It is sector agnostic, with a focus on impact areas such as agriculture, healthcare, fintech, cyber security and education, and some attention to women entrepreneurs. This is investment, so founders give up equity in exchange for the money.",
+  "amount": "Up to ₹10 crore in a single round, or 10% of committed corpus if lower",
+  "amountMaxInr": 100000000,
+  "repayable": true,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Company incorporated in Maharashtra under the Companies Act",
+   "Company and its operations are based in Maharashtra",
+   "Meets the Startup India definition of a startup",
+   "Scalable, innovative business with a track record and strong team"
+  ],
+  "howToApply": [
+   "Read the criteria on the MSInS page",
+   "Submit the application form on the MITDF page, or email the fund manager",
+   "Investment is decided by the fund's competent authorities"
+  ],
+  "status": "unclear",
+  "statusNote": "MSInS page shows an application form and the fund's 2022 SEBI registration. It does not say how much is left to invest or whether new deals are being closed.",
+  "deadline": null,
+  "watchOut": "This is venture capital, not a grant. Expect investor due diligence and a stake in your company. Listed criteria are illustrative and the fund can add its own.",
+  "officialUrl": "https://msins.in/MITDF",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "maharashtra-ipr-support-scheme",
+  "name": "Intellectual Property Rights (IPR) Support Scheme",
+  "shortName": "MSInS IPR Support",
+  "provider": "Maharashtra State Innovation Society (MSInS), Government of Maharashtra",
+  "level": "state",
+  "state": "maharashtra",
+  "kind": "subsidy",
+  "summary": "Reimburses all eligible costs of getting a patent, an industrial design, or a copyright on computer code or software. Maharashtra startups recognised by DPIIT claim up to ₹5 lakh for Indian filings and ₹20 lakh for international ones. Some ITI and skill university students and alumni can also claim. Trademarks are not covered.",
+  "amount": "100% reimbursement, up to ₹5 lakh for domestic IPR and ₹20 lakh for international IPR, excluding taxes",
+  "amountMaxInr": 2000000,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Valid DPIIT recognition on the date of application",
+   "Incorporated or registered in Maharashtra, with real business operations there",
+   "Annual turnover up to ₹5 crore for domestic claims, ₹100 crore for international claims",
+   "The IP comes from something the applicant owns or lawfully controls",
+   "Patent granted, or design or software copyright registered, before a startup claims"
+  ],
+  "howToApply": [
+   "Hire any qualified IP professional and pay the costs yourself",
+   "After grant or registration, submit the claim form with invoices and proof of payment",
+   "MSInS checks the claim and pays the approved amount into your bank account"
+  ],
+  "status": "open-rolling",
+  "statusNote": "MSInS page shows the revised scheme under a Government Resolution dated 9 October 2026, with a live post-grant claim form and no closing date.",
+  "deadline": null,
+  "watchOut": "You pay first and get money back only after the patent is granted, which can take years. The cap is lifetime per applicant, and a rate card limits each activity.",
+  "officialUrl": "https://msins.in/IPRDetails",
+  "applyUrl": "https://msins.accubate.app/ext/form/23879/1/apply",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "maharashtra-quality-testing-certification-scheme",
+  "name": "Quality Testing and Certification Support Scheme",
+  "shortName": null,
+  "provider": "Maharashtra State Innovation Society (MSInS), Government of Maharashtra",
+  "level": "state",
+  "state": "maharashtra",
+  "kind": "subsidy",
+  "summary": "Reimburses Maharashtra startups recognised by DPIIT for third-party product testing and certification at NABL or BIS recognised labs. It covers testing needed for product development, standards compliance, regulatory approval or market readiness, up to a lifetime limit of ₹5 lakh per startup. Routine production quality checks and consultancy fees are not covered.",
+  "amount": "100% reimbursement of eligible costs, up to ₹5 lakh per startup in total, excluding taxes",
+  "amountMaxInr": 500000,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "manufacturing"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "DPIIT recognised startup",
+   "Incorporated or registered in Maharashtra, with operations there",
+   "Testing done at a NABL accredited or BIS recognised lab, except in approved cases",
+   "Testing is for an innovative product, not routine production checks",
+   "Claim filed within 12 months of the invoice date, after full payment"
+  ],
+  "howToApply": [
+   "Complete the testing at an eligible lab and pay in full",
+   "Submit the application with invoices, payment proof, test reports and CA declarations",
+   "MSInS verifies it and pays into the startup's account, subject to funds"
+  ],
+  "status": "open-rolling",
+  "statusNote": "MSInS page cites a Government Resolution dated 9 October 2026 under the Maharashtra Startup Policy 2025. No closing date shown.",
+  "deadline": null,
+  "watchOut": "This suits hardware and physical products more than software. Earlier assistance counts toward the ₹5 lakh limit, and payment depends on funds being available.",
+  "officialUrl": "https://msins.in/QualityTesting",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "microsoft-for-startups",
+  "name": "Microsoft for Startups",
+  "shortName": null,
+  "provider": "Microsoft",
+  "level": "private",
+  "state": null,
+  "kind": "credits",
+  "summary": "Azure credits for private, for-profit software startups below Series C. Without an investor, you start with $200, reach $5,000 after business verification, and can work up through milestones. With a referral code from an investor in Microsoft's network, you start with $1,000 and approved startups can reach up to $150,000.",
+  "amount": "Without a code: $200 to start, $5,000 after verification, then further milestones. With an investor code: $1,000 to start. Up to $150,000 at the top.",
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Builds a software product or service that the company owns.",
+   "Privately held and for-profit, with no Series C or later round.",
+   "Headquartered in a country where Azure services are available.",
+   "No more than $350,000 in lifetime free Azure credits.",
+   "Not an agency, consultancy, educational or government body, and not in crypto mining.",
+   "Needs a new personal Microsoft account with no earlier Azure offer. Work and company email accounts are refused."
+  ],
+  "howToApply": [
+   "Click Get started on the Microsoft for Startups page and sign in with a personal Microsoft account.",
+   "Enter a 10-character investor code, or continue without one and verify through LinkedIn.",
+   "Set up an Azure account, including a payment card.",
+   "Microsoft reviews most applications in about three business days."
+  ],
+  "status": "open-rolling",
+  "statusNote": "Microsoft's application guide and FAQ were both updated on 30 October 2026 and show no deadline. Microsoft does not publish its investor list.",
+  "deadline": null,
+  "watchOut": "Credits come in stages with time limits: $200 lasts 90 days and $5,000 lasts 180 days. Miss the next milestone and the subscription moves to pay-as-you-go on your card.",
+  "officialUrl": "https://learn.microsoft.com/en-us/startups/microsoft-for-startups/application",
+  "applyUrl": "https://www.microsoft.com/en-us/startups",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "mongodb-for-startups",
+  "name": "MongoDB for Startups",
+  "shortName": null,
+  "provider": "MongoDB",
+  "level": "private",
+  "state": null,
+  "kind": "credits",
+  "summary": "MongoDB Atlas credits and Voyage AI tokens for early-stage software startups, along with technical help. Four tiers run from Inspire for bootstrapped founders to Scale for fast-growing companies, with more credits and support at each step. MongoDB does not publish dollar figures on the programme page. Existing Atlas users can also apply.",
+  "amount": null,
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Less than 7 years old and at Series A or earlier.",
+   "Focused on a single software product or service. Dev shops and agencies are not eligible.",
+   "Not previously accepted into the programme.",
+   "An active company website and LinkedIn profile."
+  ],
+  "howToApply": [
+   "If you have a VC, accelerator or incubator, ask them to refer you.",
+   "Otherwise use the Apply Now form on the page.",
+   "If you hear nothing after five business days, write to startups@mongodb.com."
+  ],
+  "status": "open-rolling",
+  "statusNote": "Apply Now form live with no deadline shown. The form asks for your HQ country, and the page lists no country limits.",
+  "deadline": null,
+  "watchOut": "No amounts are published, so you only learn your credit after applying. It only helps if your product runs on MongoDB Atlas, so do not switch databases just for this.",
+  "officialUrl": "https://www.mongodb.com/solutions/startups",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "msme-innovative-incubation",
+  "name": "MSME Innovative Scheme, Incubation component",
+  "shortName": "MSME Idea Hackathon",
+  "provider": "Ministry of Micro, Small and Medium Enterprises",
+  "level": "central",
+  "state": null,
+  "kind": "grant",
+  "summary": "Funds individuals and small firms to turn an idea into a working prototype, through approved Host Institutes acting as incubators. Ideas enter through the ministry's MSME Idea Hackathon rounds and pass an expert review. The ministry pays most of the approved cost, and students do not have to contribute at all.",
+  "amount": "Up to ₹15 lakh per idea, covering 85% of approved cost. The money goes through the Host Institute.",
+  "amountMaxInr": 1500000,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Any individual or MSME with an innovative idea",
+   "No qualification requirement",
+   "Individuals need Aadhaar and MSMEs need Udyam Registration",
+   "Non-student applicants contribute 15% of approved cost"
+  ],
+  "howToApply": [
+   "Check the Host Institute list on the incubation portal",
+   "Submit your idea to a Host Institute during a hackathon window",
+   "The institute shortlists and uploads ideas for ministry evaluation"
+  ],
+  "status": "periodic",
+  "statusNote": "The portal says the window for ideas under Hackathon 6.0 has closed and received ideas are under evaluation. Earlier rounds are still processing instalments. No Hackathon 7.0 date is shown.",
+  "deadline": null,
+  "watchOut": "The funds are paid to the Host Institute, not to you, and released in stages after ministry approval. Rounds take time, with older hackathons still paying instalments in 2026. Choose an institute with care.",
+  "officialUrl": "https://my.msme.gov.in/inc/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "national-startup-awards",
+  "name": "National Startup Awards",
+  "shortName": "NSA 6.0",
+  "provider": "DPIIT, Government of India",
+  "level": "central",
+  "state": null,
+  "kind": "prize",
+  "summary": "Annual government awards recognising startups across 20 sector categories, plus women-led, North-East and student awards. Winners in startup categories are eligible for cash, along with mentoring, investor access, market connections and visibility. The sixth edition adds 12 new sectors. It rewards existing traction and impact rather than funding an idea.",
+  "amount": "₹25 lakh per category for winning startups, subject to award guidelines",
+  "amountMaxInr": 2500000,
+  "repayable": false,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Eligible startups or student innovators under the NSA 6.0 guidelines",
+   "Fits one of the 20 sector categories or a special category",
+   "Judged on innovation, scalability, sustainability and social or economic impact"
+  ],
+  "howToApply": [
+   "Go to the Startup India portal",
+   "Read the NSA 6.0 guidelines for your category",
+   "Submit your application by 20 November 2026"
+  ],
+  "status": "open-window",
+  "statusNote": "A PIB release dated 27 October 2026 says applications for NSA 6.0 are open from 27 October to 20 November 2026 through the Startup India portal.",
+  "deadline": "2026-11-20",
+  "watchOut": "This is a competition with one cash winner per category, so treat it as visibility, not funding. Read the 6.0 rules on the portal. The 2020 edition required DPIIT recognition and a product in the market.",
+  "officialUrl": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2329132&reg=48&lang=2",
+  "applyUrl": "https://www.startupindia.gov.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "next-generation-incubation-scheme-stpi",
+  "name": "Next Generation Incubation Scheme",
+  "shortName": "NGIS",
+  "provider": "Software Technology Parks of India, under the Ministry of Electronics and IT",
+  "level": "central",
+  "state": null,
+  "kind": "incubation",
+  "summary": "An incubation scheme for software product startups, including embedded electronics, at 12 Tier-II locations such as Jaipur, Lucknow, Bhopal and Patna. It offers plug and play space, security testing, mentoring and cloud credits, plus seed money for selected startups. Ideation-stage founders can get a monthly stipend during pre-incubation.",
+  "amount": "Seed funding up to ₹25 lakh. Pre-incubation interns get ₹10,000 a month for 6 months.",
+  "amountMaxInr": 2500000,
+  "repayable": null,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Working on a software product, including embedded electronics",
+   "Based at one of the 12 listed Tier-II locations",
+   "Selected on innovation, team strength and business proposal",
+   "DPIIT recognition is encouraged, per the June 2026 playbook"
+  ],
+  "howToApply": [
+   "Contact the STPI centre in your location to ask about open calls",
+   "Apply through STPI's startup portal during a call"
+  ],
+  "status": "unclear",
+  "statusNote": "STPI's page describes a three-year outlay and was last updated 22 January 2021. The June 2026 playbook still lists it. STPI's startup portal could not be opened, so a current call is not confirmed.",
+  "deadline": null,
+  "watchOut": "The published term looks to have passed and no recent call could be confirmed. Ask STPI directly before planning around this money. It also only covers startups at the 12 named cities.",
+  "officialUrl": "https://stpi.in/en/about-ngis",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "nidhi-entrepreneur-in-residence",
+  "name": "NIDHI Entrepreneur-in-Residence",
+  "shortName": "NIDHI-EIR",
+  "provider": "Department of Science and Technology, Government of India",
+  "level": "central",
+  "state": null,
+  "kind": "grant",
+  "summary": "A monthly fellowship for graduates who want to build a technology business instead of taking a job. It runs through selected Technology Business Incubators and is open to any sector. Fellows get a stipend, co-working space, mentoring and advice while they turn an idea into a business proposal.",
+  "amount": "₹10,000 to ₹30,000 a month for up to 12 months",
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "idea"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "students"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Indian citizen",
+   "At least 4 years of full-time undergraduate or postgraduate education, or a 3-year degree or diploma plus 2 years of work",
+   "A promising technology business idea",
+   "Cannot take NIDHI-PRAYAS support for the same idea at the same time"
+  ],
+  "howToApply": [
+   "Find a NIDHI-EIR Centre on the official list",
+   "Watch for that centre's local announcement",
+   "Apply to the centre in its prescribed format"
+  ],
+  "status": "periodic",
+  "statusNote": "The NIDHI portal, updated 11 October 2026, keeps the programme live and says applicants go through selected centres. Calls are announced locally by each centre, so there is no national date.",
+  "deadline": null,
+  "watchOut": "This is a small living stipend for one person, not capital for a company. Selection sits with each incubator, and which centres have open seats changes, so you must check them one by one.",
+  "officialUrl": "https://nidhi.dst.gov.in/nidhieir/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "nidhi-prayas",
+  "name": "NIDHI PRAYAS 2.0",
+  "shortName": "PRAYAS",
+  "provider": "Department of Science and Technology, Government of India",
+  "level": "central",
+  "state": null,
+  "kind": "grant",
+  "summary": "A prototype grant for individual innovators and young startups building a physical product grounded in science or technology. Money comes through PRAYAS Centres, with higher amounts at Advance PRAYAS Centres for deep tech. Selected projects get up to 15 months, plus lab access and mentoring from the centre.",
+  "amount": "Up to ₹20 lakh through a PRAYAS Centre, or up to ₹40 lakh through an Advance PRAYAS Centre",
+  "amountMaxInr": 4000000,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype"
+  ],
+  "sectors": [
+   "deeptech",
+   "manufacturing",
+   "climate",
+   "agritech"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "Individual innovator without a startup, or a startup incorporated in India for not more than 5 years",
+   "Startup turnover never above ₹1 crore in any financial year, with at least 51% held by Indian citizens",
+   "Applicant must be 18 or older and own or hold a licence to the underlying IP",
+   "Must be a tangible physical prototype, not past MVP stage",
+   "Not more than ₹40 lakh of government grants received so far"
+  ],
+  "howToApply": [
+   "Choose a PRAYAS Centre or Advance PRAYAS Centre that fits your stage",
+   "Apply to that centre under the PRAYAS 2.0 process",
+   "The centre screens the idea and releases the grant in tranches if selected"
+  ],
+  "status": "periodic",
+  "statusNote": "Guidelines dated March 2026 are live and the innovators page invites applications to any centre. There is no single national deadline, and the NIDHI portal's open calls section showed no post when checked.",
+  "deadline": null,
+  "watchOut": "The guidelines exclude pure software, e-commerce, service and app-based projects, so most SaaS founders do not qualify. One innovator or startup can use PRAYAS 2.0 only once, and it cannot run alongside NIDHI-EIR.",
+  "officialUrl": "https://nidhi-prayas.org/innovators",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "nidhi-seed-support-program",
+  "name": "NIDHI Seed Support Program",
+  "shortName": "NIDHI-SSP",
+  "provider": "Department of Science and Technology, Government of India",
+  "level": "central",
+  "state": null,
+  "kind": "seed-funding",
+  "summary": "Seed money for startups associated with an approved Technology Business Incubator, meant to bridge the gap between building and selling a product. The Department gives funds to the incubator, which then invests in its startups, usually through equity or a low-interest soft loan after its own committee recommends support.",
+  "amount": "Up to ₹1 crore per startup in exceptional cases. Incubators have typically invested ₹10 to 25 lakh.",
+  "amountMaxInr": 10000000,
+  "repayable": true,
+  "stages": [
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Company registered in India, preferably DPIIT recognised or applied",
+   "At least 3 months with the incubator, in person or virtually",
+   "Clear value proposition backed by customer validation",
+   "Indian promoters hold at least 51%",
+   "Preference for startups with no earlier government funding"
+  ],
+  "howToApply": [
+   "Check the list of supported incubators on the NIDHI portal",
+   "Join an incubator and complete 3 months of association",
+   "Apply when that incubator announces a call"
+  ],
+  "status": "periodic",
+  "statusNote": "The NIDHI page says listed incubators announce periodic calls, and the guidelines were uploaded in March 2024. No national application date is published.",
+  "deadline": null,
+  "watchOut": "Despite the name, this is not free money. Guidelines point to equity or a soft loan, and the incubator negotiates terms. Expect closer to ₹10 to 25 lakh than the headline ₹1 crore.",
+  "officialUrl": "https://nidhi.dst.gov.in/nidhissp/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "nsrcel-women-startup-program",
+  "name": "Women Startup Program",
+  "shortName": "NSRCEL WSP",
+  "provider": "NSRCEL, IIM Bangalore, powered by Kotak BizLabs",
+  "level": "private",
+  "state": null,
+  "kind": "incubation",
+  "summary": "A structured journey for women founders run by NSRCEL at IIM Bangalore. Cohort 6 covers three pathways: an Entrepreneurship Base Program for idea to MVP, incubation for validated MVPs with early traction, and a Scale Hub for growth-stage alumni. NSRCEL takes no equity. Founders in incubation can pitch for grants, though no amount is published.",
+  "amount": null,
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "women"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Base Program: aspiring women entrepreneurs aged 18 or over with a feasible business idea.",
+   "Incubation: based in India, majority ownership in the venture, and at MVP-ready to early growth stage.",
+   "Founders must be committed full-time to the idea.",
+   "Solo founders can apply, but each applicant may submit only one idea.",
+   "Sector agnostic. Scale Hub is for growth-stage alumni and varies by sector."
+  ],
+  "howToApply": [
+   "Check which pathway is open on the programme page.",
+   "Register your interest, then submit the application form linked there.",
+   "Applications go through screening and evaluation before onboarding."
+  ],
+  "status": "unclear",
+  "statusNote": "The page marks one pathway Apply Now and two Applications Coming Soon, with no deadline. The linked form could not be read when checked, so it is not confirmed as accepting entries.",
+  "deadline": null,
+  "watchOut": "Grants are not automatic: you pitch for them during incubation, and they depend on set criteria. The page says largely free of cost, not fully free, so ask about any charges.",
+  "officialUrl": "https://nsrcel.org/women-startup-program/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "nvidia-inception",
+  "name": "NVIDIA Inception",
+  "shortName": "Inception",
+  "provider": "NVIDIA",
+  "level": "private",
+  "state": null,
+  "kind": "credits",
+  "summary": "A free membership programme for AI and technology startups. Members get cloud credits from NVIDIA and its partners, free self-paced training, developer tools, preferred pricing on some NVIDIA hardware and software, and investor introductions where eligible. There are no fees and no equity. No cash grant is mentioned, and no credit figure is published.",
+  "amount": null,
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "ai",
+   "deeptech"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Officially incorporated and less than 10 years old.",
+   "A working website and a clear use case for NVIDIA technology.",
+   "Actively run by at least one founder.",
+   "No funding or revenue requirement.",
+   "Consulting firms, crypto companies, cloud providers, resellers and public companies are excluded."
+  ],
+  "howToApply": [
+   "Apply through the Inception portal linked from the programme page.",
+   "Share business and product details and attach a pitch deck."
+  ],
+  "status": "open-rolling",
+  "statusNote": "Programme page is live with no deadline. A banner on the page mentioned planned system maintenance on the check date.",
+  "deadline": null,
+  "watchOut": "Unincorporated founders cannot apply. NVIDIA publishes no credit amount, so treat this as discounts, training and introductions rather than a set sum you can budget against.",
+  "officialUrl": "https://www.nvidia.com/en-us/startups/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "odisha-product-development-marketing-assistance",
+  "name": "Product Development and Marketing/Publicity Assistance",
+  "shortName": null,
+  "provider": "MSME Department, Government of Odisha (Startup Odisha)",
+  "level": "state",
+  "state": "odisha",
+  "kind": "grant",
+  "summary": "Support for recognised Odisha startups launching an innovative product in the market. To qualify you need significant equity from registered investors, a sizeable government grant, or steady monthly revenue. Half is paid in advance and the rest after you show bills. Startups at least half owned by specified founder groups get a little more.",
+  "amount": "Up to ₹15 lakh, or up to ₹16 lakh for specified founders",
+  "amountMaxInr": 1600000,
+  "repayable": false,
+  "stages": [
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Recognised by Startup Odisha",
+   "Equity of at least ₹25 lakh from SEBI registered funds or angel networks, or",
+   "A government funding sanction of at least ₹5 lakh, or",
+   "Revenue run rate of ₹2.5 lakh a month for at least six months"
+  ],
+  "howToApply": [
+   "Get recognised on the Startup Odisha portal",
+   "Submit an online product development and marketing plan",
+   "Nodal Agency reviews, the Task Force approves, then funds are released"
+  ],
+  "status": "open-rolling",
+  "statusNote": "Startup Odisha policy page says the 2016 policy is currently active and operational until a new policy is notified. No closing date shown.",
+  "deadline": null,
+  "watchOut": "You must already have traction to qualify. Utilisation bills are due within three months of the advance and the final certificate within six, and the policy is awaiting replacement.",
+  "officialUrl": "https://startupodisha.gov.in/startup-incentives/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "odisha-startup-monthly-allowance",
+  "name": "Startup Odisha Monthly Allowance",
+  "shortName": null,
+  "provider": "MSME Department, Government of Odisha (Startup Odisha)",
+  "level": "state",
+  "state": "odisha",
+  "kind": "grant",
+  "summary": "A monthly allowance for one year for startups recognised by Startup Odisha that show some early traction: outside equity, a published patent, a government grant, or steady revenue. Startups with at least 50% equity held by women, transgender, SC, ST, SEBC or disabled founders get a higher rate. A startup can take this only once.",
+  "amount": "₹20,000 a month for one year, or ₹22,000 a month for specified founders",
+  "amountMaxInr": 264000,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Recognised by Startup Odisha, within 7 years of incorporation and turnover up to ₹25 crore",
+   "Equity of ₹5 lakh to ₹1 crore from SEBI registered funds or angel networks, or",
+   "A published patent, or a government funding sanction letter, or",
+   "Revenue run rate of ₹50,000 to ₹10 lakh a month for three months"
+  ],
+  "howToApply": [
+   "Register and get recognised on the Startup Odisha portal",
+   "Apply online for the monetary benefit",
+   "Nodal Agency reviews, the Task Force approves, and money goes to the bank account"
+  ],
+  "status": "open-rolling",
+  "statusNote": "Startup Odisha policy page says the 2016 policy is currently active and operational until a new policy is notified. Portal notices are dated 2026. No closing date shown.",
+  "deadline": null,
+  "watchOut": "After the first three months you must submit utilisation reports with bills to keep getting paid. The 2016 policy is awaiting a replacement, so the rules could change soon.",
+  "officialUrl": "https://startupodisha.gov.in/startup-incentives/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "peak-xv-spark-fellowship",
+  "name": "Spark Fellowship",
+  "shortName": "Peak XV Spark",
+  "provider": "Peak XV Partners",
+  "level": "private",
+  "state": null,
+  "kind": "grant",
+  "summary": "A fellowship from venture firm Peak XV Partners for women founders building in tech at an early stage. Peak XV describes it as carrying a $100,000 equity-free grant, and says more than 50 women founders have taken part. Its page does not list current dates, so check the status before planning around it.",
+  "amount": "$100,000 equity-free grant",
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "women"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "For female founders.",
+   "Building in tech.",
+   "In the early stages of the startup journey."
+  ],
+  "howToApply": [
+   "Peak XV's page shows no form or application dates.",
+   "Ask through contactus@peakxv.com, the general contact it lists."
+  ],
+  "status": "unclear",
+  "statusNote": "Peak XV's page still promotes the fellowship and a general FAQ says Spark continues, but no current cohort or window is shown.",
+  "deadline": null,
+  "watchOut": "Confirm that an intake is running before relying on this. The page gives few terms, so ask Peak XV directly about country rules and grant conditions.",
+  "officialUrl": "https://www.peakxv.com/our-causes",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "pradhan-mantri-mudra-yojana",
+  "name": "Pradhan Mantri MUDRA Yojana",
+  "shortName": "MUDRA",
+  "provider": "Ministry of Finance, through MUDRA and lending institutions",
+  "level": "central",
+  "state": null,
+  "kind": "loan",
+  "summary": "Small business loans for non-corporate, non-farm micro enterprises in manufacturing, trading and services, given by banks, NBFCs and microfinance lenders. MUDRA itself refinances lenders and does not lend directly. Loans come in four sizes, from Shishu to Tarun Plus, with the largest reserved for borrowers who already repaid a Tarun loan.",
+  "amount": "Shishu up to ₹50,000, Kishor up to ₹5 lakh, Tarun up to ₹10 lakh, Tarun Plus up to ₹20 lakh",
+  "amountMaxInr": 2000000,
+  "repayable": true,
+  "stages": [
+   "idea",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Indian citizen with a plan for a non-farm income activity",
+   "Credit need up to ₹20 lakh",
+   "Aimed at non-corporate small businesses such as proprietorships and partnerships",
+   "Tarun Plus only after repaying an earlier Tarun loan"
+  ],
+  "howToApply": [
+   "Approach a bank, NBFC or microfinance lender near you",
+   "Or apply online through Udyamimitra or Jan Samarth",
+   "The lender applies its own terms and interest rate"
+  ],
+  "status": "open-rolling",
+  "statusNote": "MUDRA's site has performance reports for 2025-26 and a notice on the Tarun Plus ₹20 lakh limit. No end date or window is published. Applications go through lenders year round.",
+  "deadline": null,
+  "watchOut": "MUDRA's own site targets non-corporate businesses, so a private limited startup should ask the lender first, as the Startup India playbook says otherwise. MUDRA warns it uses no agents, and interest is set by the lender.",
+  "officialUrl": "https://www.mudra.org.in/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "prime-ministers-employment-generation-programme",
+  "name": "Prime Minister's Employment Generation Programme",
+  "shortName": "PMEGP",
+  "provider": "Ministry of MSME, implemented by Khadi and Village Industries Commission",
+  "level": "central",
+  "state": null,
+  "kind": "subsidy",
+  "summary": "A credit-linked subsidy for individuals setting up a new non-farm micro enterprise. A bank lends most of the project cost and the government pays part of it as margin money subsidy. The rate depends on rural or urban location and applicant category. It targets self-employment, mostly in rural areas, rather than tech startups.",
+  "amount": "Subsidy of 15% to 35% of project cost, on projects up to ₹50 lakh in manufacturing and ₹20 lakh in services",
+  "amountMaxInr": null,
+  "repayable": null,
+  "stages": [
+   "idea"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "Individual above 18, with no income ceiling",
+   "New project only, not an existing unit or one that has taken other government subsidy",
+   "At least Class VIII pass for projects above ₹10 lakh in manufacturing or ₹5 lakh in services",
+   "Own contribution of 10%, or 5% for special categories"
+  ],
+  "howToApply": [
+   "Apply online on the KVIC PMEGP portal",
+   "Your application goes to a bank for loan sanction",
+   "Subsidy is released once the bank has sanctioned the project"
+  ],
+  "status": "unclear",
+  "statusNote": "The approval on record covers 2021-22 to 2025-26. A PIB release dated 28 October 2026 shows subsidy still being released in FY 2026-27, but no notice approving a new term was found. The KVIC portal could not be opened in our check.",
+  "deadline": null,
+  "watchOut": "You still take a bank loan and repay it, and only part is subsidised. It suits small local units more than software products. Confirm with KVIC that new applications are being processed, since the formal term has ended.",
+  "officialUrl": "https://www.myscheme.gov.in/schemes/pmegp",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "prism-dsir",
+  "name": "Promoting Innovations in Individuals, Start-ups and MSMEs",
+  "shortName": "PRISM",
+  "provider": "Department of Scientific and Industrial Research, Government of India",
+  "level": "central",
+  "state": null,
+  "kind": "grant",
+  "summary": "Grants for Indian citizens turning a new idea into a working prototype, model or process, with later support for building an enterprise around a proven idea. Proposals go through regional outreach centres to the department for evaluation. Preferred areas include green technology, clean energy, smart materials, waste to wealth and affordable healthcare.",
+  "amount": "Up to ₹2 lakh or ₹20 lakh at up to 90% of cost in Phase I. Up to ₹50 lakh at 50% in Phase II.",
+  "amountMaxInr": 5000000,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "climate",
+   "manufacturing"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "Any Indian citizen with an innovative idea, including students",
+   "Phase II is only for PRISM innovators or those with proof of concept backed by another government agency",
+   "Proposal must lead to a prototype, model, process or marketable product"
+  ],
+  "howToApply": [
+   "Read the PRISM guidelines and application format on the DSIR site",
+   "Send one signed PDF to a TOCIC outreach centre, with a copy to DSIR",
+   "The centre forwards it with expert comments for DSIR evaluation"
+  ],
+  "status": "unclear",
+  "statusNote": "The DSIR page describes how to submit and shows no deadline. Guidelines date from 2013 and the last call advert listed is from 2014, though a 2025 compendium was uploaded. Current funding could not be confirmed.",
+  "deadline": null,
+  "watchOut": "The forms and rules are old, so confirm the scheme is still funding before you prepare. Reach out to a TOCIC centre first. It suits physical inventions and processes more than software products.",
+  "officialUrl": "https://www.dsir.gov.in/offerings/schemes-and-services/details/promoting-innovations-in-individuals-start-ups-and-msmes-prism-kjMwITMtQWa",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "rainmatter-foundation-grants",
+  "name": "Rainmatter Foundation grants",
+  "shortName": "Rainmatter",
+  "provider": "Rainmatter Foundation",
+  "level": "private",
+  "state": null,
+  "kind": "grant",
+  "summary": "Multi-year, usually unrestricted grants from a nonprofit founded in India in 2019, for organisations and fellows working to restore the environment through action, research, advocacy and policy. Focus areas include forests, water, soil, food systems and energy. For-profit startups are pointed to a separate investment arm instead. No grant size is published.",
+  "amount": null,
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "climate",
+   "agritech"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "Organisations working in the foundation's focus areas.",
+   "Fellowships are for individuals whose work fits its thesis.",
+   "For-profit startups are sent to the separate investment track, Rainmatter Capital."
+  ],
+  "howToApply": [
+   "Read the focus areas page to see if your work fits.",
+   "Send an initial enquiry through the Get in touch form."
+  ],
+  "status": "unclear",
+  "statusNote": "An enquiry form is live, but no open calls are listed. For conservation work, the page says the foundation prefers to reach out to organisations itself.",
+  "deadline": null,
+  "watchOut": "This is not a startup grant. For-profit companies go to Rainmatter Capital, which is investment money. Grants usually run three to five years and start with a conversation, not a set application round.",
+  "officialUrl": "https://rainmatter.org/focus-areas",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "rajasthan-istart-ideation-grant",
+  "name": "Ideation Grant, Rajasthan Startup Policy 2022",
+  "shortName": "iStart Ideation Grant",
+  "provider": "Department of Information Technology and Communication, Government of Rajasthan",
+  "level": "state",
+  "state": "rajasthan",
+  "kind": "grant",
+  "summary": "A fixed grant for pre-seed startups registered on Rajasthan's iStart platform, meant to encourage new ideas. The idea must meet criteria set by an evaluation committee. Startups in which women founders hold more than half the equity get an extra ₹60,000. Registration needs a Rajasthan entity or an operating office in the state.",
+  "amount": "₹2,40,000, plus ₹60,000 more for startups with over 50% equity held by women founders",
+  "amountMaxInr": 300000,
+  "repayable": false,
+  "stages": [
+   "idea"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Registered under iStart",
+   "Pre-seed stage",
+   "Sole proprietorship, private limited, OPC, LLP or partnership in Rajasthan, or with an operating office there",
+   "Idea meets the evaluation committee's criteria"
+  ],
+  "howToApply": [
+   "Register your startup on iStart Rajasthan",
+   "Apply for the incentive through your iStart login",
+   "The evaluation committee reviews the idea"
+  ],
+  "status": "unclear",
+  "statusNote": "iStart portal, last updated 13-10-2026, lists this under Startup Policy 2022. The policy text could not be opened, so its end date and any application window are unconfirmed.",
+  "deadline": null,
+  "watchOut": "Eligibility details are notified from time to time and were not on the funding page. Ask the iStart helpdesk how the committee currently works before you count on this.",
+  "officialUrl": "https://istart.rajasthan.gov.in/funding-incentives",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "rajasthan-istart-viability-grant",
+  "name": "Viability Grant, Rajasthan Startup Policy 2022",
+  "shortName": "iStart Viability Grant",
+  "provider": "Department of Information Technology and Communication, Government of Rajasthan",
+  "level": "state",
+  "state": "rajasthan",
+  "kind": "grant",
+  "summary": "A grant for seed stage startups registered on iStart, sized by their QRate score, the state's startup rating. Unrated startups can get ₹10 lakh after committee review. Rated startups can get ₹20 lakh to ₹60 lakh, and those who improve their score within a set time can claim the difference.",
+  "amount": "₹10 lakh without a QRate rating; ₹20 lakh to ₹60 lakh by QRate score",
+  "amountMaxInr": 6000000,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Registered under iStart",
+   "Seed stage",
+   "Rated through QRate, or passes committee evaluation if unrated",
+   "Further conditions as notified by the government"
+  ],
+  "howToApply": [
+   "Register on iStart and complete the QRate assessment",
+   "Apply for the incentive through your iStart login",
+   "Committee evaluates, and upgrades can bring a top-up"
+  ],
+  "status": "unclear",
+  "statusNote": "iStart portal, last updated 13-10-2026, lists the slabs under Startup Policy 2022. The policy text could not be opened, so its end date and any application window are unconfirmed.",
+  "deadline": null,
+  "watchOut": "The ₹60 lakh headline needs Silver or better on QRate, and unrated startups get ₹10 lakh at most. Top-ups must come within 3 to 18 months depending on the band.",
+  "officialUrl": "https://istart.rajasthan.gov.in/funding-incentives",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "research-development-innovation-fund",
+  "name": "Research, Development and Innovation Fund",
+  "shortName": "RDI Fund",
+  "provider": "Anusandhan National Research Foundation, Department of Science and Technology",
+  "level": "central",
+  "state": null,
+  "kind": "loan",
+  "summary": "A ₹1 lakh crore government fund for private companies and startups commercialising research-heavy technology at Technology Readiness Level 4 or above. It does not fund companies itself. Money reaches them through second level fund managers such as TDB, BIRAC and selected investment funds, as long-tenure loans, equity or a hybrid.",
+  "amount": "Up to 50% of total project cost as loans, equity or hybrid instruments. No grants.",
+  "amountMaxInr": null,
+  "repayable": true,
+  "stages": [
+   "growth"
+  ],
+  "sectors": [
+   "deeptech",
+   "ai",
+   "biotech",
+   "climate"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "Private company or startup advancing RDI-intensive technology",
+   "Technology Readiness Level 4 or above",
+   "Works in a sunrise sector such as energy, biotech, AI applications or the digital economy",
+   "Matching contribution from the company or private investors"
+  ],
+  "howToApply": [
+   "Do not apply to the fund itself, since it funds only through fund managers",
+   "Find a fund manager on the RDI Fund's second level fund managers page",
+   "Apply to that manager under its own process"
+  ],
+  "status": "unclear",
+  "statusNote": "TDB's RDI page says CALL CLOSED and its home page gave 30 September 2026 as the close, though its active calls table still shows 2031. The RDI site lists a first cohort of 19 managers and now 21 AIFs and FROs.",
+  "deadline": null,
+  "watchOut": "This is not a grant. You need matching money and work past early research, and the RDI Fund will not take your application. TDB's first call has closed, so check other fund managers one by one.",
+  "officialUrl": "https://rdifund.anrf.gov.in/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "samridh-meity",
+  "name": "Startup Accelerator of MeitY for Product Innovation, Development and Growth",
+  "shortName": "SAMRIDH",
+  "provider": "Ministry of Electronics and IT, through MeitY Startup Hub",
+  "level": "central",
+  "state": null,
+  "kind": "seed-funding",
+  "summary": "A six-month accelerator route for IT product startups ready to scale. Selected accelerators provide customer, investor and international connections, while the scheme invests alongside the accelerator or a private investor on a one-to-one basis. Startups reach it only through an accelerator chosen by MeitY Startup Hub, not by applying to MeitY.",
+  "amount": "Up to ₹40 lakh from the scheme, matched by up to ₹40 lakh from the accelerator or investor",
+  "amountMaxInr": 4000000,
+  "repayable": true,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "IT-based product startup",
+   "Selected by a SAMRIDH accelerator in a cohort of about 5 to 10 startups",
+   "Accelerator or investor willing to put in matching money"
+  ],
+  "howToApply": [
+   "Check the accelerators in the SAMRIDH cohort lists on MeitY Startup Hub",
+   "Approach an accelerator that fits your product",
+   "Apply through its own selection process"
+  ],
+  "status": "periodic",
+  "statusNote": "MeitY Startup Hub issued the final list of partners for Cohort 2 on 3 March 2025. No current founder-facing call or date for a further cohort was visible.",
+  "deadline": null,
+  "watchOut": "This is investment, not a grant. The scheme document uses SAFE or promissory notes, and MeitY Startup Hub takes equity alongside the accelerator. You also need a private investor willing to match.",
+  "officialUrl": "https://msh.meity.gov.in/schemes/samridh",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "stand-up-india",
+  "name": "Stand-Up India",
+  "shortName": null,
+  "provider": "Department of Financial Services, Ministry of Finance",
+  "level": "central",
+  "state": null,
+  "kind": "loan",
+  "summary": "A bank loan scheme for women and SC or ST entrepreneurs setting up a new enterprise in manufacturing, services, trading or agri-allied work. It offered a composite loan repayable over up to seven years. The Finance Ministry says the scheme ran until 31 March 2025, and a replacement has been announced.",
+  "amount": "Composite loan of ₹10 lakh to ₹1 crore",
+  "amountMaxInr": 10000000,
+  "repayable": true,
+  "stages": [
+   "idea"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "women",
+   "sc-st"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "SC, ST or woman entrepreneur above 18",
+   "Greenfield enterprise only",
+   "For a company or firm, at least 51% held by an SC, ST or woman entrepreneur",
+   "At least 10% of project cost from your own funds"
+  ],
+  "howToApply": [
+   "Treat the scheme as ended and ask your bank what it can currently offer",
+   "Watch the Department of Financial Services for the announced replacement"
+  ],
+  "status": "closed",
+  "statusNote": "The Department of Financial Services says the scheme runs up to 31.03.2025 and a new scheme is being prepared. The Stand-Up Mitra portal still shows an Apply Here button. No launch notice for the replacement was found.",
+  "deadline": "2025-03-31",
+  "watchOut": "The portal still looks open, and many sites still advertise it, but the ministry states the term ended. The announced loans up to ₹2 crore are not confirmed as launched, so ask your bank before planning on them.",
+  "officialUrl": "https://financialservices.gov.in/stand-india-scheme-supi",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "startup-india-seed-fund-scheme",
+  "name": "Startup India Seed Fund Scheme",
+  "shortName": "SISFS",
+  "provider": "DPIIT, Government of India",
+  "level": "central",
+  "state": null,
+  "kind": "seed-funding",
+  "summary": "Gave young DPIIT-recognised startups seed money through approved incubators across India. It paid a grant for proof of concept and prototypes, then debt or convertible debentures for market entry. New startup applications have now closed, and money already approved is still being paid out.",
+  "amount": "Up to ₹20 lakh as a grant, plus up to ₹50 lakh as convertible debentures or debt",
+  "amountMaxInr": 5000000,
+  "repayable": null,
+  "stages": [
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Recognised by DPIIT",
+   "Incorporated not more than 2 years before applying",
+   "Technology used in the core product, service or business model",
+   "Not more than ₹10 lakh of other Central or State scheme money, with prizes and free workspace not counted"
+  ],
+  "howToApply": [
+   "New startup applications are closed, so you cannot apply now",
+   "Watch the portal and DPIIT for any successor scheme",
+   "If already selected, deal with your incubator on milestones and releases"
+  ],
+  "status": "closed",
+  "statusNote": "The portal shows a final extended notice: startups could apply until 31 May 2026 and incubators had to finish selection by 30 June 2026. The June 2026 Startup India playbook says disbursals are ongoing. No successor scheme was found.",
+  "deadline": "2026-05-31",
+  "watchOut": "This is closed to new startups, though many blogs still list it as open. The original rupee limits were per startup through an incubator, and each incubator set its own bar and released money in milestones.",
+  "officialUrl": "https://seedfund.startupindia.gov.in/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "startups-intellectual-property-protection",
+  "name": "Scheme for Facilitating Start-ups Intellectual Property Protection",
+  "shortName": "SIPP",
+  "provider": "DPIIT and the Office of the Controller General of Patents, Designs and Trademarks",
+  "level": "central",
+  "state": null,
+  "kind": "subsidy",
+  "summary": "Cuts the cost of protecting patents, trademarks and designs for DPIIT-recognised startups. A government-listed facilitator handles filing and follow-up, and the patent office pays the facilitator's fee, so you mainly pay statutory fees. Recognised startups also get an 80% rebate on patent filing fees under Startup India benefits.",
+  "amount": "Facilitator fees paid by the government, and an 80% rebate on patent filing fees",
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "DPIIT-recognised startup",
+   "Self-declaration that no other government scheme paid the agent fees for the same application",
+   "Use a facilitator on the official list"
+  ],
+  "howToApply": [
+   "Pick a facilitator from the lists on the IP India SIPP page",
+   "The facilitator files and handles your application",
+   "The facilitator claims its fee from the patent office"
+  ],
+  "status": "unclear",
+  "statusNote": "IP India's page shows the revised scheme extended for three years from 1 April 2023, which would run to March 2026. No later extension was found, though the June 2026 playbook and Startup India pages still describe it.",
+  "deadline": null,
+  "watchOut": "It pays for help with filing, not cash for your startup, and you still owe statutory fees. Ask the facilitator to confirm the scheme still covers new filings, since the last visible extension has lapsed.",
+  "officialUrl": "https://ipindia.gov.in/page-content/startups-intellectual-property-protection-sipp",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "tamil-nadu-sc-st-startup-fund",
+  "name": "Tamil Nadu SC/ST Startup Fund",
+  "shortName": "TN SC/ST Fund",
+  "provider": "Tamil Nadu Startup and Innovation Mission (StartupTN), Government of Tamil Nadu",
+  "level": "state",
+  "state": "tamil-nadu",
+  "kind": "seed-funding",
+  "summary": "A state fund that invests in startups founded and led by Scheduled Caste and Scheduled Tribe entrepreneurs, through equity or debt. The government becomes a shareholder. Scalable models and those based on indigenous traditional knowledge are encouraged. A dedicated StartupTN team runs it, and a linked venture lab helps founders get ready.",
+  "amount": null,
+  "amountMaxInr": null,
+  "repayable": true,
+  "stages": [
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "sc-st"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Startup founded solely by Scheduled Caste or Scheduled Tribe entrepreneurs",
+   "Identified as a beneficiary by StartupTN",
+   "Scalable business model or one based on commercial use of traditional knowledge"
+  ],
+  "howToApply": [
+   "Register on the StartupTN portal",
+   "Contact the StartupTN team that handles the fund",
+   "Go through their assessment and sanction process"
+  ],
+  "status": "unclear",
+  "statusNote": "StartupTN home page lists the fund. The 2023 policy runs five years or until replaced. No per-startup limit or application window seen on the official pages available.",
+  "deadline": null,
+  "watchOut": "No per-startup amount appears on the official pages available, and support comes as equity or debt, so ask what terms apply before you plan around it.",
+  "officialUrl": "https://startuptn.in/pdf/Tamil-Nadu-Startup-and-Innovation-Policy-2023.pdf",
+  "applyUrl": "https://startuptn.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "tamil-nadu-space-tech-fund",
+  "name": "Tamil Nadu Space Tech Fund",
+  "shortName": null,
+  "provider": "Tamil Nadu Startup and Innovation Mission (StartupTN), Government of Tamil Nadu",
+  "level": "state",
+  "state": "tamil-nadu",
+  "kind": "seed-funding",
+  "summary": "A ₹10 crore state fund for space technology startups recognised by DPIIT that have a proven concept and third-party funding. It offers matching grants or equity. It covers satellite systems, launch vehicles, space robotics, debris mitigation and downstream data applications, and aims to bring in private investment and high-tech jobs.",
+  "amount": "Up to ₹50 lakh as a matching grant or equity",
+  "amountMaxInr": 5000000,
+  "repayable": null,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "deeptech"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "DPIIT recognised startup",
+   "Proven concept",
+   "Has already secured third-party funding",
+   "Works in space technology, including downstream data applications"
+  ],
+  "howToApply": [
+   "Register on the StartupTN portal",
+   "Contact StartupTN for the current application route"
+  ],
+  "status": "unclear",
+  "statusNote": "StartupTN home page describes the fund and its resources page lists a government order dated 11-06-2025. No application window or form seen.",
+  "deadline": null,
+  "watchOut": "You must bring outside money first because the support is matching. Only a space data software company would fit, and it is not clear whether you would get a grant or give equity.",
+  "officialUrl": "https://startuptn.in/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "tamil-nadu-tanseed-seed-grant",
+  "name": "Tamil Nadu Startup Seed Fund",
+  "shortName": "TANSEED",
+  "provider": "Tamil Nadu Startup and Innovation Mission (StartupTN), Government of Tamil Nadu",
+  "level": "state",
+  "state": "tamil-nadu",
+  "kind": "seed-funding",
+  "summary": "Early-stage funding for Tamil Nadu startups. Under the state policy it gives up to ₹10 lakh, or ₹15 lakh for rural impact, climate action and women-led startups, in return for a 3% stake. Selected startups also join a one-year accelerator with mentoring and compliance help.",
+  "amount": "Up to ₹10 lakh, or ₹15 lakh for rural impact, climate action and women-led startups, for a 3% support stake",
+  "amountMaxInr": 1500000,
+  "repayable": true,
+  "stages": [
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Early-stage startup under the Tamil Nadu startup programme",
+   "25% of assistance is set aside for women-led startups and 10% for rural impact startups",
+   "Detailed criteria were not on the official pages available, so check the current call"
+  ],
+  "howToApply": [
+   "Register on the StartupTN portal",
+   "Watch the portal for the next TANSEED round",
+   "Apply when the call opens and go through selection"
+  ],
+  "status": "periodic",
+  "statusNote": "StartupTN home page still lists TANSEED. Policy runs five years from its 2023 notification or until replaced. No open call or round dates visible on the portal.",
+  "deadline": null,
+  "watchOut": "It is called a grant but StartupTN takes a 3% stake, so model that against your cap table. The portal shows no open call today, so check it often for the next round.",
+  "officialUrl": "https://startuptn.in/pdf/Tamil-Nadu-Startup-and-Innovation-Policy-2023.pdf",
+  "applyUrl": "https://startuptn.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "tata-social-enterprise-challenge",
+  "name": "Tata Social Enterprise Challenge",
+  "shortName": "TSEC",
+  "provider": "Tata Group and IIM Calcutta",
+  "level": "private",
+  "state": null,
+  "kind": "prize",
+  "summary": "An annual contest for social enterprises in India, run by the Tata Group and IIM Calcutta. Cash rewards of up to ₹10 lakh go to the winner and two runners-up, and shortlisted teams get mentoring. Finalists can also pitch for up to ₹1 crore in seed funding, subject to investment criteria and due diligence.",
+  "amount": "Cash reward up to ₹10 lakh for the winner and two runners-up. Finalists can pitch for up to ₹1 crore in seed funding.",
+  "amountMaxInr": 1000000,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "social"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "An early-stage venture, or an idea with a proof of concept, and a sustainable business model that creates social impact.",
+   "Ventures must be no more than five years old.",
+   "For-profit, not-for-profit and hybrid models are all accepted.",
+   "A team is represented by at most two members.",
+   "Last year's semifinalists are not eligible.",
+   "International entries cannot pitch for seed funding and incubation."
+  ],
+  "howToApply": [
+   "Register through the portal linked from tatasechallenge.org when an edition opens.",
+   "Submit an impact proposal.",
+   "Shortlisted teams join a mentoring programme that includes time at IIM Calcutta."
+  ],
+  "status": "periodic",
+  "statusNote": "The 14th edition opened on 10 July 2026, and the official site lists 10 September 2026 as the closing date, now passed. The next edition's dates are not posted.",
+  "deadline": null,
+  "watchOut": "The ₹1 crore is seed funding subject to investment criteria, not prize money, and its terms are not stated. Only the cash reward is non-dilutive here, and TSEC says it never asks for payment.",
+  "officialUrl": "https://tatasechallenge.org/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "technology-development-board-core-funding",
+  "name": "Technology Development Board Core Funding",
+  "shortName": "TDB",
+  "provider": "Technology Development Board, Department of Science and Technology",
+  "level": "central",
+  "state": null,
+  "kind": "loan",
+  "summary": "Long-running government finance for Indian companies taking home-grown technology to commercial use, or adapting imported technology for wider use in India. The main route is a low-interest soft loan released against milestones. Equity is also possible, and grants are reserved for exceptional cases of national interest. Past funding spans many sectors.",
+  "amount": "Soft loan at 5% simple interest for 50% of the project cost not yet incurred. Equity up to 25% of approved cost.",
+  "amountMaxInr": null,
+  "repayable": true,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "Indian industrial concern or other agency",
+   "Developing and commercially applying indigenous technology, or adapting imported technology",
+   "Equity cannot exceed the capital paid up by promoters"
+  ],
+  "howToApply": [
+   "Read TDB's project funding guidelines",
+   "Register and apply on TDB's online portal, since applications are online only",
+   "Money is released in tranches against technical and financial milestones"
+  ],
+  "status": "open-rolling",
+  "statusNote": "TDB's active calls table lists a general call open from 17 December 2025 to 31 December 2030. Its startup-specific call closed on 10 April 2025. The application portal's security certificate failed in our check, so the form itself was not viewed.",
+  "deadline": null,
+  "watchOut": "This is a loan with repayment, aimed at ready-to-commercialise projects with real project costs. A separate, more generous startup call has closed. Write to TDB if the online portal gives you trouble.",
+  "officialUrl": "https://tdb.gov.in/modes-funding",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "telangana-performance-grant-startup-incentives",
+  "name": "Performance Related Grant and Startup Reimbursements",
+  "shortName": "Telangana startup incentives",
+  "provider": "Telangana Innovation Cell, Department of ITE&C, Government of Telangana",
+  "level": "state",
+  "state": "telangana",
+  "kind": "subsidy",
+  "summary": "Claim-based incentives for recognised Telangana startups. Companies growing 15% a year can claim a grant of 5% of annual turnover within three years of incorporation. Others reimburse patent costs, international trade show costs and first-year hiring of Telangana residents, as well as state GST. Each claim goes to a startup council for a decision.",
+  "amount": "Performance grant of 5% of turnover up to ₹10 lakh; patents up to ₹2 lakh; trade shows up to ₹5 lakh; ₹10,000 per local hire",
+  "amountMaxInr": 1000000,
+  "repayable": false,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Recognised as a startup on the Telangana portal",
+   "Performance grant: 15% year-on-year growth shown in audited accounts, within three years of incorporation",
+   "Patent claim: filed within six months of obtaining the patent",
+   "Hiring claim: Telangana-domiciled employees with the company at least eight months",
+   "Trade show claim: endorsed by a state supported incubator, in the first three years"
+  ],
+  "howToApply": [
+   "Register and get recognised on the Startup Telangana portal",
+   "Submit the prescribed annexure and documents through Apply Now",
+   "The Innovation Cell checks the claim and the startup council decides"
+  ],
+  "status": "unclear",
+  "statusNote": "Funding and Incentives page lists these with Apply Now links and no end date. No statement of the policy term or record of recent disbursals was found.",
+  "deadline": null,
+  "watchOut": "These pay back what you already spent or earned, and the council decides based on the year's available budget. Confirm with tsic@telangana.gov.in that claims are currently being paid.",
+  "officialUrl": "https://startup.telangana.gov.in/funding-incentives/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "the-nudge-incubator",
+  "name": "The/Nudge Incubator",
+  "shortName": null,
+  "provider": "The/Nudge Institute",
+  "level": "private",
+  "state": null,
+  "kind": "grant",
+  "summary": "A 9-month programme for early-stage nonprofit founders working on livelihood problems in India. Selected organisations get an innovation grant of ₹20 lakh, hands-on mentoring, fundraising support and a peer network. It is limited to nonprofits such as Section 8 companies, trusts and societies, so a normal for-profit startup cannot apply.",
+  "amount": "Innovation grant of ₹20 lakh",
+  "amountMaxInr": 2000000,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "social"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "Exclusively for non-profit social entrepreneurs building resilient livelihoods.",
+   "Registered, or planning to register, as a Section 8 company, trust or society.",
+   "Early stage (0 to 3 years) with a proof of concept or minimum viable product.",
+   "At least one founder working full-time.",
+   "Focused on livelihoods for marginalised communities."
+  ],
+  "howToApply": [
+   "Fill in the application form linked from the Incubator page.",
+   "Shortlisted applicants submit a detailed business plan.",
+   "The final round is a virtual interview."
+  ],
+  "status": "unclear",
+  "statusNote": "A site banner says applications are open for the next cohort, but the dates on the page are old, from May 2023 and May 2025. No current deadline is shown.",
+  "deadline": null,
+  "watchOut": "Nonprofit only, and focused on livelihoods. Page details are stale, so register interest or contact the institute to confirm the current grant size and the next cohort before you plan on it.",
+  "officialUrl": "https://www.thenudge.org/livelihoods-ecosystem/social-entrepreneurship/incubator/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "tide-2-0-meity",
+  "name": "Technology Incubation and Development of Entrepreneurs 2.0",
+  "shortName": "TIDE 2.0",
+  "provider": "Ministry of Electronics and IT, through MeitY Startup Hub",
+  "level": "central",
+  "state": null,
+  "kind": "incubation",
+  "summary": "Supports IT startups using emerging technology such as AI, IoT, blockchain and robotics on problems of social relevance. Money and mentoring come through 51 approved incubators. Support runs in steps, from an entrepreneur-in-residence stipend for proof of concept to a prototype grant, then an investment for market outreach.",
+  "amount": "Up to ₹4 lakh for proof of concept, up to ₹7 lakh grant for prototypes, up to ₹40 lakh investment for product and market",
+  "amountMaxInr": 4000000,
+  "repayable": null,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "ai",
+   "deeptech",
+   "social"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "IT-based startup, recognised by DPIIT per the June 2026 Startup India playbook",
+   "Working with emerging technology in one of the scheme's seven areas of social relevance",
+   "Selected and supported by a TIDE 2.0 incubation centre"
+  ],
+  "howToApply": [
+   "Open the list of TIDE 2.0 incubation centres on MeitY Startup Hub",
+   "Pick a centre that suits your sector and contact it",
+   "Apply to its cohort if one is running"
+  ],
+  "status": "unclear",
+  "statusNote": "The approval dated 1 February 2019 covers five years, which has passed. No published extension was found, but MeitY Startup Hub still lists the scheme and the June 2026 playbook includes it. Ask a centre if it still has funds.",
+  "deadline": null,
+  "watchOut": "The original five-year term has run out, so a centre may have no money left to give. Confirm funds with the incubator first. The investment stage is not a grant and each centre sets its own terms.",
+  "officialUrl": "https://msh.meity.gov.in/schemes/tide",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "uttar-pradesh-prototype-grant-sustenance-allowance",
+  "name": "Prototype Grant and Sustenance Allowance, Uttar Pradesh Startup Policy 2026",
+  "shortName": "UP prototype grant",
+  "provider": "Department of IT & Electronics, Government of Uttar Pradesh",
+  "level": "state",
+  "state": "uttar-pradesh",
+  "kind": "grant",
+  "summary": "Under Uttar Pradesh's new startup policy, registered startups can get a one-time prototype grant, plus a monthly allowance until the prototype stage. Software startups building standalone or technically advanced applications qualify. Women-led and some other founders, some sectors, and Purvanchal or Bundelkhand startups get 50% more on the prototype grant. Deep tech can get up to double.",
+  "amount": "Prototype grant up to ₹10 lakh, plus ₹20,000 a month for two years",
+  "amountMaxInr": 1000000,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Registered on both DPIIT and StartinUP",
+   "Incorporated in Uttar Pradesh with an innovative idea",
+   "Incubated at a StartinUP recognised incubator, with its recommendation",
+   "Not basic websites, information portals or simple apps"
+  ],
+  "howToApply": [
+   "Register on DPIIT and the StartinUP portal",
+   "Join a recognised incubator and get its recommendation",
+   "Apply on StartinUP by your stage; expert committee and PIU decide"
+  ],
+  "status": "unclear",
+  "statusNote": "Policy text on Invest UP says it runs five years from notification and replaces the 2020 policy. StartinUP's own policy page still shows old 2020 amounts, and selection guidelines are still to be notified.",
+  "deadline": null,
+  "watchOut": "The portal still shows lower 2020 figures, so confirm which rate applies to you. The grant pays 70% upfront and 30% as reimbursement, and you need an incubator on board first.",
+  "officialUrl": "https://invest.up.gov.in/wp-content/uploads/2026/07/en-notice_140726.pdf",
+  "applyUrl": "https://startinup.up.gov.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "uttar-pradesh-seed-capital",
+  "name": "Seed Capital, Uttar Pradesh Startup Policy 2026",
+  "shortName": "UP seed capital",
+  "provider": "Department of IT & Electronics, Government of Uttar Pradesh",
+  "level": "state",
+  "state": "uttar-pradesh",
+  "kind": "grant",
+  "summary": "Money for Uttar Pradesh startups to refine a prototype, develop the product, test it and market an MVP. The standard limit is ₹15 lakh, with larger proposals considered case by case. It is paid half in advance and half against milestones. The deep tech section also offers compute cost reimbursement of up to ₹2 lakh a year.",
+  "amount": "Up to ₹15 lakh; proposals up to ₹50 lakh considered case by case",
+  "amountMaxInr": 5000000,
+  "repayable": false,
+  "stages": [
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Registered on both DPIIT and StartinUP",
+   "Incorporated in Uttar Pradesh",
+   "Incubated at a recognised incubator with its recommendation, unless scaling stage or beyond",
+   "At the stage for launching an MVP"
+  ],
+  "howToApply": [
+   "Register on DPIIT and the StartinUP portal",
+   "Get your incubator's recommendation",
+   "Apply on StartinUP; the expert committee recommends and the PIU approves"
+  ],
+  "status": "unclear",
+  "statusNote": "Policy text on Invest UP says it runs five years from notification and replaces the 2020 policy. Selection guidelines are to come, and StartinUP still lists 2020 seed figures.",
+  "deadline": null,
+  "watchOut": "Anything above ₹15 lakh is discretionary. The second half depends on meeting milestones you commit to, and portal figures may lag the new policy, so confirm before you budget.",
+  "officialUrl": "https://invest.up.gov.in/wp-content/uploads/2026/07/en-notice_140726.pdf",
+  "applyUrl": "https://startinup.up.gov.in/",
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "venture-capital-fund-for-scheduled-castes",
+  "name": "Venture Capital Fund for Scheduled Castes",
+  "shortName": "VCF-SC",
+  "provider": "Ministry of Social Justice and Empowerment, managed by IFCI Venture Capital",
+  "level": "central",
+  "state": null,
+  "kind": "loan",
+  "summary": "Concessional finance for companies majority-owned by Scheduled Caste entrepreneurs in manufacturing, services and allied sectors, including startups in technology business incubators. Most money comes as debentures, with some equity possible. The fund covers up to 75% of project cost on smaller cases and asks promoters to bring the rest.",
+  "amount": "₹10 lakh to ₹15 crore, with total assistance not above two times the company's net worth",
+  "amountMaxInr": 150000000,
+  "repayable": true,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "sc-st"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "Company with at least 51% held by Scheduled Caste entrepreneurs, with management control",
+   "That holding for 6 months if asking up to ₹50 lakh, or 12 months above it",
+   "Project in manufacturing, services or allied areas, with asset creation from the funds"
+  ],
+  "howToApply": [
+   "Download the application form and brochure from the fund's site",
+   "Email the completed form to IFCI Venture Capital at the address on the Apply Online page",
+   "Clear the fund's appraisal"
+  ],
+  "status": "open-rolling",
+  "statusNote": "The fund's site has an Apply Online page with no deadline. The June 2026 playbook still lists the fund, with a 4% coupon on loans. Its home page showed little text when checked.",
+  "deadline": null,
+  "watchOut": "Only for SC-majority companies, and the limit tied to net worth can keep early startups far below the headline. The asset creation rule makes it a harder fit for asset-light software firms. This is repayable money.",
+  "officialUrl": "https://vcfsc.in/apply-online.html",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "vercel-for-startups",
+  "name": "Vercel for Startups",
+  "shortName": null,
+  "provider": "Vercel",
+  "level": "private",
+  "state": null,
+  "kind": "credits",
+  "summary": "A startup programme from the Vercel hosting platform. Eligible teams can get up to $30,000 in what Vercel calls a Flexible Commitment Amount, along with Enterprise-tier access and startup-focused support. Founders register interest through a form on the page, and India is listed in its country options. Vercel does not publish its eligibility rules there.",
+  "amount": "Up to $30,000 in Flexible Commitment Amount",
+  "amountMaxInr": null,
+  "repayable": null,
+  "stages": [
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Open to eligible teams, but the page does not define who qualifies.",
+   "The form asks for a work email, company size, company website and country.",
+   "India is one of the countries you can select."
+  ],
+  "howToApply": [
+   "Fill in the interest form on the programme page.",
+   "Wait for the startups team to respond."
+  ],
+  "status": "open-rolling",
+  "statusNote": "Interest form live with no deadline or cohort dates shown. No eligibility rules or reply time are published.",
+  "deadline": null,
+  "watchOut": "Vercel does not define Flexible Commitment Amount on this page, so do not assume it works like free credits. Ask how it is applied and what happens after it runs out.",
+  "officialUrl": "https://vercel.com/startups",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "villgro-tvaran-t-map-maharashtra",
+  "name": "TVARAN 3.0: Maharashtra Tech Accelerator Project",
+  "shortName": "T-MAP",
+  "provider": "Villgro, as part of Cisco's 40 communities initiative",
+  "level": "private",
+  "state": "maharashtra",
+  "kind": "incubation",
+  "summary": "An accelerator for digital waste and water solutions working inside Maharashtra's city bodies. Selected commercial enterprises get access to a shared pilot fund of up to ₹3 crore, chances to validate in real cities and implementation support. Focus areas include digital operational intelligence, modular wastewater treatment and compact solid waste processing.",
+  "amount": "Access to a shared pilot pool of up to ₹3 crore. No per-startup figure is published.",
+  "amountMaxInr": null,
+  "repayable": null,
+  "stages": [
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "climate"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Solutions ready to scale in Mumbai, Thane or Mira Bhayandar.",
+   "Prior experience working with urban local bodies.",
+   "Existing urban local body partnerships or MoUs, or the potential to set them up.",
+   "A commercial enterprise ready to scale in Maharashtra."
+  ],
+  "howToApply": [
+   "Open the programme page on the Villgro site.",
+   "Use Apply Now, which goes to Villgro's application portal."
+  ],
+  "status": "open-window",
+  "statusNote": "Villgro's programmes page marks this Applications open for 2026, but no closing date is shown.",
+  "deadline": null,
+  "watchOut": "The ₹3 crore is a shared pool, not one award, and the page does not say whether it is a grant. Villgro's other support can include equity or debt, so confirm the terms first.",
+  "officialUrl": "https://villgro.org/programs/tvaran-3-0-maharashtra-tech-accelerator-project-t-map/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "wadhwani-entrepreneur",
+  "name": "Wadhwani Entrepreneur",
+  "shortName": "Wadhwani Foundation",
+  "provider": "Wadhwani Foundation, delivered in India by the National Entrepreneurship Network",
+  "level": "private",
+  "state": null,
+  "kind": "incubation",
+  "summary": "Free, zero-equity support for Indian entrepreneurs, with no cash attached. An AI business platform is open to all businesses. Ignite serves students, aspiring founders and early-stage founders. Liftoff is a structured growth programme for eligible businesses with ₹5 crore or more in revenue, and Accelerate is for those at ₹25 crore or more.",
+  "amount": null,
+  "amountMaxInr": null,
+  "repayable": null,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "The AI platform, WadhwaniEntrepreneur.ai, is open to businesses of every size and stage.",
+   "Ignite is aimed at students, aspiring entrepreneurs and early-stage founders.",
+   "Liftoff is for eligible MSMEs with annual revenue of ₹5 crore or more.",
+   "Accelerate is for established businesses with annual revenue of ₹25 crore or more."
+  ],
+  "howToApply": [
+   "Open the Wadhwani Entrepreneur page and choose the path that fits your stage.",
+   "Sign up on WadhwaniEntrepreneur.ai for the AI platform.",
+   "Apply to Liftoff or Accelerate from the same page if you meet the revenue bar."
+  ],
+  "status": "open-rolling",
+  "statusNote": "The foundation's page describes the platform as available to all businesses and shows no deadlines. Availability of structured programmes varies, and intake dates are not listed.",
+  "deadline": null,
+  "watchOut": "No cash is on offer. Older partner material describes Liftoff as an early-stage programme, but the foundation's page now sets a ₹5 crore revenue bar, so most early founders get only the AI platform or Ignite.",
+  "officialUrl": "https://wadhwanifoundation.org/initiatives/entrepreneur/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "wadhwani-grants",
+  "name": "Wadhwani Grants",
+  "shortName": null,
+  "provider": "Wadhwani Charitable Foundation",
+  "level": "private",
+  "state": null,
+  "kind": "grant",
+  "summary": "Multi-year grants tied to verified results, for organisations already creating jobs or raising household incomes in India. Money is released only after outcomes such as a job placement, a new job or a higher income are verified. There is no standard grant size. The foundation states no fees, equity, return or repayment.",
+  "amount": "No standard figure. Size depends on geography, outcomes and economics.",
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "growth"
+  ],
+  "sectors": [
+   "social"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": false,
+  "eligibility": [
+   "Places people in jobs, helps enterprises hire, or raises household incomes, at meaningful annual scale.",
+   "Results can be confirmed through registries, audits, evaluation partners, or bank and UPI records.",
+   "Historical delivery data to set a credible baseline.",
+   "Seeking money to expand proven work, not only to fund activity.",
+   "India is the listed focus geography."
+  ],
+  "howToApply": [
+   "Apply on the Wadhwani Grants page with your organisation, model, geography, tracks and outcomes.",
+   "The foundation reviews your work and data for fit.",
+   "If approved, you sign a grant agreement and an independent baseline is set."
+  ],
+  "status": "open-rolling",
+  "statusNote": "The page says applications are reviewed on merit on a rolling basis, all year.",
+  "deadline": null,
+  "watchOut": "This is for proven organisations at scale, not new startups. Money follows verified outcomes, so you fund delivery first and the grant comes later. A software product without job or income results will not fit.",
+  "officialUrl": "https://wadhwanifoundation.org/initiatives/grants/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "we-hub-telangana-we-engage",
+  "name": "WE Engage",
+  "shortName": "WE Hub WE Engage",
+  "provider": "WE Hub, Government of Telangana",
+  "level": "state",
+  "state": "telangana",
+  "kind": "incubation",
+  "summary": "Sector-agnostic programmes for women founders from WE Hub, Telangana's state-led organisation for women entrepreneurs. FLINT is a 6-week track for ideas. SPARK and PROPEL are 12-week tracks, co-designed with Wadhwani Foundation, for validated MVPs and early-growth startups. They offer mentoring, networks and routes to markets and funding. No cash amount is published.",
+  "amount": null,
+  "amountMaxInr": null,
+  "repayable": null,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "women"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "PROPEL: women entrepreneurs in India from urban areas with a 51% stake, equal or majority ownership, or a CXO role, at early growth.",
+   "SPARK: an enterprise 51% owned by a woman or a group of 2 to 3 women, with a validated MVP and seeking first revenue.",
+   "PROPEL and SPARK: company or enterprise legally registered in India.",
+   "FLINT: students with an idea, working women seeking a career shift, or women on a career break with startup ideas."
+  ],
+  "howToApply": [
+   "Find the track that fits your stage on the Urban Innovation page.",
+   "Use the Apply Now link for the programme.",
+   "Contact WE Hub if no cohort is listed, as dates are not published."
+  ],
+  "status": "unclear",
+  "statusNote": "The page shows an Apply Now link but no cohort dates or deadline. No 2026 intake could be confirmed on an official page.",
+  "deadline": null,
+  "watchOut": "These are support programmes, with funding described only as access, not an award. Confirm the next cohort by contacting WE Hub, since the site shows no dates and its footer reads 2024.",
+  "officialUrl": "https://wehub.org.in/urban-innovation/",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "women-entrepreneurship-platform-wep",
+  "name": "Women Entrepreneurship Platform",
+  "shortName": "WEP",
+  "provider": "NITI Aayog, Government of India",
+  "level": "central",
+  "state": null,
+  "kind": "incubation",
+  "summary": "A national platform for women entrepreneurs from NITI Aayog. After registering, members can browse a directory of schemes, incubators and accelerators, find mentors, and join partner programmes. Its stated support covers training, finance access, market linkage, business services, mentoring, and compliance and legal help. It is a route to support and does not itself offer a set grant.",
+  "amount": null,
+  "amountMaxInr": null,
+  "repayable": null,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue",
+   "growth"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "women"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Built for women entrepreneurs, from those starting out to those scaling up.",
+   "Access runs through registering on the platform.",
+   "Partner programmes set their own bar. We Rise, for example, targets women-led MSMEs with high growth potential."
+  ],
+  "howToApply": [
+   "Register on wep.gov.in.",
+   "Use the mentor listing and the schemes and incubator directory.",
+   "Watch for Award to Reward partner programmes, which pick their own participants."
+  ],
+  "status": "open-rolling",
+  "statusNote": "Site is live with registration, and its footer says last updated 25 Feb 2026. The WEP Offerings page showed no listings when checked.",
+  "deadline": null,
+  "watchOut": "No money comes from joining. Listed schemes need checking at the source, as some look dated, and WEP disclaims responsibility for offers on its site. Treat it as a starting directory.",
+  "officialUrl": "https://wep.gov.in/about-us",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ },
+ {
+  "slug": "zoho-for-startups",
+  "name": "Zoho for Startups",
+  "shortName": null,
+  "provider": "Zoho",
+  "level": "private",
+  "state": null,
+  "kind": "credits",
+  "summary": "Zoho Wallet credits that startups can spend on Zoho's business apps for 360 days. Credits come in two stages, and the second needs you to host your domain with Zoho within 15 days. Zoho states that it gives no cash, grants or investment. India is one of the countries where the programme is live, with limited access.",
+  "amount": null,
+  "amountMaxInr": null,
+  "repayable": false,
+  "stages": [
+   "idea",
+   "prototype",
+   "early-revenue"
+  ],
+  "sectors": [
+   "any"
+  ],
+  "audience": [
+   "any"
+  ],
+  "goodForSoftware": true,
+  "eligibility": [
+   "Not a current or past paying Zoho customer.",
+   "An earlier Zoho One for Startups benefit rules you out.",
+   "A Zoho account made with your organisation's main email address.",
+   "Come through a partner ecosystem enabler, or hold a valid DPIIT certificate and register as self-funded."
+  ],
+  "howToApply": [
+   "If your incubator or accelerator works with Zoho, ask it for the application steps.",
+   "If you have DPIIT recognition, create a Zoho account and register under the self-funded category.",
+   "Unlock the second stage by hosting your domain with Zoho within 15 days."
+  ],
+  "status": "open-rolling",
+  "statusNote": "FAQ says the programme is live in India with limited access. The credit value did not display on the page when checked, so it is left blank.",
+  "deadline": null,
+  "watchOut": "Credits only buy Zoho's own apps and last 360 days. They will not pay for your hosting. The main page reserves the programme for partner-linked startups, while the FAQ adds a DPIIT route.",
+  "officialUrl": "https://www.zoho.com/startups/faq.html",
+  "applyUrl": null,
+  "checkedOn": "2026-11-04"
+ }
+]

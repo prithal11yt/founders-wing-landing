@@ -4,10 +4,13 @@ import { ACCENT, Wordmark } from './brand'
 import { JOIN } from './ui'
 
 const LINKS = [
-  { label: 'What’s Included', href: '/#benefits' },
-  { label: 'Stories', href: '/#stories' },
-  { label: 'Our Why', href: '/#founder' },
+  // Too many links for a tablet, so these three wait for wider screens.
+  { label: 'What’s Included', href: '/#benefits', wideOnly: true },
+  { label: 'Stories', href: '/#stories', wideOnly: true },
+  { label: 'Our Why', href: '/#founder', wideOnly: true },
   { label: 'Events', href: '/events' },
+  { label: 'Ideas', href: '/ideas' },
+  { label: 'Grants', href: '/grants' },
   { label: 'Blog', href: '/blog' },
   { label: 'FAQs', href: '/#faq' },
 ]
@@ -22,14 +25,14 @@ export function SiteNav() {
         </a>
         <nav className="hidden md:flex items-center gap-7 text-[13px] text-white/70">
           {LINKS.map(l => (
-            <a key={l.href} href={l.href} className="hover:text-white transition-colors">{l.label}</a>
+            <a key={l.href} href={l.href} className={`whitespace-nowrap hover:text-white transition-colors ${l.wideOnly ? 'hidden lg:inline' : ''}`}>{l.label}</a>
           ))}
         </nav>
         <div className="flex items-center gap-1">
           <a href={PHONE_TEL} aria-label={`Call ${PHONE_DISPLAY}`} className="p-2.5 rounded-full text-white/75 hover:text-white hover:bg-white/10 transition-colors">
             <Phone className="w-4 h-4" />
           </a>
-          <a href={JOIN} className="rounded-full h-9 md:h-10 px-4 md:px-5 inline-flex items-center text-[13px] font-medium text-white hover:brightness-110 transition-all" style={{ background: ACCENT }}>
+          <a href={JOIN} className="rounded-full h-9 md:h-10 px-4 md:px-5 inline-flex items-center whitespace-nowrap text-[13px] font-medium text-white hover:brightness-110 transition-all" style={{ background: ACCENT }}>
             Get Membership
           </a>
         </div>
