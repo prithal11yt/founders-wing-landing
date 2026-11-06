@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
-import { Check, Globe, Linkedin, MessageCircle, Phone, Plus, Play, Youtube, Zap, ShieldCheck, CreditCard } from 'lucide-react'
+import { Check, X, Globe, Linkedin, MessageCircle, Phone, Plus, Play, Youtube, Zap, ShieldCheck, CreditCard } from 'lucide-react'
 import { PHONE_DISPLAY, PHONE_TEL, WHATSAPP_URL } from '@/lib/contact'
 import { COHORT_1_SIZE, EARLY_SPOTS, cohortOf, earlySpotsLeft } from '@/lib/cohort'
 import { ANNUAL_MONTHLY, PRICE_SENTENCE, PRICING, STARTER_PRICE, inrFmt } from '@/lib/pricing'
@@ -26,13 +26,14 @@ const STORIES = [
 ]
 
 const FAQS = [
-  { q: 'What kind of projects is this for?', a: 'Anything you are building with AI: SaaS products, AI automations for clients, apps, AI agencies, content businesses. The goal is the same for everyone. Get it built, get it launched, and get people paying for it.' },
-  { q: "I haven't started anything yet — is this for me?", a: "Yes, 100%. Most of our members are in the same boat — full of ideas but stuck overthinking. This community is specifically designed to help you go from 'I want to start' to actually launching. You don't need experience, just the willingness to take action." },
-  { q: 'What are Cohort 1 and Cohort 2?', a: `Cohort 1 was the founding ${COHORT_1_SIZE} members, who joined at the founding price. It closed in October 2026. Cohort 2 is open now. The first ${EARLY_SPOTS} members of Cohort 2 also join the Cohort 1 group, so you learn alongside the founding members from day one; once Cohort 2 has ${EARLY_SPOTS} members it gets its own group. Live sessions and the main community are the same for everyone.` },
-  { q: 'How much does it cost?', a: `Two plans: ${PRICE_SENTENCE}.${couponActive() ? ` Until ${COUPON_ENDS_LABEL}, code ${COUPON.code} takes ${COUPON.percent}% off at checkout.` : ''} No monthly option — we want committed members who are serious about building.` },
-  { q: 'What is the time commitment?', a: "No mandatory hours. Most members spend 2-3 hours per week — joining the weekly session, checking in with their accountability buddy, and sharing progress. The key is consistency, not hours." },
-  { q: 'How is this different from your free WhatsApp group?', a: "The free WhatsApp group is great for general discussion, but it's 5,000+ people. Founders Wing is smaller, focused, and action-oriented — weekly live sessions, accountability partners, Hot Seat coaching, and members who are committed because they paid to be here." },
-  { q: 'Can I cancel?', a: 'Your access continues for the full duration of your plan (6 or 12 months). After that, you can choose not to renew. There are no refunds — we want members who are committed to showing up and doing the work.' },
+  { q: 'Who is Founders Wing for?', a: 'Solo builders in India working on their first AI product: a SaaS, an automation, an app or an AI service. If you already run a business and want AI to bring you more customers, you are welcome too.' },
+  { q: "I haven't started building yet. Is this for me?", a: 'Yes, if you are ready to start. Bring a rough idea, and the Wednesday calls and the group will help you pick one and begin. If you only want to learn about AI without building anything, our free WhatsApp group is a better fit.' },
+  { q: 'Will I make money from this?', a: 'Nobody can honestly promise that. What we promise is a room that keeps you building, gives you honest feedback, and pushes you to put your product in front of people who might pay. Making money with AI is the goal everyone here is working towards.' },
+  { q: 'What are Cohort 1 and Cohort 2?', a: `Cohort 1 was the founding ${COHORT_1_SIZE} members, who joined at the founding price. It closed in October 2026. Cohort 2 is open now. The first ${EARLY_SPOTS} members of Cohort 2 also join the Cohort 1 group, so you build alongside the founding members from day one; once Cohort 2 has ${EARLY_SPOTS} members it gets its own group. Live sessions and the main community are the same for everyone.` },
+  { q: 'How much does it cost?', a: `Two plans: ${PRICE_SENTENCE}.${couponActive() ? ` Until ${COUPON_ENDS_LABEL}, code ${COUPON.code} takes ${COUPON.percent}% off at checkout.` : ''} There is no monthly plan, because the room works best with people who stay and keep showing up.` },
+  { q: 'How much time does it take?', a: 'There are no set hours. Join the Wednesday call, post your progress, and give feedback to others. Plan for 2 to 3 hours a week inside the community, plus the time you spend building.' },
+  { q: 'How is this different from your free WhatsApp group?', a: 'The free group is 5,000+ people talking about AI. Founders Wing is a smaller room of people who are building, with a live call every Wednesday, hot seat feedback, and members who paid to be here, so they show up.' },
+  { q: 'Can I cancel?', a: 'Your access continues for the full duration of your plan (6 or 12 months). After that, you can choose not to renew. There are no refunds, because we want members who are committed to showing up and doing the work.' },
 ]
 
 function useMemberCount() {
@@ -56,6 +57,7 @@ export function Home() {
       <StatsStrip count={count} />
       <ToolsStrip />
       <FounderStory />
+      <WhoItsFor />
       <WhatYouGet />
       <Membership nextMemberNo={nextMemberNo} earlyLeft={earlyLeft} />
       <MemberStories />
@@ -76,17 +78,17 @@ function Hero({ count }: { count: number | null }) {
     <section className="pt-36 md:pt-44 pb-16 md:pb-24">
       <div className="mx-auto max-w-6xl px-5 grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-14 items-center">
         <div>
-          <p className="inline-flex items-center gap-2 text-sm text-neutral-500 mb-5"><WingMark className="h-3.5 w-auto" gradient /> For people building with AI</p>
+          <p className="inline-flex items-center gap-2 text-sm text-neutral-500 mb-5"><WingMark className="h-3.5 w-auto" gradient /> For solo builders in India</p>
           <h1 className="text-[44px] leading-[1.02] md:text-7xl font-medium tracking-[-0.045em]">
-            Build it with AI.
+            Build with AI.
             <br />
-            <span className="text-neutral-400">Get paying customers.</span>
+            <span className="text-neutral-400">Get paid for it.</span>
           </h1>
           <p className="mt-6 text-lg text-neutral-600 leading-relaxed max-w-md">
-            For people building SaaS, AI automations and AI-powered businesses who want to make money from them. Build here, get feedback, and use the network to reach paying customers faster.
+            Founders Wing is a community for solo builders working on their first AI product. Every week you show what you’re building, get honest feedback, and learn from people doing the same thing.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <PrimaryCTA />
+            <PrimaryCTA>Join Founders Wing</PrimaryCTA>
             <a href={PHONE_TEL} className="inline-flex items-center gap-2 rounded-full h-12 px-6 text-[15px] font-medium border border-neutral-200 hover:bg-neutral-50 transition-colors">
               <Phone className="w-4 h-4" style={{ color: ACCENT }} /> Enquire now
             </a>
@@ -99,7 +101,7 @@ function Hero({ count }: { count: number | null }) {
               <Image src="/prithal-portrait.jpg" alt="" width={36} height={36} className="w-9 h-9 rounded-full object-cover ring-2 ring-white" />
             </div>
             <p className="text-sm text-neutral-600">
-              <span className="font-semibold text-neutral-900">{count ?? '40+'} founders</span> already inside
+              <span className="font-semibold text-neutral-900">{count ?? '50+'} builders inside</span> · Live call every Wednesday
             </p>
           </div>
         </div>
@@ -130,7 +132,7 @@ function Hero({ count }: { count: number | null }) {
               <p className="text-sm text-neutral-500">Watch Prithal explain it · 10 min</p>
             </div>
             <p className="hidden sm:flex items-center gap-1.5 text-sm text-neutral-500">
-              <Zap className="w-4 h-4" style={{ color: ACCENT }} /> Weekly live sessions
+              <Zap className="w-4 h-4" style={{ color: ACCENT }} /> Live every Wednesday
             </p>
           </div>
         </div>
@@ -142,8 +144,8 @@ function Hero({ count }: { count: number | null }) {
 function StatsStrip({ count }: { count: number | null }) {
   const stats = [
     { v: '50K+', l: 'YouTube subscribers' },
-    { v: count !== null ? String(count) : '50', l: 'Members' },
-    { v: '26', l: 'Live sessions every 6 months' },
+    { v: count !== null ? String(count) : '50+', l: 'Builders inside' },
+    { v: '26', l: 'Live calls every 6 months' },
     { v: '5,000+', l: 'In the free WhatsApp community' },
   ]
   return (
@@ -160,13 +162,13 @@ function StatsStrip({ count }: { count: number | null }) {
   )
 }
 
-/* Superpower's "So we built superpower": black, huge type, lines light up as you scroll.
+/* Why we exist: black, huge type, lines light up as you scroll. Then who runs it.
    Lines start grey (never invisible), so nothing depends on the observer firing. */
 function FounderStory() {
   const lines = [
-    'Anyone can build with AI now.',
-    'Getting people to pay for it',
-    'is the hard part.',
+    'AI made it possible for one person',
+    'to build a real product.',
+    'Building alone is the hard part.',
   ]
   return (
     <section id="founder" className="bg-neutral-950 text-white py-24 md:py-36">
@@ -175,13 +177,16 @@ function FounderStory() {
         <div className="space-y-1 md:space-y-2">
           {lines.map(l => <RevealLine key={l} text={l} className="text-4xl md:text-6xl font-medium tracking-[-0.04em] leading-[1.08]" />)}
         </div>
+        <p className="mt-8 max-w-2xl text-lg md:text-xl text-neutral-400 leading-relaxed">
+          On your own, nobody sees your work. Nobody tells you what’s broken, and nobody’s there when you’re stuck at 11pm. Most solo projects we see don’t stall because the idea is bad. They stall because nobody else ever looks at them, and they never reach anyone who’d pay.
+        </p>
         <p className="mt-12 md:mt-16 text-4xl md:text-6xl font-medium tracking-[-0.04em] leading-[1.05]">
           <span className="text-neutral-500">So we built</span>
           <br />
           <Wordmark gradient />
         </p>
         <p className="mt-8 max-w-2xl text-lg md:text-xl text-neutral-400 leading-relaxed">
-          A paid room of people building SaaS, AI automations and AI businesses. You build, and the room helps you launch it, improve it and get in front of the people who&apos;ll pay for it. Faster than doing it alone.
+          So you don’t build alone. It’s a room of people building with AI, all working towards the same goal: making money from what they build.
         </p>
         {/* On desktop the portrait on the right carries the name; phones keep this row. */}
         <div className="mt-12 flex items-center gap-4 lg:hidden">
@@ -226,6 +231,50 @@ function FounderStory() {
   )
 }
 
+/* Who it's for, and who it isn't. Saying no makes the yes believable. */
+function WhoItsFor() {
+  const forYou = [
+    'You’re building your first AI product: a SaaS, an automation, an app or an AI service.',
+    'You’re building it mostly on your own.',
+    'You want it to make money, not just to work.',
+    'You’ll show up every week and share what you’re doing.',
+  ]
+  const notForYou = [
+    'You want passive income without building anything.',
+    'You want to learn AI tools or follow AI news, with no plan to build.',
+    'You want someone else to build it for you.',
+    'You’re a funded startup with a team.',
+  ]
+  return (
+    <section id="who" className="py-20 md:py-28">
+      <div className="mx-auto max-w-6xl px-5">
+        <p className="text-[15px] text-neutral-500">Who it’s for</p>
+        <h2 className="mt-3 text-4xl md:text-6xl font-medium tracking-[-0.045em] max-w-3xl leading-[1.04]">One goal. One kind of person.</h2>
+        <p className="mt-5 max-w-2xl text-lg text-neutral-600 leading-relaxed">Everyone inside is building with AI, and everyone is working towards making money from it. That shared goal is what makes the room work.</p>
+        <div className="mt-12 grid md:grid-cols-2 gap-4">
+          <div className="rounded-[24px] bg-neutral-50 p-6 md:p-8">
+            <p className="text-lg font-medium">This is for you if</p>
+            <ul className="mt-5 space-y-3.5">
+              {forYou.map(t => (
+                <li key={t} className="flex items-start gap-3 text-[15px] leading-relaxed"><Check className="w-4 h-4 mt-1 shrink-0" style={{ color: ACCENT }} strokeWidth={2.5} /><span>{t}</span></li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-[24px] border border-neutral-200 p-6 md:p-8">
+            <p className="text-lg font-medium">It’s not for you if</p>
+            <ul className="mt-5 space-y-3.5">
+              {notForYou.map(t => (
+                <li key={t} className="flex items-start gap-3 text-[15px] leading-relaxed text-neutral-600"><X className="w-4 h-4 mt-1 shrink-0 text-neutral-400" strokeWidth={2.5} /><span>{t}</span></li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <p className="mt-6 text-[15px] text-neutral-600">Already run a business and want AI to bring you more customers? You’re welcome too.</p>
+      </div>
+    </section>
+  )
+}
+
 function RevealLine({ text, className }: { text: string; className: string }) {
   const ref = useRef<HTMLParagraphElement>(null)
   const [lit, setLit] = useState(false)
@@ -246,7 +295,7 @@ function Membership({ nextMemberNo, earlyLeft }: { nextMemberNo: number | null; 
   const [open, setOpen] = useState<number | null>(null)
   const extra = [
     { q: "What's included exactly?", a: INCLUDED.join(' · ') + '.' },
-    { q: 'How do the live sessions work?', a: 'Every week Prithal runs a live call — AI tool breakdowns, your questions answered, and Hot Seat coaching where a member gets focused help on their specific blocker. Recordings are shared in the community.' },
+    { q: 'How do the live calls work?', a: 'Every Wednesday Prithal runs a live call. Members bring questions, and in the hot seat one member shows what they are building and gets focused feedback. Recordings are shared in the community.' },
   ]
   return (
     <section id="membership" className="py-20 md:py-28">
@@ -266,7 +315,7 @@ function Membership({ nextMemberNo, earlyLeft }: { nextMemberNo: number | null; 
           <p className="text-[15px] text-neutral-500">Two days of offline workshops cost ₹6,000+. Six months here is {STARTER_PRICE}.</p>
           <h2 className="mt-3 text-5xl md:text-6xl font-medium tracking-[-0.045em] leading-[1.02]">Founders Wing<br />Cohort 2</h2>
           <p className="mt-5 text-neutral-600 leading-relaxed">
-            Everything you need to build your AI project, launch it and get customers, with people who are doing the same.
+            Everything in Founders Wing for one payment: the Wednesday calls, the feedback, the group and the people in it.
           </p>
           <div className="mt-6 rounded-[22px] border border-neutral-200 bg-neutral-50 p-5">
             <p className="text-[15px] font-medium">Cohort 1, the founding {COHORT_1_SIZE}, is full. Cohort 2 is open.</p>
@@ -345,7 +394,7 @@ function ToolsStrip() {
   return (
     <section className="py-10 md:py-12 border-b border-neutral-100">
       <div className="mx-auto max-w-6xl px-5">
-        <p className="text-center text-xs uppercase tracking-[0.2em] text-neutral-400">Tools you’ll learn to use inside</p>
+        <p className="text-center text-xs uppercase tracking-[0.2em] text-neutral-400">What members build with</p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-x-7 gap-y-5 md:gap-x-10">
           {row.map(t => (
             <div key={t} className="flex items-center gap-2 text-neutral-500 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all">
@@ -359,19 +408,18 @@ function ToolsStrip() {
   )
 }
 
-/* ─────────── What you get: scroll-driven ───────────
+/* ─────────── A week inside: scroll-driven ───────────
    The section is tall; a sticky viewport stays put while scrolling swaps the scene on
-   the right and lights up the matching benefit on the left (Apple/Linear pattern).
-   Scenes are small UI illustrations of each benefit; member names/quotes are real,
-   replies and session titles are placeholders to swap for real ones. */
+   the right and lights up the matching item on the left (Apple/Linear pattern).
+   Scenes are small UI illustrations; member names/quotes are real, replies and
+   session titles are placeholders to swap for real ones. */
 const BENEFITS = [
-  { k: 'workshops', stage: 'Build', n: '01', t: 'Workshops on AI automations, SaaS building and local AI', d: 'Hands-on sessions where you build along, with the tools the pros actually use.', scene: WorkshopScene },
-  { k: 'library', stage: 'Build', n: '02', t: 'Weekly live sessions, plus a library of 10+ recordings', d: '26 live calls with Prithal every 6 months. Missed one? Every session is recorded and waiting for you.', scene: LibraryScene },
-  { k: 'tools', stage: 'Build', n: '03', t: 'Learn new AI tools, every week', d: 'One new tool every week with a real workflow you can use the same day. Not just a demo.', scene: ToolScene },
-  { k: 'feedback', stage: 'Launch', n: '04', t: 'Real-time feedback on what you’re building', d: 'Post your landing page, pitch or pricing and get honest feedback from founders the same day, not in three weeks.', scene: FeedbackScene },
-  { k: 'network', stage: 'Get customers', n: '05', t: 'A network that gets you clients', d: 'Members bring their own networks. Ask for an intro and someone usually knows the exact person you need.', scene: NetworkScene },
-  { k: 'builders', stage: 'Grow', n: '06', t: 'Founders already building SaaS, AI automations and apps', d: 'You’re in a room with people shipping real products, not just talking about them.', scene: BuildersScene },
-  { k: 'community', stage: 'Grow', n: '07', t: 'Your private WhatsApp group', d: 'Members only. Wins, questions, feedback, and founders pushing each other to ship.', scene: CommunityScene },
+  { k: 'call', stage: 'Every week', n: '01', t: 'A live call with Prithal, every Wednesday', d: 'Bring what you’re stuck on and get answers live. Missed one? Every call is recorded and waiting in the library.', scene: LibraryScene },
+  { k: 'feedback', stage: 'Every week', n: '02', t: 'Hot seat feedback on what you’re building', d: 'Show your product, landing page or pricing, and get honest feedback on what to fix, from Prithal and members.', scene: FeedbackScene },
+  { k: 'community', stage: 'Every week', n: '03', t: 'Share your progress with the group', d: 'Post what you built or shipped this week. Seeing others ship keeps you shipping.', scene: CommunityScene },
+  { k: 'workshops', stage: 'Whenever you need it', n: '04', t: 'Workshops on AI automations, SaaS building and local AI', d: 'Hands-on sessions where you build along with the tools members use.', scene: WorkshopScene },
+  { k: 'network', stage: 'Whenever you need it', n: '05', t: 'Ask the room for help and introductions', d: 'Members bring their own networks. Ask, and someone often knows the person you need.', scene: NetworkScene },
+  { k: 'builders', stage: 'Whenever you need it', n: '06', t: 'People building the same kind of thing', d: 'SaaS, automations, apps and AI services. You’re in a room with people building, not just talking about it.', scene: BuildersScene },
 ]
 
 function WhatYouGet() {
@@ -388,15 +436,15 @@ function WhatYouGet() {
     <section ref={ref} id="benefits" className="relative bg-neutral-50" style={{ height: `${BENEFITS.length * 75}vh` }}>
       <div className="sticky top-0 h-[100svh] overflow-hidden flex flex-col">
         <div className="mx-auto w-full max-w-6xl px-5 pt-28 md:pt-32 lg:hidden">
-          <p className="text-[15px] text-neutral-500">What you get inside</p>
-          <h2 className="mt-2 text-3xl md:text-5xl font-medium tracking-[-0.045em]">Build it. Launch it. Get customers.</h2>
+          <p className="text-[15px] text-neutral-500">What happens inside</p>
+          <h2 className="mt-2 text-3xl md:text-5xl font-medium tracking-[-0.045em]">A week in Founders Wing</h2>
         </div>
 
         <div className="mx-auto w-full max-w-6xl px-5 flex-1 grid lg:grid-cols-[0.95fr_1.05fr] gap-6 lg:gap-16 items-center pb-6 md:pb-10 lg:pt-28">
           {/* Desktop: heading + the list, active item expands */}
           <div className="hidden lg:block">
-            <p className="text-[15px] text-neutral-500">What you get inside</p>
-            <h2 className="mt-2 text-[44px] font-medium tracking-[-0.045em] leading-[1.05]">Build it. Launch it.<br />Get customers.</h2>
+            <p className="text-[15px] text-neutral-500">What happens inside</p>
+            <h2 className="mt-2 text-[44px] font-medium tracking-[-0.045em] leading-[1.05]">A week in<br />Founders Wing</h2>
             <ol className="mt-7 space-y-2.5">
             {BENEFITS.map((b, i) => (
               <li key={b.k} className={`transition-opacity duration-500 ${i === active ? 'opacity-100' : 'opacity-30'}`}>
@@ -617,42 +665,6 @@ function LibraryScene() {
   )
 }
 
-function ToolScene() {
-  const recent: ToolSlug[] = ['claude', 'cursor', 'perplexity', 'elevenlabs', 'googlegemini', 'ollama']
-  const steps = ['Set it up in 10 minutes', 'Use it on your own business', 'Share what happened in the group']
-  return (
-    <div className="absolute inset-0 bg-white p-4 md:p-6 flex flex-col">
-      <div className="flex items-center justify-between text-[11px] text-neutral-500">
-        <span className="rounded-full bg-neutral-100 px-2.5 py-1 font-medium text-neutral-800">Tool of the week</span>
-        <span>One new tool, every week</span>
-      </div>
-      <div className="mt-3 rounded-2xl border border-neutral-200 p-3.5 flex items-center gap-3.5">
-        <span className="w-12 h-12 rounded-xl bg-neutral-50 border border-neutral-200 flex items-center justify-center shrink-0"><ToolLogo slug="n8n" className="w-7 h-7" /></span>
-        <div className="min-w-0">
-          <p className="text-[15px] font-medium">n8n</p>
-          <p className="text-[12px] text-neutral-500 leading-snug">Automate lead follow-ups while you sleep</p>
-        </div>
-        <span className="ml-auto rounded-full bg-emerald-50 text-emerald-700 text-[11px] px-2 py-0.5 font-medium whitespace-nowrap">This week</span>
-      </div>
-      <ol className="mt-3 space-y-2">
-        {steps.map((st, i) => (
-          <li key={st} className="flex items-center gap-3 text-[13px]">
-            <span className="w-6 h-6 rounded-full bg-neutral-100 text-[11px] font-mono flex items-center justify-center text-neutral-600">{i + 1}</span>{st}
-          </li>
-        ))}
-      </ol>
-      <p className="mt-auto pt-3 text-[11px] text-neutral-500">Recent weeks</p>
-      <div className="mt-2 flex items-center gap-2">
-        {recent.map(t => (
-          <span key={t} className="w-9 h-9 rounded-lg bg-neutral-50 border border-neutral-200 flex items-center justify-center" title={TOOLS[t]}>
-            <ToolLogo slug={t} className="w-4.5 h-4.5" />
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 function CommunityScene() {
   const msgs = [
     { n: 'Harjot S.', t: 'I consider joining Founders Wing the best decision of my life 🙌' },
@@ -697,7 +709,7 @@ function MemberStories() {
     <section id="stories" className="py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-5">
         <p className="text-center text-[15px] text-neutral-500">Member Stories</p>
-        <h2 className="mt-3 text-center text-4xl md:text-6xl font-medium tracking-[-0.045em]">Hear it from our members</h2>
+        <h2 className="mt-3 text-center text-4xl md:text-6xl font-medium tracking-[-0.045em]">What building here is like</h2>
         <div className="mt-12 md:mt-16 grid md:grid-cols-3 gap-4 md:gap-5">
           {STORIES.map((s, i) => (
             <figure key={s.name} className="relative rounded-[24px] overflow-hidden bg-neutral-900 aspect-[4/5]">
@@ -742,16 +754,16 @@ function MemberStories() {
 
 function HowItWorks() {
   const steps = [
-    { n: '01', t: 'Join in 2 minutes', d: 'Fill a short form and pay securely. You are in the same day.' },
-    { n: '02', t: 'Tell the room what you’re building', d: 'SaaS, automation, app, anything with AI. Post your intro and what you need.' },
-    { n: '03', t: 'Build with the room', d: 'Weekly live sessions, workshops and a new tool every week. Ask the moment you’re stuck.' },
-    { n: '04', t: 'Launch and get customers', d: 'Post it for feedback, ask for intros, and use the network to reach the people who’ll pay.' },
+    { n: '01', t: 'Join in 2 minutes', d: 'Fill a short form and pay securely. You’re in the same day.' },
+    { n: '02', t: 'Say what you’re building', d: 'Post your intro in the group: what you’re building, and where you’re stuck.' },
+    { n: '03', t: 'Show up every Wednesday', d: 'Bring your progress to the call, get feedback, and fix what’s holding you back.' },
+    { n: '04', t: 'Put it in front of people who pay', d: 'Use the feedback and the room’s introductions to reach your first customers.' },
   ]
   return (
     <section className="py-20 md:py-28 border-t border-neutral-100">
       <div className="mx-auto max-w-6xl px-5">
         <p className="text-[15px] text-neutral-500">How it works</p>
-        <h2 className="mt-3 text-4xl md:text-6xl font-medium tracking-[-0.045em] max-w-2xl">From idea to paying customers, one week at a time</h2>
+        <h2 className="mt-3 text-4xl md:text-6xl font-medium tracking-[-0.045em] max-w-2xl">What happens after you join</h2>
         <div className="mt-12 md:mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {steps.map(s => (
             <div key={s.n} className="rounded-[22px] bg-neutral-50 p-6 md:p-7">
@@ -798,9 +810,9 @@ function FinalCTA() {
           <br />
           <span className="text-neutral-500">long enough.</span>
         </h2>
-        <p className="mt-6 text-lg text-neutral-400 max-w-xl mx-auto">Build it with AI, launch it, and get your first paying customers. With people who are doing the same.</p>
+        <p className="mt-6 text-lg text-neutral-400 max-w-xl mx-auto">Build it with AI, get it in front of people who pay, and stop doing it alone.</p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <PrimaryCTA />
+          <PrimaryCTA>Join Founders Wing</PrimaryCTA>
           <a href={PHONE_TEL} className="inline-flex items-center gap-2 rounded-full h-12 px-6 text-[15px] font-medium border border-white/15 hover:bg-white/5 transition-colors">
             <Phone className="w-4 h-4" /> {PHONE_DISPLAY}
           </a>

@@ -262,9 +262,9 @@ export default async function FounderPage() {
           <div className="mx-auto max-w-4xl px-5 text-center">
             <WingMark className="h-10 md:h-12 w-auto mx-auto mb-8" gradient />
             <h2 className="text-4xl md:text-7xl font-medium tracking-[-0.045em] leading-[1.02]">
-              Build it with AI.
+              Build with AI.
               <br />
-              <span className="text-neutral-500">Get paying customers.</span>
+              <span className="text-neutral-500">Get paid for it.</span>
             </h2>
             <p className="mt-6 text-lg text-neutral-400 max-w-xl mx-auto">Join the room. Weekly live sessions with me, feedback on what you build, and a network that helps you get customers.</p>
             <div className="mt-10"><PrimaryCTA /></div>

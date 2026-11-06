@@ -69,7 +69,7 @@ export function SiteFooter() {
         <div>
           <Wordmark className="text-white text-lg" />
           <p className="mt-4 text-sm leading-relaxed max-w-xs">
-            Build it with AI. Get paying customers. India’s community for people building SaaS, AI automations and AI businesses.
+            Build with AI. Get paid for it. A community for solo builders in India working on their first AI product.
           </p>
         </div>
         <Col title="Founders Wing" links={SITE} />

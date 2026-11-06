@@ -30,10 +30,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Founders Wing | Build it with AI. Get paying customers.",
+    default: "Founders Wing | Build with AI. Get paid for it.",
     template: "%s | Founders Wing",
   },
-  description: "India’s community for people building SaaS, AI automations and AI businesses. Build here, get feedback, and use the network to reach paying customers faster. From ₹1,042/month.",
+  description: "A community for solo builders in India working on their first AI product. A live call every Wednesday, honest feedback, and people working towards the same goal: making money with AI. From ₹1,042/month.",
   keywords: ["founder community india", "ai tools for founders", "entrepreneur community india", "startup community india", "online business india"],
   authors: [{ name: "Prithal Bhardwaj", url: "https://thesoloentrepreneur.in" }],
   creator: "Prithal Bhardwaj",
@@ -48,16 +48,16 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: BASE_URL,
     siteName: "Founders Wing",
-    title: "Founders Wing | Build it with AI. Get paying customers.",
-    description: "India’s community for people building SaaS, AI automations and AI businesses. Build here, get feedback, and reach paying customers faster.",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Founders Wing — Build it with AI. Get paying customers." }],
+    title: "Founders Wing | Build with AI. Get paid for it.",
+    description: "A community for solo builders in India working on their first AI product. A live call every Wednesday, honest feedback, and people working towards making money with AI.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Founders Wing: Build with AI. Get paid for it." }],
   },
   twitter: {
     card: "summary_large_image",
     site: "@Prithal7",
     creator: "@Prithal7",
-    title: "Founders Wing | Build it with AI. Get paying customers.",
-    description: "India’s community for people building SaaS, AI automations and AI businesses. Build here, get feedback, and reach paying customers faster.",
+    title: "Founders Wing | Build with AI. Get paid for it.",
+    description: "A community for solo builders in India working on their first AI product. A live call every Wednesday, honest feedback, and people working towards making money with AI.",
     images: ["/opengraph-image"],
   },
   robots: {
@@ -124,7 +124,7 @@ export default function RootLayout({
                 name: "Founders Wing",
                 url: BASE_URL,
                 logo: `${BASE_URL}/logo.png`,
-                description: "India’s community for people building SaaS, AI automations and AI businesses, who want to launch and get paying customers.",
+                description: "A community for solo builders in India working on their first AI product, all working towards making money with AI.",
                 founder: { "@type": "Person", name: "Prithal Bhardwaj" },
                 sameAs: [
                   "https://www.youtube.com/@PrithalBhardwaj",

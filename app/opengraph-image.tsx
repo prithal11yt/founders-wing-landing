@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 import { ANNUAL_MONTHLY } from '@/lib/pricing'
 
 export const runtime = 'edge'
-export const alt = 'Founders Wing — Build it with AI. Get paying customers.'
+export const alt = 'Founders Wing: Build with AI. Get paid for it.'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -40,8 +40,8 @@ export default async function Image() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ fontSize: 84, fontWeight: 700, lineHeight: 1.02, letterSpacing: -3 }}>Build it with AI.</div>
-          <div style={{ fontSize: 84, fontWeight: 700, lineHeight: 1.02, letterSpacing: -3, color: '#7c8698' }}>Get paying customers.</div>
+          <div style={{ fontSize: 84, fontWeight: 700, lineHeight: 1.02, letterSpacing: -3 }}>Build with AI.</div>
+          <div style={{ fontSize: 84, fontWeight: 700, lineHeight: 1.02, letterSpacing: -3, color: '#7c8698' }}>Get paid for it.</div>
           <div style={{ marginTop: 28, fontSize: 28, color: 'rgba(255,255,255,0.65)', maxWidth: 900, lineHeight: 1.4 }}>
             {`India’s community for people building SaaS, AI automations and AI businesses. From ${ANNUAL_MONTHLY}/month.`}
           </div>

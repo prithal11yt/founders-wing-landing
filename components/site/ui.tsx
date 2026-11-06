@@ -9,13 +9,12 @@ export const JOIN = '/#apply'
 export { PLANS, type PlanKey } from '@/lib/pricing'
 
 export const INCLUDED = [
-  'Weekly live sessions with Prithal (26 every 6 months)',
+  'A live call with Prithal every Wednesday (26 every 6 months)',
+  'Hot seat feedback on what you’re building',
   'Library of 10+ recorded sessions',
-  'Real-time feedback on what you’re building',
   'Workshops: AI automations, SaaS building, local AI models',
-  'A founder network that helps you get clients',
   'Private members-only WhatsApp group',
-  'A new AI tool every week',
+  'Introductions through the member network',
   'AI playbooks, templates & the 50 Business Ideas ebook',
 ]
 
