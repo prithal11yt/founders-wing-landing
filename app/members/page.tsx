@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useId } from 'react'
 import { COHORT_1_SIZE } from '@/lib/cohort'
-import { Compass, Globe, HandHelping, LayoutDashboard, Newspaper, Users } from 'lucide-react'
-import { STAGES, STAGE_PATH } from '@/lib/crm'
+import { Check, ChevronDown, Compass, Globe, Hammer, HandHelping, IndianRupee, LayoutDashboard, Lightbulb, Lock, Newspaper, Rocket, Sparkles, Target, Timer, TrendingUp, Users } from 'lucide-react'
+import { STAGES, STAGE_PATH, STAGE_TARGET_DAYS } from '@/lib/crm'
 
 type Member = {
   id: string
@@ -787,225 +787,296 @@ function WingsCard({ wings, onGiven }: { wings: WingsData; onGiven: () => void }
 }
 
 /* ── Journey board ─────────────────────────────────────────────────────────
-   Where every member is on Decide → Build → Launch → Sell (plus the Grow with
-   AI lane), what they're building and their 30-day goal. Read-only: the team
-   updates it after each check-in. */
+   Each member's place on Decide → Build → Launch → Sell (plus the Grow with AI
+   lane), styled after Cal AI / Apple Fitness. The page stays black and white;
+   only the stage medals change material as members move up (flat grey for
+   Decide, then copper, silver, gold, holographic). "You" shows your own day
+   count, goal and next step; "Board" shows everyone, best stage first.
+   Read-only: the team updates stages and goals after each call. */
 
-const STAGE_COLOR: Record<string, string> = {
-  decide: '#525252',
-  build: '#0284c7',
-  launch: '#d97706',
-  sell: '#059669',
-  grow: '#7c3aed',
+const BEST_FIRST = ['grow', 'sell', 'launch', 'build', 'decide']
+const STAGE_SHORT: Record<string, string> = { decide: 'Decide', build: 'Build', launch: 'Launch', sell: 'Sell', grow: 'Grow' }
+const STAGE_ICON: Record<string, typeof Lightbulb> = { decide: Lightbulb, build: Hammer, launch: Rocket, sell: IndianRupee, grow: Sparkles }
+const METAL: Record<string, { bg: string; icon: string; glow: string }> = {
+  build: { bg: 'radial-gradient(circle at 34% 28%, #f7d6b4 0%, #c9854a 46%, #874a1c 100%)', icon: '#ffffff', glow: '#a8622a' },
+  launch: { bg: 'radial-gradient(circle at 34% 28%, #ffffff 0%, #c8d0d9 46%, #75808d 100%)', icon: '#3b4552', glow: '#7b8794' },
+  sell: { bg: 'radial-gradient(circle at 34% 28%, #fff7cf 0%, #eabf2e 46%, #976600 100%)', icon: '#ffffff', glow: '#b8860b' },
+  grow: { bg: 'conic-gradient(from 210deg, #c4b5fd, #93c5fd, #99f6e4, #fbcfe8, #fde68a, #c4b5fd)', icon: '#3b0764', glow: '#8b5cf6' },
 }
+const RING_COLOR: Record<string, string> = { decide: '#c7c7cc', build: '#b06a30', launch: '#6b7785', sell: '#c9971c', grow: 'holo' }
+const CARD = 'bg-white rounded-[24px] shadow-[0_1px_2px_rgba(0,0,0,0.03),0_8px_24px_rgba(0,0,0,0.04)]'
+const APPLE_FONT = "-apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, Inter, sans-serif"
+
 const stageMeta = (v?: string | null) => STAGES.find((s) => s.value === v)
 const stageLabel = (v?: string | null) => stageMeta(v)?.label ?? v ?? ''
 const shortDate = (iso: string) => new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
+const daysSince = (iso: string | null) => (iso ? Math.max(1, Math.floor((Date.now() - new Date(iso).getTime()) / 86400000) + 1) : null)
+const goalDaysLeft = (g: JourneyMember['goal']) => (g?.due_on ? Math.ceil((new Date(g.due_on + 'T23:59:59').getTime() - Date.now()) / 86400000) : null)
+const goalUsed = (g: JourneyMember['goal']) => {
+  if (!g?.set_on || !g?.due_on) return 0
+  const a = new Date(g.set_on).getTime(), b = new Date(g.due_on).getTime()
+  return b > a ? Math.min(1, Math.max(0, (Date.now() - a) / (b - a))) : 1
+}
+const paceColor = (stage: string, d: number | null) => {
+  const t = STAGE_TARGET_DAYS[stage] ?? 30
+  if (d == null) return '#aeaeb2'
+  return d > t * 2 ? '#ff3b30' : d > t ? '#ff9500' : stage === 'decide' ? '#8e8e93' : '#000000'
+}
+// What it takes to reach a stage: the milestone of the stage before it.
+const unlockFor = (stage: string) => stageMeta(STAGE_PATH[STAGE_PATH.indexOf(stage as typeof STAGE_PATH[number]) - 1])?.milestone ?? ''
 
-function dueText(due: string | null): { text: string; late: boolean } | null {
-  if (!due) return null
-  const days = Math.ceil((new Date(due + 'T23:59:59').getTime() - Date.now()) / 86400000)
-  if (days < 0) return { text: `review due since ${shortDate(due)}`, late: true }
-  if (days === 0) return { text: 'due today', late: false }
-  return { text: `${days} day${days === 1 ? '' : 's'} left`, late: false }
+function Medal({ stage, size, locked = false }: { stage: string; size: number; locked?: boolean }) {
+  const Icon = locked ? Lock : STAGE_ICON[stage] ?? Lightbulb
+  const icon = <Icon style={{ width: size * 0.44, height: size * 0.44 }} strokeWidth={2} />
+  const base = 'inline-flex items-center justify-center rounded-full shrink-0'
+  if (locked) return <span className={base} style={{ width: size, height: size, border: '2px dashed #d1d1d6', color: '#c7c7cc' }}>{icon}</span>
+  const m = METAL[stage]
+  if (!m) return <span className={base} style={{ width: size, height: size, background: '#f2f2f5', border: '1.5px solid #e5e5ea', color: '#aeaeb2' }}>{icon}</span>
+  return (
+    <span className={base} style={{
+      width: size, height: size, background: m.bg, color: m.icon,
+      boxShadow: `inset 0 0 0 ${Math.max(2, size * 0.06)}px rgba(255,255,255,0.55), inset 0 -${size * 0.08}px ${size * 0.16}px rgba(0,0,0,0.18), 0 ${size * 0.12}px ${size * 0.3}px -${size * 0.12}px ${m.glow}`,
+    }}>{icon}</span>
+  )
+}
+
+function Ring({ size, stroke, frac, color, children }: { size: number; stroke: number; frac: number; color: string; children?: React.ReactNode }) {
+  const id = useId().replace(/:/g, '')
+  const r = (size - stroke) / 2, c = 2 * Math.PI * r
+  return (
+    <span className="relative inline-flex items-center justify-center shrink-0" style={{ width: size, height: size }}>
+      <svg width={size} height={size} className="absolute inset-0" aria-hidden>
+        <defs><linearGradient id={id} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#a78bfa" /><stop offset=".5" stopColor="#60a5fa" /><stop offset="1" stopColor="#f472b6" /></linearGradient></defs>
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#efeff4" strokeWidth={stroke} />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color === 'holo' ? `url(#${id})` : color} strokeWidth={stroke} strokeLinecap="round"
+          strokeDasharray={`${c * Math.min(1, Math.max(0.02, frac))} ${c}`} transform={`rotate(-90 ${size / 2} ${size / 2})`} />
+      </svg>
+      {children}
+    </span>
+  )
 }
 
 function JourneyBoard({ data }: { data: JourneyData }) {
-  const [filter, setFilter] = useState<string>('all')
-  const [q, setQ] = useState('')
   const me = data.members.find((m) => m.isMe) || null
-  const meUnplaced = data.unplaced.some((u) => u.isMe)
-  const count = (stage: string) => data.members.filter((m) => m.stage === stage).length
-  const order = [...STAGE_PATH, 'grow'] as string[]
+  const [view, setView] = useState<'you' | 'board'>(me ? 'you' : 'board')
+  return (
+    <div className="max-w-xl mx-auto text-black" style={{ fontFamily: APPLE_FONT, letterSpacing: '-0.01em' }}>
+      <div className="flex p-1 rounded-full bg-[#ebebef] mb-5">
+        {(['you', 'board'] as const).map((v) => (
+          <button key={v} onClick={() => setView(v)}
+            className="flex-1 py-2 rounded-full text-[15px] font-semibold transition-colors"
+            style={view === v ? { background: '#ffffff', color: '#000', boxShadow: '0 1px 3px rgba(0,0,0,0.08)' } : { color: '#8e8e93' }}>
+            {v === 'you' ? 'You' : 'Board'}
+          </button>
+        ))}
+      </div>
+      {view === 'you' ? <YouView me={me} data={data} /> : <BoardView data={data} />}
+      <p className="text-[12px] text-[#aeaeb2] text-center mt-8">The Founders Wing team updates stages and goals after each call.</p>
+    </div>
+  )
+}
 
-  const needle = q.trim().toLowerCase()
-  const visible = data.members.filter((m) =>
-    (filter === 'all' || m.stage === filter) &&
-    (!needle || [m.name, m.project, m.summary, m.goal?.goal].some((t) => t?.toLowerCase().includes(needle))))
-
-  const nextStage = me && me.stage !== 'grow' ? STAGE_PATH[STAGE_PATH.indexOf(me.stage as typeof STAGE_PATH[number]) + 1] : undefined
+function YouView({ me, data }: { me: JourneyMember | null; data: JourneyData }) {
+  if (!me) {
+    return (
+      <div className={`${CARD} p-6 flex items-center gap-4`}>
+        <Medal stage="decide" size={56} locked />
+        <div>
+          <p className="text-[17px] font-semibold">You&apos;re not on the path yet</p>
+          <p className="text-[14px] text-[#8e8e93] mt-0.5">Your community manager places you after a short onboarding call, then sets your first 30-day goal with you.</p>
+        </div>
+      </div>
+    )
+  }
+  const st = me.stage
+  const d = daysSince(me.stage_since)
+  const target = STAGE_TARGET_DAYS[st] ?? 30
+  const at = STAGE_PATH.indexOf(st as typeof STAGE_PATH[number])
+  const next = st === 'grow' || at < 0 || at === STAGE_PATH.length - 1 ? null : STAGE_PATH[at + 1]
+  const rank = (s: string) => BEST_FIRST.indexOf(s)
+  const ahead = data.members.filter((m) => rank(m.stage) < rank(st)).length
+  const behind = data.members.filter((m) => rank(m.stage) > rank(st)).length
+  const total = data.members.length || 1
+  const left = goalDaysLeft(me.goal)
+  const moves = data.wins.filter((w) => w.kind === 'moved')
 
   return (
-    <div className="space-y-6">
-      {/* Intro + the path */}
-      <div className="rounded-3xl border border-neutral-200 bg-white p-6 md:p-7 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
-        <p className="text-sky-700 text-[13px] font-medium mb-1.5">The journey</p>
-        <h1 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Everyone here is moving one stage forward</h1>
-        <p className="text-[15px] text-neutral-500 mt-2 max-w-2xl leading-relaxed">See where each member is, what they&apos;re building and what they&apos;re aiming for in the next 30 days. If someone is a stage ahead of you, they&apos;re the person to ask.</p>
-
-        <div className="mt-6 grid grid-cols-4 gap-2 sm:flex sm:flex-wrap sm:items-stretch">
-          {STAGE_PATH.map((st, i) => (
-            <div key={st} className="flex items-stretch sm:items-center gap-2">
-              <StageChip stage={st} n={count(st)} active={filter === st} isMine={me?.stage === st} onClick={() => setFilter(filter === st ? 'all' : st)} />
-              {i < STAGE_PATH.length - 1 && <span className="hidden sm:inline text-neutral-400 text-sm" aria-hidden>→</span>}
+    <div>
+      {/* Stage strip */}
+      <div className="flex justify-between">
+        {['decide', 'build', 'launch', 'sell', 'grow'].map((s) => {
+          const cur = s === st
+          const done = st === 'grow' ? s !== 'grow' : s !== 'grow' && STAGE_PATH.indexOf(s as typeof STAGE_PATH[number]) < at
+          return (
+            <div key={s} className="text-center px-1.5 pt-2 pb-2.5 rounded-[18px]" style={cur ? { background: '#fff', boxShadow: '0 4px 16px rgba(0,0,0,0.07)' } : undefined}>
+              <p className="text-[12px] mb-1.5" style={{ color: cur ? '#000' : '#8e8e93', fontWeight: cur ? 600 : 500 }}>{STAGE_SHORT[s]}</p>
+              {cur ? <Medal stage={s} size={42} /> : done
+                ? <span className="inline-flex items-center justify-center rounded-full" style={{ width: 42, height: 42, border: '2px solid #000' }}><Check className="w-[18px] h-[18px]" strokeWidth={2.5} /></span>
+                : <Medal stage={s} size={42} locked />}
             </div>
-          ))}
-          <span className="hidden sm:block w-px self-stretch bg-neutral-200 mx-2" aria-hidden />
-          <div className="col-span-2 flex">
-            <StageChip stage="grow" n={count('grow')} active={filter === 'grow'} isMine={me?.stage === 'grow'} onClick={() => setFilter(filter === 'grow' ? 'all' : 'grow')} />
+          )
+        })}
+      </div>
+
+      {/* Days in stage */}
+      <div className={`${CARD} mt-4 p-5 sm:p-6 flex items-center justify-between gap-4`}>
+        <div>
+          <p className="text-[56px] font-bold leading-none tracking-[-0.04em] tabular-nums" style={{ color: d != null && d > target ? paceColor(st, d) : '#000' }}>{d ?? '—'}</p>
+          <p className="text-[13px] text-[#8e8e93] mt-1.5">Days in {stageLabel(st)}</p>
+          <span className="inline-flex items-center gap-1.5 mt-3 rounded-full bg-[#f2f2f5] px-2.5 py-1 text-[13px] font-semibold"><Timer className="w-3.5 h-3.5" /> Target {target} days</span>
+        </div>
+        <Ring size={132} stroke={12} frac={(d ?? 0) / target} color={RING_COLOR[st]}><Medal stage={st} size={66} /></Ring>
+      </div>
+
+      {/* Three small cards */}
+      <div className="grid grid-cols-3 gap-2.5 mt-3">
+        {[
+          { v: left == null ? '—' : left < 0 ? `${-left}d late` : `${left}d`, l: 'Goal left', frac: me.goal ? goalUsed(me.goal) : 0, color: '#ff3b30', Icon: Target },
+          { v: String(ahead), l: 'Ahead of you', frac: ahead / total, color: '#ff9500', Icon: TrendingUp },
+          { v: String(behind), l: 'Behind you', frac: behind / total, color: '#007aff', Icon: Users },
+        ].map(({ v, l, frac, color, Icon }) => (
+          <div key={l} className={`${CARD} px-3.5 pt-3.5 pb-4`}>
+            <p className="text-[22px] font-bold tracking-[-0.03em] tabular-nums">{v}</p>
+            <p className="text-[12px] text-[#8e8e93]">{l}</p>
+            <div className="flex justify-center mt-3"><Ring size={60} stroke={6} frac={frac} color={color}><Icon className="w-5 h-5" style={{ color }} /></Ring></div>
+          </div>
+        ))}
+      </div>
+
+      {/* Goal */}
+      <p className="text-[22px] font-bold tracking-[-0.02em] mt-7 mb-3">Your 30-day goal</p>
+      {me.goal ? (
+        <div className={`${CARD} px-5 py-[18px]`}>
+          <p className="text-[17px] font-semibold leading-snug">{me.goal.goal.charAt(0).toUpperCase() + me.goal.goal.slice(1)}</p>
+          {me.goal.next_action && <p className="text-[14px] text-[#8e8e93] mt-1">Next: {me.goal.next_action}</p>}
+          <div className="h-2 rounded-full bg-[#efeff4] mt-4 overflow-hidden"><div className="h-full rounded-full bg-black" style={{ width: `${Math.round(goalUsed(me.goal) * 100)}%` }} /></div>
+          <div className="flex justify-between text-[13px] text-[#8e8e93] mt-2">
+            <span>{me.goal.set_on ? `Set ${shortDate(me.goal.set_on)}` : ''}</span>
+            <span>{me.goal.due_on ? `Due ${shortDate(me.goal.due_on)}` : ''}</span>
           </div>
         </div>
-      </div>
-
-      {/* Where you are */}
-      {me ? (
-        <div className="rounded-2xl border p-5 md:p-6" style={{ borderColor: `${STAGE_COLOR[me.stage]}33`, background: `${STAGE_COLOR[me.stage]}0a` }}>
-          <p className="text-[13px] font-semibold mb-2" style={{ color: STAGE_COLOR[me.stage] }}>You&apos;re in {stageLabel(me.stage)}</p>
-          {me.goal ? (
-            <>
-              <p className="text-[16px] text-neutral-900 leading-relaxed"><span className="text-neutral-500">Your 30-day goal:</span> {me.goal.goal}</p>
-              {me.goal.next_action && <p className="text-[13px] text-neutral-600 mt-1">Next action: {me.goal.next_action}</p>}
-            </>
-          ) : (
-            <p className="text-[15px] text-neutral-700">Your community manager will agree a 30-day goal with you at your next check-in.</p>
-          )}
-          <p className="text-[13px] text-neutral-600 mt-3 pt-3 border-t" style={{ borderColor: `${STAGE_COLOR[me.stage]}26` }}>
-            {nextStage
-              ? <>To reach <span className="text-neutral-800 font-medium">{stageLabel(nextStage)}</span>: {stageMeta(me.stage)?.milestone}</>
-              : <>Milestone for this stage: {stageMeta(me.stage)?.milestone}</>}
-          </p>
-        </div>
-      ) : meUnplaced ? (
-        <div className="rounded-2xl border border-neutral-200 bg-white p-5 text-[15px] text-neutral-700">
-          You&apos;re not on the board yet. Your community manager places you after a short onboarding call, then sets your first 30-day goal with you.
-        </div>
-      ) : null}
-
-      {/* Recent wins */}
-      {data.wins.length > 0 && (
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
-          <p className="text-[13px] font-semibold text-emerald-700 mb-3">Wins in the last 30 days</p>
-          <ul className="space-y-2">
-            {data.wins.map((w, i) => (
-              <li key={i} className="text-[14px] text-neutral-700 flex gap-3">
-                <span className="text-neutral-500 text-[12px] w-14 shrink-0 pt-0.5 tabular-nums">{shortDate(w.at)}</span>
-                <span>
-                  <span className="font-semibold text-neutral-900">{w.isMe ? 'You' : w.name}</span>{' '}
-                  {w.kind === 'moved'
-                    ? <>moved from {stageLabel(w.from)} to <span style={{ color: STAGE_COLOR[w.to || ''] }}>{stageLabel(w.to)}</span></>
-                    : <>hit their 30-day goal: {w.goal}</>}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
+      ) : (
+        <div className={`${CARD} px-5 py-[18px] text-[15px] text-[#8e8e93]`}>Your community manager sets this with you at your next call.</div>
       )}
 
-      {/* Filters */}
-      <div className="flex flex-wrap items-center gap-2">
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search names, projects, goals"
-          className="flex-1 min-w-[200px] rounded-xl bg-white border border-neutral-200 px-4 py-2.5 text-[14px] text-neutral-800 placeholder:text-neutral-400 outline-none focus:border-sky-500" />
-        <div className="flex flex-wrap gap-1.5">
-          {['all', ...order].map((st) => (
-            <button key={st} onClick={() => setFilter(st)}
-              className="text-[13px] px-3 py-1.5 rounded-lg border transition-colors"
-              style={filter === st
-                ? { borderColor: st === 'all' ? '#0284c7' : STAGE_COLOR[st], color: st === 'all' ? '#0284c7' : STAGE_COLOR[st], background: '#ffffff' }
-                : { borderColor: '#e5e5e5', color: '#525252', background: '#ffffff' }}>
-              {st === 'all' ? `All ${data.members.length}` : stageLabel(st)}
-            </button>
-          ))}
+      {/* Up next */}
+      <p className="text-[22px] font-bold tracking-[-0.02em] mt-7 mb-3">Up next</p>
+      <div className={`${CARD} px-5 py-[18px] flex items-center gap-4`}>
+        {next ? <Medal stage={next} size={56} locked /> : <Medal stage={st} size={56} />}
+        <div className="min-w-0">
+          <p className="text-[17px] font-semibold">{next ? stageLabel(next) : st === 'grow' ? 'Keep growing with AI' : 'Top of the path'}</p>
+          <p className="text-[14px] text-[#8e8e93] mt-0.5">{next ? unlockFor(next) : `You're ahead of ${behind} members. ${stageMeta(st)?.milestone ?? ''}`}</p>
         </div>
       </div>
 
-      {/* Stage sections */}
-      {order.filter((st) => filter === 'all' || filter === st).map((st) => {
-        const items = visible.filter((m) => m.stage === st)
-        if (items.length === 0 && (needle || filter === 'all')) return null
+      {moves.length > 0 && (
+        <>
+          <p className="text-[22px] font-bold tracking-[-0.02em] mt-7 mb-3">Moved up this month</p>
+          <div className={`${CARD} py-1`}>
+            {moves.map((w, i) => (
+              <div key={i} className="flex items-center gap-3.5 px-4 py-3" style={i ? { borderTop: '1px solid #f2f2f5' } : undefined}>
+                <Medal stage={w.to || 'decide'} size={36} />
+                <p className="text-[15px] flex-1 min-w-0"><span className="font-semibold">{w.isMe ? 'You' : w.name}</span> moved up to {stageLabel(w.to)}</p>
+                <span className="text-[13px] text-[#8e8e93] shrink-0">{shortDate(w.at)}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+function BoardView({ data }: { data: JourneyData }) {
+  const [filter, setFilter] = useState('all')
+  const [open, setOpen] = useState<Record<string, boolean>>({})
+  const by = (s: string) => data.members.filter((m) => m.stage === s)
+  return (
+    <div>
+      {/* Summary */}
+      <div className={`${CARD} p-5`}>
+        <div className="flex items-end justify-between">
+          <div>
+            <p className="text-[44px] font-bold leading-none tracking-[-0.04em] tabular-nums">{data.members.length}</p>
+            <p className="text-[13px] text-[#8e8e93] mt-1">Members on the path</p>
+          </div>
+          <div className="flex">{BEST_FIRST.slice(0, 4).map((s, i) => <span key={s} style={{ marginLeft: i ? -10 : 0 }}><Medal stage={s} size={34} /></span>)}</div>
+        </div>
+        <div className="flex h-2.5 rounded-full overflow-hidden gap-0.5 mt-4">
+          {BEST_FIRST.map((s) => by(s).length > 0 && (
+            <span key={s} className="h-full" style={{ flex: by(s).length, background: s === 'decide' ? '#e5e5ea' : s === 'grow' ? 'linear-gradient(90deg,#a78bfa,#60a5fa,#f472b6)' : RING_COLOR[s] }} />
+          ))}
+        </div>
+        <div className="flex justify-between mt-2.5">
+          {BEST_FIRST.map((s) => <span key={s} className="text-[12px] text-[#8e8e93]"><b className="text-black font-semibold">{by(s).length}</b> {STAGE_SHORT[s]}</span>)}
+        </div>
+      </div>
+
+      {/* Filter */}
+      <div className="flex gap-1.5 mt-4 overflow-x-auto pb-1 -mx-1 px-1">
+        {['all', ...BEST_FIRST].map((s) => (
+          <button key={s} onClick={() => setFilter(s)}
+            className="px-3.5 py-1.5 rounded-full text-[14px] font-semibold whitespace-nowrap shrink-0"
+            style={filter === s ? { background: '#000', color: '#fff' } : { background: '#fff', color: '#3a3a3c', boxShadow: '0 1px 2px rgba(0,0,0,0.04)' }}>
+            {s === 'all' ? 'All' : STAGE_SHORT[s]}
+          </button>
+        ))}
+      </div>
+
+      {/* Stages, best first */}
+      {BEST_FIRST.filter((s) => filter === 'all' || filter === s).map((s) => {
+        const list = by(s)
+        const dim = s === 'decide'
+        const top = s === 'sell' || s === 'grow'
+        const limit = filter === s || open[s] ? list.length : dim ? 5 : 6
         return (
-          <section key={st}>
-            <div className="flex items-baseline gap-3 mb-3 px-1">
-              <span className="w-2 h-2 rounded-full shrink-0 translate-y-[-1px]" style={{ background: STAGE_COLOR[st] }} />
-              <h2 className="text-lg font-semibold text-neutral-900" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{stageLabel(st)}</h2>
-              <span className="text-[13px] text-neutral-500">{items.length} · {stageMeta(st)?.hint}</span>
+          <section key={s}>
+            <div className="flex items-center justify-between mt-7 mb-2.5">
+              <div className="flex items-center gap-2.5"><Medal stage={s} size={26} /><h2 className="text-[20px] font-bold tracking-[-0.02em]" style={{ color: dim ? '#8e8e93' : '#000' }}>{stageLabel(s)}</h2></div>
+              <span className="text-[15px] text-[#8e8e93]">{list.length}</span>
             </div>
-            {items.length === 0 ? (
-              <p className="text-[13px] text-neutral-400 px-1 pb-2">Nobody here yet.</p>
+            {list.length === 0 ? (
+              <div className="rounded-[24px] border-2 border-dashed border-[#e5e5ea] px-5 py-4 flex items-center gap-3.5">
+                <Medal stage={s} size={40} locked />
+                <p className="text-[14px] text-[#8e8e93]">{s === 'grow' ? 'For members already running a business with AI.' : `No one is here yet. ${unlockFor(s)}`}</p>
+              </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {items.map((m) => <JourneyCard key={m.member_no} m={m} />)}
+              <div className={dim ? 'rounded-[24px] py-1 bg-[#fbfbfc] border border-[#ececf0]' : `${CARD} py-1`}
+                style={top ? { boxShadow: s === 'sell' ? '0 0 0 1.5px #ecd27a, 0 10px 30px -12px rgba(201,151,28,0.35)' : '0 0 0 1.5px #d8ccfb, 0 10px 30px -12px rgba(139,92,246,0.35)' } : undefined}>
+                {list.slice(0, limit).map((m, i) => {
+                  const d = daysSince(m.stage_since)
+                  const left = goalDaysLeft(m.goal)
+                  return (
+                    <div key={m.member_no} className="flex items-center gap-3.5 px-4 py-3" style={{ borderTop: i ? '1px solid #f2f2f5' : undefined, background: m.isMe ? '#f0f7ff' : undefined }}>
+                      <Medal stage={s} size={dim ? 36 : 42} />
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-[16px]" style={{ fontWeight: dim ? 500 : 600, color: dim ? '#8e8e93' : '#000' }}>{m.isMe ? 'You' : m.name}</p>
+                        <p className="truncate text-[13px] text-[#8e8e93]">{m.project || m.summary || 'Goal to be set at the next call'}</p>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <p className="text-[15px] font-semibold tabular-nums" style={{ color: paceColor(s, d) }}>{d != null ? `Day ${d}` : ''}</p>
+                        <p className="text-[12px] text-[#8e8e93]">{left == null ? 'No goal yet' : left < 0 ? `Goal ${-left}d late` : `Goal ${left}d left`}</p>
+                      </div>
+                    </div>
+                  )
+                })}
+                {list.length > limit && (
+                  <button onClick={() => setOpen((o) => ({ ...o, [s]: true }))} className="w-full flex items-center justify-center gap-1 py-3 text-[14px] font-semibold border-t border-[#f2f2f5]">
+                    See all {list.length} <ChevronDown className="w-4 h-4" />
+                  </button>
+                )}
               </div>
             )}
           </section>
         )
       })}
-      {visible.length === 0 && needle && <p className="text-neutral-500 text-sm py-6 text-center">No members match “{q}”.</p>}
 
-      {/* Not placed yet */}
-      {filter === 'all' && !needle && data.unplaced.length > 0 && (
-        <div className="rounded-2xl border border-neutral-200 bg-white p-5">
-          <p className="text-[13px] font-semibold text-neutral-700 mb-1">Joining the board after their onboarding call <span className="font-normal text-neutral-400">· {data.unplaced.length}</span></p>
-          <p className="text-[14px] text-neutral-600 leading-relaxed">
-            {data.unplaced.map((u, i) => (
-              <span key={u.member_no}>
-                <span className={u.isMe ? 'text-sky-700' : undefined}>{u.isMe ? 'You' : u.name}</span>{i < data.unplaced.length - 1 ? ', ' : ''}
-              </span>
-            ))}
-          </p>
+      {filter === 'all' && data.unplaced.length > 0 && (
+        <div className="mt-7 rounded-[24px] border-2 border-dashed border-[#e5e5ea] px-5 py-4">
+          <p className="text-[15px] font-semibold text-[#3a3a3c]">Joining after their onboarding call <span className="font-normal text-[#8e8e93]">· {data.unplaced.length}</span></p>
+          <p className="text-[14px] text-[#8e8e93] mt-1">{data.unplaced.map((u) => (u.isMe ? 'You' : u.name)).join(', ')}</p>
         </div>
       )}
-
-      <p className="text-[12px] text-neutral-400 px-1">The Founders Wing team updates this board after each check-in. If your stage or goal looks out of date, tell your community manager.</p>
-    </div>
-  )
-}
-
-function StageChip({ stage, n, active, isMine, onClick }: { stage: string; n: number; active: boolean; isMine: boolean; onClick: () => void }) {
-  const color = STAGE_COLOR[stage]
-  return (
-    <button onClick={onClick}
-      className="w-full h-full sm:h-auto sm:w-auto rounded-xl border px-2.5 sm:px-4 py-2.5 text-left transition-colors sm:min-w-[96px]"
-      style={{ borderColor: active ? color : '#e5e5e5', background: active ? `${color}14` : '#ffffff' }}>
-      <p className="text-2xl font-bold leading-none tabular-nums" style={{ fontFamily: 'Space Grotesk, sans-serif', color }}>{n}</p>
-      <p className="text-[12px] sm:text-[13px] text-neutral-700 mt-1.5 font-medium">{stageLabel(stage)}{isMine && <span className="block sm:inline text-sky-700 font-normal"><span className="hidden sm:inline"> · </span>you</span>}</p>
-    </button>
-  )
-}
-
-function JourneyCard({ m }: { m: JourneyMember }) {
-  const color = STAGE_COLOR[m.stage]
-  const due = dueText(m.goal?.due_on ?? null)
-  return (
-    <div className="rounded-2xl border border-neutral-200 bg-white p-5 flex flex-col gap-3 shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
-      style={{ background: m.isMe ? '#f0f9ff' : undefined, borderColor: m.isMe ? '#bae6fd' : undefined }}>
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full flex items-center justify-center text-base font-bold text-white shrink-0"
-          style={{ background: color }}>
-          {m.name[0]?.toUpperCase()}
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className="text-[15px] font-semibold text-neutral-900 truncate">
-            {m.name}{m.isMe && <span className="text-sky-700 text-[13px] font-normal"> (you)</span>}
-          </p>
-          <p className="text-[12px] text-neutral-500">{m.isFounding ? 'Founding Member' : 'Member'} #{m.member_no}</p>
-        </div>
-        <span className="text-[12px] font-medium px-2.5 py-1 rounded-md shrink-0" style={{ color, background: `${color}1a` }}>{stageLabel(m.stage)}</span>
-      </div>
-
-      {(m.project || m.summary) && (
-        <div>
-          {m.project && <p className="text-[14px] font-semibold text-neutral-800">{m.project}</p>}
-          {m.summary && <p className="text-[13px] text-neutral-600 leading-relaxed line-clamp-2">{m.summary}</p>}
-        </div>
-      )}
-
-      {m.goal ? (
-        <div className="rounded-xl bg-neutral-50 p-3.5">
-          <div className="flex items-center justify-between gap-2 mb-1">
-            <p className="text-[12px] font-medium text-neutral-500">30-day goal</p>
-            {due && <p className="text-[12px] tabular-nums" style={{ color: due.late ? '#b45309' : '#737373' }}>{due.text}</p>}
-          </div>
-          <p className="text-[14px] text-neutral-800 leading-relaxed line-clamp-4" title={m.goal.goal}>{m.goal.goal}</p>
-          {m.goal.next_action && <p className="text-[13px] text-neutral-600 mt-1.5"><span className="text-neutral-400">Next:</span> {m.goal.next_action}</p>}
-        </div>
-      ) : (
-        <p className="text-[13px] text-neutral-400 italic">Goal to be set at the next check-in</p>
-      )}
-
-      <p className="text-[12px] text-neutral-500 mt-auto">
-        {m.stage_since ? `In ${stageLabel(m.stage)} since ${shortDate(m.stage_since)}` : `In ${stageLabel(m.stage)}`}
-        {m.goals_achieved > 0 && <> · <span className="text-emerald-700">{m.goals_achieved} goal{m.goals_achieved === 1 ? '' : 's'} hit</span></>}
-      </p>
     </div>
   )
 }

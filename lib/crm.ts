@@ -28,6 +28,10 @@ export const STAGES = [
 /* Decide → Build → Launch → Sell is the path; Grow with AI is its own lane. */
 export const STAGE_PATH = ['decide', 'build', 'launch', 'sell'] as const
 
+/* Pace the members' Journey board measures "Day N in a stage" against. Past the
+   target the counter turns orange, past twice the target it turns red. */
+export const STAGE_TARGET_DAYS: Record<string, number> = { decide: 14, build: 30, launch: 21, sell: 30, grow: 45 }
+
 export const OUTCOMES = [
   { value: 'clarity', label: 'Get clarity on idea' },
   { value: 'mvp', label: 'Build usable MVP' },
