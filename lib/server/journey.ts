@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js"
 import { COHORT_1_SIZE } from "@/lib/cohort"
-import { STAGES } from "@/lib/crm"
+import { JOURNEY_START, STAGES } from "@/lib/crm"
 
 /* Builds the members' Journey board (/members → Journey) from the team's CRM
    tables. Only member-safe fields come out of here: no emails, phones, call
@@ -49,7 +49,10 @@ export async function buildJourney(s: SupabaseClient, me: string) {
   const goalsBy = group(g.data ?? [])
   const stageRowsBy = group(h.data ?? [])
 
-  const since = Date.now() - WIN_WINDOW_DAYS * 86400000
+  const start = new Date(JOURNEY_START).getTime()
+  const since = Math.max(start, Date.now() - WIN_WINDOW_DAYS * 86400000)
+  // Day counts never reach back before the board's start date.
+  const fromStart = (iso: string | null | undefined) => (iso ? (new Date(iso).getTime() < start ? new Date(start).toISOString() : iso) : null)
   const members: JourneyMember[] = []
   const unplaced: Who[] = []
   const wins: JourneyWin[] = []
@@ -75,7 +78,7 @@ export async function buildJourney(s: SupabaseClient, me: string) {
       stage,
       project: crm?.project_name?.trim() || null,
       summary: crm?.board_summary?.trim() || selfBy.get(k)?.what_building?.trim() || null,
-      stage_since: stageRows.find((x) => x.new_value === stage)?.changed_at ?? null,
+      stage_since: fromStart(stageRows.find((x) => x.new_value === stage)?.changed_at),
       goal: active ? { goal: active.goal, next_action: active.next_action, set_on: active.set_on, due_on: active.due_on } : null,
       goals_achieved: goals.filter((x) => x.status === "achieved").length,
     })

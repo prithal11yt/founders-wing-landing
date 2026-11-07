@@ -32,6 +32,11 @@ export const STAGE_PATH = ['decide', 'build', 'launch', 'sell'] as const
    target the counter turns orange, past twice the target it turns red. */
 export const STAGE_TARGET_DAYS: Record<string, number> = { decide: 14, build: 30, launch: 21, sell: 30, grow: 45 }
 
+/* The Journey board's day counts start here. Anyone placed before this date
+   counts from it (day 1 = 8 Nov 2026), and "Moved up" only lists moves made
+   on or after it. Later stage changes count from their own date. */
+export const JOURNEY_START = '2026-11-08T00:00:00+05:30'
+
 export const OUTCOMES = [
   { value: 'clarity', label: 'Get clarity on idea' },
   { value: 'mvp', label: 'Build usable MVP' },
