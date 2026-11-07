@@ -3,8 +3,9 @@ import { COHORT_1_SIZE } from "@/lib/cohort"
 import { JOURNEY_START, STAGES } from "@/lib/crm"
 
 /* Builds the members' Journey board (/members → Journey) from the team's CRM
-   tables. Only member-safe fields come out of here: no emails, phones, call
-   notes, blockers or renewal signals. */
+   tables. Only member-safe fields come out of here: name, stage, project and
+   how long they've been in the stage. No emails, phones, call notes, goals,
+   blockers or renewal signals. */
 
 const STAGE_KEYS = new Set<string>(STAGES.map((s) => s.value))
 const WIN_WINDOW_DAYS = 30
@@ -23,20 +24,17 @@ export type JourneyMember = Who & {
   project: string | null
   summary: string | null
   stage_since: string | null
-  goal: { goal: string; next_action: string | null; set_on: string | null; due_on: string | null } | null
-  goals_achieved: number
 }
-export type JourneyWin = Who & { kind: "moved" | "goal"; from?: string; to?: string; goal?: string; at: string }
+export type JourneyWin = Who & { kind: "moved"; from: string; to: string; at: string }
 
 export async function buildJourney(s: SupabaseClient, me: string) {
-  const [m, p, c, g, h] = await Promise.all([
+  const [m, p, c, h] = await Promise.all([
     s.from("fw_memberships").select("full_name, email, created_at").order("created_at", { ascending: true }),
     s.from("fw_member_profiles").select("member_email, what_building"),
     s.from("fw_crm_members").select("email, project_name, stage, membership_status, board_summary, board_hidden"),
-    s.from("fw_crm_goals").select("email, goal, next_action, set_on, due_on, status, reviewed_on").order("created_at", { ascending: false }),
     s.from("fw_crm_history").select("email, old_value, new_value, changed_at").eq("field", "Stage").order("changed_at", { ascending: false }),
   ])
-  for (const r of [m, p, c, g, h]) if (r.error) throw new Error(r.error.message)
+  for (const r of [m, p, c, h]) if (r.error) throw new Error(r.error.message)
 
   const lower = (e: string | null | undefined) => (e || "").trim().toLowerCase()
   const group = <T extends { email: string }>(rows: T[]) => {
@@ -46,7 +44,6 @@ export async function buildJourney(s: SupabaseClient, me: string) {
   }
   const selfBy = new Map((p.data ?? []).map((x) => [lower(x.member_email), x]))
   const crmBy = new Map((c.data ?? []).map((x) => [lower(x.email), x]))
-  const goalsBy = group(g.data ?? [])
   const stageRowsBy = group(h.data ?? [])
 
   const start = new Date(JOURNEY_START).getTime()
@@ -69,8 +66,6 @@ export async function buildJourney(s: SupabaseClient, me: string) {
     const stage = crm?.stage && STAGE_KEYS.has(crm.stage) ? crm.stage : null
     if (!stage) { unplaced.push(who); return }
 
-    const goals = goalsBy.get(k) ?? []
-    const active = goals.find((x) => x.status === "active")
     const stageRows = stageRowsBy.get(k) ?? []
     members.push({
       ...who,
@@ -79,19 +74,12 @@ export async function buildJourney(s: SupabaseClient, me: string) {
       project: crm?.project_name?.trim() || null,
       summary: crm?.board_summary?.trim() || selfBy.get(k)?.what_building?.trim() || null,
       stage_since: fromStart(stageRows.find((x) => x.new_value === stage)?.changed_at),
-      goal: active ? { goal: active.goal, next_action: active.next_action, set_on: active.set_on, due_on: active.due_on } : null,
-      goals_achieved: goals.filter((x) => x.status === "achieved").length,
     })
 
-    // Wins: stage moves (not first placement) and goals achieved in the last 30 days.
+    // Wins: stage moves (not first placement) since the board started, last 30 days.
     for (const r of stageRows) {
       if (r.old_value && r.new_value && STAGE_KEYS.has(r.new_value) && new Date(r.changed_at).getTime() >= since) {
         wins.push({ ...who, kind: "moved", from: r.old_value, to: r.new_value, at: r.changed_at })
-      }
-    }
-    for (const x of goals) {
-      if (x.status === "achieved" && x.reviewed_on && new Date(x.reviewed_on).getTime() >= since) {
-        wins.push({ ...who, kind: "goal", goal: x.goal, at: x.reviewed_on })
       }
     }
   })

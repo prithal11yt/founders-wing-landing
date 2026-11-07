@@ -395,7 +395,7 @@ function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () 
               <Field name="Demo / project URL"><input value={f.demo_url ?? ''} onChange={e => set('demo_url', e.target.value)} placeholder="https://" className={inp} /></Field>
               <label className="sm:col-span-2 flex items-center gap-2 text-[13px]"><input type="checkbox" checked={!!f.showcase_permission} onChange={e => set('showcase_permission', e.target.checked)} /> Member has given permission to feature their project publicly</label>
               <div className="sm:col-span-2 rounded-xl border border-neutral-200 bg-neutral-50 p-3 space-y-2">
-                <p className="text-[12px] font-medium text-neutral-700">Members&apos; Journey board <span className="font-normal text-neutral-500">· every member sees the stage, this line, and the 30-day goal and next action</span></p>
+                <p className="text-[12px] font-medium text-neutral-700">Members&apos; Journey board <span className="font-normal text-neutral-500">· every member sees the stage, this line, and how many days they've been in it. Changing the stage restarts their day count and shows as a move up</span></p>
                 <Field name="One line about what they’re building" hint="shown to members"><input value={f.board_summary ?? ''} onChange={e => set('board_summary', e.target.value)} placeholder={m.self?.what_building || 'e.g. HR and payroll app for small Indian companies'} className={inp} /></Field>
                 <label className="flex items-center gap-2 text-[13px]"><input type="checkbox" checked={!!f.board_hidden} onChange={e => set('board_hidden', e.target.checked)} /> Hide this member from the Journey board</label>
               </div>
@@ -407,7 +407,7 @@ function Profile({ m, me, onClose, post }: { m: Member; me: string; onClose: () 
 
           {/* 30-day goal */}
           <section className={section}>
-            <div className="flex items-center justify-between mb-3"><h3 className="font-semibold">30-day goal</h3><span className="text-[12px] text-neutral-500">Goal and next action are shown on the members&apos; Journey board</span></div>
+            <div className="flex items-center justify-between mb-3"><h3 className="font-semibold">30-day goal</h3><span className="text-[12px] text-neutral-500">Internal only, not shown to members</span></div>
             {g ? (
               <div className="rounded-xl bg-neutral-50 border border-neutral-200 p-4">
                 <p className="text-[14px] font-medium">{g.goal}</p>

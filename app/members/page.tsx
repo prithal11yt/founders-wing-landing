@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback, useId } from 'react'
 import { COHORT_1_SIZE } from '@/lib/cohort'
-import { Check, ChevronDown, Hammer, IndianRupee, Lightbulb, Lock, Rocket, Sparkles, Target, Timer, TrendingUp, Users } from 'lucide-react'
+import { Check, ChevronDown, ChevronsUp, Hammer, IndianRupee, Lightbulb, Lock, Rocket, Sparkles, Timer, TrendingUp, Users } from 'lucide-react'
 import { STAGES, STAGE_PATH, STAGE_TARGET_DAYS } from '@/lib/crm'
 
 type Member = {
@@ -21,10 +21,8 @@ type JourneyMember = JourneyWho & {
   project: string | null
   summary: string | null
   stage_since: string | null
-  goal: { goal: string; next_action: string | null; set_on: string | null; due_on: string | null } | null
-  goals_achieved: number
 }
-type JourneyWin = JourneyWho & { kind: 'moved' | 'goal'; from?: string; to?: string; goal?: string; at: string }
+type JourneyWin = JourneyWho & { kind: 'moved'; from: string; to: string; at: string }
 type JourneyData = { members: JourneyMember[]; unplaced: JourneyWho[]; wins: JourneyWin[] }
 
 const firstName = (name?: string | null) => (name || 'Founder').split(' ')[0]
@@ -195,7 +193,7 @@ export default function MembersPortal() {
 
 /* The members' area is only the Journey board: where everyone is on the path and
    what they're aiming for. Members can't edit anything here; the team updates
-   stages and goals from /team/members. */
+   stages from /team/members. */
 function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () => void }) {
   const isFounding = !!member.member_no && member.member_no <= COHORT_1_SIZE
   const [journey, setJourney] = useState<JourneyData | null>(null)
@@ -241,8 +239,8 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
    lane), styled after Cal AI / Apple Fitness. The page stays black and white;
    only the stage medals change material as members move up (flat grey for
    Decide, then copper, silver, gold, holographic). "You" shows your own day
-   count, goal and next step; "Board" shows everyone, best stage first.
-   Read-only: the team updates stages and goals after each call. */
+   count and what unlocks the next stage; "Board" shows everyone, best stage
+   first. Read-only: the team updates stages after each call. */
 
 const BEST_FIRST = ['grow', 'sell', 'launch', 'build', 'decide']
 const STAGE_SHORT: Record<string, string> = { decide: 'Decide', build: 'Build', launch: 'Launch', sell: 'Sell', grow: 'Grow' }
@@ -261,12 +259,6 @@ const stageMeta = (v?: string | null) => STAGES.find((s) => s.value === v)
 const stageLabel = (v?: string | null) => stageMeta(v)?.label ?? v ?? ''
 const shortDate = (iso: string) => new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
 const daysSince = (iso: string | null) => (iso ? Math.max(1, Math.floor((Date.now() - new Date(iso).getTime()) / 86400000) + 1) : null)
-const goalDaysLeft = (g: JourneyMember['goal']) => (g?.due_on ? Math.ceil((new Date(g.due_on + 'T23:59:59').getTime() - Date.now()) / 86400000) : null)
-const goalUsed = (g: JourneyMember['goal']) => {
-  if (!g?.set_on || !g?.due_on) return 0
-  const a = new Date(g.set_on).getTime(), b = new Date(g.due_on).getTime()
-  return b > a ? Math.min(1, Math.max(0, (Date.now() - a) / (b - a))) : 1
-}
 const paceColor = (stage: string, d: number | null) => {
   const t = STAGE_TARGET_DAYS[stage] ?? 30
   if (d == null) return '#aeaeb2'
@@ -321,7 +313,7 @@ function JourneyBoard({ data }: { data: JourneyData }) {
         ))}
       </div>
       {view === 'you' ? <YouView me={me} data={data} /> : <BoardView data={data} />}
-      <p className="text-[12px] text-[#aeaeb2] text-center mt-8">The Founders Wing team updates stages and goals after each call.</p>
+      <p className="text-[12px] text-[#aeaeb2] text-center mt-8">The Founders Wing team updates stages after each call.</p>
     </div>
   )
 }
@@ -333,7 +325,7 @@ function YouView({ me, data }: { me: JourneyMember | null; data: JourneyData }) 
         <Medal stage="decide" size={56} locked />
         <div>
           <p className="text-[17px] font-semibold">You&apos;re not on the path yet</p>
-          <p className="text-[14px] text-[#8e8e93] mt-0.5">Your community manager places you after a short onboarding call, then sets your first 30-day goal with you.</p>
+          <p className="text-[14px] text-[#8e8e93] mt-0.5">Your community manager places you on the path after a short onboarding call.</p>
         </div>
       </div>
     )
@@ -347,7 +339,6 @@ function YouView({ me, data }: { me: JourneyMember | null; data: JourneyData }) 
   const ahead = data.members.filter((m) => rank(m.stage) < rank(st)).length
   const behind = data.members.filter((m) => rank(m.stage) > rank(st)).length
   const total = data.members.length || 1
-  const left = goalDaysLeft(me.goal)
   const moves = data.wins.filter((w) => w.kind === 'moved')
 
   return (
@@ -381,7 +372,7 @@ function YouView({ me, data }: { me: JourneyMember | null; data: JourneyData }) 
       {/* Three small cards */}
       <div className="grid grid-cols-3 gap-2.5 mt-3">
         {[
-          { v: left == null ? '—' : left < 0 ? `${-left}d late` : `${left}d`, l: 'Goal left', frac: me.goal ? goalUsed(me.goal) : 0, color: '#ff3b30', Icon: Target },
+          { v: String(moves.length), l: 'Moved up this month', frac: moves.length / total, color: '#34c759', Icon: ChevronsUp },
           { v: String(ahead), l: 'Ahead of you', frac: ahead / total, color: '#ff9500', Icon: TrendingUp },
           { v: String(behind), l: 'Behind you', frac: behind / total, color: '#007aff', Icon: Users },
         ].map(({ v, l, frac, color, Icon }) => (
@@ -392,22 +383,6 @@ function YouView({ me, data }: { me: JourneyMember | null; data: JourneyData }) 
           </div>
         ))}
       </div>
-
-      {/* Goal */}
-      <p className="text-[22px] font-bold tracking-[-0.02em] mt-7 mb-3">Your 30-day goal</p>
-      {me.goal ? (
-        <div className={`${CARD} px-5 py-[18px]`}>
-          <p className="text-[17px] font-semibold leading-snug">{me.goal.goal.charAt(0).toUpperCase() + me.goal.goal.slice(1)}</p>
-          {me.goal.next_action && <p className="text-[14px] text-[#8e8e93] mt-1">Next: {me.goal.next_action}</p>}
-          <div className="h-2 rounded-full bg-[#efeff4] mt-4 overflow-hidden"><div className="h-full rounded-full bg-black" style={{ width: `${Math.round(goalUsed(me.goal) * 100)}%` }} /></div>
-          <div className="flex justify-between text-[13px] text-[#8e8e93] mt-2">
-            <span>{me.goal.set_on ? `Set ${shortDate(me.goal.set_on)}` : ''}</span>
-            <span>{me.goal.due_on ? `Due ${shortDate(me.goal.due_on)}` : ''}</span>
-          </div>
-        </div>
-      ) : (
-        <div className={`${CARD} px-5 py-[18px] text-[15px] text-[#8e8e93]`}>Your community manager sets this with you at your next call.</div>
-      )}
 
       {/* Up next */}
       <p className="text-[22px] font-bold tracking-[-0.02em] mt-7 mb-3">Up next</p>
@@ -495,17 +470,16 @@ function BoardView({ data }: { data: JourneyData }) {
                 style={top ? { boxShadow: s === 'sell' ? '0 0 0 1.5px #ecd27a, 0 10px 30px -12px rgba(201,151,28,0.35)' : '0 0 0 1.5px #d8ccfb, 0 10px 30px -12px rgba(139,92,246,0.35)' } : undefined}>
                 {list.slice(0, limit).map((m, i) => {
                   const d = daysSince(m.stage_since)
-                  const left = goalDaysLeft(m.goal)
                   return (
                     <div key={m.member_no} className="flex items-center gap-3.5 px-4 py-3" style={{ borderTop: i ? '1px solid #f2f2f5' : undefined, background: m.isMe ? '#f0f7ff' : undefined }}>
                       <Medal stage={s} size={dim ? 36 : 42} />
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-[16px]" style={{ fontWeight: dim ? 500 : 600, color: dim ? '#8e8e93' : '#000' }}>{m.isMe ? 'You' : m.name}</p>
-                        <p className="truncate text-[13px] text-[#8e8e93]">{m.project || m.summary || 'Goal to be set at the next call'}</p>
+                        {(m.project || m.summary) && <p className="truncate text-[13px] text-[#8e8e93]">{m.project || m.summary}</p>}
                       </div>
                       <div className="text-right shrink-0">
                         <p className="text-[15px] font-semibold tabular-nums" style={{ color: paceColor(s, d) }}>{d != null ? `Day ${d}` : ''}</p>
-                        <p className="text-[12px] text-[#8e8e93]">{left == null ? 'No goal yet' : left < 0 ? `Goal ${-left}d late` : `Goal ${left}d left`}</p>
+                        <p className="text-[12px] text-[#8e8e93]">of {STAGE_TARGET_DAYS[s] ?? 30} days</p>
                       </div>
                     </div>
                   )
