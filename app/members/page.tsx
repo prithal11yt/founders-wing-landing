@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState, useCallback, useId } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { COHORT_1_SIZE } from '@/lib/cohort'
-import { Check, ChevronDown, ChevronsUp, Hammer, IndianRupee, Lightbulb, Lock, Rocket, Sparkles, TrendingUp, Users } from 'lucide-react'
+import { ChevronDown, Hammer, IndianRupee, Lightbulb, Lock, Rocket, Sparkles } from 'lucide-react'
 import { STAGES, STAGE_PATH, STAGE_USUAL_DAYS } from '@/lib/crm'
 
 type Member = {
@@ -235,12 +235,12 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
 }
 
 /* ── Journey board ─────────────────────────────────────────────────────────
-   Each member's place on Decide → Build → Launch → Sell (plus the Grow with AI
-   lane), styled after Cal AI / Apple Fitness. The page stays black and white;
+   Everyone's place on Decide → Build → Launch → Sell (plus the Grow with AI lane)
+   and how many days they've been there, against how long each stage usually
+   takes. Styled after Cal AI / Apple Fitness: the page stays black and white and
    only the stage medals change material as members move up (flat grey for
-   Decide, then copper, silver, gold, holographic). "You" shows your own day
-   count and what unlocks the next stage; "Board" shows everyone, best stage
-   first. Read-only: the team updates stages after each call. */
+   Decide, then copper, silver, gold, holographic). Read-only: the team updates
+   stages after each call. */
 
 const BEST_FIRST = ['grow', 'sell', 'launch', 'build', 'decide']
 const STAGE_SHORT: Record<string, string> = { decide: 'Decide', build: 'Build', launch: 'Launch', sell: 'Sell', grow: 'Grow' }
@@ -286,177 +286,73 @@ function Medal({ stage, size, locked = false }: { stage: string; size: number; l
   )
 }
 
-function Ring({ size, stroke, frac, color, children }: { size: number; stroke: number; frac: number; color: string; children?: React.ReactNode }) {
-  const id = useId().replace(/:/g, '')
-  const r = (size - stroke) / 2, c = 2 * Math.PI * r
-  return (
-    <span className="relative inline-flex items-center justify-center shrink-0" style={{ width: size, height: size }}>
-      <svg width={size} height={size} className="absolute inset-0" aria-hidden>
-        <defs><linearGradient id={id} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#a78bfa" /><stop offset=".5" stopColor="#60a5fa" /><stop offset="1" stopColor="#f472b6" /></linearGradient></defs>
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#efeff4" strokeWidth={stroke} />
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color === 'holo' ? `url(#${id})` : color} strokeWidth={stroke} strokeLinecap="round"
-          strokeDasharray={`${c * Math.min(1, Math.max(0.02, frac))} ${c}`} transform={`rotate(-90 ${size / 2} ${size / 2})`} />
-      </svg>
-      {children}
-    </span>
-  )
-}
-
 function JourneyBoard({ data }: { data: JourneyData }) {
-  const me = data.members.find((m) => m.isMe) || null
-  const [view, setView] = useState<'you' | 'board'>(me ? 'you' : 'board')
   return (
     <div className="max-w-xl mx-auto text-black" style={{ fontFamily: APPLE_FONT, letterSpacing: '-0.01em' }}>
-      <div className="flex p-1 rounded-full bg-[#ebebef] mb-5">
-        {(['you', 'board'] as const).map((v) => (
-          <button key={v} onClick={() => setView(v)}
-            className="flex-1 py-2 rounded-full text-[15px] font-semibold transition-colors"
-            style={view === v ? { background: '#ffffff', color: '#000', boxShadow: '0 1px 3px rgba(0,0,0,0.08)' } : { color: '#8e8e93' }}>
-            {v === 'you' ? 'You' : 'Board'}
-          </button>
-        ))}
-      </div>
-      {view === 'you' ? <YouView me={me} data={data} /> : <BoardView data={data} />}
-      <p className="text-[12px] text-[#aeaeb2] text-center mt-8">The Founders Wing team updates stages after each call.</p>
+      <BoardIntro />
+      <UsualTimeline />
+      <BoardView data={data} />
+      <p className="text-[12px] text-[#aeaeb2] text-center mt-8">You do the work. We move your medal after each call.</p>
     </div>
   )
 }
 
-function YouView({ me, data }: { me: JourneyMember | null; data: JourneyData }) {
-  if (!me) {
-    return (
-      <div className={`${CARD} p-6 flex items-center gap-4`}>
-        <Medal stage="decide" size={56} locked />
-        <div>
-          <p className="text-[17px] font-semibold">You&apos;re not on the path yet</p>
-          <p className="text-[14px] text-[#8e8e93] mt-0.5">Your community manager places you on the path after a short onboarding call.</p>
-        </div>
-      </div>
-    )
-  }
-  const st = me.stage
-  const d = daysSince(me.stage_since)
-  const usual = STAGE_USUAL_DAYS[st]
-  const at = STAGE_PATH.indexOf(st as typeof STAGE_PATH[number])
-  const next = st === 'grow' || at < 0 || at === STAGE_PATH.length - 1 ? null : STAGE_PATH[at + 1]
-  const rank = (s: string) => BEST_FIRST.indexOf(s)
-  const ahead = data.members.filter((m) => rank(m.stage) < rank(st)).length
-  const behind = data.members.filter((m) => rank(m.stage) > rank(st)).length
-  const total = data.members.length || 1
-  const moves = data.wins.filter((w) => w.kind === 'moved')
+const STAGE_PLAIN: Record<string, { now: string; done: string }> = {
+  decide: { now: "You're choosing what to build.", done: 'Done when 3–5 real people confirm the problem is worth solving.' },
+  build: { now: "You've picked the idea. Now make it real.", done: 'Done when one core workflow works from start to finish.' },
+  launch: { now: "It works, but people can't fully use it yet.", done: 'Done when real users can sign up and get through it.' },
+  sell: { now: "It's live. Now it has to earn.", done: 'Done when someone you don\'t know pays you.' },
+  grow: { now: 'You already run a business.', done: 'No finish line. Keep using AI to earn more or work less.' },
+}
 
+/* Why the board exists, in the community's own voice. */
+function BoardIntro() {
   return (
-    <div>
-      {/* Stage strip */}
-      <div className="flex justify-between">
-        {['decide', 'build', 'launch', 'sell', 'grow'].map((s) => {
-          const cur = s === st
-          const done = st === 'grow' ? s !== 'grow' : s !== 'grow' && STAGE_PATH.indexOf(s as typeof STAGE_PATH[number]) < at
-          return (
-            <div key={s} className="text-center px-1.5 pt-2 pb-2.5 rounded-[18px]" style={cur ? { background: '#fff', boxShadow: '0 4px 16px rgba(0,0,0,0.07)' } : undefined}>
-              <p className="text-[12px] mb-1.5" style={{ color: cur ? '#000' : '#8e8e93', fontWeight: cur ? 600 : 500 }}>{STAGE_SHORT[s]}</p>
-              {cur ? <Medal stage={s} size={42} /> : done
-                ? <span className="inline-flex items-center justify-center rounded-full" style={{ width: 42, height: 42, border: '2px solid #000' }}><Check className="w-[18px] h-[18px]" strokeWidth={2.5} /></span>
-                : <Medal stage={s} size={42} locked />}
-            </div>
-          )
-        })}
-      </div>
-
-      {/* Days in stage */}
-      <div className={`${CARD} mt-4 p-5 sm:p-6 flex items-center justify-between gap-4`}>
-        <div>
-          <p className="text-[56px] font-bold leading-none tracking-[-0.04em] tabular-nums" style={{ color: d != null && usual && d > usual ? paceColor(st, d) : '#000' }}>{d ?? '—'}</p>
-          <p className="text-[13px] text-[#8e8e93] mt-1.5">Days in {stageLabel(st)}</p>
-          {usual && <span className="inline-block mt-3 rounded-full bg-[#f2f2f5] px-2.5 py-1 text-[13px] font-semibold">Usually about {usual} days</span>}
-        </div>
-        <Ring size={132} stroke={12} frac={usual ? (d ?? 0) / usual : 1} color={RING_COLOR[st]}><Medal stage={st} size={66} /></Ring>
-      </div>
-
-      {/* Three small cards */}
-      <div className="grid grid-cols-3 gap-2.5 mt-3">
-        {[
-          { v: String(moves.length), l: 'Moved up this month', frac: moves.length / total, color: '#34c759', Icon: ChevronsUp },
-          { v: String(ahead), l: 'Ahead of you', frac: ahead / total, color: '#ff9500', Icon: TrendingUp },
-          { v: String(behind), l: 'Behind you', frac: behind / total, color: '#007aff', Icon: Users },
-        ].map(({ v, l, frac, color, Icon }) => (
-          <div key={l} className={`${CARD} px-3.5 pt-3.5 pb-4`}>
-            <p className="text-[22px] font-bold tracking-[-0.03em] tabular-nums">{v}</p>
-            <p className="text-[12px] text-[#8e8e93]">{l}</p>
-            <div className="flex justify-center mt-3"><Ring size={60} stroke={6} frac={frac} color={color}><Icon className="w-5 h-5" style={{ color }} /></Ring></div>
-          </div>
-        ))}
-      </div>
-
-      {at >= 0 && <PaceScale stage={st} days={d} />}
-
-      {/* Up next */}
-      <p className="text-[22px] font-bold tracking-[-0.02em] mt-7 mb-3">Up next</p>
-      <div className={`${CARD} px-5 py-[18px] flex items-center gap-4`}>
-        {next ? <Medal stage={next} size={56} locked /> : <Medal stage={st} size={56} />}
-        <div className="min-w-0">
-          <p className="text-[17px] font-semibold">{next ? stageLabel(next) : st === 'grow' ? 'Keep growing with AI' : 'Top of the path'}</p>
-          <p className="text-[14px] text-[#8e8e93] mt-0.5">{next ? unlockFor(next) : `You're ahead of ${behind} members. ${stageMeta(st)?.milestone ?? ''}`}</p>
-        </div>
-      </div>
-
-      {moves.length > 0 && (
-        <>
-          <p className="text-[22px] font-bold tracking-[-0.02em] mt-7 mb-3">Moved up this month</p>
-          <div className={`${CARD} py-1`}>
-            {moves.map((w, i) => (
-              <div key={i} className="flex items-center gap-3.5 px-4 py-3" style={i ? { borderTop: '1px solid #f2f2f5' } : undefined}>
-                <Medal stage={w.to || 'decide'} size={36} />
-                <p className="text-[15px] flex-1 min-w-0"><span className="font-semibold">{w.isMe ? 'You' : w.name}</span> moved up to {stageLabel(w.to)}</p>
-                <span className="text-[13px] text-[#8e8e93] shrink-0">{shortDate(w.at)}</span>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
+    <div className="pt-1 pb-5">
+      <h1 className="text-[34px] font-bold leading-[1.08] tracking-[-0.03em]">Idea to paying customers. Out in the open.</h1>
+      <p className="text-[16px] leading-relaxed text-[#6e6e73] mt-3">Building alone, it&apos;s easy to stay busy and go nowhere. So everyone here is on this board, at their real stage. Find yourself, see who&apos;s one step ahead, and go ask them how they got there.</p>
     </div>
   )
 }
 
-/* The usual time for each stage, drawn to scale, with this member's position on it. */
-function PaceScale({ stage, days }: { stage: string; days: number | null }) {
-  const at = STAGE_PATH.indexOf(stage as typeof STAGE_PATH[number])
-  const usual = STAGE_USUAL_DAYS[stage]
-  const marker = Math.min(1, (days ?? 0) / usual)
+/* What each stage means, and the benchmark members compare their day count against. */
+function UsualTimeline() {
   return (
-    <>
-      <p className="text-[22px] font-bold tracking-[-0.02em] mt-7 mb-3">How long stages usually take</p>
-      <div className={`${CARD} px-5 pt-5 pb-[18px]`}>
-        <div className="flex gap-1">
-          {STAGE_PATH.map((s, i) => (
-            <div key={s} className="min-w-0" style={{ flex: Math.max(STAGE_USUAL_DAYS[s], 22) }}>
-              <div className="relative h-2.5 mt-5">
-                <div className="absolute inset-0 rounded-full" style={{ background: i < at ? '#000' : i === at ? (s === 'decide' ? '#c7c7cc' : RING_COLOR[s]) : '#efeff4' }} />
-                {i === at && (
-                  <div className="absolute bottom-0 -translate-x-1/2 flex flex-col items-center" style={{ left: `${marker * 100}%` }}>
-                    <span className="text-[11px] font-semibold whitespace-nowrap mb-3.5">You</span>
-                    <span className="absolute -bottom-[3px] w-4 h-4 rounded-full bg-white border-[3px] border-black" />
-                  </div>
-                )}
-              </div>
-              <p className="text-[13px] font-semibold mt-3 truncate" style={{ color: i <= at ? '#000' : '#8e8e93' }}>{STAGE_SHORT[s]}</p>
-              <p className="text-[12px] text-[#8e8e93]">~{STAGE_USUAL_DAYS[s]} days</p>
-            </div>
-          ))}
-        </div>
+    <div className={`${CARD} p-5`}>
+      <p className="text-[20px] font-bold tracking-[-0.02em]">The path</p>
+      <p className="text-[14px] text-[#8e8e93] mt-0.5">What each stage means and how long it usually takes. Compare it with the days beside your name.</p>
+      <div className="flex gap-1 mt-4">
+        {STAGE_PATH.map((s) => <span key={s} className="h-2.5 rounded-full" style={{ flex: STAGE_USUAL_DAYS[s], background: s === 'decide' ? '#c7c7cc' : RING_COLOR[s] }} />)}
       </div>
-    </>
+      <div className="mt-2">
+        {[...STAGE_PATH, 'grow'].map((s, i) => (
+          <div key={s} className="flex items-start gap-3.5 py-3" style={i ? { borderTop: '1px solid #f2f2f5' } : undefined}>
+            <Medal stage={s} size={36} />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline justify-between gap-3">
+                <p className="text-[16px] font-semibold">{stageLabel(s)}</p>
+                <p className="text-[14px] font-semibold tabular-nums shrink-0">{STAGE_USUAL_DAYS[s] ? `About ${STAGE_USUAL_DAYS[s]} days` : 'Ongoing'}</p>
+              </div>
+              <p className="text-[14px] text-[#3a3a3c] mt-0.5">{STAGE_PLAIN[s].now}</p>
+              <p className="text-[13px] text-[#8e8e93]">{STAGE_PLAIN[s].done}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
 
 function BoardView({ data }: { data: JourneyData }) {
   const [filter, setFilter] = useState('all')
   const [open, setOpen] = useState<Record<string, boolean>>({})
-  const by = (s: string) => data.members.filter((m) => m.stage === s)
+  // Your own row comes first in your stage, so it's never hidden behind "See all".
+  const by = (s: string) => data.members.filter((m) => m.stage === s).sort((a, b) => Number(b.isMe) - Number(a.isMe))
+  const moves = data.wins.filter((w) => w.kind === 'moved')
   return (
     <div>
       {/* Summary */}
-      <div className={`${CARD} p-5`}>
+      <div className={`${CARD} p-5 mt-3`}>
         <div className="flex items-end justify-between">
           <div>
             <p className="text-[44px] font-bold leading-none tracking-[-0.04em] tabular-nums">{data.members.length}</p>
@@ -473,6 +369,21 @@ function BoardView({ data }: { data: JourneyData }) {
           {BEST_FIRST.map((s) => <span key={s} className="text-[12px] text-[#8e8e93]"><b className="text-black font-semibold">{by(s).length}</b> {STAGE_SHORT[s]}</span>)}
         </div>
       </div>
+
+      {moves.length > 0 && (
+        <>
+          <p className="text-[20px] font-bold tracking-[-0.02em] mt-7 mb-2.5">Moved up this month</p>
+          <div className={`${CARD} py-1`}>
+            {moves.map((w, i) => (
+              <div key={i} className="flex items-center gap-3.5 px-4 py-3" style={i ? { borderTop: '1px solid #f2f2f5' } : undefined}>
+                <Medal stage={w.to} size={36} />
+                <p className="text-[15px] flex-1 min-w-0"><span className="font-semibold">{w.isMe ? 'You' : w.name}</span> moved up to {stageLabel(w.to)}</p>
+                <span className="text-[13px] text-[#8e8e93] shrink-0">{shortDate(w.at)}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
 
       {/* Filter */}
       <div className="flex gap-1.5 mt-4 overflow-x-auto pb-1 -mx-1 px-1">
@@ -516,6 +427,9 @@ function BoardView({ data }: { data: JourneyData }) {
                       </div>
                       <div className="text-right shrink-0">
                         <p className="text-[15px] font-semibold tabular-nums" style={{ color: paceColor(s, d) }}>{d != null ? dayCount(d) : ''}</p>
+                        {d != null && STAGE_USUAL_DAYS[s] && (
+                          <div className="w-16 h-1 rounded-full bg-[#efeff4] mt-1.5 ml-auto overflow-hidden"><div className="h-full rounded-full" style={{ width: `${Math.min(100, (d / STAGE_USUAL_DAYS[s]) * 100)}%`, background: paceColor(s, d) }} /></div>
+                        )}
                       </div>
                     </div>
                   )
