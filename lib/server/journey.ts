@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js"
 import { COHORT_1_SIZE } from "@/lib/cohort"
-import { JOURNEY_START, STAGES } from "@/lib/crm"
+import { JOURNEY_START, STAGES, STAGE_BEST_FIRST } from "@/lib/crm"
 
 /* Builds the members' Journey board (/members → Journey) from the team's CRM
    tables. Only member-safe fields come out of here: name, stage, project and
@@ -76,10 +76,11 @@ export async function buildJourney(s: SupabaseClient, me: string) {
       stage_since: fromStart(stageRows.find((x) => x.new_value === stage)?.changed_at),
     })
 
-    // Wins: stage moves (not first placement) since the board started, last 30 days.
+    // Wins: forward stage moves (not first placement or a move back) since the board started, last 30 days.
     for (const r of stageRows) {
-      if (r.old_value && r.new_value && STAGE_KEYS.has(r.new_value) && new Date(r.changed_at).getTime() >= since) {
-        wins.push({ ...who, kind: "moved", from: r.old_value, to: r.new_value, at: r.changed_at })
+      const forward = r.old_value && r.new_value && STAGE_BEST_FIRST.indexOf(r.new_value) < STAGE_BEST_FIRST.indexOf(r.old_value)
+      if (forward && STAGE_KEYS.has(r.new_value!) && new Date(r.changed_at).getTime() >= since) {
+        wins.push({ ...who, kind: "moved", from: r.old_value!, to: r.new_value!, at: r.changed_at })
       }
     }
   })
