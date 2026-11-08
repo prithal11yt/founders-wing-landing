@@ -28,6 +28,9 @@ export const STAGES = [
 /* Decide → Build → Launch → Sell is the path; Grow with AI is its own lane. */
 export const STAGE_PATH = ['decide', 'build', 'launch', 'sell'] as const
 
+/* Display order on the members' board: furthest along first. */
+export const STAGE_BEST_FIRST = ['grow', 'sell', 'launch', 'build', 'decide']
+
 /* How long each stage on the path usually takes, shown on the members' Journey
    board so people can compare themselves. Past this a member's day count turns
    orange, past twice this it turns red. Grow with AI has no end, so no number. */

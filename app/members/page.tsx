@@ -2,8 +2,9 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { COHORT_1_SIZE } from '@/lib/cohort'
-import { ChevronDown, Hammer, IndianRupee, Lightbulb, Lock, Rocket, Sparkles } from 'lucide-react'
-import { STAGES, STAGE_PATH, STAGE_USUAL_DAYS } from '@/lib/crm'
+import { ChevronDown, Download, Hammer, IndianRupee, Lightbulb, Lock, Rocket, Sparkles } from 'lucide-react'
+import { STAGES, STAGE_BEST_FIRST, STAGE_PATH, STAGE_USUAL_DAYS } from '@/lib/crm'
+import { renderBoardSnapshot } from '@/lib/journey-snapshot'
 
 type Member = {
   id: string
@@ -242,7 +243,6 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
    Decide, then copper, silver, gold, holographic). Read-only: the team updates
    stages after each call. */
 
-const BEST_FIRST = ['grow', 'sell', 'launch', 'build', 'decide']
 const STAGE_SHORT: Record<string, string> = { decide: 'Decide', build: 'Build', launch: 'Launch', sell: 'Sell', grow: 'Grow' }
 const STAGE_ICON: Record<string, typeof Lightbulb> = { decide: Lightbulb, build: Hammer, launch: Rocket, sell: IndianRupee, grow: Sparkles }
 const METAL: Record<string, { bg: string; icon: string; glow: string }> = {
@@ -290,6 +290,7 @@ function JourneyBoard({ data }: { data: JourneyData }) {
   return (
     <div className="max-w-xl mx-auto text-black" style={{ fontFamily: APPLE_FONT, letterSpacing: '-0.01em' }}>
       <BoardIntro />
+      <SnapshotButton data={data} />
       <UsualTimeline />
       <BoardView data={data} />
       <p className="text-[12px] text-[#aeaeb2] text-center mt-8">You do the work. We move your medal after each call.</p>
@@ -303,6 +304,55 @@ const STAGE_PLAIN: Record<string, { now: string; done: string }> = {
   launch: { now: "It works, but people can't fully use it yet.", done: 'Done when real users can sign up and get through it.' },
   sell: { now: "It's live. Now it has to earn.", done: 'Done when someone you don\'t know pays you.' },
   grow: { now: 'You already run a business.', done: 'No finish line. Keep using AI to earn more or work less.' },
+}
+
+/* Saves the board as an image. Phones get the share sheet, so it can go straight
+   to the WhatsApp group; everything else downloads the file. */
+function SnapshotButton({ data }: { data: JourneyData }) {
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
+
+  async function snapshot() {
+    setBusy(true)
+    setError('')
+    try {
+      const members = data.members.map((m) => {
+        const days = daysSince(m.stage_since)
+        return { name: m.name, stage: m.stage, days, color: paceColor(m.stage, days) }
+      })
+      const blob = await renderBoardSnapshot(members, data.unplaced.length)
+      const filename = `founders-wing-board-${new Date().toISOString().slice(0, 10)}.png`
+      const file = new File([blob], filename, { type: 'image/png' })
+      if (window.matchMedia('(pointer: coarse)').matches && navigator.canShare?.({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file] })
+          return
+        } catch (e) {
+          if (e instanceof DOMException && e.name === 'AbortError') return
+        }
+      }
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = filename
+      a.click()
+      setTimeout(() => URL.revokeObjectURL(url), 10000)
+    } catch {
+      setError("Couldn't create the snapshot. Try again.")
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <div className="mb-5">
+      <button onClick={snapshot} disabled={busy}
+        className="w-full h-[52px] rounded-full bg-black text-white text-[16px] font-semibold inline-flex items-center justify-center gap-2 active:scale-[0.98] transition-transform disabled:opacity-60">
+        <Download className="w-[18px] h-[18px]" /> {busy ? 'Creating snapshot…' : 'Download snapshot'}
+      </button>
+      {error && <p className="text-[13px] text-[#ff3b30] text-center mt-2">{error}</p>}
+    </div>
+  )
 }
 
 /* Why the board exists, in the community's own voice. */
@@ -358,15 +408,15 @@ function BoardView({ data }: { data: JourneyData }) {
             <p className="text-[44px] font-bold leading-none tracking-[-0.04em] tabular-nums">{data.members.length}</p>
             <p className="text-[13px] text-[#8e8e93] mt-1">Members on the path</p>
           </div>
-          <div className="flex">{BEST_FIRST.slice(0, 4).map((s, i) => <span key={s} style={{ marginLeft: i ? -10 : 0 }}><Medal stage={s} size={34} /></span>)}</div>
+          <div className="flex">{STAGE_BEST_FIRST.slice(0, 4).map((s, i) => <span key={s} style={{ marginLeft: i ? -10 : 0 }}><Medal stage={s} size={34} /></span>)}</div>
         </div>
         <div className="flex h-2.5 rounded-full overflow-hidden gap-0.5 mt-4">
-          {BEST_FIRST.map((s) => by(s).length > 0 && (
+          {STAGE_BEST_FIRST.map((s) => by(s).length > 0 && (
             <span key={s} className="h-full" style={{ flex: by(s).length, background: s === 'decide' ? '#e5e5ea' : s === 'grow' ? 'linear-gradient(90deg,#a78bfa,#60a5fa,#f472b6)' : RING_COLOR[s] }} />
           ))}
         </div>
         <div className="flex justify-between mt-2.5">
-          {BEST_FIRST.map((s) => <span key={s} className="text-[12px] text-[#8e8e93]"><b className="text-black font-semibold">{by(s).length}</b> {STAGE_SHORT[s]}</span>)}
+          {STAGE_BEST_FIRST.map((s) => <span key={s} className="text-[12px] text-[#8e8e93]"><b className="text-black font-semibold">{by(s).length}</b> {STAGE_SHORT[s]}</span>)}
         </div>
       </div>
 
@@ -387,7 +437,7 @@ function BoardView({ data }: { data: JourneyData }) {
 
       {/* Filter */}
       <div className="flex gap-1.5 mt-4 overflow-x-auto pb-1 -mx-1 px-1">
-        {['all', ...BEST_FIRST].map((s) => (
+        {['all', ...STAGE_BEST_FIRST].map((s) => (
           <button key={s} onClick={() => setFilter(s)}
             className="px-3.5 py-1.5 rounded-full text-[14px] font-semibold whitespace-nowrap shrink-0"
             style={filter === s ? { background: '#000', color: '#fff' } : { background: '#fff', color: '#3a3a3c', boxShadow: '0 1px 2px rgba(0,0,0,0.04)' }}>
@@ -397,7 +447,7 @@ function BoardView({ data }: { data: JourneyData }) {
       </div>
 
       {/* Stages, best first */}
-      {BEST_FIRST.filter((s) => filter === 'all' || filter === s).map((s) => {
+      {STAGE_BEST_FIRST.filter((s) => filter === 'all' || filter === s).map((s) => {
         const list = by(s)
         const dim = s === 'decide'
         const top = s === 'sell' || s === 'grow'
