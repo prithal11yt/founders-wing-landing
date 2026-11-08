@@ -28,9 +28,10 @@ export const STAGES = [
 /* Decide → Build → Launch → Sell is the path; Grow with AI is its own lane. */
 export const STAGE_PATH = ['decide', 'build', 'launch', 'sell'] as const
 
-/* Pace the members' Journey board measures "Day N in a stage" against. Past the
-   target the counter turns orange, past twice the target it turns red. */
-export const STAGE_TARGET_DAYS: Record<string, number> = { decide: 14, build: 30, launch: 21, sell: 30, grow: 45 }
+/* How long each stage on the path usually takes, shown on the members' Journey
+   board so people can compare themselves. Past this a member's day count turns
+   orange, past twice this it turns red. Grow with AI has no end, so no number. */
+export const STAGE_USUAL_DAYS: Record<string, number> = { decide: 14, build: 45, launch: 21, sell: 30 }
 
 /* The Journey board's day counts start here. Anyone placed before this date
    counts from it (day 1 = 8 Nov 2026), and "Moved up" only lists moves made

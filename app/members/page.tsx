@@ -2,8 +2,8 @@
 
 import { useEffect, useState, useCallback, useId } from 'react'
 import { COHORT_1_SIZE } from '@/lib/cohort'
-import { Check, ChevronDown, ChevronsUp, Hammer, IndianRupee, Lightbulb, Lock, Rocket, Sparkles, Timer, TrendingUp, Users } from 'lucide-react'
-import { STAGES, STAGE_PATH, STAGE_TARGET_DAYS } from '@/lib/crm'
+import { Check, ChevronDown, ChevronsUp, Hammer, IndianRupee, Lightbulb, Lock, Rocket, Sparkles, TrendingUp, Users } from 'lucide-react'
+import { STAGES, STAGE_PATH, STAGE_USUAL_DAYS } from '@/lib/crm'
 
 type Member = {
   id: string
@@ -260,10 +260,14 @@ const stageLabel = (v?: string | null) => stageMeta(v)?.label ?? v ?? ''
 const shortDate = (iso: string) => new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
 const daysSince = (iso: string | null) => (iso ? Math.max(1, Math.floor((Date.now() - new Date(iso).getTime()) / 86400000) + 1) : null)
 const paceColor = (stage: string, d: number | null) => {
-  const t = STAGE_TARGET_DAYS[stage] ?? 30
+  const usual = STAGE_USUAL_DAYS[stage]
   if (d == null) return '#aeaeb2'
-  return d > t * 2 ? '#ff3b30' : d > t ? '#ff9500' : stage === 'decide' ? '#8e8e93' : '#000000'
+  if (usual && d > usual * 2) return '#ff3b30'
+  if (usual && d > usual) return '#ff9500'
+  return stage === 'decide' ? '#8e8e93' : '#000000'
 }
+const dayCount = (d: number) => `${d} day${d === 1 ? '' : 's'}`
+
 // What it takes to reach a stage: the milestone of the stage before it.
 const unlockFor = (stage: string) => stageMeta(STAGE_PATH[STAGE_PATH.indexOf(stage as typeof STAGE_PATH[number]) - 1])?.milestone ?? ''
 
@@ -332,7 +336,7 @@ function YouView({ me, data }: { me: JourneyMember | null; data: JourneyData }) 
   }
   const st = me.stage
   const d = daysSince(me.stage_since)
-  const target = STAGE_TARGET_DAYS[st] ?? 30
+  const usual = STAGE_USUAL_DAYS[st]
   const at = STAGE_PATH.indexOf(st as typeof STAGE_PATH[number])
   const next = st === 'grow' || at < 0 || at === STAGE_PATH.length - 1 ? null : STAGE_PATH[at + 1]
   const rank = (s: string) => BEST_FIRST.indexOf(s)
@@ -362,11 +366,11 @@ function YouView({ me, data }: { me: JourneyMember | null; data: JourneyData }) 
       {/* Days in stage */}
       <div className={`${CARD} mt-4 p-5 sm:p-6 flex items-center justify-between gap-4`}>
         <div>
-          <p className="text-[56px] font-bold leading-none tracking-[-0.04em] tabular-nums" style={{ color: d != null && d > target ? paceColor(st, d) : '#000' }}>{d ?? '—'}</p>
+          <p className="text-[56px] font-bold leading-none tracking-[-0.04em] tabular-nums" style={{ color: d != null && usual && d > usual ? paceColor(st, d) : '#000' }}>{d ?? '—'}</p>
           <p className="text-[13px] text-[#8e8e93] mt-1.5">Days in {stageLabel(st)}</p>
-          <span className="inline-flex items-center gap-1.5 mt-3 rounded-full bg-[#f2f2f5] px-2.5 py-1 text-[13px] font-semibold"><Timer className="w-3.5 h-3.5" /> Target {target} days</span>
+          {usual && <span className="inline-block mt-3 rounded-full bg-[#f2f2f5] px-2.5 py-1 text-[13px] font-semibold">Usually about {usual} days</span>}
         </div>
-        <Ring size={132} stroke={12} frac={(d ?? 0) / target} color={RING_COLOR[st]}><Medal stage={st} size={66} /></Ring>
+        <Ring size={132} stroke={12} frac={usual ? (d ?? 0) / usual : 1} color={RING_COLOR[st]}><Medal stage={st} size={66} /></Ring>
       </div>
 
       {/* Three small cards */}
@@ -383,6 +387,8 @@ function YouView({ me, data }: { me: JourneyMember | null; data: JourneyData }) 
           </div>
         ))}
       </div>
+
+      {at >= 0 && <PaceScale stage={st} days={d} />}
 
       {/* Up next */}
       <p className="text-[22px] font-bold tracking-[-0.02em] mt-7 mb-3">Up next</p>
@@ -409,6 +415,37 @@ function YouView({ me, data }: { me: JourneyMember | null; data: JourneyData }) 
         </>
       )}
     </div>
+  )
+}
+
+/* The usual time for each stage, drawn to scale, with this member's position on it. */
+function PaceScale({ stage, days }: { stage: string; days: number | null }) {
+  const at = STAGE_PATH.indexOf(stage as typeof STAGE_PATH[number])
+  const usual = STAGE_USUAL_DAYS[stage]
+  const marker = Math.min(1, (days ?? 0) / usual)
+  return (
+    <>
+      <p className="text-[22px] font-bold tracking-[-0.02em] mt-7 mb-3">How long stages usually take</p>
+      <div className={`${CARD} px-5 pt-5 pb-[18px]`}>
+        <div className="flex gap-1">
+          {STAGE_PATH.map((s, i) => (
+            <div key={s} className="min-w-0" style={{ flex: Math.max(STAGE_USUAL_DAYS[s], 22) }}>
+              <div className="relative h-2.5 mt-5">
+                <div className="absolute inset-0 rounded-full" style={{ background: i < at ? '#000' : i === at ? (s === 'decide' ? '#c7c7cc' : RING_COLOR[s]) : '#efeff4' }} />
+                {i === at && (
+                  <div className="absolute bottom-0 -translate-x-1/2 flex flex-col items-center" style={{ left: `${marker * 100}%` }}>
+                    <span className="text-[11px] font-semibold whitespace-nowrap mb-3.5">You</span>
+                    <span className="absolute -bottom-[3px] w-4 h-4 rounded-full bg-white border-[3px] border-black" />
+                  </div>
+                )}
+              </div>
+              <p className="text-[13px] font-semibold mt-3 truncate" style={{ color: i <= at ? '#000' : '#8e8e93' }}>{STAGE_SHORT[s]}</p>
+              <p className="text-[12px] text-[#8e8e93]">~{STAGE_USUAL_DAYS[s]} days</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -457,7 +494,7 @@ function BoardView({ data }: { data: JourneyData }) {
         return (
           <section key={s}>
             <div className="flex items-center justify-between mt-7 mb-2.5">
-              <div className="flex items-center gap-2.5"><Medal stage={s} size={26} /><h2 className="text-[20px] font-bold tracking-[-0.02em]" style={{ color: dim ? '#8e8e93' : '#000' }}>{stageLabel(s)}</h2></div>
+              <div className="flex items-center gap-2.5"><Medal stage={s} size={26} /><div><h2 className="text-[20px] font-bold tracking-[-0.02em] leading-tight" style={{ color: dim ? '#8e8e93' : '#000' }}>{stageLabel(s)}</h2>{STAGE_USUAL_DAYS[s] && <p className="text-[12px] text-[#8e8e93]">Usually about {STAGE_USUAL_DAYS[s]} days</p>}</div></div>
               <span className="text-[15px] text-[#8e8e93]">{list.length}</span>
             </div>
             {list.length === 0 ? (
@@ -478,8 +515,7 @@ function BoardView({ data }: { data: JourneyData }) {
                         {(m.project || m.summary) && <p className="truncate text-[13px] text-[#8e8e93]">{m.project || m.summary}</p>}
                       </div>
                       <div className="text-right shrink-0">
-                        <p className="text-[15px] font-semibold tabular-nums" style={{ color: paceColor(s, d) }}>{d != null ? `Day ${d}` : ''}</p>
-                        <p className="text-[12px] text-[#8e8e93]">of {STAGE_TARGET_DAYS[s] ?? 30} days</p>
+                        <p className="text-[15px] font-semibold tabular-nums" style={{ color: paceColor(s, d) }}>{d != null ? dayCount(d) : ''}</p>
                       </div>
                     </div>
                   )
