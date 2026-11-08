@@ -216,7 +216,7 @@ function MemberDashboard({ member, onLogout }: { member: Member; onLogout: () =>
         <div className="max-w-xl mx-auto px-4 sm:px-0 py-4 flex items-center justify-between">
           <p className="text-[22px] font-bold tracking-[-0.03em]">Founders Wing</p>
           <div className="flex items-center gap-3">
-            <span className="text-[13px] text-[#8e8e93] hidden sm:inline">{firstName(member.full_name)} · {isFounding ? 'Founding member' : 'Member'}{member.member_no ? ` #${member.member_no}` : ''}</span>
+            <span className="text-[13px] text-[#8e8e93] hidden sm:inline">{member.plan === 'team' ? 'Team view' : `${firstName(member.full_name)} · ${isFounding ? 'Founding member' : 'Member'}${member.member_no ? ` #${member.member_no}` : ''}`}</span>
             <button onClick={onLogout} className="text-[13px] font-semibold text-[#8e8e93] hover:text-black transition-colors">Sign out</button>
           </div>
         </div>

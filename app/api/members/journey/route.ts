@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
 import { buildJourney } from "@/lib/server/journey"
+import { getSession } from "../../leads/verify/route"
 import { verifyMemberToken } from "../session/route"
 
 /* The members' Journey board: every member's stage, what they're building and
@@ -16,8 +17,11 @@ function getSupabase() {
 
 async function authEmail(request: NextRequest): Promise<string | null> {
   const token = request.cookies.get("fw_member_token")?.value
-  if (!token) return null
-  return (await verifyMemberToken(token))?.email ?? null
+  const email = token ? (await verifyMemberToken(token))?.email : null
+  if (email) return email
+  // The community manager views the board with the team login.
+  const staff = getSession(request)
+  return staff?.role === "team" ? staff.email : null
 }
 
 export async function GET(request: NextRequest) {

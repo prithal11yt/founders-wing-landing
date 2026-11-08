@@ -76,7 +76,7 @@ export function setSessionCookie(response: NextResponse, account: { email: strin
   })
 }
 
-function resolveRole(email: string, password: string): { email: string; role: LeadsRole } | null {
+export function resolveRole(email: string, password: string): { email: string; role: LeadsRole } | null {
   const adminPassword = process.env.LEADS_PASSWORD
   const teamEmail = process.env.TEAM_EMAIL
   const teamPassword = process.env.TEAM_PASSWORD

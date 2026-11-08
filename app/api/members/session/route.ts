@@ -3,6 +3,8 @@ import { createClient } from "@supabase/supabase-js"
 import crypto from "crypto"
 import { escapeLike } from "@/lib/like"
 import { hashPassword, verifyPassword, verifyInvitation, credentialVersion } from "@/lib/member-credentials"
+import { resolveRole, setSessionCookie } from "../../leads/auth/route"
+import { getSession } from "../../leads/verify/route"
 
 // Loose sanity check on the email shape before it ever reaches the database.
 // This blocks "%"-style patterns and injection characters, while still allowing
@@ -83,6 +85,12 @@ async function findMember(email: string) {
   return null
 }
 
+// The community manager views the board with the team login. Not a row in
+// fw_memberships, so never counted, listed or given member-only data.
+const teamViewer = (email: string) => ({
+  id: "team", full_name: "Team", email, plan: "team", created_at: new Date().toISOString(), member_no: null,
+})
+
 // Member number = join order across all memberships.
 async function memberNumber(email: string): Promise<number | null> {
   if (email.trim().toLowerCase() === DEMO_EMAIL) return 1 // demo displays as a founding member
@@ -138,7 +146,13 @@ export async function POST(request: NextRequest) {
       )
     }
     const member = await findMember(email)
-    if (!member) return invalid()
+    if (!member) {
+      const account = mode === "setup" ? null : resolveRole(email.trim().toLowerCase(), password)
+      if (account?.role !== "team") return invalid()
+      const response = NextResponse.json({ success: true, member: teamViewer(account.email) })
+      setSessionCookie(response, account)
+      return response
+    }
     const lower = member.email.toLowerCase()
     const supabase = getSupabase()
     const { data: auth, error: authError } = await supabase.from("fw_member_auth")
@@ -186,10 +200,11 @@ export async function POST(request: NextRequest) {
 // GET → return current member from cookie
 export async function GET(request: NextRequest) {
   const token = request.cookies.get("fw_member_token")?.value
-  if (!token) return NextResponse.json({ authenticated: false }, { status: 401 })
-
-  const result = await verifyMemberToken(token)
+  const result = token ? await verifyMemberToken(token) : null
   if (!result) {
+    const staff = getSession(request)
+    if (staff?.role === "team") return NextResponse.json({ authenticated: true, member: teamViewer(staff.email) })
+    if (!token) return NextResponse.json({ authenticated: false }, { status: 401 })
     const response = NextResponse.json({ authenticated: false }, { status: 401 })
     response.cookies.delete("fw_member_token")
     return response
@@ -211,8 +226,9 @@ export async function GET(request: NextRequest) {
 }
 
 // DELETE → logout
-export async function DELETE() {
+export async function DELETE(request: NextRequest) {
   const response = NextResponse.json({ success: true })
   response.cookies.delete("fw_member_token")
+  if (getSession(request)?.role === "team") response.cookies.delete("fw_leads_token")
   return response
 }
