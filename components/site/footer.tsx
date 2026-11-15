@@ -62,7 +62,9 @@ function Col({ title, links }: { title: string; links: { href: string; label: st
   )
 }
 
-export function SiteFooter() {
+// The events directory leaves out the phone number and WhatsApp chat.
+export function SiteFooter({ hidePhone = false }: { hidePhone?: boolean }) {
+  const contact = hidePhone ? CONTACT.filter((l) => l.href !== PHONE_TEL && l.href !== WHATSAPP_URL) : CONTACT
   return (
     <footer className="bg-neutral-950 text-neutral-400">
       <div className="mx-auto max-w-6xl px-5 py-14 md:py-16 grid gap-10 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
@@ -74,7 +76,7 @@ export function SiteFooter() {
         </div>
         <Col title="Founders Wing" links={SITE} />
         <Col title="Resources" links={RESOURCES} />
-        <Col title="Contact" links={CONTACT} />
+        <Col title="Contact" links={contact} />
       </div>
       <div className="border-t border-white/5">
         <div className="mx-auto max-w-6xl px-5 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs">

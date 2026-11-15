@@ -4,9 +4,9 @@ import { SiteFooter } from '@/components/site/footer'
 export default function EventsLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-white text-neutral-950">
-      <SiteNav />
+      <SiteNav hidePhone />
       <main>{children}</main>
-      <SiteFooter />
+      <SiteFooter hidePhone />
     </div>
   )
 }
