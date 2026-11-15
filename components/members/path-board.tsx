@@ -59,9 +59,9 @@ const STAGE_PLAIN: Record<string, { now: string; done: string }> = {
 
 export function PathShell({ who, onLogout, children }: { who: string; onLogout: () => void; children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#f5f6fa] text-[#0b1220] [--path-step:12px] md:[--path-step:60px]" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+    <div className="min-h-screen bg-[#f5f6fa] text-[#0b1220] [--path-step:12px] md:[--path-step:36px]" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
       <header className="bg-white border-b border-[#eceef4]">
-        <div className="max-w-[820px] mx-auto px-5 h-14 flex items-center justify-between">
+        <div className="max-w-[1140px] mx-auto px-5 h-14 flex items-center justify-between">
           <p className="text-[16px] font-extrabold tracking-[-0.02em]" style={DISPLAY}>Founders Wing</p>
           <nav className="flex items-center gap-5 text-[13px]">
             <span className="relative font-semibold py-4">The path<span className="absolute left-0 right-0 bottom-2.5 h-[2px] rounded-full bg-[#1d3fbf]" /></span>
@@ -70,7 +70,7 @@ export function PathShell({ who, onLogout, children }: { who: string; onLogout: 
           </nav>
         </div>
       </header>
-      <main className="max-w-[820px] mx-auto px-5 pt-10 pb-16">{children}</main>
+      <main className="max-w-[1140px] mx-auto px-5 pt-10 pb-16">{children}</main>
     </div>
   )
 }
@@ -81,7 +81,7 @@ export function PathBoard({ data }: { data: JourneyData }) {
   return (
     <div>
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-        <div className="max-w-[460px]">
+        <div className="max-w-[640px]">
           <p className="text-[11px] font-bold tracking-[0.14em] text-[#1d3fbf]">THE FOUNDERS WING PATH</p>
           <h1 className="mt-3 text-[40px] md:text-[48px] leading-[0.98] font-extrabold tracking-[-0.035em]" style={DISPLAY}>Every business here is somewhere on this path.</h1>
           <p className="mt-4 text-[14px] leading-relaxed text-[#3d4659]">
@@ -123,7 +123,7 @@ export function PathBoard({ data }: { data: JourneyData }) {
 function Stop({ stage, index, members, isBottom }: { stage: string; index: number; members: JourneyMember[]; isBottom: boolean }) {
   const c = COLOR[stage]
   const [all, setAll] = useState(false)
-  const shown = all ? members : members.slice(0, 6)
+  const shown = all ? members : members.slice(0, 8)
   const usual = STAGE_USUAL_DAYS[stage]
   const hasMe = members.some((m) => m.isMe)
   return (
@@ -131,7 +131,7 @@ function Stop({ stage, index, members, isBottom }: { stage: string; index: numbe
       {!isBottom && (
         // Ends level with the top of the next stop's number, so it runs above that heading, not through it.
         <span aria-hidden className="absolute top-[44px] bottom-0 right-[calc(100%-22.5px)] border-r-[2.5px] border-b-[2.5px] border-dashed rounded-br-[22px]"
-          style={{ borderColor: c.rail, left: `calc(${-index} * var(--path-step))` }} />
+          style={{ borderColor: c.rail, left: 'calc(21px - var(--path-step))' }} />
       )}
       <div className="relative flex items-center gap-3 flex-wrap">
         <span className="grid place-items-center w-[42px] h-[42px] rounded-full text-white text-[17px] font-extrabold shrink-0 ring-4 ring-[#f5f6fa]" style={{ background: c.solid, ...DISPLAY }}>{index + 1}</span>
@@ -146,7 +146,7 @@ function Stop({ stage, index, members, isBottom }: { stage: string; index: numbe
             {stage === 'grow' ? 'For members who already run a business and use AI to grow it.' : 'Nobody here yet. Be the first.'}
           </p>
         ) : (
-          <div className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(205px,1fr))] gap-3">
+          <div className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-3">
             {shown.map((m) => <MemberCard key={m.member_no} m={m} stage={stage} />)}
           </div>
         )}
