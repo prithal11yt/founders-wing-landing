@@ -39,4 +39,4 @@ next-env.d.ts
 /Light_Neumorphic_FoundersWing/
 /founders-wing-landing-github/
 /founders-wing-neumorphic/
-.DS_Store
+.DS_Store/.next-build/

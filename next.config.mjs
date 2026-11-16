@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // The VPS deploy builds into a side folder (NEXT_DIST_DIR=.next-build) so a
+  // failed build never replaces the live one; everywhere else it's .next.
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   typescript: {
     ignoreBuildErrors: true,
   },
