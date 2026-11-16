@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import { ChevronDown, Download } from 'lucide-react'
-import { STAGES, STAGE_PATH, STAGE_USUAL_DAYS } from '@/lib/crm'
+import { STAGES, STAGE_USUAL_DAYS } from '@/lib/crm'
+import { PATH_ORDER, PATH_COLOR, STAGE_PLAIN, daysSince, paceColor } from '@/lib/members-path'
 import { renderBoardSnapshot } from '@/lib/journey-snapshot'
 
 export type JourneyWho = { member_no: number; name: string; isMe: boolean }
@@ -21,40 +22,17 @@ export type JourneyData = { members: JourneyMember[]; unplaced: JourneyWho[]; wi
    left to Grow with AI at the top right, so moving on means moving up. Each stop has its own
    colour; everything else stays quiet. Read-only: the team moves markers. */
 
-const ORDER = [...STAGE_PATH, 'grow'] as string[]
-const COLOR: Record<string, { solid: string; rail: string; soft: string }> = {
-  decide: { solid: '#475569', rail: '#cbd5e1', soft: '#eef1f5' },
-  build: { solid: '#1d4ed8', rail: '#a5c4fb', soft: '#e6eeff' },
-  launch: { solid: '#6d28d9', rail: '#cbb8fb', soft: '#f1ebff' },
-  sell: { solid: '#c2410c', rail: '#fbbf8a', soft: '#fff1e6' },
-  grow: { solid: '#15803d', rail: '#93e2b0', soft: '#e5f7ec' },
-}
+const ORDER = PATH_ORDER
+const COLOR = PATH_COLOR
 const DISPLAY = { fontFamily: 'var(--font-path-display), Inter, sans-serif' }
 
 const stageMeta = (v?: string | null) => STAGES.find((s) => s.value === v)
 const stageLabel = (v?: string | null) => stageMeta(v)?.label ?? v ?? ''
 const stopNo = (v: string) => ORDER.indexOf(v) + 1
-const daysSince = (iso: string | null) => (iso ? Math.max(1, Math.floor((Date.now() - new Date(iso).getTime()) / 86400000) + 1) : null)
 const dayCount = (d: number) => `${d} day${d === 1 ? '' : 's'}`
 const agoLabel = (iso: string) => {
   const d = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000)
   return d <= 0 ? 'today' : d === 1 ? 'yesterday' : `${d} days ago`
-}
-// Past the usual time for a stage the day count turns orange, past double it turns red.
-const paceColor = (stage: string, d: number | null) => {
-  const usual = STAGE_USUAL_DAYS[stage]
-  if (d == null || !usual) return '#8b93a7'
-  if (d > usual * 2) return '#dc2626'
-  if (d > usual) return '#ea7a0c'
-  return '#8b93a7'
-}
-
-const STAGE_PLAIN: Record<string, { now: string; done: string }> = {
-  decide: { now: "You're choosing what to build.", done: 'Done when 3–5 real people confirm the problem is worth solving.' },
-  build: { now: "You've picked the idea. Now make it real.", done: 'Done when one core workflow works from start to finish.' },
-  launch: { now: "It works, but people can't fully use it yet.", done: 'Done when real users can sign up and get through it.' },
-  sell: { now: "It's live. Now it has to earn.", done: 'Done when someone you don\'t know pays you.' },
-  grow: { now: 'You already run a business.', done: 'No finish line. Keep using AI to earn more or work less.' },
 }
 
 export function PathShell({ who, onLogout, children }: { who: string; onLogout: () => void; children: React.ReactNode }) {
@@ -226,7 +204,11 @@ function SnapshotButton({ data }: { data: JourneyData }) {
         const days = daysSince(m.stage_since)
         return { name: m.name, stage: m.stage, days, color: paceColor(m.stage, days) }
       })
-      const blob = await renderBoardSnapshot(members, data.unplaced.length)
+      // Draw with the same heading font as the page.
+      const h1 = document.querySelector('h1')
+      const display = h1 ? getComputedStyle(h1).fontFamily : ''
+      await document.fonts?.ready
+      const blob = await renderBoardSnapshot(members, data.unplaced.length, display)
       const filename = `founders-wing-board-${new Date().toISOString().slice(0, 10)}.png`
       const file = new File([blob], filename, { type: 'image/png' })
       if (window.matchMedia('(pointer: coarse)').matches && navigator.canShare?.({ files: [file] })) {
