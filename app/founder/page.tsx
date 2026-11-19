@@ -12,7 +12,7 @@ import { PrimaryCTA } from '@/components/site/ui'
 import { MemberCount } from '@/components/site/member-count'
 
 export const metadata: Metadata = {
-  title: 'Prithal Bhardwaj | Founder of Founders Wing',
+  title: { absolute: 'Prithal Bhardwaj | Founder of Founders Wing' },
   description:
     'Prithal Bhardwaj runs The Solo Entrepreneur on YouTube (50K+ subscribers, 675+ videos) and founded Founders Wing, India’s community for people building SaaS, AI automations and AI businesses.',
   alternates: { canonical: `${SITE_URL}/founder` },

@@ -12,14 +12,15 @@ const BASE_URL = 'https://www.founderswing.com'
 export const revalidate = 3600
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Static pages: no lastModified, since a build date isn't a content change.
+  // /secure-spot is noindexed, so it stays out.
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: BASE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
-    { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${BASE_URL}/founder`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/build`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/secure-spot`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/privacy-policy`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
-    { url: `${BASE_URL}/terms`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
+    { url: BASE_URL, changeFrequency: 'weekly', priority: 1.0 },
+    { url: `${BASE_URL}/blog`, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${BASE_URL}/founder`, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE_URL}/build`, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/privacy-policy`, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${BASE_URL}/terms`, changeFrequency: 'yearly', priority: 0.3 },
   ]
 
   const blogRoutes: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
@@ -31,7 +32,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const dynamicRoutes: MetadataRoute.Sitemap = seoPages.map((page) => ({
     url: `${BASE_URL}/${page.category}/${page.slug}`,
-    lastModified: new Date(),
     changeFrequency: 'monthly',
     priority: 0.7,
   }))

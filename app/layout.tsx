@@ -65,9 +65,6 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
-  alternates: {
-    canonical: BASE_URL,
-  },
   verification: {
     google: "v5saqNNUgGlyoIWpns0iPoamujl4Dz_ZcVkX-BPSA8o",
   },
@@ -92,6 +89,10 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+            // Local and preview copies must not count as traffic.
+            if (!/(^|\.)founderswing\.com$/.test(location.hostname)) window['ga-disable-G-X1QTL8HQ6M'] = true;
+            // Membership checkout runs on thesoloentrepreneur.in: keep it one session.
+            gtag('set', 'linker', { domains: ['founderswing.com', 'thesoloentrepreneur.in'] });
             gtag('config', 'G-X1QTL8HQ6M');
           `}
         </Script>
@@ -140,7 +141,7 @@ export default function RootLayout({
                 url: BASE_URL,
                 potentialAction: {
                   "@type": "SearchAction",
-                  target: { "@type": "EntryPoint", urlTemplate: `${BASE_URL}/guide/{search_term_string}` },
+                  target: { "@type": "EntryPoint", urlTemplate: `${BASE_URL}/events?q={search_term_string}` },
                   "query-input": "required name=search_term_string",
                 },
               },

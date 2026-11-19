@@ -91,8 +91,8 @@ export default async function SeoPage({ params }: { params: Promise<{ category: 
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}` },
-        { '@type': 'ListItem', position: 2, name: category.charAt(0).toUpperCase() + category.slice(1), item: `${SITE_URL}/${category}` },
-        { '@type': 'ListItem', position: 3, name: page.h1, item: `${SITE_URL}/${category}/${slug}` },
+        // No /community, /guide or /tools index page exists, so there is no middle level.
+        { '@type': 'ListItem', position: 2, name: page.h1, item: `${SITE_URL}/${category}/${slug}` },
       ],
     },
     ...(content?.faqs && {

@@ -378,7 +378,7 @@ function Membership({ nextMemberNo, earlyLeft }: { nextMemberNo: number | null; 
                   {f.q}
                   <Plus className={`w-4 h-4 text-neutral-400 transition-transform ${open === i ? 'rotate-45' : ''}`} />
                 </button>
-                {open === i && <p className="pb-4 text-sm text-neutral-600 leading-relaxed">{f.a}</p>}
+                <p hidden={open !== i} className="pb-4 text-sm text-neutral-600 leading-relaxed">{f.a}</p>
               </div>
             ))}
           </div>
@@ -778,10 +778,37 @@ function HowItWorks() {
   )
 }
 
+// Membership offers and the FAQ as structured data. Prices come from lib/pricing.
+const HOME_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Product',
+      name: 'Founders Wing membership',
+      description: 'Membership of Founders Wing, a community for solo builders in India working on their first AI product: a live call every Wednesday, hot seat feedback and a private member group.',
+      brand: { '@type': 'Brand', name: 'Founders Wing' },
+      url: 'https://www.founderswing.com/#membership',
+      offers: (Object.keys(PRICING) as PlanKey[]).map(k => ({
+        '@type': 'Offer',
+        name: `Founders Wing membership, ${PRICING[k].label}`,
+        price: PRICING[k].price,
+        priceCurrency: 'INR',
+        availability: 'https://schema.org/InStock',
+        url: 'https://www.founderswing.com/#membership',
+      })),
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: FAQS.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    },
+  ],
+}
+
 function FAQ() {
   const [open, setOpen] = useState<number | null>(0)
   return (
     <section id="faq" className="py-20 md:py-28 bg-neutral-50">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(HOME_JSON_LD) }} />
       <div className="mx-auto max-w-3xl px-5">
         <h2 className="text-center text-4xl md:text-6xl font-medium tracking-[-0.045em]">FAQs</h2>
         <div className="mt-12 border-t border-neutral-200">
@@ -791,7 +818,7 @@ function FAQ() {
                 {f.q}
                 <Plus className={`w-5 h-5 shrink-0 text-neutral-400 transition-transform ${open === i ? 'rotate-45' : ''}`} />
               </button>
-              {open === i && <p className="pb-5 text-neutral-600 leading-relaxed">{f.a}</p>}
+              <p hidden={open !== i} className="pb-5 text-neutral-600 leading-relaxed">{f.a}</p>
             </div>
           ))}
         </div>

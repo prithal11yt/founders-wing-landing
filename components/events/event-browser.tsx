@@ -8,8 +8,8 @@ import { WHEN_OPTIONS, isOver, matchesWhen, type ListedEvent, type When } from '
 import type { Lock } from '@/lib/events/hubs'
 import { EventCard } from './event-card'
 
-/* Filters run instantly in the browser. The first page of cards is in the server-rendered
-   HTML, so search engines see real events, and each filter goes in the URL so a filtered
+/* Filters run instantly in the browser. Every card is in the server-rendered HTML (past the
+   first page they are hidden until "Show more"), so search engines see every event, and each filter goes in the URL so a filtered
    view can be shared. Filtered URLs canonicalise to the page itself. */
 
 type Filters = { q: string; when: When | ''; price: '' | 'free' | 'paid'; mode: '' | 'in_person' | 'online'; type: string; state: string; city: string; sort: 'soon' | 'free' }
@@ -224,7 +224,9 @@ export function EventBrowser({ events, lock = {}, emptyHint }: { events: ListedE
             </div>
           ) : (
             <div className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {shown.slice(0, limit).map(e => <EventCard key={e.slug} e={e} />)}
+              {/* Every card is in the HTML so crawlers and AI search see the whole list;
+                  cards past the limit stay hidden until "Show more". */}
+              {shown.map((e, i) => <div key={e.slug} className={i < limit ? 'contents' : 'hidden'}><EventCard e={e} /></div>)}
             </div>
           )}
           {shown.length > limit && (

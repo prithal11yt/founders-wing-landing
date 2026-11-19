@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { EventAlertForm } from './event-alert-form'
+import { CITIES } from '@/lib/events/config'
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 import { PrimaryCTA } from '@/components/site/ui'
@@ -133,6 +135,8 @@ export async function HubPage({ hub }: { hub: Hub }) {
           <EventBrowser events={hub.events} lock={hub.lock} />
         </div>
       </section>
+
+      <section className="pb-10"><div className="mx-auto max-w-7xl px-5"><EventAlertForm city={city ?? 'india'} cityName={(city && CITIES.find(c => c.slug === city)?.name) || 'India'} /></div></section>
 
       <section className="pb-16"><div className="mx-auto max-w-7xl px-5"><CommunityBand /></div></section>
 

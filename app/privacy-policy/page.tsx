@@ -2,7 +2,8 @@ import { SiteNav } from '@/components/site/nav'
 import { SiteFooter } from '@/components/site/footer'
 
 export const metadata = {
-  title: 'Privacy Policy — Founders Wing',
+  title: 'Privacy Policy',
+  alternates: { canonical: 'https://www.founderswing.com/privacy-policy' },
   description: 'How Founders Wing collects, uses, and protects your personal data.',
 }
 

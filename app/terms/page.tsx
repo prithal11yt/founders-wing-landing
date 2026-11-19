@@ -3,7 +3,8 @@ import { ANNUAL_PRICE, STARTER_PRICE } from '@/lib/pricing'
 import { SiteFooter } from '@/components/site/footer'
 
 export const metadata = {
-  title: 'Terms of Service — Founders Wing',
+  title: 'Terms of Service',
+  alternates: { canonical: 'https://www.founderswing.com/terms' },
   description: 'Terms and conditions for using the Founders Wing community.',
 }
 

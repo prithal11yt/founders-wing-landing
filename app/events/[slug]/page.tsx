@@ -29,11 +29,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!e || !['published', 'cancelled'].includes(e.status)) return { robots: { index: false, follow: true } }
   const url = `${SITE_URL}/events/${e.slug}`
   const date = new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(e.startAt))
-  const title = `${e.title} | ${date}, ${e.mode === 'online' ? 'Online' : e.city ?? 'India'}`
+  // Keep titles near 60 characters: drop the brand first, then shorten the event name.
+  const tail = ` | ${date}, ${e.mode === 'online' ? 'Online' : e.city ?? 'India'}`
+  const branded = `${e.title}${tail} | ${SITE_NAME}`
+  const title = branded.length <= 65 ? branded
+    : e.title.length + tail.length <= 65 ? `${e.title}${tail}`
+    : `${e.title.slice(0, 64 - tail.length).trimEnd()}…${tail}`
   const description = metaDescription(e)
   const longPast = Date.now() - new Date(e.endAt ?? e.startAt).getTime() > LONG_PAST_MS
   return {
-    title, description, alternates: { canonical: url },
+    title: { absolute: title }, description, alternates: { canonical: url },
     robots: longPast ? { index: false, follow: true } : { index: true, follow: true },
     openGraph: { title, description, url, siteName: SITE_NAME, type: 'website', locale: 'en_IN', ...(e.image ? { images: [{ url: e.image }] } : {}) },
     twitter: { card: 'summary_large_image', title, description, ...(e.image ? { images: [e.image] } : {}) },

@@ -8,7 +8,7 @@ import { SiteNav } from '@/components/site/nav'
 import { SiteFooter } from '@/components/site/footer'
 
 export const metadata: Metadata = {
-  title: `Founders Wing Blog | Guides for People Building with AI`,
+  title: { absolute: `Founders Wing Blog | Guides for People Building with AI` },
   description: 'Practical guides on building with AI, launching, getting your first customers, and earning your first money online in India.',
   alternates: {
     canonical: `${SITE_URL}/blog`,

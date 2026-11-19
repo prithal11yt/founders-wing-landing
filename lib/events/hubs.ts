@@ -278,7 +278,7 @@ export function hubJsonLd(hub: Hub) {
       '@type': 'CollectionPage', name: hub.title, description: hub.description, url: `${SITE_URL}${hub.path}`,
       mainEntity: {
         '@type': 'ItemList', numberOfItems: hub.events.length,
-        itemListElement: hub.events.slice(0, 30).map((e, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE_URL}/events/${e.slug}`, name: e.title })),
+        itemListElement: hub.events.map((e, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE_URL}/events/${e.slug}`, name: e.title })),
       },
     },
   ]
@@ -312,7 +312,7 @@ export function eventJsonLd(e: ListedEvent & { summary: string | null; address: 
     ...(e.image ? { image: [e.image] } : {}),
     ...(e.organizer ? { organizer: { '@type': 'Organization', name: e.organizer, ...(e.organizerUrl ? { url: e.organizerUrl } : {}) } } : {}),
     ...(e.priceType === 'free' || (e.priceType === 'paid' && e.priceMin != null && e.currency)
-      ? { offers: { '@type': 'Offer', url: e.url, price: e.priceType === 'free' ? 0 : e.priceMin, priceCurrency: e.currency ?? 'INR', availability: 'https://schema.org/InStock' } }
+      ? { offers: { '@type': 'Offer', url: e.url, price: e.priceType === 'free' ? 0 : e.priceMin, priceCurrency: e.priceType === 'free' ? 'INR' : (e.currency ?? 'INR'), availability: 'https://schema.org/InStock' } }
       : {}),
   }
 }

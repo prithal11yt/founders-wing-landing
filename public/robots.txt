@@ -2,5 +2,10 @@ User-agent: *
 Allow: /
 Disallow: /leads/
 Disallow: /api/
+Disallow: /admin
+Disallow: /team
+Disallow: /members
+Disallow: /analytics
+Disallow: /secure-spot
 
 Sitemap: https://www.founderswing.com/sitemap.xml
